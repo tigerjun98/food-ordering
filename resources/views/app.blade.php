@@ -208,7 +208,7 @@
         $.fn.updateOption = async function( options ) {
             // default options.
             var settings = $.extend({
-                url: '{{ route('admin.selectOption') }}',
+                url: '{{ route('ajaxRequest') }}',
                 id : null,
                 val: null,
                 data: {
@@ -216,25 +216,33 @@
                     'ref': $(this).val()
                 },
                 loading: false,
+                returnFormat: 'option'
             }, options );
 
             try {
                 let result = await $(this).sendRequest({
                     data: {
-                        type: 'area',
+                        type: settings.data.type,
                         ref: $(this).val(),
                     }
                 });
-                $("#"+settings.id+" option").remove();$("#"+settings.id).append($('<option>', {value:""}));
-                $.each( result, function(k, v) {
-                    $("#"+settings.id).append($('<option>', {value:k, text:v}));
-                });
-                if(settings.val){
-                    $("#"+settings.id).val(settings.val).trigger('change');
+                if(settings.returnFormat == 'text'){
+                    $("#"+settings.id).val(result);
+                } else{
+                    $("#"+settings.id+" option").remove();
+                    $("#"+settings.id).append($('<option>', {value:""}));
+                    $.each( result, function(k, v) {
+                        $("#"+settings.id).append($('<option>', {value:k, text:v}));
+                    });
+                    if(settings.val){
+                        $("#"+settings.id).val(settings.val).trigger('change');
+                    }
                 }
+
             } catch(err) {
                 console.log(err);
             }
         };
+
     }( jQuery ));
 </script>

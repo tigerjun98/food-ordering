@@ -25,84 +25,43 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('/login', [App\Http\Controllers\User\AuthController::class, 'login'])->name('login');
         Route::post('/login', [App\Http\Controllers\User\AuthController::class, 'submitLogin'])->name('submitLogin');
-        Route::post('/register', [App\Http\Controllers\User\AuthController::class, 'submitRegister'])->name('register');
+        Route::get('/register', [App\Http\Controllers\User\AuthController::class, 'register'])->name('register');
+        Route::post('/register', [App\Http\Controllers\User\AuthController::class, 'submitRegister'])->name('submitRegister');
         Route::get('/forget-password', [App\Http\Controllers\User\AuthController::class, 'forgetPassword'])->name('forgetPassword');
         Route::post('/forget-password', [App\Http\Controllers\User\AuthController::class, 'submitForgetPassword'])->name('submitForgetPassword');
         Route::get('/reset-password', [App\Http\Controllers\User\AuthController::class, 'resetPassword'])->name('password.reset');
         Route::post('/reset-password/{token}', [App\Http\Controllers\User\AuthController::class, 'submitResetPassword'])->name('submitResetPassword');
-
     });
 
-    Route::get('/product', [App\Http\Controllers\User\ProductController::class, 'index'])->name('product');
-    Route::get('/product/{id}', [App\Http\Controllers\User\ProductController::class, 'show'])->name('product.show');
-
-    Route::name('promotion.')->group(function () {
-        Route::group(['prefix'=>'promotions'], function () {
-            Route::get('/', [App\Http\Controllers\User\PromotionController::class, 'index']);
-            Route::get('/dt', [App\Http\Controllers\User\PromotionController::class, 'indexDt'])->name('indexDt');
-        });
-    });
 
     Route::group(['middleware' => ['auth:user']], function () {
+
         Route::get('/account', [App\Http\Controllers\User\UserController::class, 'index'])->name('account');
         Route::post('/update', [App\Http\Controllers\User\UserController::class, 'update'])->name('account.update');
-        Route::post('/updateAddress', [App\Http\Controllers\User\UserController::class, 'updateAddress'])->name('account.updateAddress');
         Route::post('/logout', [App\Http\Controllers\User\UserController::class, 'logout'])->name('logout');
 
-        Route::name('order.')->group(function () {
-            Route::group(['prefix'=>'order'], function () {
-//                Route::get('/', [App\Http\Controllers\User\OrderController::class, 'index']);
-//                Route::post('/dt', [App\Http\Controllers\User\OrderController::class, 'indexDt'])->name('indexDt');
-//                Route::get('/edit/{id}', [App\Http\Controllers\User\OrderController::class, 'edit'])->name('edit');
-                Route::post('/receive/{id}', [App\Http\Controllers\User\OrderController::class, 'receivedOrder'])->name('received');
-                Route::get('/review/{id}', [App\Http\Controllers\User\OrderController::class, 'review'])->name('review');
-                Route::post('/submitReview', [App\Http\Controllers\User\OrderController::class, 'submitReview'])->name('submitReview');
+        Route::name('transaction.')->group(function () {
+            Route::group(['prefix'=>'transaction'], function () {
+
+                Route::name('deposit.')->group(function () {
+                    Route::group(['prefix'=>'deposit'], function () {
+                        Route::get('', [App\Http\Controllers\User\Transaction\DepositController::class, 'create'])->name('create');
+                        Route::post('/{id}', [App\Http\Controllers\User\Transaction\DepositController::class, 'store'])->name('store');
+                        Route::get('/history', [App\Http\Controllers\User\Transaction\DepositController::class, 'index'])->name('index');
+                        Route::post('/dt', [App\Http\Controllers\User\Transaction\DepositController::class, 'indexDt'])->name('indexDt');
+                        Route::post('/upload/image/{id}', [App\Http\Controllers\User\Transaction\DepositController::class, 'uploadDropzoneImage'])->name('uploadImage');
+                        Route::post('/delete/image/{id}', [App\Http\Controllers\User\Transaction\DepositController::class, 'deleteDropzoneImage'])->name('deleteDropzoneImage');
+                    });
+                });
+
+
             });
         });
 
-        Route::name('payment.')->group(function () {
-            Route::group(['prefix'=>'payment'], function () {
-                Route::post('resubmit/{id}', [App\Http\Controllers\User\PaymentController::class, 'resubmit'])->name('resubmit');
-                Route::post('/{id}', [App\Http\Controllers\User\PaymentController::class, 'requestPaymentId'])->name('request');
-            });
-        });
-    });
-
-    Route::name('order.')->group(function () {
-        Route::group(['prefix'=>'order'], function () {
-            Route::get('/', [App\Http\Controllers\User\OrderController::class, 'index']);
-            Route::post('/dt', [App\Http\Controllers\User\OrderController::class, 'indexDt'])->name('indexDt');
-            Route::get('/edit/{id}', [App\Http\Controllers\User\OrderController::class, 'edit'])->name('edit');
-            Route::post('/cancel/{id}', [App\Http\Controllers\User\OrderController::class, 'cancelOrder'])->name('cancel');
-        });
-    });
-
-    Route::name('payment.')->group(function () {
-        Route::group(['prefix'=>'payment'], function () {
-            Route::get('/{id}', [App\Http\Controllers\User\PaymentController::class, 'index']);
-            Route::post('resubmit/{id}', [App\Http\Controllers\User\PaymentController::class, 'resubmit'])->name('resubmit');
-            Route::post('/{id}', [App\Http\Controllers\User\PaymentController::class, 'requestPaymentId'])->name('request');
-        });
     });
 
 
 
-
-//Route::post('/payment/{id}', [App\Http\Controllers\User\OrderController::class, 'requestPaymentId'])->name('requestPayment');
-//Route::get('/payment/{id}', [App\Http\Controllers\User\OrderController::class, 'payment'])->name('payment');
-    Route::get('/checkout', [App\Http\Controllers\User\OrderController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout', [App\Http\Controllers\User\OrderController::class, 'submitOrder'])->name('submitOrder');
-
-    Route::group(['middleware' => 'throttle:100,1'], function () {
-        Route::post('/RMCallback/{orderId}', [App\Http\Controllers\User\PaymentController::class, 'paymentCallback']);
-    });
-
-// for cpanel
-//Route::get('/link', function () {
-//    $target = '/home/lewin/app/storage/app/public';
-//    $shortcut = '/home/lewin/public_html/storage';
-//    symlink($target, $shortcut);
-//});
 
 
     Route::get('/testing', function () {

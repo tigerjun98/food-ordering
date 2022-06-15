@@ -1,4 +1,4 @@
-<label class="form-group has-float-label {{isset($style) ? $style : ''}}">
+<label class="form-group has-float-label mb-2 {{isset($class) ? $class : ''}}">
     <input class="form-control {{isset($class) ? $class : ''}}"
            type="{{isset($type) ? $type : 'text'}}"
             id="{{$id ?? $name}}"
@@ -12,11 +12,14 @@
             {{$action ?? '' }}
             {{isset($required) ? '' : 'required' }}
             {{isset($disabled) ? 'disabled' : '' }}
+            {{isset($readonly) ? 'readonly' : '' }}
             {{isset($onchange) ? 'onchange='.$onchange.'(this)' : '' }}
     />
     <span>
         @if(isset($label))
             {{ __('common.'.$label) }}
+        @elseif(isset($name))
+            {{ __('common.'.$name) }}
         @endif
 
         <span class="text-danger">{{isset($required) ? null : '*' }}</span>

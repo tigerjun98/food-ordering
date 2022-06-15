@@ -18,11 +18,6 @@ return [
 
     'confirm_alert' => 'Are you sure you want to proceed?',
     'confirm_alert_desc' => 'If you proceed this you can\'t recover it.',
-    'product_missing' => 'Add more product to checkout',
-    'order_placed' => 'Order placed',
-    'success' => 'success',
-    'order_not_found' => 'order not found!',
-    'unpaid_order_found' => 'Please pay the prev order to continue',
-    'commission_missing' => 'commission missing!',
+    'incorrect_old_password' => 'Incorrect old password',
 
 ];

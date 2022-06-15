@@ -1,48 +1,32 @@
-{{--welcome modal--}}
-<div class="pr-0 modal fade bd-example-modal-lg" id="welcomeModal" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
-            </div>
-            <div class="modal-body"></div>
-        </div>
-    </div>
-</div>
-<style>
-    #welcomeModal .modal-content {
-        background: none;
-    }
-    #welcomeModal .modal-body {
-        width: 100%;
-        height: 70vh;
-        max-height: initial;
-        background: url('{{asset("storage/settings/".\App\Models\Setting::getValue('popup'))}}');
-    }
-</style>
-
 {{--universal modal--}}
-<div class="pr-0 modal fade bd-example-modal-lg" id="publicModal" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade popup" id="publicModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body space-y-20 pd-40" id="modal-body">
+{{--                <h2 class="text-center">Your Bidding--}}
+{{--                    Successfuly Added</h2>--}}
+{{--                <p class="text-center">your bid <span class="price color-popup">(2.39ETH) </span> has been listing--}}
+{{--                    to our database</p>--}}
+{{--                <a href="#" class="btn btn-primary"> Watch the listings</a>--}}
             </div>
-            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
 </div>
 
 {{--confirm modal--}}
-<div class="pr-0 modal" id="confirmModal" role="dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal fade popup" id="confirmModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
-            </div>
-            <div class="modal-body" id="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body space-y-20 pd-40" id="modal-body">
                 <h2 id="confirm-title">{{ __('messages.confirm_alert') }}</h2>
                 <p id="confirm-desc">{{ __('messages.confirm_alert_desc') }}</p>
+{{--                <a href="#" class="btn btn-primary"> Watch the listings</a>--}}
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button class="light" data-bs-dismiss="modal" aria-label="Close">{{ __('common.cancel') }}</button>
@@ -51,6 +35,7 @@
         </div>
     </div>
 </div>
+
 <style>
     #confirmModal.modal.show .modal-dialog {
         height: 350px;

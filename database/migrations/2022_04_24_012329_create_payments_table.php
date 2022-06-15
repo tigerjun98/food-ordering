@@ -15,13 +15,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->unsignedBigInteger('order_detail_id');
-            $table->integer('retry')->default(0);
-            $table->text('payment_url')->nullable();
-            $table->text('checkout_id')->nullable();
-            $table->json('request')->nullable();
-            $table->json('response')->nullable();
-            $table->json('callback_response')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->float('amount')->default(0);
+            $table->string('network')->nullable();
+            $table->string('address')->nullable();
+            $table->integer('status')->nullable();
+            $table->string('invoice')->nullable();
             $table->timestamps();
         });
     }

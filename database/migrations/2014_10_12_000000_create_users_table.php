@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();
             $table->string('name')->unique()->nullable();
             $table->string('email')->unique()->nullable();
+            $table->string('avatar')->default('default.jpg');
+            $table->float('wallet')->default(0);
             $table->integer('status');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

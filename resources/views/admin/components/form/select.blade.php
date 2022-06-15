@@ -1,4 +1,4 @@
-<label class="form-group has-float-label">
+<label class="form-group has-float-label mb-2 {{isset($class) ? $class : ''}}">
     <select class="form-control select2-single" data-width="100%" name="{{$name}}"
             id="{{$id ?? $name}}" {{$action ?? ''}}>
         @if(isset($option) && $option)
@@ -9,7 +9,11 @@
         {{$customOption ?? ''}}
     </select>
 
-    <span>{{ __('common.'.$label) }}
+    <span> @if(isset($label))
+            {{ __('common.'.$label) }}
+        @elseif(isset($name))
+            {{ __('common.'.$name) }}
+        @endif
         <span class="text-danger">{{isset($required) ? null : '*' }}</span>
     </span>
     @if(isset($small))

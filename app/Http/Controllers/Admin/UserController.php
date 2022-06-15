@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProductType;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserDevice;
 use App\Traits\ApiResponser;
@@ -33,12 +34,15 @@ class UserController extends Controller {
 
         $query = User::query();
         $data = $query
+            ->with(['deposit' => function($query){
+                $query->sum('amount');
+            }])
             ->filter($request)
             ->orderBy('created_at','desc')
             ->paginate(50);
 
         $option['data_path']    = 'admin.user.table.table_data';
-        $option['column']       = ['status', 'username', 'full_name', 'referral', 'referral_from', 'phone', 'email', 'action'];
+        $option['column']       = ['status', 'username', 'deposit', 'full_name', 'referral', 'phone', 'email', 'action'];
 
         if($request->return == "table"){
             $option['response'] = 'ajax';
@@ -65,16 +69,11 @@ class UserController extends Controller {
 
     public function destroy(Request $request, $id){
 
-        if(OrderDetail::where('user_id', $id)->first()){
-            return $this->error('order_exists', 401);
+        if(Transaction::where('user_id', $id)->first()){
+            return $this->error(__('common.transaction_exists'), 401);
         }
 
         User::where('id',$id)->delete();
-        DB::table('cart')->where('user_id',$id)->delete();
-        DB::table('address')->where('user_id',$id)->delete();
-
-        Cart::where('user_id',$id)->delete();
-
         $this->adminLog('user_delete', ['id'=>$id]);
         return $this->success('', 'success');
     }

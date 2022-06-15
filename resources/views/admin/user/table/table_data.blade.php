@@ -1,9 +1,9 @@
 <tr class="text-muted">
     @component('admin.components.datatable.row',[ 'data' => $d->getStatusDescription(), 'type' => 'badge']) @endcomponent
     @component('admin.components.datatable.row',[ 'data' => $d->name]) @endcomponent
+    @component('admin.components.datatable.row',[ 'data' => $d->total_deposit, 'type'=> 'float']) @endcomponent
     @component('admin.components.datatable.row',[ 'data' => $d->full_name]) @endcomponent
     @component('admin.components.datatable.row',[ 'data' => $d->referral->name ?? '']) @endcomponent
-    @component('admin.components.datatable.row',[ 'data' => $d->referral_from ?? '']) @endcomponent
     @component('admin.components.datatable.row',[ 'data' => $d->phone ?? '']) @endcomponent
     @component('admin.components.datatable.row',[ 'data' => $d->email]) @endcomponent
     @component('admin.components.datatable.action')

@@ -1,183 +1,102 @@
 <?php $route = Route::current()->getName(); $ignore = ['home', 'aboutUs', 'product.show'];?>
-<header class="header-area header-padding-1">
-    <div class="main-header-wrap {{in_array($route, $ignore) ? '' : 'transparent-bar'}}">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-lg-3">
-                    <div class="logo-header-about-wrap">
-                        <div class="logo logo-width">
-                            <a href="/"><img src="{{ asset('/images/logo/logo.svg') }}" alt="logo"></a>
+<header id="header_main" class="header_1 js-header">
+    <div class="themes-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="site-header-inner">
+                    <div class="wrap-box flex">
+                        <div id="site-logo" class="clearfix">
+                            <div id="site-logo-inner">
+                                <a href="index.html" rel="home" class="main-logo">
+                                    <img id="logo_header" src="assets/images/logo/logo_dark.png" alt="nft-gaming" width="92" height="47"
+                                         data-retina="assets/images/logo/logo_dark@2x.png" data-width="133"
+                                         data-height="56">
+                                </a>
+                            </div>
                         </div>
-{{--                        <div class="header-about-icon ml-35">--}}
-{{--                            <a class="quickinfo-button-active" href="#"><i class=" ti-align-left "></i></a>--}}
-{{--                        </div>--}}
-                    </div>
-                </div>
-                <div class="col-lg-6 d-flex justify-content-center">
-                    <div class="main-menu menu-lh-1">
-                        <nav class="text-capitalize">
-                            <ul>
-                                <li><a href="{{route('home')}}" class="{{$route == 'home' ? 'active' : ''}}">{{ __('common.home') }}</a></li>
-                                <li><a class="{{$route == 'product.show' ? 'active' : ''}} {{$route == 'promotion.' ? 'active' : ''}} {{$route == 'product' ? 'active' : ''}}" href="#">{{ __('common.product') }} <i class="fa fa-angle-down"></i></a>
-                                    <ul class="sub-menu-width">
-                                        <li><a class="{{$route == 'product' ? 'active' : ''}}"  href="{{route('product')}}">{{ __('common.all_product') }}</a></li>
-                                        <li><a class="{{$route == 'promotion.' ? 'active' : ''}}" href="{{route('promotion.')}}">{{ __('common.promotion') }}</a></li>
+                        <div class="mobile-button"><span></span></div><!-- /.mobile-button -->
+                        <nav id="main-nav" class="main-nav cc">
+                            <ul id="menu-primary-menu" class="menu">
+                                <li class="menu-item menu-item-has-children current-menu-item">
+                                    <a href="#">Home</a>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item current-item"><a href="index.html">Home 1</a></li>
+                                        <li class="menu-item"><a href="home2.html">Home 2</a></li>
+                                        <li class="menu-item"><a href="home3.html">Home 3</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">{{ __('common.help') }} <i class="fa fa-angle-down"></i></a>
-                                    <ul class="sub-menu-width">
-                                        <li><a href="{{route('faq')}}">{{ __('common.faq') }}</a></li>
+
+                                <li class="menu-item menu-item-has-children">
+                                    <a href="#">Explore</a>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item"><a href="explore.html">Explore</a></li>
+                                        <li class="menu-item"><a href="live-auctions.html">Live Auctions</a></li>
+                                        <li class="menu-item"><a href="live-auctions-details.html">Live Auctions Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{route('contactUs')}}">{{ __('common.contact_us') }}</a></li>
+
+                                <li class="menu-item menu-item-has-children">
+                                    <a href="#">Pages</a>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item"><a href="about.html">About</a></li>
+                                        <li class="menu-item"><a href="author.html">Author</a></li>
+                                        <li class="menu-item"><a href="author-profile.html">Author Profile</a></li>
+                                        <li class="menu-item"><a href="edit-profile.html">Edit Profile</a></li>
+                                        <li class="menu-item"><a href="connect-wallet.html">Connect Wallet</a></li>
+                                        <li class="menu-item"><a href="create-item.html">Create Item</a></li>
+                                        <li class="menu-item"><a href="login.html">Login</a></li>
+                                        <li class="menu-item"><a href="register.html">Register</a></li>
+                                        <li class="menu-item"><a href="faq.html">Faq</a></li>
+                                        <li class="menu-item"><a href="popular-collections.html">Popular Collections</a></li>
+                                    </ul>
+                                </li>
+
                                 @if(Auth::check())
-                                    <li><a href="#" class="{{$route == 'order.' ? 'active' : ''}}">{{ __('common.account') }} <i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub-menu-width">
-                                            <li><a href="{{route('account')}}">{{ __('common.my_profile') }}</a></li>
-                                            <li><a href="{{route('order.')}}">{{ __('common.my_orders') }}</a></li>
-                                            <li><a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('common.logout') }}</a></li>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
+                                    <li class="menu-item menu-item-has-children ">
+                                        <a href="#">{{ __('common.account') }}</a>
+                                        <ul class="sub-menu">
+                                            <li class="menu-item"><a href="{{route('account')}}">{{ __('common.profile') }}</a></li>
+                                            <li class="menu-item"><a href="{{route('transaction.deposit.index')}}">{{ __('common.history') }}</a></li>
                                         </ul>
                                     </li>
-                                @else
-                                    <li><a href="{{route('login')}}" class="{{$route == 'login' ? 'active' : ''}}">{{ __('common.login') }}</a></li>
                                 @endif
 
+
+                                <li class="menu-item">
+                                    <a href="contact.html">Contact</a>
+                                </li>
                             </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="lang-cart-search-wrap">
-                        <div class="language mr-55">
-                            <ul>
-                                <li><a class="{{App::isLocale('en') ? 'active' : ''}}" href="{{route('setLocale','en')}}">English</a></li>
-                                    <li><a class="{{App::isLocale('cn') ? 'active' : ''}}" href="{{route('setLocale','cn')}}">中文</a></li>
-                            </ul>
-                        </div>
-                        <div class="same-style cart-wrap ml-20">
-                            <a href="#" class="cart-active">
-                                <i class=" ti-shopping-cart "></i>
-                                <span class="count-style" id="count-cart">0</span>
-                            </a>
+                        </nav><!-- /#main-nav -->
+                        <div class="flat-search-btn flex">
+                            <div class="header-search flat-show-search" >
+                                <div class="top-search">
+                                    <form action="#" method="get" role="search" class="search-form">
+                                        <input type="search" id="s" class="search-field style" placeholder="Search Here..." value="" name="s" title="Search for" required="">
+                                        <button class="search search-submit" type="submit" title="Search">
+                                            <i class="far fa-search"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="sc-btn-top cc" id="site-header">
+                                <a href="{{route('transaction.deposit.create')}}" class="sc-button header-slider style wallet fl-button pri-1">
+                                    <span>{{ __('common.deposit') }}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="header-small-mobile header-small-mobile-ptb">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-6">
-                    <div class="mobile-logo logo-width">
-                        <a href="/">
-                            <img alt="" src="{{ asset('/images/logo/logo.svg') }}">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="mobile-header-right-wrap">
-                        <div class="same-style cart-wrap">
-                            <a href="#" class="cart-active">
-                                <i class=" ti-shopping-cart "></i>
-                                <span class="count-style">0</span>
-                            </a>
-                        </div>
-                        <div class="mobile-off-canvas">
-                            <a class="mobile-aside-button" href="#"><i class=" ti-align-left "></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    <div class="mode_switcher">
+        <a href="#" onclick="switchTheme()" class="light d-flex align-items-center">
+            <img src="{{ asset('assets/user/images/icon/sun.png') }}" alt="">
+        </a>
+        <a href="#" onclick="switchTheme()" class="dark d-flex align-items-center is_active">
+            <img src="{{ asset('assets/user/images/icon/moon.png') }}" alt="">
+        </a>
     </div>
+
 </header>
-
-<div class="mobile-off-canvas-active">
-    <a class="mobile-aside-close"><i class="ti-close"></i></a>
-    <div class="header-mobile-aside-wrap">
-        <div class="mobile-menu-wrap">
-            <!-- mobile menu start -->
-            <div class="mobile-navigation">
-                <!-- mobile menu navigation start -->
-                <nav>
-                    <ul class="mobile-menu">
-                        <li><a href="{{route('home')}}">{{ __('common.home') }}</a></li>
-
-                        <li class="menu-item-has-children">
-                            <a href="#">{{ __('common.shop_now') }}</a>
-                            <ul class="dropdown">
-                                <li><a href="{{route('product')}}">{{ __('common.all_product') }}</a></li>
-                                <li><a href="{{route('promotion.')}}">{{ __('common.promotions') }}</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{{route('contactUs')}}">{{ __('common.contact_us') }}</a></li>
-                        <li class="menu-item-has-children">
-                            <a href="#">{{ __('common.account') }}</a>
-                            <ul class="dropdown">
-                                <li><a href="{{route('account')}}">{{ __('common.my_profile') }}</a></li>
-                                <li><a href="{{route('order.')}}">{{ __('common.my_orders') }}</a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </nav>
-                <!-- mobile menu navigation end -->
-            </div>
-            <!-- mobile menu end -->
-        </div>
-        <div class="mobile-curr-lang-wrap text-capitalize">
-            <div class="single-mobile-curr-lang mb-3">
-                <a class="mobile-language-active" href="#">{{ __('langauge') }}<i class="fa fa-angle-down"></i></a>
-                <div class="lang-curr-dropdown lang-dropdown-active">
-                    <ul>
-                        <li><a class="{{App::isLocale('en') ? 'active' : ''}}" href="{{route('setLocale','en')}}">English</a></li>
-                        <li><a class="{{App::isLocale('cn') ? 'active' : ''}}" href="{{route('setLocale','cn')}}">中文</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="single-mobile-curr-lang">
-                @if(Auth::check())
-                <a class="mobile-account-active" href="#">{{ __('common.my_account') }} <i class="fa fa-angle-down"></i></a>
-                <div class="lang-curr-dropdown account-dropdown-active">
-                    <ul>
-                        <li><a href="{{route('account')}}">{{ __('common.my_profile') }}</a></li>
-                        <li><a href="{{route('order.')}}">{{ __('common.my_orders') }}</a></li>
-                        <li><a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('common.logout') }}</a></li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </ul>
-                </div>
-                @else
-                    <a href="{{route('login')}}">{{ __('common.login') }} / {{ __('common.register') }}</a>
-                @endif
-            </div>
-        </div>
-{{--        <div class="mobile-social-wrap">--}}
-{{--            <a class="facebook" href="#"><i class="ti-facebook"></i></a>--}}
-{{--            <a class="twitter" href="#"><i class="ti-twitter-alt"></i></a>--}}
-{{--            <a class="pinterest" href="#"><i class="ti-pinterest"></i></a>--}}
-{{--            <a class="instagram" href="#"><i class="ti-instagram"></i></a>--}}
-{{--            <a class="google" href="#"><i class="ti-google"></i></a>--}}
-{{--        </div>--}}
-    </div>
-</div>
-<style>
-    .mobile-off-canvas-active .header-mobile-aside-wrap .mobile-curr-lang-wrap .single-mobile-curr-lang .lang-curr-dropdown{
-        box-shadow: none;
-    }
-    .cart-wrap a span.count-style {
-        top: -9px;
-        background: #0050B4;
-    }
-    .main-menu > nav > ul > li > a::after {
-        background: #0050B4 !important;
-    }
-    a:hover {
-        color: #00A9EA !important;
-    }
-</style>

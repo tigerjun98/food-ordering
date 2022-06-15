@@ -14,12 +14,8 @@ return [
     */
     'dashboard'  => 'Dashboard',
     'admin_management'  => 'Admins management',
-    'product_management' => 'Products management',
-    'order_management' => 'Orders management',
     'user_management'  => 'Users management',
-    'promotion_management'  => 'Promotions management',
+    'deposit_management'  => 'Deposit management',
     'setting_management'  => 'Settings management',
-    'commission_management'  => 'Commissions management',
     'log_management'  => 'Logs management',
-    'sales_management'  => 'Sales management',
 ];

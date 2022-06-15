@@ -34,7 +34,7 @@ class AuthController extends Controller {
         if(Auth::guard('user')->check()){
             return redirect()->route('account');
         }
-        return view('user.auth');
+        return view('user.auth.login');
     }
 
     public function submitLogin(Request $request)
@@ -55,7 +55,7 @@ class AuthController extends Controller {
         }
 
         if($auth){
-            return $this->success('Success');
+            return $this->success('', 'Success', route('account'));
         }
 
         return $this->error('Credentials not match', 401);
@@ -64,7 +64,7 @@ class AuthController extends Controller {
 
     public function register()
     {
-        return view('register');
+        return view('user.auth.register');
     }
 
     public function submitRegister(Request $request)
@@ -82,7 +82,7 @@ class AuthController extends Controller {
                 $referral = User::where('name', 'origin')->first();
             }
 
-            $name = $request->get('first_name').'_'.rand(1231,9999);
+            $name = $request->get('last_name').'_'.rand(1231,9999);
             $arr = [
                 'id'            => User::find($this->getUserID()) ? abs( crc32( uniqid() ) ) : $this->getUserID(),
                 'referral_id'   => $referral->id,
@@ -95,10 +95,10 @@ class AuthController extends Controller {
             ];
             $this->validate(new Request($arr), User::$rules);
             User::create($arr);
-
             \DB::commit();
+
             Auth::guard('user')->loginUsingId($this->getUserID());
-            return $this->success('Success');
+            return $this->success('', 'success', route('login'));
 
         } catch (\Exception $e) {
             \DB::rollback();

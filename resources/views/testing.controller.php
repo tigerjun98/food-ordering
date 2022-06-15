@@ -28,9 +28,6 @@ class WalletController extends Controller
         ];
     }
 
-
-
-
     public function remove(Request $request){
         do {
             $point = BookingPoint::where('booking_id',$request->id)->delete();

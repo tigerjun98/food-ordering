@@ -1,5 +1,5 @@
 <?php $code = random_int(121212, 999999)?>
-<form id="SubmitForm{{isset($id) ? $code : ''}}">
+<form class="form-profile" id="SubmitForm{{isset($id) ? $code : ''}}">
     @csrf
     {{$body ?? ''}}
 </form>
@@ -26,6 +26,15 @@
         text-transform: capitalize;
     }
     ::placeholder {
+        text-transform: capitalize;
+    }
+    .flat-form{
+        margin: 10px 0;
+    }
+    .input-box{
+        margin: 13px 0px;
+    }
+    .title-infor-account{
         text-transform: capitalize;
     }
 </style>

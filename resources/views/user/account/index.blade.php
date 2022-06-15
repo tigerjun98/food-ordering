@@ -1,59 +1,62 @@
 @extends('user.layout')
 
 @section('content')
-    @component('user.components.layouts.breadcrumb', ['title' => 'my_account'])@endcomponent
+    @component('user.components.layouts.header', ['title' => 'my_profile'])@endcomponent
 
-    <div class="my-account-area pt-100 pb-95">
+    <div class="tf-section flat-author-profile flat-explore flat-auctions ">
         <div class="container">
-            <div class="row flex-row-reverse">
-                <div class="col-lg-12">
-                    <div class="myaccount-tab-menu nav text-capitalize" role="tablist">
-                        <a href="#dashboad" class="active" data-bs-toggle="tab">{{__('common.dashboard')}}</a>
-                        <a href="#address-edit" data-bs-toggle="tab"> {{__('common.address')}}</a>
-                        <a href="#account-info" data-bs-toggle="tab">{{__('common.account_details')}}</a>
-                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('common.logout')}}</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                    <!-- My Account Tab Menu End -->
-                    <!-- My Account Tab Content Start -->
-                    <div class="tab-content" id="myaccountContent">
-                        <!-- Single Tab Content Start -->
-                        <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
-                            <div class="myaccount-content">
-                                <div class="welcome">
-                                    <p>Hello, <strong>{{Auth::check()}}</strong> (If Not <strong>{{Auth::user()->name}} !</strong><a href="login-register.html" class="logout"> Logout</a>)</p>
+            <div class="flat-tabs tab-author">
+                <div class="author-profile flex">
+                    <div class="feature-profile flex">
+                        <div class="img-box relative">
+                            <img class="avatar" src="{{ asset('assets/user/images/box-item/author-profile.jpg') }}" alt="">
+                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
+                        </div>
+                        <div class="infor">
+                            <h3 class="fs-24 text-color-1">{{ $data->name }}</h3>
+                            <div class="box-price flat-price">
+                                <div class="price flex">
+                                    <img class="" src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
+                                    <div class="title-price text-color-1">Balance: {{$data->total_deposit}} USDT</div>
                                 </div>
-
-                                <p class="mb-0">From your account dashboard. you can view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
                             </div>
                         </div>
-                        <!-- Single Tab Content End -->
+                    </div>
 
-                        <!-- Single Tab Content Start -->
-                        <div class="tab-pane fade" id="address-edit" role="tabpanel">
-                            @include('user.account.form.address')
+                    <div class="button-profile flex">
+                        <h3 class="text-color-1">Active</h3>
+                        <div class="button-follow">
+                            <a href="{{ route('transaction.deposit.index') }}" class="sc-button btn-6 style-1 tf-style cc"><span>{{ __('common.history') }}</span></a>
                         </div>
-                        <!-- Single Tab Content End -->
+                        <div class="button-edit">
+                            <a href="{{route('transaction.deposit.create')}}" class="sc-button btn-5 style-2 tf-style cc"><span>{{ __('common.deposit') }}</span></a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="menu-tab tab-title cc">
+                    <li class="item-title">
+                        <h3 class="inner">{{ __('common.my_account') }}</h3>
+                    </li>
+                    <li class="item-title">
+                        <h3 class="inner">{{ __('common.security') }}</h3>
+                    </li>
+                </ul>
+                <div class="content-tab">
+                    <div class="content-inner tab-content">
+                        @include('user.account.form.account')
+                    </div>
 
-                        <div class="tab-pane fade" id="account-info" role="tabpanel">
-                            @include('user.account.form.details')
-                        </div>
+                    <div class="content-inner tab-content mt-0 pt-0">
+                        @include('user.account.form.security')
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-
-    </script>
     <style>
-        .myaccount-tab-menu a:hover, .myaccount-tab-menu a.active {
-            background: {{ __('css.primary-color') }};
-            border-color:  {{ __('css.primary-border') }};
-            color: #ffffff;
+        .flat-author-profile .tab-author .author-profile {
+            background: url('{{asset('assets/user/images/backgroup-secsion/bg-author-profile.png')}}') no-repeat center;
         }
     </style>
 @endsection

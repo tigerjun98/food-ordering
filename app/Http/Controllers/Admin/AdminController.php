@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Location;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -28,13 +29,8 @@ class AdminController extends Controller
 
     public function selectOption(Request $request){
 
-        if($request->type == 'area'){
-            $output = [];
-            $data = Location::getAreaList($request->ref);
-            foreach( $data as $d ) {
-                $output[$d] = ucfirst(str_replace("_"," ",$d));
-            }
-            return $output;
+        if($request->type == 'address'){
+            return Transaction::getNetworkAddress($request->ref);
         }
 
         // check username or referral username

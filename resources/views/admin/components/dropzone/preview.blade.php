@@ -14,5 +14,16 @@
         </div>
     </div>
     <a href="#" class="remove dz-remove" onclick="deleteDropzoneImage{{$id ?? ''}}('{{$item}}')">
-        <i class="glyph-icon simple-icon-trash"></i></a>
+        <i class="glyph-icon simple-icon-trash"></i>
+    </a>
+    <a href="{{asset("storage/".$path."/".$item)}}" target="_blank" class="open_image">open image</a>
 </div>
+<style>
+    .open_image{
+        position: absolute;
+        color: #0050b4;
+        padding: 5px 10px;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+</style>

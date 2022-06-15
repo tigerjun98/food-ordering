@@ -93,8 +93,10 @@ class User extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return $this->last_name .' '. $this->first_name;
+        return $this->first_name .' '. $this->last_name;
     }
+
+
 
     public function getStatusDescription()
     {
@@ -110,24 +112,15 @@ class User extends Authenticatable
         return $this->hasOne(User::class, 'id','referral_id');
     }
 
-    public function address(){
-        return $this->hasOne(Address::class, 'user_id','id');
+    public function deposit(){
+        return $this->hasMany(Transaction::class, 'user_id','id')
+            ->where('type', 0)
+            ->where('status', 0);
     }
 
-    public static function getAddress($userID, $value = null)
+    public function getTotalDepositAttribute()
     {
-        $data = Address::where('user_id', $userID)->first();
-
-        if(!$data){
-            $data = OrderDetail::where('user_id', $userID)
-                ->orderBy('created_at', 'desc')
-                ->first();
-        }
-
-        if($data && $value) return $data->{$value};
-        if($data) return $data;
-
-        return null;
+        return $this->deposit->sum('amount');
     }
 
     public static function getStatusList()

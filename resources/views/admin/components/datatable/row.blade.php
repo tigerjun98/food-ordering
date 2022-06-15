@@ -56,7 +56,7 @@
 @elseif(isset($type) && $type == 'float')
     <td>
         @if(is_numeric($data))
-            {{ __('common.currency') }} {{number_format($data, 2,'.',',')}}
+             {{number_format($data, 2,'.',',')}} @if(isset($currency) && $currency) {{$currency}} @else MYR @endif
         @else
             -
         @endif

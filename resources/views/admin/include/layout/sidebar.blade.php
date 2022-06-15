@@ -8,10 +8,7 @@
                         ['name'=> 'dashboard', 'routeName'=> 'index', 'icon'=>'monitor-analytics','permission'=> 'dashboard'],
                         ['name'=> 'users', 'routeName'=> 'user.', 'icon'=>'conference', 'permission'=> 'user_management'],
                         ['name'=> 'admins', 'routeName'=> 'account.', 'icon'=>'user', 'permission'=> 'admin_management'],
-                        ['name'=> 'orders', 'routeName'=> 'order.', 'icon'=>'check', 'permission'=> 'order_management'],
-                        ['name'=> 'products', 'routeName'=> 'product.', 'icon'=>'box-close', 'permission'=> 'product_management'],
-                        ['name'=> 'commissions', 'routeName'=> 'commission.', 'icon'=>'gears', 'permission'=> 'commission_management'],
-                        ['name'=> 'promotions', 'routeName'=> 'promotion.', 'icon'=>'gift-box', 'permission'=> 'promotion_management'],
+                        ['name'=> 'deposit', 'routeName'=> 'transaction.deposit.', 'icon'=>'check', 'permission'=> 'deposit_management'],
                         ['name'=> 'settings', 'routeName'=> 'setting.', 'icon'=>'gears', 'permission'=> 'setting_management']
                     ]
                 ?>
@@ -33,13 +30,6 @@
                         </li>
                     @endif
                 @endforeach
-
-                <li class="main_nav {{$route == 'admin.sales.' ? 'active' : ''}}">
-                    <a href="{{route('admin.sales.')}}">
-                        <i class="iconsminds-calculator"></i>
-                        <span>{{ __('common.sales') }}</span>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
