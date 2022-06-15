@@ -177,7 +177,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
         Eusonlito\LaravelMeta\MetaServiceProvider::class
     ],
 
@@ -193,7 +192,6 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-         'MongoDB' => Jenssegers\Mongodb\MongodbServiceProvider::class,
         'Meta'    => Eusonlito\LaravelMeta\Facade::class,
     ])->toArray(),
 
