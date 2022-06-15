@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Schema;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use phpDocumentor\Reflection\Types\Integer;
 
 class Transaction extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'transactions';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';
