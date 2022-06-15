@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.7",
         "predis/predis": "^1.1",
         "revenuemonster/sdk": "^2.0",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.0",
+        "jean85/pretty-package-versions": "^1.5 || ^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
