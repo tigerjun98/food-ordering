@@ -17,39 +17,28 @@
                         <div class="mobile-button"><span></span></div><!-- /.mobile-button -->
                         <nav id="main-nav" class="main-nav cc">
                             <ul id="menu-primary-menu" class="menu">
-                                <li class="menu-item menu-item-has-children current-menu-item">
-                                    <a href="#">Home</a>
-                                    <ul class="sub-menu">
-                                        <li class="menu-item current-item"><a href="index.html">Home 1</a></li>
-                                        <li class="menu-item"><a href="home2.html">Home 2</a></li>
-                                        <li class="menu-item"><a href="home3.html">Home 3</a></li>
-                                    </ul>
+
+                                <li class="menu-item">
+                                    <a href="{{route('home')}}">Home</a>
                                 </li>
 
-                                <li class="menu-item menu-item-has-children">
+                                <li class="menu-item menu-item-has-children current-menu-item">
                                     <a href="#">Explore</a>
                                     <ul class="sub-menu">
-                                        <li class="menu-item"><a href="explore.html">Explore</a></li>
-                                        <li class="menu-item"><a href="live-auctions.html">Live Auctions</a></li>
-                                        <li class="menu-item"><a href="live-auctions-details.html">Live Auctions Details</a></li>
+                                        <li class="menu-item current-item"><a href="{{ route('about') }}">About</a></li>
+{{--                                        <li class="menu-item"><a href="home2.html">Home 2</a></li>--}}
+{{--                                        <li class="menu-item"><a href="home3.html">Home 3</a></li>--}}
                                     </ul>
                                 </li>
 
-                                <li class="menu-item menu-item-has-children">
-                                    <a href="#">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li class="menu-item"><a href="about.html">About</a></li>
-                                        <li class="menu-item"><a href="author.html">Author</a></li>
-                                        <li class="menu-item"><a href="author-profile.html">Author Profile</a></li>
-                                        <li class="menu-item"><a href="edit-profile.html">Edit Profile</a></li>
-                                        <li class="menu-item"><a href="connect-wallet.html">Connect Wallet</a></li>
-                                        <li class="menu-item"><a href="create-item.html">Create Item</a></li>
-                                        <li class="menu-item"><a href="login.html">Login</a></li>
-                                        <li class="menu-item"><a href="register.html">Register</a></li>
-                                        <li class="menu-item"><a href="faq.html">Faq</a></li>
-                                        <li class="menu-item"><a href="popular-collections.html">Popular Collections</a></li>
-                                    </ul>
-                                </li>
+{{--                                <li class="menu-item menu-item-has-children">--}}
+{{--                                    <a href="#">Explore</a>--}}
+{{--                                    <ul class="sub-menu">--}}
+{{--                                        <li class="menu-item"><a href="explore.html">Explore</a></li>--}}
+{{--                                        <li class="menu-item"><a href="live-auctions.html">Live Auctions</a></li>--}}
+{{--                                        <li class="menu-item"><a href="live-auctions-details.html">Live Auctions Details</a></li>--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
 
                                 @if(Auth::check())
                                     <li class="menu-item menu-item-has-children ">
@@ -62,22 +51,22 @@
                                 @endif
 
 
-                                <li class="menu-item">
-                                    <a href="contact.html">Contact</a>
-                                </li>
+{{--                                <li class="menu-item">--}}
+{{--                                    <a href="contact.html">Contact</a>--}}
+{{--                                </li>--}}
                             </ul>
                         </nav><!-- /#main-nav -->
-                        <div class="flat-search-btn flex">
-                            <div class="header-search flat-show-search" >
-                                <div class="top-search">
-                                    <form action="#" method="get" role="search" class="search-form">
-                                        <input type="search" id="s" class="search-field style" placeholder="Search Here..." value="" name="s" title="Search for" required="">
-                                        <button class="search search-submit" type="submit" title="Search">
-                                            <i class="far fa-search"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                        <div class="flat-search-btn flex mt-3 deposit-btn">
+{{--                            <div class="header-search flat-show-search" >--}}
+{{--                                <div class="top-search">--}}
+{{--                                    <form action="#" method="get" role="search" class="search-form">--}}
+{{--                                        <input type="search" id="s" class="search-field style" placeholder="Search Here..." value="" name="s" title="Search for" required="">--}}
+{{--                                        <button class="search search-submit" type="submit" title="Search">--}}
+{{--                                            <i class="far fa-search"></i>--}}
+{{--                                        </button>--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="sc-btn-top cc" id="site-header">
                                 <a href="{{route('transaction.deposit.create')}}" class="sc-button header-slider style wallet fl-button pri-1">
                                     <span>{{ __('common.deposit') }}</span>
@@ -99,4 +88,22 @@
         </a>
     </div>
 
+    <style>
+        @media (max-width: 768px){
+            .deposit-btn{
+                transform: scale(0.8) !important;
+                position: absolute;
+                right: 56px;
+                top: -15px !important;
+                display: block !important;
+            }
+            .is-fixed .deposit-btn{
+                top: 7px !important;
+            }
+            .mode_switcher{
+                display: none;
+            }
+        }
+
+    </style>
 </header>

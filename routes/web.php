@@ -18,7 +18,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/option', [App\Http\Controllers\User\UserController::class, 'ajaxRequest'])->name('ajaxRequest');
         Route::get('/contact-us', [App\Http\Controllers\User\HomeController::class, 'contactUs'])->name('contactUs');
         Route::post('/contact-us', [App\Http\Controllers\User\HomeController::class, 'contactByEmail'])->name('contactByEmail');
-        Route::get('/about-us', [App\Http\Controllers\User\HomeController::class, 'aboutUs'])->name('aboutUs');
+        Route::get('/about', [App\Http\Controllers\User\HomeController::class, 'about'])->name('about');
         Route::get('/refund-policy', [App\Http\Controllers\User\HomeController::class, 'refundPolicy'])->name('refundPolicy');
         Route::get('/privacy-policy', [App\Http\Controllers\User\HomeController::class, 'privacyPolicy'])->name('privacyPolicy');
         Route::get('/faq', [App\Http\Controllers\User\HomeController::class, 'faq'])->name('faq');

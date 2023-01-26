@@ -50,8 +50,7 @@
                                     @component('user.components.form.dropzone', [
                                         'submitUrl'   => route('transaction.deposit.uploadImage', $id),
                                         'deleteUrl'   => route('transaction.deposit.deleteDropzoneImage', $id)
-                                    ])
-                                    @endcomponent
+                                    ])@endcomponent
                                 </div>
 
 

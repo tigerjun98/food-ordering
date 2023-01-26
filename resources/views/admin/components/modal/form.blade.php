@@ -14,6 +14,7 @@
         @endforeach
     </ul>
 </div>
+
 <form id="SubmitForm">
     <div class="modal-body add_modal">
         @csrf

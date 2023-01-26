@@ -19,4 +19,18 @@
     .heading{
         text-transform: capitalize;
     }
+    @media (max-width: 768px){
+        .absolute.mark-page4{
+            display: block;
+            right: -65px;
+            bottom: -67px;
+        }
+        .absolute.mark-page3{
+            display: block;
+            width: 66px;
+        }
+        .flat-title-page.inner{
+            padding: 137px 30px 75px;
+        }
+    }
 </style>

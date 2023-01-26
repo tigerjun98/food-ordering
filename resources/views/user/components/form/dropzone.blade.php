@@ -2,7 +2,7 @@
 <div class="form-row" id="uploadImg">
     <div class="col-md-12 mb-1 mt-2">
         <p class="mb-1 text-semi-muted text-small">{{$small ?? ''}}</p>
-        <p class="mb-1 text-muted text-small">Max size : 10MB</p>
+        <p class="mb-1 text-mutsed text-small">Max size : 10MB</p>
         <p class="text-muted text-small">Support : .png | .jpg | .jpeg</p>
     </div>
 </div>

@@ -20,9 +20,9 @@ class HomeController extends Controller {
     {
         return view('user.home.faq');
     }
-    public function aboutUs(Request $request)
+    public function about(Request $request)
     {
-        return view('user.home.about-us');
+        return view('user.home.about');
     }
 
     public function privacyPolicy(Request $request)

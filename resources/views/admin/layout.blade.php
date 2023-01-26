@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Samboja</title>
+{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
+    <title>Broker</title>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">
+{{--    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">--}}
+{{--    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">--}}
+{{--    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">--}}
     <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
 
     <!-- Scripts -->
@@ -85,30 +85,35 @@
     <link href="{{ asset('assets/admin/font/iconsmind-s/css/iconsminds.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/font/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
 
+    {{ Illuminate\Support\Facades\Vite::useBuildDirectory('/backendAssets') }}
+    @vite(['resources/scss/backend.scss', 'resources/js/backend.js'])
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
     <!-- Styles -->
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap.rtl.only.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap-float-label.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap-tagsinput.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/fullcalendar.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/datatables.responsive.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/select2-bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/perfect-scrollbar.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/daterangepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/glide.core.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap-stars.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/nouislider.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/cropper.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/component-custom-switch.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/dropzone.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/smart_wizard.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/bootstrap-tagsinput.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/slick.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/quill.snow.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/vendor/quill.bubble.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap.rtl.only.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-float-label.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-tagsinput.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/fullcalendar.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/dataTables.bootstrap4.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/datatables.responsive.bootstrap4.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/select2.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/select2-bootstrap.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/perfect-scrollbar.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/daterangepicker.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/glide.core.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-stars.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/nouislider.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/cropper.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-datepicker3.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/component-custom-switch.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/dropzone.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/smart_wizard.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-tagsinput.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/slick.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/quill.snow.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/css/vendor/quill.bubble.css') }}" rel="stylesheet">--}}
 
     <link href="{{ asset('assets/admin/css/dore.light.blue.css') }}" rel="stylesheet">
 {{--    <link href="{{ asset('assets/admin/css/dore.dark.blue.min.css') }}" rel="stylesheet">--}}
@@ -133,7 +138,7 @@
 
         }
         .logo {
-            background: url('/images/logo/logo.svg') no-repeat;
+            /*background: url('/images/logo/logo.svg') no-repeat;*/
             background-size: contain;
             /*width: 77px;*/
             height: 59px;

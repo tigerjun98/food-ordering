@@ -40,6 +40,12 @@
                     <li class="item-title">
                         <h3 class="inner">{{ __('common.security') }}</h3>
                     </li>
+                    <li class="item-title" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <h3 class="inner">{{ __('common.logout') }}</h3>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </ul>
                 <div class="content-tab">
                     <div class="content-inner tab-content">

@@ -70,7 +70,8 @@ class AuthController extends Controller {
     public function submitRegister(Request $request)
     {
         $request->validate([
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|confirmed|min:6',
+            'referral' => 'required|exists:users,name'
         ]);
 
         try {
@@ -82,7 +83,7 @@ class AuthController extends Controller {
                 $referral = User::where('name', 'origin')->first();
             }
 
-            $name = $request->get('last_name').'_'.rand(1231,9999);
+            $name = $request->get('last_name').rand(1231,9999);
             $arr = [
                 'id'            => User::find($this->getUserID()) ? abs( crc32( uniqid() ) ) : $this->getUserID(),
                 'referral_id'   => $referral->id,

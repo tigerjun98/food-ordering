@@ -1,13 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
+        "dev": "vite",
+        "build": "vite build",
+        "build:admin": "vite build --config vite.admin.config.js"
     },
     "devDependencies": {
         "@inertiajs/inertia": "^0.11.0",
@@ -22,8 +18,13 @@
         "lodash": "^4.17.19",
         "postcss": "^8.4.6",
         "postcss-import": "^14.0.2",
+        "sass": "^1.57.1",
         "tailwindcss": "^3.0.18",
         "vue": "^3.2.31",
         "vue-loader": "^17.0.0"
+    },
+    "dependencies": {
+        "laravel-vite-plugin": "^0.7.3",
+        "vite": "^4.0.4"
     }
 }

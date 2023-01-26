@@ -88,6 +88,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+        .btn-logo{
+            display: flex;
+            margin: 0 auto;
+            width: fit-content;
+            text-transform: capitalize;
+        }
+        .btn-logo span.icon{
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            width: 16px;
+            height: 16px;
+            display: block;
+            margin-right: 12px;
+            position: relative;
+        }
     </style>
     <script>
         var lazyLoadInstance = new LazyLoad({
@@ -127,6 +142,7 @@
 <script src="{{ asset('assets/user/js/shortcodes.js') }}"></script>
 <script src="{{ asset('assets/user/js/main.js') }}"></script>
 
+<script src="{{ asset('assets/user/js/jquery.fancybox.js') }}"></script>
 <script src="{{ asset('assets/user/js/wow.min.js') }}"></script>
 <script src="{{ asset('assets/user/js/switchmode.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>

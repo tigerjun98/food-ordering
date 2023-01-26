@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::resources([
         'user'      => 'App\Http\Controllers\Admin\UserController',
+        'transaction' => 'App\Http\Controllers\Admin\TransactionController',
         'setting'   => 'App\Http\Controllers\Admin\SettingController',
         'account'   => 'App\Http\Controllers\Admin\AccountController',
     ],

@@ -1,5 +1,5 @@
 <div class="info-title info-account">
-<fieldset class="input-box">
+<fieldset class="input-box cc">
     @if(isset($label))
         @if($label != '')
             <p class="title-infor-account">{{__('common.'.$label)}}

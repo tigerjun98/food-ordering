@@ -34,40 +34,24 @@
                 <div class="col-lg-12">
                     <div class="post">
                         <div class="flat-tabs themesflat-tabs">
-                            <ul class="bid-history-list list-1">
-                                @foreach($data as $key => $d)
-                                    <li class="">
-                                        <div class="content">
-                                            <div class="meta-info flex-one style">
-                                                <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset("storage/avatar/". Auth::user()->avatar ?? 'default.jpg') }}" alt="">
-                                                        <img class="check" src="{{asset('assets/user/images/icon/author-check.svg')}}" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <h5> By<a class="text-color-3" href="#"> {{ Auth::user()->name }}</a> </h5>
-                                                        <div class="date"> Place A deposit <span class="text-color-6"> @ {{ date("Y-m-d G:i", strtotime($d->created_at))}}</span></div>
-                                                    </div>
-                                                </div>
-                                                <div class="flat-price">
-                                                    <div class="price flex">
-                                                        <img class="" src="{{asset('assets/user/images/icon/icon-price.svg')}}" alt="">
-                                                        <div class="title-price"> {{$d->amount}} {{$d->token_explain}}
-                                                            <p class="font-2"> = RM {{ number_format(\App\Models\Transaction::convertCurrency($d->amount, $d->token)) }}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            @foreach($data as $key => $d)
+                                <div class="card-dt">
+                                    <div class="left">
+                                        <div class="avatar" style="background: url('{{ asset("storage/avatar/". Auth::user()->avatar ?? 'default.jpg') }}')"></div>
+                                        <div class="body">
+                                            <div class="title">By <span>{{ Auth::user()->name }}</span></div>
+                                            <div class="desc">Place a deposit <span>@ {{ date("Y-m-d G:i", strtotime($d->created_at))}}</span></div>
                                         </div>
-{{--                                        <div class="action">--}}
-{{--                                            <div class="action-btn">--}}
-{{--                                                <span class="action-btn-icon"></span>--}}
-{{--                                                <span>Update</span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-                                    </li>
-                                @endforeach
-                            </ul>
+                                    </div>
+                                    <div class="right">
+                                        <div class="icon"></div>
+                                        <div class="body">
+                                            <div class="title">{{$d->amount}} <span>{{$d->token_explain}}</span></div>
+                                            <div class="desc">{{ number_format(\App\Models\Transaction::convertCurrency($d->amount, $d->token)) }} <span>MYR</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -76,21 +60,80 @@
     </div>
 
     <style>
-        .action{
+        .card-dt{
+            border: 1px solid var(--primary-color6);
+            background-color: var(--primary-color10);
+            padding: 20px 17px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .card-dt .left{
             display: flex;
         }
-        .action-btn{
+        .card-dt .left .avatar{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-size: contain !important;
+        }
+        .card-dt .left .body{
+            margin-top: 3px;
+            margin-left: 10px;
+            font-size: 13px;
+        }
+
+        .card-dt .left .body .title{
+            margin-bottom: 7px;
+        }
+        .card-dt .left .body .desc{
+            font-weight: 500;
+            color: #7e7e7e;
+        }
+        .card-dt .left .body .desc span{
+            color: #fff;
+        }
+        .card-dt .right{
             display: flex;
+            position: absolute;
+            right: 17px;
+            top: 50%;
+            transform: translateY(-50%);
         }
-        .action-btn span{
-            display: block;
-        }
-        .action-btn-icon{
+        .card-dt .right .icon{
+            background: url("/images/icons/money.svg");
             background-size: contain;
-            height: 20px;
-            width: 20px;
+            background-repeat: no-repeat;
+            width: 22px;
+            height: 22px;
+            margin: 4px 11px 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .card-dt .right{
+                position: relative;
+                right: unset;
+                top: unset;
+                transform: none;
+                margin-top: 18px;
+            }
+        }
+
+        .card-dt .right .title{
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .card-dt .right .title span{
+            font-size: 12px;
+        }
+        .card-dt .right .desc{
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        .card-dt .right .desc span{
+            font-size: 10px;
         }
     </style>
+
     <script>
         function filterStatus(status, val){
             $("a.status-tab").removeClass("active");

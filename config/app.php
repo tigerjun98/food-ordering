@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,6 +179,8 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Eusonlito\LaravelMeta\MetaServiceProvider::class
+
+
     ],
 
     /*
@@ -193,6 +196,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Meta'    => Eusonlito\LaravelMeta\Facade::class,
+        'Constant' => \App\Constants::class,
+        'Vite' => \Illuminate\Support\Facades\Vite::class,
     ])->toArray(),
 
 ];

@@ -2,21 +2,34 @@
 
 namespace App\Models;
 
+use App\Constants;
+use App\Traits\FilterTrait;
+use App\Traits\ModelTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Schema;
 use phpDocumentor\Reflection\Types\Integer;
+use PHPUnit\Util\Filter;
 
 class Transaction extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, ModelTrait, HasFactory;
+    use FilterTrait {
+        FilterTrait::scopeFilter as parentFilterTrait;
+    }
 
     protected $table = 'transactions';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -57,10 +70,12 @@ class Transaction extends Model
 
     public static function getTypeList($id = null)
     {
-        $arr = [
-            0 => 'deposit',
-            1 => 'withdraw',
-        ];
+        $arr = array_compare(Constants::$statusTexts, [
+            Constants::DEPOSIT,
+            Constants::WITHDRAW,
+            Constants::EARN,
+            Constants::LOSS,
+        ]);
 
         if($id) return $arr[$id] ?? '';
         return $arr;
@@ -102,12 +117,12 @@ class Transaction extends Model
     {
         try {
             \DB::beginTransaction();
-            $image = $request->file('file');
+            $image = request()->file('file');
             $type = $image->extension();
             $size = $image->getSize();
             $imageName = time().'.'.$type;
             $path = 'deposit/';
-            $storagePath = Storage::disk('public')->put($path, $request->file);
+            $storagePath = Storage::disk('public')->put($path, request()->file);
             $storageName = basename($storagePath);
 
             $arr = [
@@ -136,8 +151,8 @@ class Transaction extends Model
         try {
             \DB::beginTransaction();
             $path = 'deposit/';
-            Storage::disk('public')->delete($path.$request->filename);
-            Attachment::where('type', 'deposit')->where('path', $path.$request->filename)->forceDelete();
+            Storage::disk('public')->delete($path.request()->filename);
+            Attachment::where('type', 'deposit')->where('path', $path.request()->filename)->forceDelete();
             \DB::commit();
 
         } catch (\Exception $e) {
@@ -160,64 +175,47 @@ class Transaction extends Model
         return $id ? ($arr[$id] ?? '') : $arr;
     }
 
-    public function getStatusExplainAttribute()
+    protected function statusExplain(): Attribute
     {
-        return static::getStatusList()[$this->status] ?? __('common.unknown_status');
+        return Attribute::make(
+            get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
+        );
     }
 
-    public static function getStatusList()
+    public static function getStatusList($id = null): array
     {
-        return [
-            0 => 'unpaid',
-            1 => 'pending',
-            2 => 'received',
-            3 => 'completed',
-            4 => 'cancelled',
-            5 => 'refunding',
-            6 => 'refunded',
-        ];
+        $arr = array_compare(Constants::$statusTexts, [
+            Constants::PAID,
+            Constants::PENDING,
+            Constants::PROCESSING,
+        ]);
+        return $id ? ($arr[$id] ?? []) : $arr;
+    }
+
+    protected function typeExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
+        );
     }
 
     public static function Filter(){
         return [
             'id'            => ['type' => 'text', 'label' => 'id' ],
+            'full_name'     => ['type' => 'text', 'label' => 'Full name' ],
             'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
             'created_at'    => ['type' => 'date', 'label' => 'created_at' ],
         ];
     }
 
-    public function scopeFilter($query, $request)
+    public function scopeFilter($query)
     {
-        foreach (static::Filter() as $column => $item){
-            if($item['type'] == 'text'){
-                if($column == 'id' && $request->{$column} != ''){
-                    $query->where('id',request()->input($column));
-                } elseif($request->{$column} != ''){
-                    $query->whereHas('user', function ($q) use($column){
-                        $q->where($column, 'like', '%'.request()->input($column).'%');
-                    });
-                }
-            }
-            if($item['type'] == 'select'){
-                if($request->{$column} != ''){
-                    if (str_contains($request->{$column}, ',')) {
-                        $query->whereIn($column, explode(",",$request->{$column}));
-                    } else{
-                        $query->where($column, $request->{$column});
-                    }
-                }
-            }
-
-            if($item['type'] == 'date'){
-                if($request->{$column.'_before'} != '' && $request->{$column.'_after'} != ''){
-                    $query->whereDate($column,'>=',date("Y-m-d", strtotime(request()->input($column.'_after'))))
-                        ->whereDate($column,'<=',date("Y-m-d", strtotime(request()->input($column.'_before'))));
-                }
-            }
-
+        if (request()->filled('full_name')) {
+            $query->whereHas('user', function ($q){
+                $q->where(\DB::raw("CONCAT(`first_name`, ' ', `last_name`)"), 'LIKE', "%".request()->full_name."%");
+            });
         }
 
-        return $query;
-
+        return $this->searchAll($this->parentFilterTrait($query), ['id']);
     }
 }

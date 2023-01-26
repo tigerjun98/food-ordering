@@ -1,5 +1,4 @@
 @extends('user.layout')
-
 @section('content')
     <!-- slider -->
     <section class="flat-title-page style2 slider">
@@ -9,7 +8,7 @@
         <img class="absolute mark-page4" src="{{ asset('assets/user/images/mark/mark-header-03.png') }}" alt="">
         <img class="absolute mark-page5" src="{{ asset('assets/user/images/mark/mark-header-05.png') }}" alt="">
         <img class="absolute mark-page9" src="{{ asset('assets/user/images/mark/mark-header-06.png') }}" alt="">
-        <img class="absolute mark-page8" src="{{ asset('assets/user/images/mark/mark-slider-4.png') }}" alt="">
+{{--        <img class="absolute mark-page8" src="{{ asset('assets/user/images/mark/mark-slider-4.png') }}" alt="">--}}
         <div class="swiper-container mainslider home">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -17,25 +16,29 @@
                         <div class="themes-container">
                             <div class="wrap-heading flat-slider flex">
                                 <div class="content">
-                                    <h1 class="heading">Discover Collec<span class="s2">t </span><br> and Sell <span class="tf-text style s1">NFT Token.</span>  </h1>
-                                    <p class="sub-heading">Etiam sit amet magna risus. Pellentesque laoreet, ligula sit amet lacinia.</p>
+                                    <h1 class="heading">New standar<span class="s2">d </span><br> in stock <span class="tf-text style s1">broker.</span>  </h1>
+                                    <p class="sub-heading">Trade forex, commodities, synthetic and stock indices from a single account.</p>
                                     <div class="flat-bt-slider flex style2">
-                                        <a href="explore.html" class="sc-button style-1 fl-button"><span>Explore More
-                                                </span></a>
-                                        <a href="connect-wallet.html" class="sc-button style-2 btn-5"><span>Collect NFT
-                                                </span></a>
+                                        <a href="explore.html" class="sc-button style-1 fl-button cc">
+                                            <span>{{ __('common.contact_us') }}</span>
+                                        </a>
+                                        <a href="{{ route('register') }}" class="sc-button style-2 btn-5 cc">
+                                            <span>{{ __('common.open_an_account') }}</span></a>
                                     </div>
                                 </div>
-                                <div class="image">
-                                    <img class="mark-slider-01 animate-up" src="{{ asset('assets/user/images/mark/mark-slider-3.png') }}" alt="">
-                                    <img class="absolute mark-slider-02 animate-zoom" src="{{ asset('assets/user/images/mark/mark-header-07.png') }}" alt="">
-                                    <div class="img-slider">
-                                        <div class="box-img flat-img flex">
-                                            <div class="img-1"><img src="{{ asset('assets/user/images/mark/mark-slider-1.jpg') }}" alt=""></div>
-                                            <div class="img-2"><img src="{{ asset('assets/user/images/mark/mark-slider-2.jpg') }}" alt=""> </div>
-                                        </div>
-                                        <div class="bg-color"></div>
-                                    </div>
+                                <div class="image" style="top: 242px; position: relative;">
+                                    <img class="mark-slider-01" src="{{ asset('assets/user/images/mark/mark1-slider-home2.png') }}" alt="">
+{{--                                    <img class="absolute mark-slider-02 animate-zoom" src="{{ asset('assets/user/images/mark/mark-header-07.png') }}" alt="">--}}
+{{--                                    <div class="img-slider">--}}
+{{--                                        <div class="box-img flat-img flex">--}}
+{{--                                            <div class="img-1">--}}
+{{--                                                <img style="height: 290px;" src="{{ asset('/images/home/slider-1.png') }}" alt="">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="img-2"><img src="{{ asset('assets/user/images/mark/mark-slider-2.jpg') }}" alt=""> </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="bg-color"></div>--}}
+{{--                                    </div>--}}
+
                                 </div>
                             </div>
                         </div>
@@ -47,25 +50,28 @@
                         <div class="themes-container">
                             <div class="wrap-heading flat-slider flex">
                                 <div class="content">
-                                    <h1 class="heading">Discover Collec<span class="s2">t </span><br> and Sell <span class="tf-text style s1">NFT Token.</span>  </h1>
-                                    <p class="sub-heading">Etiam sit amet magna risus. Pellentesque laoreet, ligula sit amet lacinia.</p>
+                                    <h1 class="heading">A partner invested <span class="s2">in </span><br> your <span class="tf-text style s1">success.</span>  </h1>
+                                    <p class="sub-heading">Trade with confidence and benefit from the reliability of a trusted broker with a proven record of stability, security and strength.</p>
                                     <div class="flat-bt-slider flex style2">
-                                        <a href="explore.html" class="sc-button style-1 fl-button"><span>Explore More
-                                                </span></a>
-                                        <a href="connect-wallet.html" class="sc-button style-2 btn-5"><span>Collect NFT
-                                                </span></a>
+                                        <a href="explore.html" class="sc-button style-1 fl-button cc">
+                                            <span>{{ __('common.contact_us') }}</span>
+                                        </a>
+                                        <a href="{{ route('register') }}" class="sc-button style-2 btn-5 cc">
+                                            <span>{{ __('common.open_an_account') }}</span></a>
                                     </div>
+
                                 </div>
-                                <div class="image">
-                                    <img class="mark-slider-01" src="{{ asset('assets/user/images/mark/mark-slider-3.png') }}" alt="">
+                                <div class="image" style="top: 242px; position: relative;">
+                                    <img class="mark-slider-01" src="{{ asset('assets/user/images/mark/mark2-slider-home2.png') }}" alt="">
                                     <img class="absolute mark-slider-02" src="{{ asset('assets/user/images/mark/mark-header-07.png') }}" alt="">
-                                    <div class="img-slider">
-                                        <div class="box-img flat-img flex">
-                                            <div class="img-1"><img src="{{ asset('assets/user/images/mark/mark-slider-1.jpg') }}" alt=""></div>
-                                            <div class="img-2"><img src="{{ asset('assets/user/images/mark/mark-slider-2.jpg') }}" alt=""> </div>
-                                        </div>
-                                        <div class="bg-color"></div>
-                                    </div>
+{{--                                    <div class="img-slider">--}}
+{{--                                        <div class="box-img flat-img flex">--}}
+{{--                                            <div class="img-1">--}}
+{{--                                                <img style="height: 290px;" src="{{ asset('/images/home/slider-2.png') }}" alt=""></div>--}}
+{{--                                            <div class="img-2"><img src="{{ asset('assets/user/images/mark/mark-slider-2.jpg') }}" alt=""></div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="bg-color"></div>--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
                         </div>
@@ -77,24 +83,25 @@
                         <div class="themes-container">
                             <div class="wrap-heading flat-slider flex">
                                 <div class="content">
-                                    <h1 class="heading">Discover Collec<span class="s2">t </span><br> and Sell <span class="tf-text style s1">NFT Token.</span>  </h1>
-                                    <p class="sub-heading">Etiam sit amet magna risus. Pellentesque laoreet, ligula sit amet lacinia.</p>
+                                    <h1 class="heading">Finance Focu<span class="s2">s </span><br> Road to <span class="tf-text style s1">Success.</span>  </h1>
+                                    <p class="sub-heading">Listen to what you want for your future, then together we create a plan to help you get there</p>
                                     <div class="flat-bt-slider flex style2">
-                                        <a href="explore.html" class="sc-button style-1 fl-button"><span>Explore More
-                                                </span></a>
-                                        <a href="connect-wallet.html" class="sc-button style-2 btn-5"><span>Collect NFT
-                                                </span></a>
+                                        <a href="explore.html" class="sc-button style-1 fl-button cc">
+                                            <span>{{ __('common.contact_us') }}</span>
+                                        </a>
+                                        <a href="{{ route('register') }}" class="sc-button style-2 btn-5 cc">
+                                            <span>{{ __('common.open_an_account') }}</span></a>
                                     </div>
                                 </div>
-                                <div class="image">
-                                    <img class="mark-slider-01" src="{{ asset('assets/user/images/mark/mark-slider-3.png') }}" alt="">
-                                    <img class="absolute mark-slider-02" src="{{ asset('assets/user/images/mark/mark-header-07.png') }}" alt="">
+                                <div class="image" style="position: relative; top: 286px;">
+{{--                                    <img class="mark-slider-01" src="{{ asset('assets/user/images/mark/mark2-slider-home2.png') }}" alt="">--}}
+{{--                                    <img class="absolute mark-slider-02" src="{{ asset('assets/user/images/mark/mark-header-07.png') }}" alt="">--}}
                                     <div class="img-slider">
-                                        <div class="box-img flat-img flex">
-                                            <div class="img-1"><img src="{{ asset('assets/user/images/mark/mark-slider-1.jpg') }}" alt=""></div>
-                                            <div class="img-2"><img src="{{ asset('assets/user/images/mark/mark-slider-2.jpg') }}" alt=""> </div>
+                                        <div class="box-img flat-img flex box-img-fixed">
+                                            <div class="img-1"><img src="{{ asset('/images/home/slider-3.jpg') }}" alt=""></div>
+                                            <div class="img-2"><img src="{{ asset('/images/home/slider-4.jpg') }}" alt=""> </div>
                                         </div>
-                                        <div class="bg-color"></div>
+{{--                                        <div class="bg-color"></div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -105,136 +112,74 @@
             <div class="btn-slide-next"><i class="far fa-long-arrow-right"></i></div>
             <div class="btn-slide-prev"><i class="far fa-long-arrow-left"></i></div>
         </div>
+        <style>
+            .box-img-fixed .img-1, .box-img-fixed .img-2{
+                width: 245px;
+                height: 280px;
+                object-fit: cover;
+            }
+        </style>
     </section>
 
-    <!-- flat cetagories -->
-    <div class="tf-section flat-cetagories style">
-        <div class="themes-container">
+    <!-- flat friendly -->
+    <div class="flat-friendly home2 home3">
+        <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <div class="wrap-cetagories">
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Creative Arts</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img src="{{ asset('assets/user/images/box-item/cetagories-1.png') }}" alt="img">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Virtual World</a></h3>
-                                <p class="font-2"> 20+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-2.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">3D Art</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-3.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Books</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-4.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Music</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-5.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Animation</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-6.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Discovery</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-7.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">3D Modeling</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-8.png') }}" alt="">
-                        </div>
-                        <div class="cetagories flex">
-                            <div class="content">
-                                <h3><a href="#">Galaxy</a></h3>
-                                <p class="font-2"> 50+ Items </p>
-                            </div>
-                            <img class="" src="{{ asset('assets/user/images/box-item/cetagories-9.png') }}" alt="">
-                        </div>
+                    <ul class="flex">
+                        <li>
+                            <img class="img-icon" src="{{ asset('assets/user/images/icon/friendly-01.svg') }}" alt="">
+                            <div class="title-friendly fs-24">Decentralized Platform.</div>
+                        </li>
+                        <li class="style">
+                            <img class="img-icon" src="{{ asset('assets/user/images/icon/friendly-02.svg') }}" alt="">
+                            <div class="title-friendly fs-24">Decentralized Platform.</div>
+                        </li>
+                        <li>
+                            <img class="img-icon" src="{{ asset('assets/user/images/icon/friendly-03.svg') }}" alt="">
+                            <div class="title-friendly fs-24">Crowd Meet Wisdom</div>
+                        </li>
+                        <li>
+                            <img class="img-icon" src="{{ asset('assets/user/images/icon/friendly-04.svg') }}" alt="">
+                            <div class="title-friendly fs-24">Rewards Meachanism</div>
+                        </li>
+                    </ul>
 
-                        <div class="cetagories-button flex">
-                            <div class="sc-btn-button">
-                                <a href="#" class="sc-button btn-2"><span>View All More
-                                        </span></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- flat auctions -->
-    <div class="flat-auctions live-auctions pb-120 seller style2 ">
+    <!-- flat live auctions -->
+    <div class="tf-section flat-auctions live-auctions home2">
         <div class="container">
-            <div class="row help-row">
-                <div class="col-lg-12">
-                    <div class="heading-section center">
-                        <h2>Live Auctions</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="heading-section2 style">
+                        <h2 class="fw-5">Explore our service</h2>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="swiper-container show-shadow carousel auctions">
-                        <div class="swiper-wrapper mb-60">
+                    <div class="swiper-container carousel-4 auctions show-slider3">
+                        <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="slider-item">
                                     <div class="sc-card-product sc-card-article blog-article">
                                         <div class="card-media flat-img">
-                                            <a href="live-auctions-details.html"><img src="{{ asset('assets/user/images/box-item/auctions-1.jpg') }}" alt="Image"></a>
+                                            <a href="live-auctions-details.html">
+                                                <img src="{{ asset('assets/user/images/box-item/auctions-3.jpg') }}" alt="Image">
+                                            </a>
                                         </div>
                                         <div class="content">
-                                            <h6 class="tags">6 in stock</h6>
                                             <h3><a href="live-auctions-details.html">Axtronic Electronics VS-10</a></h3>
-                                            <div class="meta-info mb-17">
+                                            <div class="meta-info mb-17 style">
                                                 <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
                                                     <div class="info">
                                                         <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
+                                                        <div class="date"> In <span class="text-color-6"> @ 3d Models</span></div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="meta-price flex-one">
-                                                <div class="price flex">
-                                                    <img class="" src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                                    <div class="title-price"> 2.39 ETH</div>
-                                                </div>
-                                                <div class="button-place-bid">
-                                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                                </div>
-                                            </div>
-                                            <div class="featured-countdown">
-                                                <h4 class="flex-one"><span class="title-countdown">Ending Time - </span>
-                                                    <span class="js-countdown" data-timer="0187600" data-labels=" :  ,  : , : , "></span></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -244,35 +189,19 @@
                                 <div class="slider-item">
                                     <div class="sc-card-product sc-card-article blog-article">
                                         <div class="card-media flat-img">
-                                            <a href="live-auctions-details.html"><img src="{{ asset('assets/user/images/box-item/auctions-4.jpg') }}" alt="Image"></a>
+                                            <a href="live-auctions-details.html">
+                                                <img src="{{ asset('assets/user/images/box-item/auctions-6.jpg') }}" alt="Image">
+                                            </a>
                                         </div>
                                         <div class="content">
-                                            <h6 class="tags">6 in stock</h6>
-                                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                                            <div class="meta-info mb-17">
+                                            <h3><a href="live-auctions-details.html">Axtronic Electronics VS-10</a></h3>
+                                            <div class="meta-info mb-17 style">
                                                 <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
                                                     <div class="info">
                                                         <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
+                                                        <div class="date"> In <span class="text-color-6"> @ 3d Models</span></div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="meta-price flex-one">
-                                                <div class="price flex">
-                                                    <img class="" src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                                    <div class="title-price"> 2.39 ETH</div>
-                                                </div>
-                                                <div class="button-place-bid">
-                                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                                </div>
-                                            </div>
-                                            <div class="featured-countdown">
-                                                <h4 class="flex-one"><span class="title-countdown">Ending Time - </span>
-                                                    <span class="js-countdown" data-timer="0187600" data-labels=" :  ,  : , : , "></span></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -282,35 +211,19 @@
                                 <div class="slider-item">
                                     <div class="sc-card-product sc-card-article blog-article">
                                         <div class="card-media flat-img">
-                                            <a href="live-auctions-details.html"><img src="{{ asset('assets/user/images/box-item/auctions-3.jpg') }}" alt="Image"></a>
+                                            <a href="live-auctions-details.html">
+                                                <img src="{{ asset('assets/user/images/box-item/auctions-7.jpg') }}" alt="Image">
+                                            </a>
                                         </div>
                                         <div class="content">
-                                            <h6 class="tags">5 in stock</h6>
                                             <h3><a href="live-auctions-details.html">Axtronic Electronics VS-10</a></h3>
-                                            <div class="meta-info mb-17">
+                                            <div class="meta-info mb-17 style">
                                                 <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
                                                     <div class="info">
                                                         <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
+                                                        <div class="date"> In <span class="text-color-6"> @ 3d Models</span></div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="meta-price flex-one">
-                                                <div class="price flex">
-                                                    <img class="" src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                                    <div class="title-price"> 2.39 ETH</div>
-                                                </div>
-                                                <div class="button-place-bid">
-                                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                                </div>
-                                            </div>
-                                            <div class="featured-countdown">
-                                                <h4 class="flex-one"><span class="title-countdown">Ending Time - </span>
-                                                    <span class="js-countdown" data-timer="0187600" data-labels=" :  ,  : , : , "></span></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -320,45 +233,27 @@
                                 <div class="slider-item">
                                     <div class="sc-card-product sc-card-article blog-article">
                                         <div class="card-media flat-img">
-                                            <a href="live-auctions-details.html"><img src="{{ asset('assets/user/images/box-item/auctions-2.jpg') }}" alt="Image"></a>
+                                            <a href="live-auctions-details.html">
+                                                <img src="{{ asset('assets/user/images/box-item/auctions-3.jpg') }}" alt="Image">
+                                            </a>
                                         </div>
                                         <div class="content">
-                                            <h6 class="tags">4 in stock</h6>
                                             <h3><a href="live-auctions-details.html">Axtronic Electronics VS-10</a></h3>
-                                            <div class="meta-info mb-17">
+                                            <div class="meta-info mb-17 style">
                                                 <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
                                                     <div class="info">
                                                         <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
+                                                        <div class="date"> In <span class="text-color-6"> @ 3d Models</span></div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="meta-price flex-one">
-                                                <div class="price flex">
-                                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                                    <div class="title-price"> 2.39 ETH</div>
-                                                </div>
-                                                <div class="button-place-bid">
-                                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                                </div>
-                                            </div>
-                                            <div class="featured-countdown">
-                                                <h4 class="flex-one"><span class="title-countdown">Ending Time - </span>
-                                                    <span class="js-countdown" data-timer="0187600" data-labels=" :  ,  : , : , "></span></h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="sc-btn-button center">
-                        <a href="live-auctions.html" class="sc-button btn-2"><span>View All More
-                                </span></a>
+                        <div class="swiper-button-next btn-slide-next active"></div>
+                        <div class="swiper-button-prev btn-slide-prev"></div>
                     </div>
                 </div>
             </div>
@@ -366,406 +261,162 @@
     </div>
 
     <!-- flat top seller -->
-    <div class="tf-section flat-top-seller">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 col-md-4">
-                    <div class="wrap-seller center">
-                        <div class="img-box flat-img">
-                            <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-1.jpg') }}" alt=""></div>
-                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h3><a href="author-profile.html">Liam Olivia</a></h3>
-                            <div class="price flex">
-                                <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                <div class="title-price fs-16"> 2.39 ETH</div>
-                            </div>
-                            <div class="button-follow">
-                                <a href="#" class="sc-button btn-6"><span>Follow</span></a>
-                            </div>
+    <div class="flat-top-seller home2">
+        <div class="themes-container2 style-container">
+            <div class="container">
+                <div class="row mb-5 pb-5">
+                    <div class="col-lg-12">
+                        <div class="heading-section center">
+                            <h2>Live Auctions</h2>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4">
-                    <div class="wrap-seller center">
-                        <div class="img-box flat-img">
-                            <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-2.jpg') }}" alt=""></div>
-                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h3><a href="author-profile.html">Liam Olivia</a></h3>
-                            <div class="price flex">
-                                <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                <div class="title-price fs-16"> 2.39 ETH</div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="wrap-seller">
+                            <div class="img-box flat-img">
+                                <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-1.jpg') }}" alt=""></div>
+                                <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
                             </div>
-                            <div class="button-follow">
-                                <a href="#" class="sc-button btn-6"><span>Follow</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <div class="wrap-seller center">
-                        <div class="img-box flat-img">
-                            <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-3.jpg') }}" alt=""></div>
-                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h3><a href="author-profile.html">Liam Olivia</a></h3>
-                            <div class="price flex">
-                                <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                <div class="title-price fs-16"> 2.39 ETH</div>
-                            </div>
-                            <div class="button-follow">
-                                <a href="#" class="sc-button btn-6"><span>Follow</span></a>
+                            <div class="content">
+                                <h3><a href="author-profile.html">Liam Olivia</a></h3>
+                                <div class="price flex">
+                                    <img src="{{ asset('/images/icon/money.svg') }}" alt="">
+                                    <div class="title-price fs-16"> 2.39 USDT</div>
+                                </div>
+                                <div class="button-follow">
+                                    <a href="#" class="sc-button btn-6 bt"><span>Follow</span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <div class="wrap-seller center">
-                        <div class="img-box flat-img">
-                            <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-4.jpg') }}" alt=""></div>
-                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h3><a href="author-profile.html">Liam Olivia</a></h3>
-                            <div class="price flex">
-                                <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                <div class="title-price fs-16"> 2.39 ETH</div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="wrap-seller">
+                            <div class="img-box flat-img">
+                                <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-2.jpg') }}" alt=""></div>
+                                <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
                             </div>
-                            <div class="button-follow">
-                                <a href="#" class="sc-button btn-6"><span>Follow</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <div class="wrap-seller center">
-                        <div class="img-box flat-img">
-                            <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-5.jpg') }}" alt=""></div>
-                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h3><a href="author-profile.html">Liam Olivia</a></h3>
-                            <div class="price flex">
-                                <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                <div class="title-price fs-16"> 2.39 ETH</div>
-                            </div>
-                            <div class="button-follow">
-                                <a href="#" class="sc-button btn-6"><span>Follow</span></a>
+                            <div class="content">
+                                <h3><a href="author-profile.html">Md Mahi Al Ramil</a></h3>
+                                <div class="price flex">
+                                    <img src="{{ asset('/images/icon/money.svg') }}" alt="">
+                                    <div class="title-price fs-16"> 2.39 USDT</div>
+                                </div>
+                                <div class="button-follow">
+                                    <a href="#" class="sc-button btn-6 bt"><span>Follow</span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <div class="wrap-seller center">
-                        <div class="img-box flat-img">
-                            <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-6.jpg') }}" alt=""></div>
-                            <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
-                        </div>
-                        <div class="content">
-                            <h3><a href="author-profile.html">Liam Olivia</a></h3>
-                            <div class="price flex">
-                                <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                <div class="title-price fs-16"> 2.39 ETH</div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="wrap-seller style-mobi">
+                            <div class="img-box flat-img">
+                                <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-3.jpg') }}" alt=""></div>
+                                <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
                             </div>
-                            <div class="button-follow">
-                                <a href="#" class="sc-button btn-6"><span>Follow</span></a>
+                            <div class="content">
+                                <h3><a href="author-profile.html">Kutubul Alam</a></h3>
+                                <div class="price flex">
+                                    <img src="{{ asset('/images/icon/money.svg') }}" alt="">
+                                    <div class="title-price fs-16"> 2.39 USDT</div>
+                                </div>
+                                <div class="button-follow">
+                                    <a href="#" class="sc-button btn-6 bt"><span>Follow</span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <h3 class="title center font fw-6 mt-58 text-t text-color-5">Empowering 230,000+ Businesses with Innovation <span class="text-color-3">Top Creators</span> Digital NFT Marketplace. </h3>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="wrap-seller style-mobi mobi2">
+                            <div class="img-box flat-img">
+                                <div class="img-author"><img src="{{ asset('assets/user/images/box-item/top-saller-6.jpg') }}" alt=""></div>
+                                <img class="check" src="{{ asset('assets/user/images/icon/icon-check.svg') }}" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="author-profile.html">Kamrul Islam</a></h3>
+                                <div class="price flex">
+                                    <img src="{{ asset('/images/icon/money.svg') }}" alt="">
+                                    <div class="title-price fs-16"> 2.39 USDT</div>
+                                </div>
+                                <div class="button-follow">
+                                    <a href="#" class="sc-button btn-6 bt"><span>Follow</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <h3 class="title center font fw-6 mt-58 text-t text-color-5">Empowering 230,000 +Businesses with Innovation <span class="text-color-3">Top Creators</span> Digital NFT Marketplace. </h3>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- flat explore -->
-    <div class="tf-section flat-explore flat-auctions">
+    <!-- flat featured -->
+    <div class="tf-section flat-featured home2">
         <div class="container">
             <div class="row">
+
                 <div class="col-lg-12">
                     <div class="heading-section center">
-                        <h2>Explore Assets NFTS</h2>
+                        <h2>Live Auctions</h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-5.jpg') }}" alt="Image"></a>
-                        </div>
-                        <div class="content">
-                            <h6 class="tags">6 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-6.jpg') }}" alt="Image"></a>
-                        </div>
-                        <div class="content">
-                            <h6 class="tags">6 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-3.jpg') }}" alt="Image"></a>
+                <div class="col-lg-4 col-md-4">
+                    <div class="wrap-featured center">
+                        <div class="custom box-img">
+                            <img src="{{ asset('/images/home/box-item-1.png') }}" alt="">
                         </div>
                         <div class="content">
-                            <h6 class="tags">5 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
+                            <h3 class="fw-4"><a href="{{ route('register') }}">Contact Us</a></h3>
+                            <p>Mauris nec dictum lacus, quis pretium nunc. Aenean malesuada sem et accumsan sagittis.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-7.jpg') }}" alt="Image"></a>
+                <div class="col-lg-4 col-md-4">
+                    <div class="wrap-featured center">
+                        <div class="custom box-img">
+                            <img src="{{ asset('/images/home/box-item-2.png') }}" alt="">
                         </div>
                         <div class="content">
-                            <h6 class="tags">4 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
-
+                            <h3 class="fw-4"><a href="connect-wallet.html">Create account</a></h3>
+                            <p>Mauris nec dictum lacus, quis pretium nunc. Aenean malesuada sem et accumsan sagittis.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-8.jpg') }}" alt="Image"></a>
+                <div class="col-lg-4 col-md-4">
+                    <div class="wrap-featured center">
+                        <div class="custom box-img">
+                            <img src="{{ asset('/images/home/box-item-3.png') }}" alt="">
                         </div>
                         <div class="content">
-                            <h6 class="tags">6 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
-
+                            <h3 class="fw-4"><a href="connect-wallet.html">Deposit</a></h3>
+                            <p>Mauris nec dictum lacus, quis pretium nunc. Aenean malesuada sem et accumsan sagittis.</p>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-9.jpg') }}" alt="Image"></a>
-                        </div>
-                        <div class="content">
-                            <h6 class="tags">6 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-10.jpg') }}" alt="Image"></a>
-                        </div>
-                        <div class="content">
-                            <h6 class="tags">5 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="sc-card-product sc-card-article blog-article">
-                        <div class="card-media flat-img">
-                            <a class="images" href="live-auctions-details.html"><img class="img-item" src="{{ asset('assets/user/images/box-item/auctions-11.jpg') }}" alt="Image"></a>
-                        </div>
-                        <div class="content">
-                            <h6 class="tags">4 in stock</h6>
-                            <h3><a href="live-auctions-details.html"> Axtronic Electronics VS-10 </a></h3>
-                            <div class="meta-info mb-17">
-                                <div class="author">
-                                    <div class="avatar">
-                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="meta-price flex-one">
-                                <div class="price flex">
-                                    <img class="" src="{{ asset('assets/user/images/icon/icon-diamond.svg') }}" alt="">
-                                    <div class="title-price"> 2.39 ETH</div>
-                                </div>
-                                <div class="button-place-bid">
-                                    <a href="#" data-toggle="modal" data-target="#popup_bid" class="sc-button btn-3"><span>Place Bid</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="sc-btn-button center mt-30">
-                        <a href="explore.html" class="sc-button btn-2"><span>View All More
-                                </span></a>
                     </div>
                 </div>
             </div>
         </div>
+        <style>
+            .flat-featured img{
+                width: 85px;
+                height: 85px;
+                object-fit: cover;
+                border-radius: 12px;
+            }
+            .custom.box-img{
+                background: none !important;
+                width: auto !important;
+            }
+        </style>
     </div>
 
     <!-- flat friendly -->
     <div class="flat-friendly">
-        <div class="themes-container2 wrap-friendly">
+        <div class="themes-container2 wrap-friendly" style="background: url('{{ asset('assets/user/images/backgroup-secsion/bg-friendly.jpg') }}') center center no-repeat">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="box-img animate-up">
@@ -792,346 +443,92 @@
         </div>
     </div>
 
-    <!-- flat collection -->
-    <div class="flat-collection seller style2 ">
+    <!-- flat blog -->
+    <div class="tf-section flat-blog home3">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-sm-12">
-                    <div class="heading-section2">
-                        <h2 class="fw-5">Popular Collection</h2>
+                <div class="col-lg-12 col-sm-12">
+                    <div class="heading-section style center">
+                        <h2 class="fw-5">Latest News & Blogs</h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="swiper-container carousel-1 show-slider show-boder">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="fl-blog fl-item2">
-                                    <article class="sc-card-article blog-article style-article">
-                                        <div class="flat-tabs card-media media">
-                                            <div class="content-tab content-img">
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-1.jpg') }}'" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-13.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-17.jpg') }}" alt="">
-                                                </div>
-                                            </div>
-                                            <ul class="menu-tab menu-img">
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-2.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-3.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-4.jpg') }}" alt="">
-                                                </li>
-                                            </ul>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="fl-blog fl-item2">
+                        <article class="sc-card-article blog-article">
+                            <div class="card-media">
+                                <a href="blog-details.html"><img class="img-item" src="{{ asset('assets/user/images/blog/blog-1.jpg') }}" alt=""></a>
+                            </div>
+                            <div class="post">
+                                <div class="text-article">
+                                    <h3><a href="blog-details.html">Axtronic Electronics VS-10</a></h3>
+                                    <p>Proin massa dui, maximus vitae massa in, ullamcorper euismod justo. </p>
+                                </div>
+                                <div class="meta-info style">
+                                    <div class="author">
+                                        <div class="avatar">
+                                            <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
                                         </div>
-                                        <div class="post">
-                                            <div class="text-article">
-                                                <h3><a href="popular-collections.html">Axtronic Electronics VS-10</a></h3>
-                                            </div>
-                                            <div class="meta-info">
-                                                <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="item-nft flex-one">
-                                                        <img class="img-nft" src="{{ asset('assets/user/images/icon/icon-nft.svg') }}" alt="">
-                                                        <h4>805 Items</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="info">
+                                            <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
+                                            <div class="date"> Date <span class="text-color-6"> 04/10/2022</span></div>
                                         </div>
-
-                                    </article>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="fl-blog fl-item2">
-                                    <article class="sc-card-article blog-article style-article">
-                                        <div class="flat-tabs card-media media">
-                                            <div class="content-tab content-img">
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-5.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-21.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-9.jpg') }}" alt="">
-                                                </div>
-                                            </div>
-                                            <ul class="menu-tab menu-img">
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-6.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-7.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-8.jpg') }}" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="post">
-                                            <div class="text-article">
-                                                <h3><a href="popular-collections.html">Axtronic Electronics VS-10</a></h3>
-                                            </div>
-                                            <div class="meta-info">
-                                                <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="item-nft flex-one">
-                                                        <img class="img-nft" src="{{ asset('assets/user/images/icon/icon-nft.svg') }}" alt="">
-                                                        <h4>805 Items</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="fl-blog fl-item2">
-                                    <article class="sc-card-article blog-article style-article">
-                                        <div class="flat-tabs card-media media">
-                                            <div class="content-tab content-img">
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-9.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-13.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-21.jpg') }}" alt="">
-                                                </div>
-                                            </div>
-                                            <ul class="menu-tab menu-img">
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-10.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-11.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-12.jpg') }}" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="post">
-                                            <div class="text-article">
-                                                <h3><a href="popular-collections.html">Axtronic Electronics VS-10</a></h3>
-                                            </div>
-                                            <div class="meta-info">
-                                                <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <h5> By<a class="text-color-3" href="author02.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="item-nft flex-one">
-                                                        <img class="img-nft" src="{{ asset('assets/user/images/icon/icon-nft.svg') }}" alt="">
-                                                        <h4>805 Items</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="fl-blog fl-item2">
-                                    <article class="sc-card-article blog-article style-article">
-                                        <div class="flat-tabs card-media media">
-                                            <div class="content-tab content-img">
-                                                <div class="content-inner tab-content">
-                                                    <div class=""><img src="{{ asset('assets/user/images/box-item/conlection-1.jpg') }}" alt=""></div>
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <div class="img-item-"><img src="{{ asset('assets/user/images/box-item/conlection-5.jpg') }}" alt=""></div>
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <div class="img-item-"><img src="{{ asset('assets/user/images/box-item/conlection-13.jpg') }}" alt=""></div>
-                                                </div>
-                                            </div>
-                                            <ul class="menu-tab menu-img">
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-2.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-3.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-4.jpg') }}" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="post">
-                                            <div class="text-article">
-                                                <h3><a href="popular-collections.html">Axtronic Electronics VS-10</a></h3>
-                                            </div>
-                                            <div class="meta-info">
-                                                <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="item-nft flex-one">
-                                                        <img class="img-nft" src="{{ asset('assets/user/images/icon/icon-nft.svg') }}" alt="">
-                                                        <h4>805 Items</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="fl-blog fl-item2">
-                                    <article class="sc-card-article blog-article style-article">
-                                        <div class="flat-tabs card-media media">
-                                            <div class="content-tab content-img">
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-5.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-17.jpg') }}" alt="">
-                                                </div>
-                                                <div class="content-inner tab-content">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-21.jpg') }}" alt="">
-                                                </div>
-                                            </div>
-                                            <ul class="menu-tab menu-img">
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-6.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-7.jpg') }}" alt="">
-                                                </li>
-                                                <li class="item-title">
-                                                    <img src="{{ asset('assets/user/images/box-item/conlection-8.jpg') }}" alt="">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="post">
-                                            <div class="text-article">
-                                                <h3><a href="popular-collections.html">Axtronic Electronics VS-10</a></h3>
-                                            </div>
-                                            <div class="meta-info">
-                                                <div class="author">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('assets/user/images/avatar/avt-01.png') }}" alt="">
-                                                        <img class="check" src="{{ asset('assets/user/images/icon/author-check.svg') }}" alt="">
-                                                    </div>
-                                                    <div class="info">
-                                                        <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
-                                                        <div class="date"> In <span> @ 3d Models</span></div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="item-nft flex-one">
-                                                        <img class="img-nft" src="{{ asset('assets/user/images/icon/icon-nft.svg') }}" alt="">
-                                                        <h4>805 Items</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-button-next btn-slide-next active"></div>
-                        <div class="swiper-button-prev btn-slide-prev"></div>
+                        </article>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- flat brand -->
-    <div class="tf-section flat-brand">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="brand-slider">
-                        <div class="swiper-container carousel-2">
-                            <div class="swiper-wrapper align">
-                                <div class="swiper-slide">
-                                    <div class="slogan-logo">
-                                        <a href="#">
-                                            <img src="{{ asset('assets/user/images/box-item/brand-01.png') }}" alt="images">
-                                        </a>
-                                    </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="fl-blog fl-item2">
+                        <article class="sc-card-article blog-article">
+                            <div class="card-media">
+                                <a href="blog-details.html"><img class="img-item" src="{{ asset('assets/user/images/blog/blog-2.jpg') }}" alt=""></a>
+                            </div>
+                            <div class="post">
+                                <div class="text-article">
+                                    <h3><a href="blog-details.html">Axtronic Electronics VS-10</a></h3>
+                                    <p>Proin massa dui, maximus vitae massa in, ullamcorper euismod justo. </p>
                                 </div>
-                                <div class="swiper-slide">
-                                    <div class="slogan-logo active">
-                                        <a href="#">
-                                            <img src="{{ asset('assets/user/images/box-item/brand-02.png') }}" alt="images">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="slogan-logo">
-                                        <a href="#">
-                                            <img src="{{ asset('assets/user/images/box-item/brand-03.png') }}" alt="images">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="slogan-logo">
-                                        <a href="#">
-                                            <img src="{{ asset('assets/user/images/box-item/brand-04.png') }}" alt="images">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="slogan-logo">
-                                        <a href="#">
-                                            <img src="{{ asset('assets/user/images/box-item/brand-5.png') }}" alt="images">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="slogan-logo">
-                                        <a href="#">
-                                            <img src="{{ asset('assets/user/images/box-item/brand-6.png') }}" alt="images">
-                                        </a>
+                                <div class="meta-info style">
+                                    <div class="author">
+                                        <div class="avatar">
+                                            <img src="{{ asset('assets/user/images/avatar/avt-02.png') }}" alt="">
+                                        </div>
+                                        <div class="info">
+                                            <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
+                                            <div class="date"> Date <span class="text-color-6"> 04/10/2022</span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="fl-blog fl-item2">
+                        <article class="sc-card-article blog-article">
+                            <div class="card-media">
+                                <a href="blog-details.html"><img class="img-item" src="{{ asset('assets/user/images/blog/blog-3.jpg') }}" alt=""></a>
+                            </div>
+                            <div class="post">
+                                <div class="text-article">
+                                    <h3><a href="blog-details.html">Axtronic Electronics VS-10</a></h3>
+                                    <p>Proin massa dui, maximus vitae massa in, ullamcorper euismod justo. </p>
+                                </div>
+                                <div class="meta-info style">
+                                    <div class="author">
+                                        <div class="avatar">
+                                            <img src="{{ asset('assets/user/images/avatar/avt-03.png') }}" alt="">
+                                        </div>
+                                        <div class="info">
+                                            <h5> By<a class="text-color-3" href="author-profile.html"> Themesflat</a> </h5>
+                                            <div class="date"> Date <span class="text-color-6"> 04/10/2022</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>

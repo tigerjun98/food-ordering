@@ -2,67 +2,41 @@
 
 @section('content')
 
-    @component('user.components.layouts.breadcrumb', ['title' => 'reset_password'])@endcomponent
+    @component('user.components.layouts.header', ['title' => 'reset_password'])@endcomponent
 
-    <div class="login-register-area section-padding-1 pt-100 pb-100">
-        <div class="container">
-            <div class="row">
-                <div id="error_message"></div>
-                <div class="col-lg-12 col-md-12">
-                    <div class="login-register-wrap mr-70 cc">
-                        <h3><i class="fa fa-user-o"></i> {{__('common.'.$type.'_password')}}</h3>
-                        <div class="login-register-form">
-                            <form id="SubmitForm">
-                                @csrf
-                                @if($type == 'reset')
-                                    <input type="hidden" name="email" value="{{app('request')->input('email')}}">
-                                    <input type="hidden" name="token" value="{{app('request')->input('token')}}">
-                                    <div class="sin-login-register">
-                                        <label>{{__('common.new_password')}} <span>*</span></label>
-                                        <input type="password" name="password" required>
-                                    </div>
+    @component('user.components.form.card', ['title' => __('common.'.$type.'_password')])
 
-                                    <div class="sin-login-register">
-                                        <label>{{__('common.confirm_password')}} <span>*</span></label>
-                                        <input type="password" name="password_confirmation" required>
-                                    </div>
-                                @else
-                                    <div class="sin-login-register">
-                                        <label>{{__('common.email')}} <span>*</span></label>
-                                        <input type="text" name="email" required>
-                                    </div>
-                                @endif
+        @slot('desc')
+            <p>{{ __('common.already_have_an_account') }}</p>
+            <a href="{{route('login')}}" class="text-p text-color-3 fw-6">{{ __('common.login') }}</a>
+        @endslot
 
-                                <div class="login-register-btn-remember">
-                                    <div class="login-register-btn">
-                                        <button type="submit">{{__('common.confirm')}}</button>
-                                    </div>
-                                </div>
-                            </form>
+        @slot('body')
+            @component('user.components.form.index', ['route' => $type == 'reset' ? route('submitResetPassword', app('request')->input('token')) : route('submitForgetPassword'), 'id' => true])
+                @slot('body')
+                    <div class="form-login flat-form flex-one">
+                        <div class="info-login">
+                            @if($type == 'reset')
+                                <input type="hidden" name="email" value="{{app('request')->input('email')}}">
+                                <input type="hidden" name="token" value="{{app('request')->input('token')}}">
+
+                                @component('user.components.form.text',[ 'type' => 'password',
+                                    'name' => 'password', 'label' => 'new_password'
+                                ]) @endcomponent
+
+                                @component('user.components.form.text',[ 'type' => 'password',
+                                      'name' => 'password_confirmation', 'label' => 'confirm_password'
+                                  ]) @endcomponent
+                            @else
+                                @component('user.components.form.text',[
+                                      'name' => 'email'
+                                  ]) @endcomponent
+                            @endif
+                            <button class="submit button-login cc mt-4" type="submit">{{ __('common.submit') }}</button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $('#SubmitForm').on('submit',async function(e){
-            e.preventDefault();
-            try {
-                let result = await $(this).sendRequest({
-                    data: $(this).serialize(),
-                    url: "{{$type == 'reset' ? route('submitResetPassword', app('request')->input('token')) : route('submitForgetPassword')}}",
-                    alertSuccess: true,
-                });
-
-            } catch(err) {
-                console.log(err);
-            }
-        });
-    </script>
-    <style>
-        .login-register-wrap h3{
-            text-transform: capitalize;
-        }
-    </style>
+                @endslot
+            @endcomponent
+        @endslot
+    @endcomponent
 @endsection

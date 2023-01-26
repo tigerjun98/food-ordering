@@ -22,7 +22,7 @@ class User extends Authenticatable
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
-    protected $appends = ['full_name'];
+    // protected $appends = ['full_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -90,11 +90,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function getFullNameAttribute()
-    {
-        return $this->first_name .' '. $this->last_name;
-    }
 
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->first_name .' '. $this->last_name
+        );
+    }
 
 
     public function getStatusDescription()

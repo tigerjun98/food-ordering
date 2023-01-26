@@ -37,7 +37,7 @@
             <div class="col-6">
                 <label class="form-group has-float-label mb-2">
                     <div class="input-group typeahead-container">
-                        <input type="text" class="form-control typeahead" name="address" id="address" value="{{$data->address}}">
+                        <input type="text" class="form-control typeahead" name="address" id="address" value="{{$data->address ?? '' }}">
                         <div class="input-group-append ">
                             <button class="btn btn-primary default" data-clipboard-target="#address" type="button">
                                 <i class="simple-icon-share-alt"></i>
@@ -55,11 +55,12 @@
             </script>
         </div>
 
-        @component('admin.components.form.dropzone', [
-            'label'         => 'receipt',
-            'submitUrl'     => route('admin.transaction.deposit.uploadImage', $id),
-            'deleteUrl'     => route('admin.transaction.deposit.deleteDropzoneImage', $id)
-        ])
+
+        <x-admin.form.dropzone
+            :label="'receipt'"
+            :submitUrl="route('admin.transaction.deposit.uploadImage', $id)"
+            :deleteUrl="route('admin.transaction.deposit.deleteDropzoneImage', $id)"
+        >
             @slot('data')
                 @if(isset($data->receipt))
                     @foreach($data->receipt as $key => $item)
@@ -71,8 +72,26 @@
                     @endforeach
                 @endif
             @endslot
+        </x-admin.form.dropzone>
 
-        @endcomponent
+{{--        @component('admin.components.form.dropzone', [--}}
+{{--            'label'         => 'receipt',--}}
+{{--            'submitUrl'     => route('admin.transaction.deposit.uploadImage', $id),--}}
+{{--            'deleteUrl'     => route('admin.transaction.deposit.deleteDropzoneImage', $id)--}}
+{{--        ])--}}
+{{--            @slot('data')--}}
+{{--                @if(isset($data->receipt))--}}
+{{--                    @foreach($data->receipt as $key => $item)--}}
+{{--                        @component('admin.components.dropzone.preview', [--}}
+{{--                           'item'    => $item->file,--}}
+{{--                            'path'   => 'deposit'--}}
+{{--                        ])--}}
+{{--                        @endcomponent--}}
+{{--                    @endforeach--}}
+{{--                @endif--}}
+{{--            @endslot--}}
+
+{{--        @endcomponent--}}
 
         @component('admin.components.form.select',['data' => $data,
             'name' => 'status', 'option'=> \App\Models\Transaction::getStatusList(),
