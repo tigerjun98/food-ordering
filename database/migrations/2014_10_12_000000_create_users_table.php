@@ -15,22 +15,27 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->unsignedBigInteger('referral_id')->nullable();
-            $table->string('referral_from')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('name')->nullable();
+            $table->string('name_en')->nullable();
+            $table->string('name_cn')->nullable();
+            $table->string('nric')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
-            $table->string('name')->unique()->nullable();
             $table->string('email')->unique()->nullable();
-            $table->string('avatar')->default('default.jpg');
-            $table->float('wallet')->default(0);
-            $table->integer('status');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('occupation')->nullable();
+            $table->text('remark')->nullable();
+            $table->string('avatar')->nullable();
+            $table->integer('status')->nullable();
+            $table->integer('gender')->nullable();
+            $table->string('emergency_person_name')->nullable();
+            $table->string('emergency_person_contact')->nullable();
+            $table->string('emergency_person_relationship')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken()->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->date('dob')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Traits\ApiResponser;
 
 class AuthController extends Controller {
+
     use ApiResponser;
 
 //    public function __construct()

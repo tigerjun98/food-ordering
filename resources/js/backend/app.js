@@ -1,4 +1,9 @@
 import.meta.glob([
-    '../images/**',
-    '../fonts/**',
-]);
+    // '../images/**',
+    // '../fonts/**',
+
+    // '@/js/vendor/*.js',
+    '../backend/vendor/*.js',
+    '../helpers/*.js',
+
+], { eager: true })

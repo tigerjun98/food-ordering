@@ -6,8 +6,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/scss/backend/app.css',
-                'resources/scss/backend/app.scss',
+                'resources/css/backend/app.css',
+                'resources/css/backend/app.scss',
                 'resources/js/backend/app.js',
             ],
             refresh: [
@@ -15,11 +15,11 @@ export default defineConfig({
             ],
             buildDirectory: '/backendAssets',
         }),
-        sassGlobImports() // https://www.npmjs.com/package/vite-plugin-sass-glob-import
+        sassGlobImports() // https://github.com/cmalven/vite-plugin-sass-glob-import
     ],
     resolve: {
         alias: {
-            '@': '/public',
+            '@': '/resources',
         },
     },
     server: {

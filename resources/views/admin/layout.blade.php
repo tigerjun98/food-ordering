@@ -9,7 +9,7 @@
 
     <!-- Favicon -->
 {{--    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">--}}
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">
+{{--    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">--}}
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
 
@@ -60,8 +60,6 @@
     {{--    <script src="{{ asset('js/image-compressor/image-compressor.common.js') }}" defer></script>--}}
 
     <!-- Export -->
-
-
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
@@ -117,7 +115,7 @@
 
 {{--    <link href="{{ asset('assets/admin/css/dore.light.blue.css') }}" rel="stylesheet">--}}
 {{--    <link href="{{ asset('assets/admin/css/dore.dark.blue.min.css') }}" rel="stylesheet">--}}
-    <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet">--}}
 
     <!-- intl-tel-input (Phone prefix) -->
     <link href="{{ asset('assets/admin/css/intlTelInput.css') }}" rel="stylesheet">

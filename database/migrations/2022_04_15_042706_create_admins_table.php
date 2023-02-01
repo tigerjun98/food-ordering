@@ -16,11 +16,15 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->string('name')->unique()->nullable();
+            $table->string('name_en')->nullable();
+            $table->string('name_cn')->nullable();
+            $table->integer('gender')->nullable();
+            $table->string('nric')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('password')->nullable();
-            $table->string('permissions')->nullable();
             $table->integer('status')->nullable();
+            $table->rememberToken()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

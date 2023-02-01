@@ -13,12 +13,9 @@
     }
 @endphp
 
-<label class="form-group has-float-label mb-2">
+<label class="form-group has-float-label mb-2 @if(isset($remark)) mb-4 @endif">
     <input {!! $attrString !!} {{$action ?? '' }}
-        {{ $required ?? 'required' }}
-        {{ $readonly ?? 'disabled' }}
-        {{ $readonly ?? 'readonly' }}
-        {{isset($onchange) ? 'onchange='.$onchange.'(this)' : '' }}
+        {{ isset($required) && $required ? 'required' : ''  }}
     />
 
     <span>
@@ -30,7 +27,8 @@
             {{ isset($extraLabel) ? $extraLabel : '' }}
         @if(!isset($required))<span class="text-danger">*</span>@endif
     </span>
-    @if(isset($small))
-        <small class="text-semi-muted" id="{{$smallID ?? ''}}">{{$small ?? ''}}</small>
+
+    @if(isset($remark))
+        <small class="text-semi-muted mb-2" id="{{ $remarkId ?? '' }}">{{ $remark ?? '' }}</small>
     @endif
 </label>

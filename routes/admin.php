@@ -14,10 +14,6 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login');
-Route::post('/login', [App\Http\Controllers\Admin\AuthController::class, 'submitLogin'])->name('submitLogin');
-Route::post('/register', [App\Http\Controllers\Admin\AuthController::class, 'submitRegister'])->name('register');
-
 Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
 

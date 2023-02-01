@@ -9,8 +9,8 @@ export default defineConfig({
                 'resources/scss/app.css',
                 'resources/scss/app.scss',
                 'resources/js/app.js',
-                'resources/scss/backend/app.css',
-                'resources/scss/backend/app.scss',
+                'resources/css/backend/app.css',
+                'resources/css/backend/app.scss',
                 'resources/js/backend/app.js',
             ],
             refresh: true,
@@ -19,7 +19,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': '/public',
+            '@': '/resources',
         },
     },
     server: {

@@ -12,7 +12,7 @@
         @endslot
 
         @slot('body')
-            @component('user.components.form.index', ['route' => route('submitLogin'), 'id' => true])
+            @component('user.components.form.index', ['route' => route('login'), 'id' => true])
                 @slot('body')
                     <div class="form-login flat-form flex-one">
                         <div class="info-login">

@@ -1,6 +1,21 @@
+@php
+    $attributes['class'] = isset($class) ? $class.' form-control' : 'form-control';
+    $attributes['name'] = $name;
+    $attributes['type'] = isset($type) ? $type : 'text';
+    $attributes['id'] = isset($id) ? $id : $name;
+    $attributes['value'] = isset($value) ? $value : (isset($data) && isset($data->{$name}) ? $data->{$name} : '' );
+    $attrString = "";
+    unset($attributes['extraLabel']);
+    unset($attributes['data']);
+    unset($attributes['required']);
+    foreach($attributes as $attrKey => $attrValue){
+       $attrString .= "{$attrKey}=\"{$attrValue}\"";
+    }
+@endphp
+
 <label class="form-group has-float-label mb-2 {{ $class ?? '' }}">
     <select {!! $attrString !!} {{$action ?? '' }}
-        {{ $required ?? 'required' }}
+        {{ isset($required) && $required ? 'required' : ''  }}
         {{ $disabled ?? 'disabled' }}
         {{ $readonly ?? 'readonly' }}
     >

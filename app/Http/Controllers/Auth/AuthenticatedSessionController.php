@@ -12,6 +12,10 @@ use Inertia\Inertia;
 
 class AuthenticatedSessionController extends Controller
 {
+    public function adminCreate()
+    {
+        return view('admin.auth.login');
+    }
     /**
      * Display the login view.
      *
