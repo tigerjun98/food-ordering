@@ -80,8 +80,8 @@
 {{--    <script src="{{asset('js/intlTelInput.js')}}"></script>--}}
 
     <!-- Fonts -->
-    <link href="{{ asset('assets/admin/font/iconsmind-s/css/iconsminds.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/font/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('assets/admin/font/iconsmind-s/css/iconsminds.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/admin/font/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">--}}
 
     {{ Illuminate\Support\Facades\Vite::useBuildDirectory('/backendAssets') }}
     @vite(['resources/scss/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
@@ -118,7 +118,7 @@
 {{--    <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet">--}}
 
     <!-- intl-tel-input (Phone prefix) -->
-    <link href="{{ asset('assets/admin/css/intlTelInput.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('assets/admin/css/intlTelInput.css') }}" rel="stylesheet">--}}
 
 {{--    @include('admin.dore_script')--}}
 
@@ -129,9 +129,7 @@
             .iti__flag {background-image: url("{{asset('img/flag/flags@2x.png')}}");}
         }
 
-        @import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700");
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap');
+
         body, p, .context-menu-item span, .context-menu-item span {
 
         }
