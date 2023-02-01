@@ -1,4 +1,4 @@
-/* Dore Main Style 
+/* Dore Main Style
 
 Table of Contents
 
@@ -1842,7 +1842,7 @@ button {
     }
 
     @include respond-below(md) {
-      width: $sub-menu-width/2;
+      width: calc($sub-menu-width/2);
 
       input {
         width: 85%;
@@ -2561,7 +2561,7 @@ button {
   }
 
 
- 
+
 
   .list-item-heading {
     @include respond-below(sm) {

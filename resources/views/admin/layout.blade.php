@@ -9,8 +9,8 @@
 
     <!-- Favicon -->
 {{--    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">--}}
-{{--    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">--}}
-{{--    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">--}}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
 
     <!-- Scripts -->
@@ -62,9 +62,9 @@
     <!-- Export -->
 
 
-{{--    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>--}}
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>--}}
-{{--    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>--}}
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 
 
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
@@ -86,9 +86,9 @@
     <link href="{{ asset('assets/admin/font/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
 
     {{ Illuminate\Support\Facades\Vite::useBuildDirectory('/backendAssets') }}
-    @vite(['resources/scss/backend.scss', 'resources/js/backend.js'])
+    @vite(['resources/scss/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />--}}
 
     <!-- Styles -->
 {{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap.min.css') }}" rel="stylesheet">--}}
@@ -115,7 +115,7 @@
 {{--    <link href="{{ asset('assets/admin/css/vendor/quill.snow.css') }}" rel="stylesheet">--}}
 {{--    <link href="{{ asset('assets/admin/css/vendor/quill.bubble.css') }}" rel="stylesheet">--}}
 
-    <link href="{{ asset('assets/admin/css/dore.light.blue.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('assets/admin/css/dore.light.blue.css') }}" rel="stylesheet">--}}
 {{--    <link href="{{ asset('assets/admin/css/dore.dark.blue.min.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet">
 
