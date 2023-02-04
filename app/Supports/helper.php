@@ -2,6 +2,11 @@
 
 use App\Exceptions\CommonException;
 
+function new_id(): int
+{
+    return abs( crc32( uniqid() ) );
+}
+
 function request_has($params): bool
 {
     return request()->filled($params) && request()->{$params} != '';

@@ -78,11 +78,11 @@ trait ModelTrait {
         return dateFormat($this->{$col}, $format);
     }
 
-    public function scopeThisCustomer($q, $customerId = null)
-    {
-        $id = $customerId ? $customerId : [Auth::check() ? Auth::user()->customer_id : throwErr('Permission denied!')];
-        return $q->where('customer_id', $id);
-    }
+//    public function scopeUser($q, $userId = null)
+//    {
+//        $id = $userId ? $userId : [Auth::check() ? Auth::id() : throwErr('Permission denied!')];
+//        return $q->where('user_id', $id);
+//    }
 
     public static function getShowHideLists($label = ['hidden', 'showing'])
     {

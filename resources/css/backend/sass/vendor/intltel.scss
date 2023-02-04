@@ -1,0 +1,13 @@
+.iti__flag {
+    background-image: url("@/img/vendor/intltel.flags.png");
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: url("@/img/vendor/intltel.flags@2x.png")
+    }
+};
+.iti{
+    width: 100%;
+    position: relative;
+    input{
+        padding-left: 81px !important;
+    }
+}

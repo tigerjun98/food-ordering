@@ -15,15 +15,13 @@ use Inertia\Inertia;
 */
 
 Route::group(['middleware' => ['auth:admin']], function () {
-    Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
 
     Route::resources([
         'user'      => 'App\Http\Controllers\Admin\UserController',
         'transaction' => 'App\Http\Controllers\Admin\TransactionController',
         'setting'   => 'App\Http\Controllers\Admin\SettingController',
         'account'   => 'App\Http\Controllers\Admin\AccountController',
-    ],
-        ['except' => ['show']
     ]);
 
     Route::name('account.')->group(function () {

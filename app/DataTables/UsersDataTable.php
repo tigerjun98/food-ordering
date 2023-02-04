@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -20,18 +21,11 @@ class UsersDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Transaction::query();
+        $query = User::query();
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->editColumn('user', function($row){
-                return $row->user->full_name;
-            })
-            ->editColumn('type', function($row){
-                return $row->type_explain;
-            })->editColumn('status', function($row){
-                return $row->status_explain;
-            })->editColumn('amount', function($row){
-                return $row->fundFormat('amount');
+            ->addColumn('full_name', function($row){
+                return $row->name_en;
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
@@ -39,11 +33,27 @@ class UsersDataTable extends DataTable
             })->rawColumns(['image', 'action']);
     }
 
+    public function getColumns(): array
+    {
+        return [
+            Column::make('id'),
+            Column::make('full_name'),
+            Column::make('nric'),
+            Column::make('phone'),
+            Column::make('gender'),
+            Column::make('state'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+        ];
+    }
+
     public function action($row): string
     {
         $actions = [
             'edit' => [
-                'link' => route('admin.account.destroy', $row->id)
+                'icon' => 'iconsminds-pen-2',
+                'modal' => route('admin.user.edit', $row->id)
             ]
         ];
 
@@ -84,24 +94,7 @@ class UsersDataTable extends DataTable
                     ]);
     }
 
-    /**
-     * Get the dataTable columns definition.
-     *
-     * @return array
-     */
-    public function getColumns(): array
-    {
-        return [
-            Column::make('id'),
-            Column::make('user')->title('Full name')->orderable(false),
-            Column::make('type'),
-            Column::make('status'),
-            Column::make('amount')->title('Amount (USDT)'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-        ];
-    }
+
 
     /**
      * Get filename for export.

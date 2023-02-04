@@ -1,44 +1,50 @@
 @php
-    $attributes['class'] = isset($class) ? $class.' form-control' : 'form-control';
+    $defaultClass= ' form-control select2-single ';
+    $attributes['class'] = isset($class) ? $class.$defaultClass : $defaultClass;
     $attributes['name'] = $name;
-    $attributes['type'] = isset($type) ? $type : 'text';
     $attributes['id'] = isset($id) ? $id : $name;
-    $attributes['value'] = isset($value) ? $value : (isset($data) && isset($data->{$name}) ? $data->{$name} : '' );
-    $attrString = "";
+
+    if( !isset($value) && isset($data->{$name}) ){
+        $value = $data->{$name};
+    }
+    unset($attributes['options']);
+    unset($attributes['value']);
     unset($attributes['extraLabel']);
     unset($attributes['data']);
     unset($attributes['required']);
+
+    $attrString = "";
     foreach($attributes as $attrKey => $attrValue){
-       $attrString .= "{$attrKey}=\"{$attrValue}\"";
+        $attrString .= "{$attrKey}=\"{$attrValue}\"";
     }
 @endphp
 
-<label class="form-group has-float-label mb-2 {{ $class ?? '' }}">
-    <select {!! $attrString !!} {{$action ?? '' }}
+@if(isset($col))<div class="col-{{ $col }}">@endif
+<label class="form-group has-float-label tooltip-center-bottom mb-3">
+    <select data-width="100%" {!! $attrString !!} {{$action ?? '' }}
         {{ isset($required) && $required ? 'required' : ''  }}
-        {{ $disabled ?? 'disabled' }}
-        {{ $readonly ?? 'readonly' }}
     >
-    @if(isset($default))
-        @foreach($default as $key => $val)
-            <option value="{{$key}}">{{$val}}</option>
-        @endforeach
-    @elseif(isset($options))
         @foreach($options as $key => $item)
             <option value="{{$key}}" >{{$item}}</option>
         @endforeach
-    @endif
+
         {{$customOption ?? ''}}
     </select>
 
-    <span>{{ __('common.'.$label ?? $name) }}
-        <span class="text-danger">{{isset($required) ? null : '*' }}</span>
+    <span>{{ isset($lang) ? __('common.'.$lang) : ( isset($label) ? $label : __('common.'.$name) ) }}
+        <span class="text-danger">{{isset($required) && !$required ? '' : '*' }}</span>
     </span>
-    @if(isset($small))
-        <small class="text-semi-muted" id="{{$smallID ?? ''}}">{{$small ?? ''}}</small>
+
+
+@if(isset($remark))
+        <small class="text-semi-muted mb-2" id="{{ $remarkId ?? '' }}">{{ $remark ?? '' }}</small>
     @endif
 </label>
+@if(isset($col))</div>@endif
 
+<script type="module">
+
+</script>
 @if(isset($onchange) && $onchange)
     <script>
         $("#{{$id ?? $name}}").change(function() {
@@ -52,7 +58,7 @@
     </script>
 @endif
 
-@if(isset($data) && $data)
+@if(isset($value) && $data)
     <script>
         $(document).ready(function(){
             $('#{{$id ?? $name}}').val('{{$data->$name}}').trigger('change');

@@ -1,3 +1,6 @@
+
+console.log('loaded123');
+
 $.fn.showAlert = function(options) {
     // default options.
     const settings = $.extend({

@@ -18,16 +18,22 @@
 
                         <h6 class="mb-4">Login</h6>
 
-                        <x-admin.form>
+                        <x-admin.form
+                            :route="route('admin.login')"
+                        >
                             @slot('body')
                                 <x-admin.form.text
-                                    :label="'username'"
-                                    :name="'name'"
+                                    :label="'email'"
+                                    :name="'email'"
                                     :autofocus="'autofocus'"
                                     :remark="'We\'ll never share your phone with anyone else.'"
                                 />
 
-                                <x-admin.form.password />
+                                <x-admin.form.text
+                                    :type="'password'"
+                                    :name="'password'"
+                                />
+
                             @endslot
 
                             @slot('footer')

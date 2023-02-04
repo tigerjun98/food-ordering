@@ -1,6 +1,6 @@
 let actionBtnId = ''
 let optional = {
-scrollY:        "62vh",
+scrollY:        "46vh",
 scrollX:        true,
 scrollCollapse: true,
 sDom: '<"row view-filter"<"col-sm-12"<"float-right"l><"float-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
@@ -31,8 +31,10 @@ $(".dataTables_wrapper .pagination").addClass("pagination-sm");
 $(".dataTables_wrapper .pagination").addClass("pagination-sm");
 var api = $(this).dataTable().api();
 $("#pageCountDatatable span").html("Displaying " + parseInt(api.page.info().start + 1) + "-" + api.page.info().end + " of " + api.page.info().recordsTotal + " items");
+$('[data-toggle="tooltip"]').tooltip();
+
 },
-fixedColumns:   {
+fixedColumns:{
 leftColumns: 1,
 rightColumns: 1
 },
@@ -78,4 +80,3 @@ refreshDataTable()
 }
 });
 });
-

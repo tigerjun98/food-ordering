@@ -30,7 +30,7 @@ class AdminFactory extends Factory
             'gender' => $gender[0],
             'nric' => $dobAndNric[1],
             'phone' => '601'.$this->faker->randomNumber(8),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => 'admin@admin.com',
             'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
             'remember_token' => Str::random(10),
         ];

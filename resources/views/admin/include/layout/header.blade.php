@@ -23,7 +23,7 @@
     </div>
 
 
-    <a class="navbar-logo" href="{{route('admin.index')}}">
+    <a class="navbar-logo" href="{{route('admin.home')}}">
         <span class="logo"></span>
 {{--        <span class="logo-mobile d-block d-xs-none"></span>--}}
     </a>

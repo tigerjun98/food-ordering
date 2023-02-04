@@ -12,21 +12,14 @@ use Inertia\Inertia;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function adminCreate()
-    {
-        return view('admin.auth.login');
-    }
     /**
      * Display the login view.
      *
-     * @return \Inertia\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
+        return view('admin.auth.login');
     }
 
     /**
@@ -36,6 +29,15 @@ class AuthenticatedSessionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LoginRequest $request)
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    public function storeAdmin(LoginRequest $request)
     {
         $request->authenticate();
 

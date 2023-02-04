@@ -3,18 +3,15 @@
 namespace App\Models;
 
 use App\Constants;
-use App\Traits\FilterTrait;
+use App\Traits\Models\FilterTrait;
 use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Schema;
 use phpDocumentor\Reflection\Types\Integer;
-use PHPUnit\Util\Filter;
 
 class Transaction extends Model
 {

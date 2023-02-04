@@ -48,37 +48,19 @@
                 </label>
             </div>
 
-            <script>
-                $( document ).ready(function() {
-                    new ClipboardJS('.btn');
-                });
-            </script>
+{{--            <script>--}}
+{{--                $( document ).ready(function() {--}}
+{{--                    new ClipboardJS('.btn');--}}
+{{--                });--}}
+{{--            </script>--}}
         </div>
 
 
-        <x-admin.form.dropzone
-            :label="'receipt'"
-            :submitUrl="route('admin.transaction.deposit.uploadImage', $id)"
-            :deleteUrl="route('admin.transaction.deposit.deleteDropzoneImage', $id)"
-        >
-            @slot('data')
-                @if(isset($data->receipt))
-                    @foreach($data->receipt as $key => $item)
-                        @component('admin.components.dropzone.preview', [
-                           'item'    => $item->file,
-                            'path'   => 'deposit'
-                        ])
-                        @endcomponent
-                    @endforeach
-                @endif
-            @endslot
-        </x-admin.form.dropzone>
-
-{{--        @component('admin.components.form.dropzone', [--}}
-{{--            'label'         => 'receipt',--}}
-{{--            'submitUrl'     => route('admin.transaction.deposit.uploadImage', $id),--}}
-{{--            'deleteUrl'     => route('admin.transaction.deposit.deleteDropzoneImage', $id)--}}
-{{--        ])--}}
+{{--        <x-admin.form.dropzone--}}
+{{--            :label="'receipt'"--}}
+{{--            :submitUrl="route('admin.transaction.deposit.uploadImage', $id)"--}}
+{{--            :deleteUrl="route('admin.transaction.deposit.deleteDropzoneImage', $id)"--}}
+{{--        >--}}
 {{--            @slot('data')--}}
 {{--                @if(isset($data->receipt))--}}
 {{--                    @foreach($data->receipt as $key => $item)--}}
@@ -90,8 +72,9 @@
 {{--                    @endforeach--}}
 {{--                @endif--}}
 {{--            @endslot--}}
+{{--        </x-admin.form.dropzone>--}}
 
-{{--        @endcomponent--}}
+
 
         @component('admin.components.form.select',['data' => $data,
             'name' => 'status', 'option'=> \App\Models\Transaction::getStatusList(),

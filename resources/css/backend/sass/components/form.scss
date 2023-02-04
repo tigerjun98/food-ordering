@@ -1,5 +1,25 @@
-label.has-float-label {
-    span{
-        text-transform: capitalize;
+form{
+
+    label.has-float-label {
+        position: relative;
+        span{
+            text-transform: capitalize;
+        }
+
+        .invalid-tooltip, .valid-tooltip, div.error{
+            margin-top: 0;
+            top: 28px;
+            transform: translateX(-50%);
+        }
+        .error-msg{
+            width: max-content !important;
+            max-width: 75%;
+            @include respond-below(md){
+                max-width: 100%;
+            }
+        }
     }
+
+
 }
+

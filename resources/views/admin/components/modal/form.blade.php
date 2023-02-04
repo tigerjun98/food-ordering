@@ -32,13 +32,13 @@
 </form>
 
 <script>
-    $(".select2-single, .select2-multiple").select2({
-        theme: "bootstrap",
-        dir: "ltr",
-        placeholder: "",
-        maximumSelectionSize: 6,
-        containerCssClass: ":all:"
-    });
+    // $(".select2-single, .select2-multiple").select2({
+    //     theme: "bootstrap",
+    //     dir: "ltr",
+    //     placeholder: "",
+    //     maximumSelectionSize: 6,
+    //     containerCssClass: ":all:"
+    // });
 
     $('#SubmitForm').on('submit',async function(e){
         e.preventDefault();
@@ -57,112 +57,6 @@
             console.log(err);
         }
     });
-
-    {{--$('#SubmitForm').on('submit',function(e){--}}
-    {{--    e.preventDefault();--}}
-    {{--    $.showLoading('submitButton');--}}
-    {{--    $.ajax({--}}
-    {{--        url: "{{$submitLink ?? ''}}",--}}
-    {{--        type:"PUT",--}}
-    {{--        data: $(this).serialize(),--}}
-    {{--        success:function(response){--}}
-    {{--            $.hideLoading('submitButton');--}}
-    {{--            $("#publicModal").modal('hide');--}}
-    {{--            $.updateTableFunction();--}}
-    {{--            showAlert(response, 'success');--}}
-    {{--        },--}}
-    {{--        error: function(response) {--}}
-    {{--            $.hideLoading('submitButton');--}}
-    {{--            showAlert(response);--}}
-    {{--        },--}}
-    {{--    });--}}
-    {{--});--}}
-
-
-
-    {{--(function ( $ ) {--}}
-    {{--    $.fn.sendRequest = function( options ) {--}}
-    {{--        // default options.--}}
-    {{--        var settings = $.extend({--}}
-    {{--            url: '{{ route('admin.selectOption') }}',--}}
-    {{--            id : null,--}}
-    {{--            status : 'success',--}}
-    {{--            val: null,--}}
-    {{--            data: {--}}
-    {{--                'type': options.id,--}}
-    {{--                'ref': $(this).val()--}}
-    {{--            }--}}
-    {{--        }, options );--}}
-
-    {{--        $.showLoading()--}}
-    {{--        var status, res;--}}
-
-    {{--        $.ajax({--}}
-    {{--            url: settings.url,--}}
-    {{--            type: 'POST',--}}
-    {{--            data: settings.data,--}}
-    {{--            success: function( response ) {--}}
-    {{--                $.hideLoading();--}}
-    {{--                return ({--}}
-    {{--                    'status' : 'success',--}}
-    {{--                    response,--}}
-    {{--                });--}}
-    {{--            },--}}
-    {{--            error: function(response) {--}}
-    {{--                $.hideLoading();--}}
-    {{--                status = 'error';--}}
-    {{--                showAlert(response)--}}
-    {{--                res = response;--}}
-    {{--                return ({--}}
-    {{--                    'status' : 'error',--}}
-    {{--                });--}}
-    {{--            }--}}
-    {{--        });--}}
-    {{--    };--}}
-    {{--}( jQuery ));--}}
-
-    {{--(function ( $ ) {--}}
-    {{--    $.fn.updateOption = function( options ) {--}}
-    {{--        // default options.--}}
-    {{--        var settings = $.extend({--}}
-    {{--            url: '{{ route('admin.selectOption') }}',--}}
-    {{--            id : null,--}}
-    {{--            val: null,--}}
-    {{--            data: {--}}
-    {{--                'type': options.id,--}}
-    {{--                'ref': $(this).val()--}}
-    {{--            }--}}
-    {{--        }, options );--}}
-
-    {{--        $.showLoading()--}}
-    {{--        $.ajax({--}}
-    {{--            url: settings.url,--}}
-    {{--            type: 'POST',--}}
-    {{--            data: settings.data,--}}
-    {{--            success: function( result ) {--}}
-    {{--                $.hideLoading();--}}
-    {{--                $("#"+settings.id+" option").remove();--}}
-    {{--                $("#"+settings.id).append($('<option>', {value:""}));--}}
-    {{--                $.each( result, function(k, v) {--}}
-    {{--                    $("#"+settings.id).append($('<option>', {value:k, text:v}));--}}
-    {{--                });--}}
-    {{--                if(settings.val){--}}
-    {{--                    console.log(settings.val)--}}
-    {{--                    $("#"+settings.id).val(settings.val).trigger('change');--}}
-    {{--                }--}}
-    {{--            },--}}
-    {{--            error: function(res) {--}}
-    {{--                $.hideLoading();--}}
-    {{--                showAlert(res)--}}
-    {{--            }--}}
-    {{--        });--}}
-
-    {{--        return this.css({--}}
-    {{--            color: settings.color,--}}
-    {{--            backgroundColor: settings.backgroundColor--}}
-    {{--        });--}}
-    {{--    };--}}
-    {{--}( jQuery ));--}}
 </script>
 <style>
     label{

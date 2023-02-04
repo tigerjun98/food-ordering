@@ -1,0 +1,33 @@
+.modal{
+    .modal-content{
+
+        .modal-header{
+            .title-wrapper{
+                display: flex;
+                margin-bottom: 0.5rem;
+            }
+
+            display: block;
+
+            .nav-tabs.separator-tabs{
+                border: none;
+
+                .nav-item{
+                    text-transform: capitalize;
+                    .nav-link{
+
+                        &.active{
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+
+        .modal-body{
+            margin-top: 0.5rem;
+
+        }
+    }
+}
+

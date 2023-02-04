@@ -4,11 +4,16 @@
             <h1 class="pr-3 text-capitalize">{{ $title ?? '' }}</h1>
 
             <div class="top-right-button-container">
-                <button onclick="location.href='{{url()->previous()}}';"
-                        type="button" class="btn btn-outline-primary btn-lg top-right-button mr-1 text-capitalize">
-                    <i class="iconsminds-left-1 mr-1"></i>
-                    {{ __('common.back') }}
-                </button>
+                @if(isset($back) && $back)
+                    <button onclick="location.href='{{ url()->previous() }}';"
+                            type="button" class="btn btn-outline-primary btn-lg top-right-button mr-1 text-capitalize">
+                        <i class="iconsminds-left-1 mr-1"></i>
+                        {{ __('common.back') }}
+                    </button>
+                @endif
+
+                {{ $action ?? '' }}
+
                 @if(isset($moreAction))
                     <div class="btn-group">
                         <button type="button"
@@ -192,46 +197,3 @@
         lazyLoadInstance.update();
     }
 </script>
-
-<style>
-    .dataTables_scroll, #dataTable{
-        min-height: 150px;
-    }
-    .DTFC_LeftHeadWrapper, .DTFC_LeftBodyWrapper{
-        background: #fff;
-        box-shadow: 3px 0 3px rgb(0 0 0 / 2%);
-    }
-    .DTFC_RightHeadWrapper, .DTFC_RightBodyWrapper{
-        background: #fff;
-        box-shadow: -3px 0 3px rgb(0 0 0 / 2%);
-    }
-    .DTFC_LeftBodyLiner, .DTFC_RightBodyLiner{
-        overflow-x: hidden;
-    }
-    .table thead{
-        border-top: 1px solid #dee2e6;
-    }
-    .table thead th{
-        text-transform: capitalize;
-        white-space: nowrap;
-        font-weight: 700;
-        padding: 0.75rem;
-        border-bottom: 2px solid #dee2e6;
-    }
-    tr{
-        border-top: 1px;
-    }
-    table.dataTable td{
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    .table td{
-        border-top: 0 !important;
-        color: #3A3A3A;
-        white-space: nowrap;
-    }
-    table.dataTable.nowrap th {
-        padding-right: 0.95rem !important;
-        font-weight: 700;
-    }
-</style>

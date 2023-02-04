@@ -1,18 +1,33 @@
 let prevModalId = null;
 let prevHeader = null;
 let modalIsOpening = false;
-let openingModalIds = [];
+var openingModalIds = [];
 
-$.fn.closeModal = function(options) {
+$.fn.getModalId = function(options) {
+
+    const settings = $.extend({
+        latest: false,
+    }, options);
+
+    if(settings.latest){
+        return 'modalId'+openingModalIds.at(-1) // get last array value
+    }
+
+    return openingModalIds;
+}
+
+$.fn.closeModal = async function(options) {
 
     const settings = $.extend({
         closeLatestModal: false,
     }, options);
 
-    let lastModal = openingModalIds.at(-1) // get last array value
-    $('#modalId'+lastModal).modal('hide')
-    $('#modalId'+lastModal).remove()
-    setOpeningModalIds(lastModal, 'close')
+    let lastModalId = openingModalIds.at(-1) // get last array value
+    $('#modalId'+lastModalId).modal('hide');
+    const container = document.getElementById('modalId'+lastModalId);
+    container.remove()
+
+    setOpeningModalIds(lastModalId, 'close')
     changeThemeColor(getColorCodeByClassName('navbar'));
 }
 
@@ -100,9 +115,9 @@ class Modal{
     handle(){
 
         if(this.contentIsReady()){
-            this.handleLayout()
-            $('#modal-body-'+ this.id).setHtml({html: this.settings.html});
+            $('#modal-content-'+ this.id).setHtml({html: this.settings.html});
             if(!this.isRefreshContent()){
+                jQuery.noConflict();
                 $('#modalId'+this.id).modal('show');
             }
             modalIsOpening = false;
@@ -111,8 +126,13 @@ class Modal{
 
             this.getContentFromUrl().then((res) => { // wait ajax request
                 this.handleLayout()
-                $('#modal-body-'+this.id).setHtml({html: res.html});
-                $('#modalId'+this.id).modal('show');
+                $('#modal-content-'+this.id).setHtml({html: res.html});
+                // $('#modalId'+this.id).modal('show');
+
+                // const container = document.getElementById('modalId'+this.id);
+                // const modal = new bootstrap.Modal(container);
+                // modal.show();
+                $('#modalId'+this.id).modal({backdrop:'static', keyboard:false});
                 modalIsOpening = false;
 
             }).catch((res)=>{
@@ -124,7 +144,7 @@ class Modal{
 
     handleLayout(){
         this.setLayout()
-        this.setHeader()
+        // this.setHeader()
         // this.setBody()
     }
 
@@ -139,14 +159,14 @@ class Modal{
 
         } else{
             let html = `
-                <div class="modal-new fade modal" id="modalId${this.id}">
-                    <div class="modal-dialog ${this.settings.size === 'lg' ? 'modal-fullscreen-md-down' : ''}  modal-${this.settings.size}" role="document">
+                <div class="modal fade bd-example-modal-lg" id="modalId${this.id}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content" id="modal-content-${this.id}"></div>
                     </div>
                 </div>
             `;
             $('#'+this.modalParentId).append(html);
-            $('#modalId'+this.id).modal({backdrop:'static', keyboard:false});
+
         }
     }
 
@@ -162,10 +182,17 @@ class Modal{
     }
 
     getHeader(){
-        return '<div class="modal-header">'+this.getHeaderTitle()+'<button type="button" class="btn-close" onclick="$(`#modalId' + this.id + '`).closeModal()"></button></div>'
+        return `<div class="modal-header">
+                  <div class="mb-2">
+                        <h1 class="text-capitalize">${this.getHeaderTitle()}</h1>
+                        <button type="button" class="close" onclick="$('#modalId${this.id}').closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>`
     }
 
     getBody() {
-        return '<div class="modal-body" id="modal-body-'+this.id+'"></div>'
+        return `<div class="modal-body" id="modal-body-${this.id}"></div>`
     }
 }

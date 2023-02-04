@@ -5,8 +5,8 @@
             <ul class="list-unstyled">
                 <?php
                 $items = [
-                        ['name'=> 'dashboard', 'routeName'=> 'index', 'icon'=>'monitor-analytics','permission'=> 'dashboard'],
-                        ['name'=> 'users', 'routeName'=> 'user.', 'icon'=>'conference', 'permission'=> 'user_management'],
+                        ['name'=> 'dashboard', 'routeName'=> 'home', 'icon'=>'monitor-analytics'],
+                        ['name'=> 'users', 'routeName'=> 'user.', 'icon'=>'conference'],
                         ['name'=> 'admins', 'routeName'=> 'account.', 'icon'=>'user', 'permission'=> 'admin_management'],
                         ['name'=> 'deposit', 'routeName'=> 'transaction.deposit.', 'icon'=>'check', 'permission'=> 'deposit_management'],
                         ['name'=> 'settings', 'routeName'=> 'setting.', 'icon'=>'gears', 'permission'=> 'setting_management']

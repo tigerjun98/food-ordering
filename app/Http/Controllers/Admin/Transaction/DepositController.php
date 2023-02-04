@@ -50,6 +50,14 @@ class DepositController extends Controller {
         return view($this->path, compact('data', 'option'));
     }
 
+    public function create(Request $request){
+        $data = null;
+        $id = strval(abs( crc32( uniqid() ) ));
+        return response()->json([
+            'html' => view('admin.transaction.deposit.form.index', compact('data', 'id'))->render()
+        ]);
+    }
+
     public function edit(Request $request, $id){
 
         // remove temporary created product

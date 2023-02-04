@@ -20,7 +20,7 @@
 {{--    <script src="{{ asset('assets/admin/js/vendor/jquery.validate/jquery.validate.js') }}"></script>--}}
 {{--    <script src="{{ asset('assets/admin/js/vendor/jquery.validate/additional-methods.js') }}"></script>--}}
 {{--    <script src="{{ asset('assets/admin/js/dore.script.js') }}" defer></script>--}}
-    <script src="{{ asset('assets/admin/js/dore-plugins/select.from.library.js') }}" defer></script>
+{{--    <script src="{{ asset('assets/admin/js/dore-plugins/select.from.library.js') }}" defer></script>--}}
 {{--    <script src="{{ asset('assets/admin/js/scripts.single.theme.js') }}" defer></script>--}}
 {{--    <script src="{{ asset('assets/admin/js/scripts.js') }}" defer></script>--}}
 

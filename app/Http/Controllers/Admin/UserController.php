@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
-use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\Product;
-use App\Models\ProductType;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\UserDevice;
+use App\Modules\Admin\Transaction\DataTables\TransactionsDataTable;
+use App\Modules\Admin\Transaction\Services\UserService;
+use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,51 +19,48 @@ use Illuminate\Support\Facades\View;
 use DB;
 
 class UserController extends Controller {
+
     use ApiResponser;
 
-    public function index(Request $request){
-
-        $option['column'] = 'ready';
-        $option['id'] = abs( crc32( uniqid() ) );
-        return view('admin.user.index',compact('option'));
+    public function index(UsersDataTable $dataTable){
+        $filter = User::Filter();
+        return $dataTable->render('admin.user.datatable', compact('filter'));
     }
 
-    public function indexDt(Request $request){
-
-        $query = User::query();
-        $data = $query
-            ->with(['deposit' => function($query){
-                $query->sum('amount');
-            }])
-            ->filter($request)
-            ->orderBy('created_at','desc')
-            ->paginate(50);
-
-        $option['data_path']    = 'admin.user.table.table_data';
-        $option['column']       = ['status', 'username', 'deposit', 'full_name', 'referral', 'phone', 'email', 'action'];
-
-        if($request->return == "table"){
-            $option['response'] = 'ajax';
-            return response()->json(['html' => view($this->path, compact('data','option'))->render()]);
-        }
-
-        return view($this->path, compact('data', 'option'));
-    }
-
-    public function edit(Request $request, $id){
-
-        // remove temporary created product
-        DB::table('users')->whereNull('name')->delete();
-
-        // new row will create when user click create button
-        $data = User::find($id) ?? null;
-        $id = $data ? $id : strval(abs( crc32( uniqid() ) ));
-        if(!$data) User::create(['id' => $id]);
-
-        return response()->json([
-            'html' => view('admin.user.form.index', compact('data', 'id'))->render()
+    public function create()
+    {
+        return html('admin.user.form.create',[
+            'data' => null
         ]);
     }
+
+    public function edit($userId)
+    {
+        return html('admin.user.form.create',[
+            'data' => User::findOrFail($userId)
+        ]);
+    }
+
+    public function store(UserStoreRequest $request)
+    {
+        (new UserService())->store($request->validated());
+        return makeResponse(200);
+    }
+
+//    public function edit(Request $request, $id){
+//
+//        // remove temporary created product
+//        DB::table('users')->whereNull('name')->delete();
+//
+//        // new row will create when user click create button
+//        $data = User::find($id) ?? null;
+//        $id = $data ? $id : strval(abs( crc32( uniqid() ) ));
+//        if(!$data) User::create(['id' => $id]);
+//
+//        return response()->json([
+//            'html' => view('admin.user.form.index', compact('data', 'id'))->render()
+//        ]);
+//    }
 
     public function destroy(Request $request, $id){
 
