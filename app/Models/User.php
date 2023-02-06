@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Constants;
 use App\Traits\Models\FilterTrait;
+use App\Traits\Models\ObserverTrait;
 use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, ObserverTrait;
     use SoftDeletes;
 
     use FilterTrait {
@@ -47,53 +49,58 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected function state(): Attribute
+    protected function stateName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => ucfirst(static::getStatesList()[$value] ?? '')
+            get: fn () => ucfirst(static::getStatesList()[$this->state] ?? '')
         );
+    }
+
+    protected function genderExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(static::getGenderList()[$this->gender] ?? '')
+        );
+    }
+
+    public static function getGenderList(): array
+    {
+        return Constants::getLists('gender');
     }
 
     public static function getStatesList(): array
     {
-        return [
-            'johor'         => 'Johor',
-            'kedah'         => 'Kedah',
-            'kelantan'      => 'Kelantan',
-            'kl'            => 'Kuala Lumpur',
-            'labuan'        => 'Labuan',
-            'melaka'        => 'Melaka',
-            'pahang'        => 'Pahang',
-            'penang'        => 'Penang',
-            'perak'         => 'Perak',
-            'perlis'        => 'Perlis',
-            'putrajaya'     => 'Putrajaya',
-            'sabah'         => 'Sabah',
-            'sarawak'       => 'Sarawak',
-            'selangor'      => 'Selangor',
-            'sembilan'      => 'Sembilan',
-            'terengganu'    => 'Terengganu',
-        ];
+        return Constants::getLists('state');
     }
 
     public static function Filter(){
+
+        /**
+         * string $type: <text, select, date>;
+         * string $label: // show to the user;
+         * array $column: // if specific column required
+         */
+
         return [
+            'name_en'   => ['type' => 'text', 'label'=> 'Full name'],
             'nric'      => ['type' => 'text', 'label'=> 'NRIC' ],
-            'name'      => ['type' => 'text', 'label'=> 'Full name', 'col' => ['name_en', 'name_cn'] ],
             'phone'     => ['type' => 'text', 'label'=> 'phone' ],
             'email'     => ['type' => 'text', 'label'=> 'email' ],
-
 //            'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
-//            'select_name' => ['label'=> 'Created at', 'type' => 'select', 'option' => [
-//                'testing' => '123',
-//                '123' => '123',
-//                'Happu' => '123',
-//            ]],
+            'state'     => ['type' => 'select', 'option' => self::getStatesList()],
         ];
     }
 
     public function scopeFilter($query)
     {
-        return $this->searchAll($this->parentFilterTrait($query), ['id']);
+        /**
+         * searchAll if for datatable own searching features
+         * array params: // include the column as many as you want to search
+         */
+
+        if(request()->filled('search_all'))
+            $query = $this->searchAll($query, ['nric', 'name_en', 'name_cn', 'phone', 'email']);
+
+        return $this->parentFilterTrait($query);
     }
 }

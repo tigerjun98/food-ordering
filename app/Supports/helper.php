@@ -425,13 +425,14 @@ function makeResponse($code, $message = null, $data = [])
     if (request()->ajax() || request()->wantsJson()) {
         if ($message != null) {
             $data['message'] = $message;
+
         } else {
             switch ($code) {
                 case 422:
                     $data['message'] = trans('common.something_went_wrong');
                     break;
                 case 200:
-                    $data['message'] = null;
+                    $data['message'] = trans('common.operation_success');
                     break;
                 default:
                     $data['message'] = trans('common.unknown_error');
@@ -440,6 +441,7 @@ function makeResponse($code, $message = null, $data = [])
         }
 
         return response()->json($data)->setStatusCode($code);
+
     } else {
         switch ($code) {
             case 200:

@@ -20,6 +20,18 @@
                 </div>
             @endslot
 
+            @slot('footer')
+                <x-admin.component.button
+                    :class="'btn-primary float-right'"
+                    :lang="'submit'"
+                    :type="'submit'"
+                />
+            @endslot
+
+            @slot('script')
+                $('this').closeModal({closeLatestModal: true})
+                refreshDataTable()
+            @endslot
         </x-admin.form>
     @else
         {{ $body ?? '' }}
@@ -27,8 +39,11 @@
 
 </div>
 
-<div class="modal-footer justify-content-right">
-    {{ $footer ?? '' }}
-</div>
+@if(isset($footer))
+    <div class="modal-footer justify-content-right">
+        {{ $footer ?? '' }}
+    </div>
+@endif
+
 
 

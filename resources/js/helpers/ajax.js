@@ -75,33 +75,39 @@ $.fn.sendRequest = function(options) {
         },
         error: function(xhr) {
             if(settings.showLoading) $(this).hideLoader()
-            switch(xhr.status) {
-                case 401: // no login
-                    $('#loginModal').modal('show')
-                    break;
-                case 422: // laravel validation errors
-                    $('#app-alert').showAlert({message: xhr.responseJSON.message, status: 'danger'});
-                    if (typeof handleValidationErr === "function") {
-                        handleValidationErr(xhr)
-                    }
-                    break;
-                case 500:
-                    handleServerErr(xhr)
-                    break;
-                default:
-                    if(xhr.responseJSON && xhr.responseJSON.message) {
-                        $('#app-alert').showAlert({message: xhr.responseJSON.message, status: 'danger'});
-                    }
-                    else if(xhr.message){
-                        $('#app-alert').showAlert({message: xhr.message, status: 'danger'});
-                    }
-            }
+            handleAjaxErr(xhr)
+
+
         }
     });
 };
 
-function handleServerErr(xhr){
+const handleAjaxErr = (xhr) => {
+    switch(xhr.status) {
+        case 401: // no login
+            $('#loginModal').modal('show')
+            break;
+        case 422: // laravel validation errors
+            $('#app-alert').showAlert({message: xhr.responseJSON.message, status: 'danger'});
+            if (typeof handleValidationErr === "function") {
+                handleValidationErr(xhr)
+            }
+            break;
+        case 500:
+            handleServerErr(xhr)
+            break;
+        default:
+            if(xhr.responseJSON && xhr.responseJSON.message) {
+                handleServerErr(xhr)
+            } else if(xhr.message){
+                $('#app-alert').showAlert({message: xhr.message, status: 'danger'});
+            }
+    }
+}
+
+const handleServerErr = (xhr) => {
     $("#app-alert").showAlert({
         status : 'danger', message: xhr.responseJSON.message, delay: 0
     });
 }
+

@@ -27,7 +27,6 @@
          $attributes['value'] = $value;
     }
 
-
     unset($attributes['extraLabel']);
     unset($attributes['data']);
     unset($attributes['required']);

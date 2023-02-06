@@ -1,8 +1,40 @@
 <x-admin.component.modal
     :title="'Patients details'"
-    :nav="['details', 'emergency']"
+    :nav="['details', 'address', 'emergency']"
     :submit="route('admin.user.store')"
 >
+    @slot('address')
+        <x-admin.form.textarea
+            :data="$data"
+            :name="'address'"
+            :required="false"
+        />
+
+        <div class="row">
+            <x-admin.form.text
+                :data="$data"
+                :col="'md-6'"
+                :name="'postcode'"
+                :required="false"
+            />
+            <x-admin.form.text
+                :data="$data"
+                :col="'md-6'"
+                :name="'area'"
+                :required="false"
+            />
+        </div>
+
+        <div class="row">
+            <x-admin.form.select
+                :data="$data"
+                :col="'md-12'"
+                :name="'state'"
+                :options="\App\Models\User::getStatesList()"
+            />
+        </div>
+    @endslot
+
     @slot('emergency')
         <div class="row">
             <x-admin.form.text
@@ -20,10 +52,12 @@
             />
         </div>
         <div class="row">
-{{--            <x-admin.form.select--}}
-{{--                :col="'md-6'"--}}
-{{--                :name="'emergency_contact_relationship'"--}}
-{{--            />--}}
+            <x-admin.form.text
+                :data="$data"
+                :col="'md-6'"
+                :name="'emergency_contact_relationship'"
+                :required="false"
+            />
         </div>
     @endslot
 
@@ -64,28 +98,37 @@
                     :type="'date'"
                     :col="'md-6'"
                     :name="'dob'"
+                    :required="false"
                 />
                 <x-admin.form.text
                     :data="$data"
                     :col="'md-6'"
                     :name="'email'"
+                    :required="false"
                 />
             </div>
 
             <div class="row">
+                <x-admin.form.text
+                    :data="$data"
+                    :col="'md-6'"
+                    :name="'occupation'"
+                    :required="false"
+                />
                 <x-admin.form.select
                     :data="$data"
                     :col="'md-6'"
-                    :name="'state'"
-                    :options="\App\Models\User::getStatesList()"
+                    :name="'gender'"
+                    :options="\App\Models\User::getGenderList()"
                 />
             </div>
-    @endslot
 
-    @slot('footer')
-        <x-admin.component.button
-            :class="'btn-primary'"
-            :lang="'submit'"
-        />
+            <x-admin.form.textarea
+                :data="$data"
+                :name="'remark'"
+                :rows="4"
+                :required="false"
+            />
+
     @endslot
 </x-admin.component.modal>

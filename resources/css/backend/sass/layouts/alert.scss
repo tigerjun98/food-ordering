@@ -1,0 +1,35 @@
+.alert {
+    ul {
+        margin-bottom: 0;
+    }
+}
+
+/* for backend */
+.container-fluid .app-alert{
+
+    width: 100%;
+    z-index: 10000;
+    padding: 0 30px;
+    border-radius: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    position: absolute;
+    top: -85px;
+
+    @include mobile(){
+        top: -62px;
+    }
+
+    .alert{
+        border-radius: 6px;
+
+        ul{
+            margin-left: -10px;
+
+            li{
+                font-size: 14px;
+            }
+        }
+    }
+}

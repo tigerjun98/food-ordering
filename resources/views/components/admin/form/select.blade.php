@@ -24,6 +24,7 @@
     <select data-width="100%" {!! $attrString !!} {{$action ?? '' }}
         {{ isset($required) && $required ? 'required' : ''  }}
     >
+        <option label="&nbsp;">&nbsp;</option>
         @foreach($options as $key => $item)
             <option value="{{$key}}" >{{$item}}</option>
         @endforeach
@@ -48,7 +49,7 @@
 @if(isset($onchange) && $onchange)
     <script>
         $("#{{$id ?? $name}}").change(function() {
-            $("#{{$id ?? $name}}").updateOption({
+            $("#{{ $attributes['id'] }}").updateOption({
                 id: '{{$onchange}}',
                 @if(isset($onchangeValue) && $onchangeValue)
                 val: '{{$onchangeValue}}'
@@ -58,20 +59,14 @@
     </script>
 @endif
 
-@if(isset($value) && $data)
-    <script>
-        $(document).ready(function(){
-            $('#{{$id ?? $name}}').val('{{$data->$name}}').trigger('change');
+<script type="module">
+    $('#{{ $attributes['id'] }}').change(function (){
+        let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
+        $(parent).find('div.error-msg').each(function(i, obj) {
+            $(obj).remove()
         });
-    </script>
-@elseif(isset($value) && $value)
-    <script>
-        $(document).ready(function(){
-            $('#{{$id ?? $name}}').val('{{$value}}').trigger('change');
-        });
-    </script>
-@else
+    });
 
-@endif
-
+    $('#{{ $attributes['id'] }}').val('{{ $value ?? '' }}').trigger('change');
+</script>
 

@@ -8,95 +8,99 @@ trait FilterTrait {
 
     private $query;
     private $column;
+    private $relationship;
+    private $item;
+
+    public function filterTextType($query)
+    {
+        $strict = isset($this->item['strict']) && $this->item['strict'];
+        return $query->where(
+            $this->column,
+            $strict
+                ? $this->value
+                : 'like', '%'.$this->value.'%'
+        );
+    }
 
     public function scopeFilter($query)
     {
-        $this->column = '';
-        $this->query = $query;
-        $this->handle();
-        return $this->query;
+        foreach (static::Filter() as $column => $item){
+
+            if(!$this->validation($column)) continue;
+
+            $this->column = $column;
+            $this->value = request()->{$column};
+
+            switch ($item['type']){
+                case 'text':
+                    $query = $this->filterTextType($query);
+                    break;
+
+                case 'select':
+                    $query = $this->filterOptionType($query);
+                    break;
+
+                case 'date':
+                    $query = $this->filterDateType($query);
+                    break;
+            }
+        }
+
+        return $query;
     }
 
-    public function invalidColumn($col): bool
+    public function validation($column): bool
     {
-       return !Schema::hasColumn(self::getTable(), $col);
+        if( isset($item['default']) && !$item['default'] ) return true;
+        if(!Schema::hasColumn(self::getTable(), $column)) return false; // column exist in the table
+        if(!request()->filled($column)) return false; // not empty value
+
+        return true;
+    }
+
+    public function handle($query)
+    {
+        foreach (self::Filter() as $column => $item){
+
+            if(!$this->validation($column)) return true;
+
+            $this->value = request()->input($column);
+            $this->item = $item;
+            $this->column = $column;
+
+            $query = $this->handleFilterType($query);
+        }
+
+        return $query;
     }
 
     public function searchAll($query, array $columns = [])
     {
-        foreach ($columns as $column){
-            $query->where($column, 'like', '%'.request()->search_all.'%');
+        if(request()->filled('search_all')){
+            foreach ($columns as $column){
+                $query->orWhere($column, 'like', '%'.request()->search_all.'%');
+            }
         }
+
         return $query;
     }
 
-    public function handleFilterType($column, $item)
+    public function filterOptionType($query)
     {
-        if($this->invalidColumn($column)){
-            return true;
-        }
+        if (str_contains(request()->{$this->column}, ','))
+            return $query->whereIn($this->column, explode(",",request()->{$this->column}));
 
-        $this->column = $column;
-
-        if($item['type'] == 'text')
-            $this->filterTextType($column);
-
-        if($item['type'] == 'select')
-            $this->filterOptionType($column);
-
-        if($item['type'] == 'date')
-            $this->filterDateType($column);
+        return $query->where($this->column, request()->{$this->column});
     }
 
-    public function setColumn()
+    public function filterDateType($query)
     {
-
-    }
-
-    public function handle()
-    {
-        foreach (self::Filter() as $column => $item){
-
-            if(isset($item['col'])){
-                foreach ($item['col'] as $col){
-                    $this->handleFilterType($col, $item);
-                }
-            } else{
-                $this->handleFilterType($column, $item);
-            }
-
+        if(request()->{$this->column.'_before'} != '' && request()->{$this->column.'_after'} != ''){
+            return $query->whereDate($this->column,'>=',date("Y-m-d", strtotime(request()->input($this->column.'_after'))))
+                ->whereDate($this->column,'<=',date("Y-m-d", strtotime(request()->input($this->column.'_before'))));
         }
     }
 
-    public function filterOptionType($column): void
-    {
-        if(request()->{$column} != ''){
-            if (str_contains(request()->{$column}, ',')) {
-                $this->query->whereIn($column, explode(",",request()->{$column}));
-            } else{
-                $this->query->where($column, request()->{$column});
-            }
-        }
-    }
 
-    public function filterDateType($column): void
-    {
-        if(request()->{$column.'_before'} != '' && request()->{$column.'_after'} != ''){
-            $this->query->whereDate($column,'>=',date("Y-m-d", strtotime(request()->input($column.'_after'))))
-                ->whereDate($column,'<=',date("Y-m-d", strtotime(request()->input($column.'_before'))));
-        }
-    }
-
-    public function filterTextType($column, $strict): void
-    {
-        if($strict && request()->{$column} != ''){
-            $this->query->where('id',request()->input($column));
-
-        } else{
-            $this->query->whereHas('user', function ($q) use($column){
-                $q->where($column, 'like', '%'.request()->input($column).'%');
-            });
-        }
-    }
 
 }

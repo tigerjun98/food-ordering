@@ -3154,7 +3154,7 @@ if ($().DataTable) {
 
 
     /* 03.12. Notification */
-      $.ajaxAlert = function showNotification(placementFrom, placementAlign, type, title, message, url, target){
+      $.ajaxAlert = function showNotification(type, title, message, url, target){
 
       $.notify(
         {
@@ -3170,8 +3170,8 @@ if ($().DataTable) {
           newest_on_top: false,
           showProgressbar: false,
           placement: {
-            from: placementFrom,
-            align: placementAlign
+            from: "top",
+            align: "center"
           },
           offset: 20,
           spacing: 10,

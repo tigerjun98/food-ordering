@@ -1,4 +1,4 @@
-<div class="title-wrapper mb-2">
+<div class="title-wrapper mb-3">
     <h2 class="text-capitalize">{{ $lang ? __('common.'.$lang) : $title }}</h2>
     <button type="button" class="close" aria-label="Close"
             onclick="$(this).closeModal()"

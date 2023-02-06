@@ -32,31 +32,78 @@ class Constants
     public const BUY = 405;
     public const SELL = 406;
 
+    public const JOHOR = 801;
+    public const KEDAH = 802;
+    public const KELANTAN = 803;
+    public const KL = 804;
+    public const LABUAN = 805;
+    public const MELAKA = 806;
+    public const PAHANG = 807;
+    public const PENANG = 808;
+    public const PERAK = 809;
+    public const PERLIS = 810;
+    public const PUTRAJAYA = 811;
+    public const SABAH = 812;
+    public const SARAWAK = 813;
+    public const SELANGOR = 814;
+    public const SEMBILAN = 815;
+    public const TERENGGANU = 816;
+
+
+    public static $typeRange = [
+        'gender'        => [1,2],
+        'state'         => [801, 816]
+    ];
+
     public static $statusTexts = [
-        self::MALE => 'Male',
-        self::FEMALE => 'Female',
-        self::ACTIVE => 'Active',
-        self::INACTIVE => 'Inactive',
-        self::BANNED => 'Banned',
-        self::BLOCKED => 'Blocked',
-        self::UNPAID => 'Unpaid',
-        self::PAID => 'Paid',
-        self::PENDING => 'Pending',
-        self::PROCESSING => 'Processing',
-        self::COMPLETED => 'Completed',
-        self::CANCELLED => 'Cancelled',
-        self::REFUNDING => 'Refund',
-        self::REFUNDED => 'Refunded',
-        self::DEPOSIT => 'Deposit',
-        self::WITHDRAW => 'Withdraw',
-        self::EARN => 'Earn',
-        self::LOSS => 'Loss',
-        self::BUY => 'Buy',
-        self::SELL => 'Sell',
+        self::MALE          => 'Male',
+        self::FEMALE        => 'Female',
+        self::ACTIVE        => 'Active',
+        self::INACTIVE      => 'Inactive',
+        self::BANNED        => 'Banned',
+        self::BLOCKED       => 'Blocked',
+        self::UNPAID        => 'Unpaid',
+        self::PAID          => 'Paid',
+        self::PENDING       => 'Pending',
+        self::PROCESSING    => 'Processing',
+        self::COMPLETED     => 'Completed',
+        self::CANCELLED     => 'Cancelled',
+        self::REFUNDING     => 'Refund',
+        self::REFUNDED      => 'Refunded',
+        self::DEPOSIT       => 'Deposit',
+        self::WITHDRAW      => 'Withdraw',
+        self::EARN          => 'Earn',
+        self::LOSS          => 'Loss',
+        self::BUY           => 'Buy',
+        self::SELL          => 'Sell',
+        self::JOHOR         => 'Johor',
+        self::KEDAH         => 'Kedah',
+        self::KELANTAN      => 'Kelantan',
+        self::KL            => 'Kuala Lumpur',
+        self::LABUAN        => 'Labuan',
+        self::MELAKA        => 'Melaka',
+        self::PAHANG        => 'Pahang',
+        self::PENANG        => 'Penang',
+        self::PERAK         => 'Perak',
+        self::PERLIS        => 'Perlis',
+        self::PUTRAJAYA     => 'Putrajaya',
+        self::SABAH         => 'Sabah',
+        self::SARAWAK       => 'Sarawak',
+        self::SELANGOR      => 'Selangor',
+        self::SEMBILAN      => 'Sembilan',
+        self::TERENGGANU    => 'Terengganu',
     ];
 
     public int $statusCode;
     public ?string $statusText;
+
+    public static function getLists($name): array
+    {
+        $range = self::$typeRange[$name];
+        return array_filter(self::$statusTexts, function($k) use($range) {
+            return $k >= $range[0] && $k <= $range[1];
+        }, ARRAY_FILTER_USE_KEY);
+    }
 
     public function isInvalid(): bool
     {

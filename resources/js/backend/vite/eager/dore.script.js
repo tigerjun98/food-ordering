@@ -454,6 +454,7 @@ $.dore = function (element, options) {
     var menuClickCount = 0;
     var allMenuClassNames = "menu-default menu-hidden sub-hidden main-hidden menu-sub-hidden main-show-temporary sub-show-temporary menu-mobile";
     function setMenuClassNames(clickIndex, calledFromResize, link) {
+        var nextClasses = "";
       menuClickCount = clickIndex;
       var container = $("#app-container");
       if (container.length == 0) {
@@ -3154,7 +3155,7 @@ if ($().DataTable) {
 
 
     /* 03.12. Notification */
-      $.ajaxAlert = function showNotification(placementFrom, placementAlign, type, title, message, url, target){
+      $.ajaxAlert = function showNotification(type, title, message, url, target){
 
       $.notify(
         {
@@ -3170,8 +3171,8 @@ if ($().DataTable) {
           newest_on_top: false,
           showProgressbar: false,
           placement: {
-            from: placementFrom,
-            align: placementAlign
+            from: 'top',
+            align: 'center'
           },
           offset: 20,
           spacing: 10,

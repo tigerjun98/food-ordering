@@ -23,22 +23,26 @@ class UsersDataTable extends DataTable
     {
         $query = User::query();
         return (new EloquentDataTable($query))
-            ->addIndexColumn()
+            // ->addIndexColumn()
             ->addColumn('full_name', function($row){
                 return $row->name_en;
             })->addColumn('action', function($row){
                 return $this->action($row);
+            })->editColumn('state', function($row){
+                return $row->state_name;
+            })->editColumn('gender', function($row){
+                return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action']);
+            })->rawColumns(['image', 'action'])
+            ->orderColumn('created_at', 'desc');
     }
 
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('full_name'),
             Column::make('nric'),
+            Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),
             Column::make('state'),

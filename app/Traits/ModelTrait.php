@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Date;
 
 trait ModelTrait {
 
+
     public function getImgNotFoundSrc()
     {
         return \Storage::disk('s3')->url('common/img_not_found.svg');

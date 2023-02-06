@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\ObserverTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait;
 
     protected $table = 'admins';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
@@ -25,15 +26,6 @@ class Admin extends Authenticatable
      *
      * @var array<int, string>
      */
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function($data) {
-            $unique_id = strval(abs( crc32( uniqid() ) ));
-            if(!$data->id) $data->id = abs( crc32( uniqid() ) );
-        });
-    }
 
     protected $fillablse = [
         'name',

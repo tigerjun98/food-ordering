@@ -46,12 +46,11 @@
     .container-fluid .app-alert{
         padding: 0;
         position: absolute;
-        top: -10px;
+        top: -85px;
     }
     .container-fluid .app-alert .alert_wrapper.success ul {
         border-radius: 5px;
     }
-
 
     .alert_wrapper{
         position: relative;
@@ -79,7 +78,6 @@
     }
     .alert_wrapper ul li{
         font-size: 14px;
-        /*font-family: "Montserrat", sans-serif;*/
         margin: 10px 0;
         font-weight: 500;
         line-height: 18px;

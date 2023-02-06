@@ -49,6 +49,7 @@
 
 
 @if(isset($filter) && count($filter) > 0)
+
     <div class="app-menu">
         <div class="p-4 h-100">
             <div class="scroll">
@@ -59,9 +60,14 @@
                 <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
                     <input type="hidden" id="searchVal" name="search_all" />
                     @foreach($filter as $name => $item)
+
+                        @php
+                            $label = isset($item['label']) ? $item['label'] : $name
+                        @endphp
+
                         @if($item['type'] == 'date')
                             <div class="mt-3">
-                                <label class="float-left">{{ __('common.'.$item['label']) }}</label>
+                                <label class="float-left">{{ __('common.'.$label) }}</label>
                                 <div class="float-right" onclick="switchToMonthly('{{$name}}')"><i class="simple-icon-refresh"></i></div>
                             </div>
 
@@ -110,8 +116,8 @@
 
                         @if($item['type'] == 'text')
                             <label class="form-group has-float-label mt-4 mb-3">
-                                <input class="form-control" placeholder="All {{$item['label']}}" name="{{$name}}" value="{{request()->query($name)}}">
-                                <span>{{ __('common.'.$item['label']) }}</span>
+                                <input class="form-control" placeholder="All {{$item['label'] ?? $name}}" name="{{$name}}" value="{{request()->query($name)}}">
+                                <span>{{ __('common.'.$label) }}</span>
                             </label>
                         @endif
 
@@ -124,7 +130,7 @@
                                         <option value="{{$value}}">{{$opt}}</option>
                                     @endforeach
                                 </select>
-                                <span>{{ __('common.'.$item['label']) }}</span>
+                                <span>{{ __('common.'.$label) }}</span>
                             </label>
                             <script>
                                 let opt{{$name}} = '{{request()->query($name)}}';
@@ -156,11 +162,21 @@
         </a>
     </div>
 @endif
+<script type="module">
+    $(".select2-single, .select2-multiple").select2({
+        theme: "bootstrap",
+        placeholder: "",
+        maximumSelectionSize: 6,
+        containerCssClass: ":all:"
+    });
+</script>
 <script type="text/javascript">
     const refreshDataTable = () => {
         $('#{{ $dataTableId ?? 'dataTable' }}').DataTable().ajax.reload()
         window.history.replaceState({ id: "100" }, "Filter", "?"+$('#js-datatable-filter-form').serialize());
     };
+
+    $
 
     $(document).ready(function(){
         // initialTable();

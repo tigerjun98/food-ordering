@@ -1,5 +1,4 @@
-
-console.log('loaded123');
+import 'bootstrap-notify';
 
 $.fn.showAlert = function(options) {
     // default options.
@@ -10,9 +9,7 @@ $.fn.showAlert = function(options) {
         delay: 6000
     }, options);
 
-    let id = Date.now(), errorsHtml = '';
-    this.append('<div class="alert alert_wrapper ' + settings.status + '" id="alert-' + id + '"><button onclick="hideAlert(`' + id + '`)"></button><ul id="ul-' + id + '">' +
-        '</ul></div>');
+    let id = Date.now(), errorsHtml = '<ul>';
 
     if (settings.status == 'success') {
 
@@ -52,15 +49,36 @@ $.fn.showAlert = function(options) {
         }
     }
 
+    errorsHtml += '</ul>'
 
-    $('#ul-' + id).html(errorsHtml);
-    $("#alert-" + id).hide().slideDown(700);
-
-    if (settings.delay > 1000) {
-        setTimeout(function() {
-            $("#alert-" + id).slideUp("slow", function() {
-                $("#alert-" + id).remove()
-            });
-        }, settings.delay);
-    }
+    $.notify(
+        errorsHtml,
+        {
+            z_index: 2000,
+            class: 'alert alert-dismissible fade show rounded mb-0 w-100',
+            type: settings.status,
+            delay: settings.delay,
+            allow_dismiss: true,
+            element: "#app-alert",
+            placement: {
+                from: "top",
+                align: "center"
+            },
+            animate: {
+                enter: "animated fadeInDown",
+                exit: "animated fadeOutUp"
+            },
+            template:
+                '<div data-notify="container" class="alert-dismissible fade show mb-0 alert alert-{0} " role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<span data-notify="icon"></span> ' +
+                '<span data-notify="title" class="font-weight-bold">{1}</span> ' +
+                '<span data-notify="message">{2}</span>' +
+                '<div class="progress" data-notify="progressbar">' +
+                '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                "</div>" +
+                '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                "</div>"
+        }
+    );
 };
