@@ -6,8 +6,10 @@
     {{$body ?? ''}}
 
     @if(isset($footer))
-        <div class="d-flex justify-content-end align-items-center mt-4">
-            {{$footer ?? ''}}
+        <div class="form-footer">
+            <div class="modal-footer d-flex align-items-center mt-4">
+                {{$footer ?? ''}}
+            </div>
         </div>
     @endif
 </form>

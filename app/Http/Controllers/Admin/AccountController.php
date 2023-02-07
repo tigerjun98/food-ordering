@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Models\Cart;
-use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\Product;
-use App\Models\ProductType;
 use App\Models\User;
+use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
+use App\Modules\Admin\Account\Services\AdminAccountService;
+use App\Modules\Admin\User\Requests\UserStoreRequest;
+use App\Modules\Admin\User\Services\AdminService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,83 +22,35 @@ use DB;
 class AccountController extends Controller {
     use ApiResponser;
 
-    public function index(Request $request){
-        $option['column'] = 'ready';
-        $option['id'] = abs( crc32( uniqid() ) );
-        return view('admin.account.index',compact('option'));
+    public function index(AdminsDataTable $dataTable){
+        $filter = Admin::Filter();
+        return $dataTable->render('admin.account.datatable', compact('filter'));
     }
 
-    public function indexDt(Request $request){
-
-        $query = Admin::query();
-        $data = $query
-            ->filter($request)
-            ->orderBy('created_at','desc')
-            ->paginate(50);
-
-        $option['data_path']    = 'admin.account.table.table_data';
-        $option['column']       = ['status', 'username', 'phone', 'email', 'permissions', 'action'];
-
-        if($request->return == "table"){
-            $option['response'] = 'ajax';
-            return response()->json(['html' => view($this->path, compact('data','option'))->render()]);
-        }
-
-        return view($this->path, compact('data', 'option'));
-    }
-
-    public function edit(Request $request, $id){
-
-        // remove temporary created product
-        DB::table('admins')->whereNull('name')->delete();
-
-        // new row will create when user click create button
-        $data = Admin::find($id) ?? null;
-        $id = $data ? $id : strval(abs( crc32( uniqid() ) ));
-        if(!$data) $data = Admin::create(['id' => $id]);
-
-        return response()->json([
-            'html' => view('admin.account.form.index', compact('data', 'id'))->render()
+    public function create()
+    {
+        return html('admin.account.form.create',[
+            'data' => null
         ]);
     }
 
-    public function destroy(Request $request, $id){
-
-        Admin::where('id', $id)->delete();
-        $this->adminLog('admin_delete', ['id'=>$id]);
-        return $this->success('', 'success');
+    public function store(AdminAccountStoreRequest $request)
+    {
+        (new AdminAccountService())->store($request->validated());
+        return makeResponse(200);
     }
 
-    public function update(Request $request, $id){
+    public function delete($adminId)
+    {
+        return html('admin.account.form.delete',[
+            'data' => Admin::findOrFail($adminId)
+        ]);
+    }
 
-        try {
-            \DB::beginTransaction();
-            $arr = [
-                'phone'     => $request->get('phone'),
-                'name'      => $request->get('name'),
-                'email'     => $request->get('email'),
-                'status'    => intval($request->get('status')),
-                'permissions'=> $request->get('permissions')
-            ];
-
-            $this->validate(new Request($arr), Admin::Rules($id));
-
-            if($request->get('password') && $request->get('password') != ''){
-                $this->adminLog('admin_password_update', $request->all());
-                $arr['password'] = Hash::make($request->get('password'));
-            } else{
-                $this->adminLog('admin_update', $request->all());
-            }
-
-            $arr['permissions'] = implode(',', $arr['permissions']);
-            Admin::where('id', $id)->update($arr);
-            \DB::commit();
-            return $this->success('', 'success');
-
-        } catch (\Exception $e) {
-            \DB::rollback();
-            return $this->error($e->getMessage(), 401);
-        }
+    public function destroy($adminId)
+    {
+        (new AdminAccountService())->delete(Admin::findOrFail($adminId));
+        return makeResponse(200);
     }
 }
 

@@ -76,8 +76,6 @@ $.fn.sendRequest = function(options) {
         error: function(xhr) {
             if(settings.showLoading) $(this).hideLoader()
             handleAjaxErr(xhr)
-
-
         }
     });
 };
@@ -85,7 +83,7 @@ $.fn.sendRequest = function(options) {
 const handleAjaxErr = (xhr) => {
     switch(xhr.status) {
         case 401: // no login
-            $('#loginModal').modal('show')
+            window.location.replace("admin/login");
             break;
         case 422: // laravel validation errors
             $('#app-alert').showAlert({message: xhr.responseJSON.message, status: 'danger'});

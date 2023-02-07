@@ -18,14 +18,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ObserverTrait;
-    use SoftDeletes;
-
+    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SoftDeletes;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
-//    protected $connection = 'mongodb';
     protected $table = 'users';
     protected $guarded= []; // remove this replaces with $fillable to strict input col
     protected $primaryKey = 'id';
@@ -48,6 +45,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+        );
+    }
 
     protected function stateName(): Attribute
     {
@@ -86,21 +90,16 @@ class User extends Authenticatable
             'nric'      => ['type' => 'text', 'label'=> 'NRIC' ],
             'phone'     => ['type' => 'text', 'label'=> 'phone' ],
             'email'     => ['type' => 'text', 'label'=> 'email' ],
-//            'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
             'state'     => ['type' => 'select', 'option' => self::getStatesList()],
+
+            // 'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
         ];
     }
 
     public function scopeFilter($query)
     {
-        /**
-         * searchAll if for datatable own searching features
-         * array params: // include the column as many as you want to search
-         */
-
-        if(request()->filled('search_all'))
-            $query = $this->searchAll($query, ['nric', 'name_en', 'name_cn', 'phone', 'email']);
-
-        return $this->parentFilterTrait($query);
+        return $this->searchAll(
+            $this->parentFilterTrait($query), ['nric', 'name_en', 'name_cn', 'phone', 'email']
+        );
     }
 }

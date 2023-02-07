@@ -26,4 +26,9 @@ class UserService
 
         return $this->user->find($request['id']);
     }
+
+    public function delete(User $user)
+    {
+        $user->delete();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Admin;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -11,7 +12,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersDataTable extends DataTable
+class AdminsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,15 +22,13 @@ class UsersDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = User::query();
+        $query = Admin::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
             ->addColumn('full_name', function($row){
-                return $row->full_name;
+                return $row->fullName;
             })->addColumn('action', function($row){
                 return $this->action($row);
-            })->editColumn('state', function($row){
-                return $row->state_name;
             })->editColumn('gender', function($row){
                 return $row->gender_explain;
             })->filter(function ($model) {
@@ -41,11 +40,9 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('nric'),
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),
-            Column::make('state'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -56,14 +53,14 @@ class UsersDataTable extends DataTable
     {
         $actions = [
             'edit' => [
-                'icon' => 'simple-icon-pencil',
-                'modal' => route('admin.user.edit', $row->id)
+                'icon' => 'iconsminds-pen-2',
+                'modal' => route('admin.account.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.user.destroy', $row->id)
+                'modal'     => route('admin.account.destroy', $row->id)
             ]
         ];
 

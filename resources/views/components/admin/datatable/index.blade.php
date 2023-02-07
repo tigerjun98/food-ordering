@@ -162,21 +162,11 @@
         </a>
     </div>
 @endif
-<script type="module">
-    $(".select2-single, .select2-multiple").select2({
-        theme: "bootstrap",
-        placeholder: "",
-        maximumSelectionSize: 6,
-        containerCssClass: ":all:"
-    });
-</script>
 <script type="text/javascript">
     const refreshDataTable = () => {
         $('#{{ $dataTableId ?? 'dataTable' }}').DataTable().ajax.reload()
         window.history.replaceState({ id: "100" }, "Filter", "?"+$('#js-datatable-filter-form').serialize());
     };
-
-    $
 
     $(document).ready(function(){
         // initialTable();
@@ -212,4 +202,13 @@
         }
         lazyLoadInstance.update();
     }
+</script>
+
+<script type="module">
+    $(".select2-single, .select2-multiple").select2({
+        theme: "bootstrap",
+        placeholder: "",
+        maximumSelectionSize: 6,
+        containerCssClass: ":all:"
+    });
 </script>

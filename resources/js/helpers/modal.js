@@ -117,7 +117,6 @@ class Modal{
         if(this.contentIsReady()){
             $('#modal-content-'+ this.id).setHtml({html: this.settings.html});
             if(!this.isRefreshContent()){
-                jQuery.noConflict();
                 $('#modalId'+this.id).modal('show');
             }
             modalIsOpening = false;
@@ -159,8 +158,8 @@ class Modal{
 
         } else{
             let html = `
-                <div class="modal fade bd-example-modal-lg" id="modalId${this.id}" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal fade" id="modalId${this.id}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-${this.settings.size}" role="document">
                         <div class="modal-content" id="modal-content-${this.id}"></div>
                     </div>
                 </div>

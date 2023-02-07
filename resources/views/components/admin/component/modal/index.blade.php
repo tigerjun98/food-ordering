@@ -2,7 +2,7 @@
     <x-admin.component.modal.header
         :lang="$lang ?? false"
         :title="$title"
-        :nav="$nav"
+        :nav="$nav ?? null"
     />
 </div>
 
@@ -10,22 +10,41 @@
 
     @if(isset($submit))
         <x-admin.form
-            :route="route('admin.user.store')"
+            :route="$submit"
         >
             @slot('body')
-                <div class="tab-content">
-                    @foreach($nav as $key => $item)
-                        <div class="tab-pane show {{$key == 0 ? 'active' : ''}}" id="{{$item}}" role="tabpanel">{{ ${$item} ?? '' }}</div>
-                    @endforeach
-                </div>
+                @if(isset($nav) && $nav)
+                    <div class="tab-content">
+                        @foreach($nav as $key => $item)
+                            <div class="tab-pane show {{$key == 0 ? 'active' : ''}}" id="{{$item}}" role="tabpanel">{{ ${$item} ?? '' }}</div>
+                        @endforeach
+                    </div>
+                @else
+                    {{ $body ?? '' }}
+                @endif
             @endslot
 
             @slot('footer')
                 <x-admin.component.button
-                    :class="'btn-primary float-right'"
-                    :lang="'submit'"
-                    :type="'submit'"
+                    :class="'btn-outline-primary'"
+                    :lang="'close'"
+                    :data-dismiss="'modal'"
                 />
+
+                @if(isset($delete))
+                    <x-admin.component.button
+                        :class="'btn-danger'"
+                        :lang="'confirm_delete'"
+                        :type="'submit'"
+                    />
+                @else
+                    <x-admin.component.button
+                        :class="'btn-primary'"
+                        :lang="'submit'"
+                        :type="'submit'"
+                    />
+                @endif
+
             @endslot
 
             @slot('script')

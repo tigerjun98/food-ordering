@@ -1,17 +1,15 @@
 <div class="action-col">
-
     <div class="header-icons d-inline-block align-middle">
         <div class="position-relative d-inline-block">
-
             @foreach($actions as $type => $action)
                 <x-admin.component.button
-                    :class="'action-icon'"
-                    :icon="'simple-icon-pencil'"
+                    :class="isset($action['class']) ? 'action-icon '.$action['class'] : ' action-icon '"
+                    :icon="$action['icon'] ?? 'simple-icon-eye'"
                     :tooltip="$action['text'] ?? $type"
                 >
                     @if(isset($action['modal']))
                         @slot('openModal')
-                            {url: '{{$action['modal']}}', header: 'EDIT'}
+                            { url: '{{ $action['modal'] }}', header: 'EDIT', size: '{{ isset($action['size']) ? $action['size'] : 'lg' }}' }
                         @endslot
                     @endif
 
@@ -20,7 +18,6 @@
                             <span class="count">{{ $count }}</span>
                         @endif
                     @endslot
-
                 </x-admin.component.button>
             @endforeach
         </div>

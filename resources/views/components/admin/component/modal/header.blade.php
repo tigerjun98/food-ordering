@@ -1,5 +1,5 @@
 <div class="title-wrapper mb-3">
-    <h2 class="text-capitalize">{{ $lang ? __('common.'.$lang) : $title }}</h2>
+    <h5 class="text-capitalize">{{ $lang ? __('common.'.$lang) : $title }}</h5>
     <button type="button" class="close" aria-label="Close"
             onclick="$(this).closeModal()"
     >
@@ -7,7 +7,7 @@
     </button>
 </div>
 
-@if(isset($nav))
+@if(isset($nav) && $nav)
     <ul class="nav nav-tabs separator-tabs mb-0" role="tablist">
         @foreach($nav as $key => $item)
             <li class="nav-item">

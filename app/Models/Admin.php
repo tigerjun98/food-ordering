@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Constants;
+use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,6 +17,9 @@ use Laravel\Sanctum\HasApiTokens;
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait;
+    use FilterTrait {
+        FilterTrait::scopeFilter as parentFilterTrait;
+    }
 
     protected $table = 'admins';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
@@ -52,19 +58,23 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function Rules($id){
-        return [
-            'status'        => ['required', 'digits:1'],
-            'name'          => ['required', 'alpha_dash', 'min:5', 'max:25', Rule::unique('users')->ignore($id, 'id')],
-            'email'         => ['required', 'email', Rule::unique('users')->ignore($id, 'id')],
-            'permissions'   => ['required', 'array', 'min:1'],
-            'password'      => ['nullable', 'min:6'],
-        ];
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+        );
     }
 
-    public function getStatusDescription()
+    protected function genderExplain(): Attribute
     {
-        return ucfirst(static::getStatusList()[$this->status] ?? '');
+        return Attribute::make(
+            get: fn () => ucfirst(static::getGenderList()[$this->gender] ?? '')
+        );
+    }
+
+    public static function getGenderList(): array
+    {
+        return Constants::getLists('gender');
     }
 
     public static function getPermissionsLists()
@@ -107,19 +117,11 @@ class Admin extends Authenticatable
         ];
     }
 
-    public function scopeFilter($query, $request)
+    public function scopeFilter($query)
     {
-//        dd($request->thing);
+        if(request()->filled('search_all'))
+            $query = $this->searchAll($query, ['nric', 'name_en', 'name_cn', 'phone', 'email']);
 
-        foreach (static::Filter() as $column => $item){
-            if($item['type'] == 'text'){
-                if($request->{$column}) $query->where($column, 'like', '%' . $request->{$column} . '%');
-            }
-        }
-//        if($request->status && $request->status != 'all') $query->where('status', $request->status);
-//        if($request->role && $request->role != 'all') $query->where('role', $request->role);
-
-        return $query;
-
+        return $this->parentFilterTrait($query);
     }
 }

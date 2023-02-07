@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AccountController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,19 +20,14 @@ use Inertia\Inertia;
 Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('home');
 
-    Route::resources([
-        'user'      => 'App\Http\Controllers\Admin\UserController',
+    // Route::customResource('user', UserController::class);
+
+    Route::customResources([
+        'user'      => UserController::class,
+        'account'   => AccountController::class,
         'transaction' => 'App\Http\Controllers\Admin\TransactionController',
         'setting'   => 'App\Http\Controllers\Admin\SettingController',
-        'account'   => 'App\Http\Controllers\Admin\AccountController',
     ]);
-
-    Route::name('account.')->group(function () {
-        Route::group(['prefix'=>'account'], function () {
-            Route::get('/', [App\Http\Controllers\Admin\AccountController::class, 'index']);
-            Route::post('/dt', [App\Http\Controllers\Admin\AccountController::class, 'indexDt'])->name('indexDt');
-        });
-    });
 
     Route::post('/option', [App\Http\Controllers\Admin\AdminController::class, 'selectOption'])->name('selectOption');
 

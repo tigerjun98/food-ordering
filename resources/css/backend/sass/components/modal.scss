@@ -1,6 +1,16 @@
 .modal{
     .modal-content{
 
+        .form-footer{
+            height: 100px;
+
+            .modal-footer{
+                position: absolute;
+                width: 100%;
+                left: 0;
+            }
+        }
+
         .modal-header{
             .title-wrapper{
                 display: flex;

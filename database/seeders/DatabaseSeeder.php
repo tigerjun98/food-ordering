@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Medicine;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
         Admin::factory(1)->create();
 
         $this->call([
-//            UserSeeder::class,
+            // Medicine::class,
 //            AdminSeeder::class,
 //            TransactionSeeder::class,
         ]);
