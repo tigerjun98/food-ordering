@@ -70,16 +70,6 @@
             // Your custom settings go here
         });
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.newTab = function openInNewTab(url) {
-            var win = window.open(url, '_blank');
-            win.focus();
-        }
     </script>
 </head>
 <body id="app-container" class="menu-default show-spinner rounded">

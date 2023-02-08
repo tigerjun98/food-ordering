@@ -86,10 +86,10 @@ class User extends Authenticatable
          */
 
         return [
-            'name_en'   => ['type' => 'text', 'label'=> 'Full name'],
-            'nric'      => ['type' => 'text', 'label'=> 'NRIC' ],
-            'phone'     => ['type' => 'text', 'label'=> 'phone' ],
-            'email'     => ['type' => 'text', 'label'=> 'email' ],
+            'name_en'   => ['type' => 'text', 'label'=> 'full_name'],
+            'nric'      => ['type' => 'text'],
+            'phone'     => ['type' => 'text' ],
+            'email'     => ['type' => 'text' ],
             'state'     => ['type' => 'select', 'option' => self::getStatesList()],
 
             // 'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],

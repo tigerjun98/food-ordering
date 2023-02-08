@@ -3,7 +3,6 @@
 namespace App\DataTables;
 
 use App\Models\Admin;
-use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -72,7 +71,7 @@ class AdminsDataTable extends DataTable
      * @param \App\Models\Transaction $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Transaction $model): QueryBuilder
+    public function query(Admin $model): QueryBuilder
     {
         return $model->newQuery();
     }

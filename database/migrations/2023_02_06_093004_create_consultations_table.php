@@ -21,7 +21,9 @@ return new class extends Migration
             $table->longText('advise')->nullable();
             $table->longText('symptom')->nullable();
             $table->longText('remark')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

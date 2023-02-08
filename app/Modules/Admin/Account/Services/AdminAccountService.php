@@ -3,7 +3,6 @@
 namespace App\Modules\Admin\Account\Services;
 
 use App\Models\Admin;
-use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use function PHPUnit\Framework\throwException;

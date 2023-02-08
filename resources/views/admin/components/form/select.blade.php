@@ -9,11 +9,7 @@
         {{$customOption ?? ''}}
     </select>
 
-    <span> @if(isset($label))
-            {{ __('common.'.$label) }}
-        @elseif(isset($name))
-            {{ __('common.'.$name) }}
-        @endif
+    <span> {{ __('label.'.$label ?? $name) }}
         <span class="text-danger">{{isset($required) ? null : '*' }}</span>
     </span>
     @if(isset($small))

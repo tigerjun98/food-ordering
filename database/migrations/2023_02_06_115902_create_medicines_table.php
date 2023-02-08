@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('medicines', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->string('name_en')->nullable();
             $table->string('name_cn')->nullable();
+            $table->string('sku')->nullable();
+            $table->integer('status')->nullable();
+            $table->integer('metric_unit_id')->nullable();
+            $table->integer('metric_unit_volume_id')->nullable();
             $table->text('description_en')->nullable();
             $table->text('description_cn')->nullable();
-            $table->string('sku')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->softDeletes();

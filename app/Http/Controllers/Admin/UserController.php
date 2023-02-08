@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Transaction;
 use App\Models\User;
 use App\Modules\Admin\User\Services\AdminService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
@@ -22,7 +21,8 @@ class UserController extends Controller {
 
     use ApiResponser;
 
-    public function index(UsersDataTable $dataTable){
+    public function index(UsersDataTable $dataTable)
+    {
         $filter = User::Filter();
         return $dataTable->render('admin.user.datatable', compact('filter'));
     }

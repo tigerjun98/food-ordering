@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\AuctionsDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Transaction;
 use App\Modules\Admin\Transaction\DataTables\TransactionsDataTable;
 
 class TransactionController extends Controller

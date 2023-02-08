@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Overtrue\LaravelPinyin\ServiceProvider::class, // https://github.com/overtrue/laravel-pinyin
 
         /*
          * Application Service Providers...
@@ -198,6 +199,7 @@ return [
         'Meta'    => Eusonlito\LaravelMeta\Facade::class,
         'Constant' => \App\Constants::class,
         'Vite' => \Illuminate\Support\Facades\Vite::class,
+        'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
     ])->toArray(),
 
 ];

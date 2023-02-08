@@ -43,7 +43,7 @@
         {{ isset($required) && $required ? 'required' : ''  }}
     />
 
-    <span>{{ isset($lang) ? __('common.'.$lang) : ( isset($label) ? $label : __('common.'.$name) ) }}
+    <span>{{ isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) ) }}
         <span class="text-danger">{{isset($required) && !$required ? '' : '*' }}</span>
     </span>
 

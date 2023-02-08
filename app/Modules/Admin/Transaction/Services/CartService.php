@@ -2,7 +2,6 @@
 
 namespace App\Modules\Admin\Transaction\Services;
 
-use App\Models\Transaction;
 use Carbon\Carbon;
 use function PHPUnit\Framework\throwException;
 

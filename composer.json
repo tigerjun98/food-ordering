@@ -13,6 +13,7 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.7",
+        "overtrue/laravel-pinyin": "~4.0",
         "predis/predis": "^1.1",
         "revenuemonster/sdk": "^2.0",
         "tightenco/ziggy": "^1.0",

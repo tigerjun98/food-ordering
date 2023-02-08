@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Modules\Admin\Transaction\DataTables;
+namespace App\DataTables;
 
+use App\Models\Admin;
+use App\Models\Medicine;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -9,7 +12,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class TransactionsDataTable extends DataTable
+class MedicinesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,30 +22,41 @@ class TransactionsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Transaction::query();
+        $query = Medicine::query();
         return (new EloquentDataTable($query))
-            ->addIndexColumn()
-            ->editColumn('user', function($row){
-                return $row->user ? $row->user->full_name : '';
-            })
-            ->editColumn('type', function($row){
-                return $row->type_explain;
-            })->editColumn('status', function($row){
-                return $row->status_explain;
-            })->editColumn('amount', function($row){
-                return $row->fundFormat('amount');
-            })->addColumn('action', function($row){
+            // ->addIndexColumn()
+            ->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action']);
+            })->rawColumns(['image', 'action'])
+            ->orderColumn('created_at', 'desc');
+    }
+
+    public function getColumns(): array
+    {
+        return [
+            Column::make('id'),
+            Column::make('name_cn')->title('Name'),
+            Column::make('description_cn')->title('Description'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+        ];
     }
 
     public function action($row): string
     {
         $actions = [
             'edit' => [
-                'link' => route('admin.account.destroy', $row->id)
+                'icon' => 'iconsminds-pen-2',
+                'modal' => route('admin.medicine.edit', $row->id)
+            ],
+            'delete' => [
+                'size'      => 'md', //[sm, md, lg]
+                'class'     => 'text-danger',
+                'icon'      => 'simple-icon-trash',
+                'modal'     => route('admin.medicine.destroy', $row->id)
             ]
         ];
 
@@ -54,7 +68,7 @@ class TransactionsDataTable extends DataTable
      * @param \App\Models\Transaction $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Transaction $model): QueryBuilder
+    public function query(Admin $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -83,24 +97,7 @@ class TransactionsDataTable extends DataTable
                     ]);
     }
 
-    /**
-     * Get the dataTable columns definition.
-     *
-     * @return array
-     */
-    public function getColumns(): array
-    {
-        return [
-            Column::make('id'),
-            Column::make('user')->title('Full name')->orderable(false),
-            Column::make('type'),
-            Column::make('status'),
-            Column::make('amount')->title('Amount (USDT)'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-        ];
-    }
+
 
     /**
      * Get filename for export.

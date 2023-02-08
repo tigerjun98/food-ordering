@@ -35,7 +35,6 @@ return [
     'sign_in' => 'sign in',
     'my_profile' => 'my profile',
     'save_and_update_info' => 'Save & Update Information',
-    'phone' => 'phone',
     'my_account' => 'my account',
     'security' => 'security',
     'update_your_info' => 'Update Your Information',
@@ -49,7 +48,6 @@ return [
     'select_network' => 'select network',
     'amount' => 'amount',
     'token' => 'token',
-    'address' => 'address',
     'deposit_detail' => 'deposit_detail',
     'network' => 'network',
     'copy_address' => 'copy address',
@@ -100,7 +98,8 @@ return [
     'contact_us' => 'contact us',
     'about_us' => 'about us',
     'emergency' => 'Emergency',
-    'nric' => 'NRIC',
-    'operation_success' => 'Operation success'
-
+    'operation_success' => 'Operation success',
+    'patients' => 'Patients',
+    'consultations' => 'Consultations',
+    'medicines' => 'Medicines'
 ];

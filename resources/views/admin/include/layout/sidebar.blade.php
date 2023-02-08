@@ -6,7 +6,9 @@
                 <?php
                 $items = [
                         ['name'=> 'dashboard', 'routeName'=> 'home', 'icon'=>'monitor-analytics'],
-                        ['name'=> 'users', 'routeName'=> 'user.', 'icon'=>'conference'],
+                        ['name'=> 'patients', 'routeName'=> 'user.index', 'icon'=>'conference'],
+                        ['name'=> 'medicines', 'routeName'=> 'medicine.index', 'icon'=>'conference'],
+                        ['name'=> 'consultations', 'routeName'=> 'consultation.index', 'icon'=>'conference'],
                         ['name'=> 'admins', 'routeName'=> 'account.', 'icon'=>'user', 'permission'=> 'admin_management'],
                         ['name'=> 'deposit', 'routeName'=> 'transaction.deposit.', 'icon'=>'check', 'permission'=> 'deposit_management'],
                         ['name'=> 'settings', 'routeName'=> 'setting.', 'icon'=>'gears', 'permission'=> 'setting_management']

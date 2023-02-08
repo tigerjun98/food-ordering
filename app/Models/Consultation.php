@@ -15,49 +15,17 @@ use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 use phpDocumentor\Reflection\Types\Integer;
 
-class Medicine extends Model
+class Consultation extends Model
 {
-    use SoftDeletes, ModelTrait, HasFactory;
+    use SoftDeletes, ModelTrait, HasFactory, ObserverTrait;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
-    protected $table = 'medicines';
+    protected $table = 'consultations';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function($data) {
-            if(!$data->id) $data->id = abs( crc32( uniqid() ) );
-        });
-
-        static::saving(function ($model) {
-            $pinyin = implode(' ', Pinyin::convert($model->name_cn));
-            $model->slug = slugify($pinyin);
-            if(!$model->name_en)
-                $model->name_en = $pinyin;
-        });
-    }
-
-    public static function getVolumeMetricUnitList()
-    {
-        return [
-            2 => trans('common.ml'),
-            3 => trans('common.tablet'),
-            4 => trans('common.gram'),
-        ];
-    }
-
-    public static function getMetricUnitList()
-    {
-        return [
-            1 => trans('common.bottle'),
-            5 => trans('common.unit'),
-        ];
-    }
 
     public static function getStatusList()
     {

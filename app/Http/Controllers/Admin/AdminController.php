@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Location;
-use App\Models\Transaction;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -28,10 +26,6 @@ class AdminController extends Controller
     }
 
     public function selectOption(Request $request){
-
-        if($request->type == 'address'){
-            return Transaction::getNetworkAddress($request->ref);
-        }
 
         // check username or referral username
         if($request->type == 'name' || $request->type == 'referral_username'){

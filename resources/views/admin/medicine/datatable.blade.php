@@ -2,7 +2,7 @@
 
 @section('content')
     <x-admin.datatable :dataTable="$dataTable"
-                       :title="'Admin Management'"
+                       :title="'Medicine Management'"
                        :filter="$filter"
     >
         @slot('action')
@@ -12,7 +12,7 @@
 {{--            </button>--}}
 
             <x-admin.component.button
-                :openModal="'{ header: `CREATE`, url: `'.route('admin.account.create').'` }'"
+                :openModal="'{ header: `CREATE`, url: `'.route('admin.medicine.create').'` }'"
                 :class="'btn-outline-primary btn-lg top-right-button mr-1'"
                 :lang="'create'"
                 :icon="'iconsminds-folder-add-- mr-1'"
