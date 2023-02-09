@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'search' => 'Search',
     'details' => 'Details',
     'emergency' => 'Emergency',
     'gender' => 'Gender',

@@ -27,6 +27,15 @@ class Consultation extends Model
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
 
+    public static function getSpecialistList()
+    {
+        return [
+            1 => trans('common.bottle'),
+            5 => trans('common.unit'),
+        ];
+    }
+
+
     public static function getStatusList()
     {
         return [

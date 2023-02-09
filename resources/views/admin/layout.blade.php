@@ -9,7 +9,7 @@
 
     <!-- CSRF Token -->
 {{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-    <title>Yilin</title>
+    <title>{{ config('app.name', 'Yilin') }}</title>
 
     {{ Vite::useBuildDirectory('/backendAssets') }}
     @vite(['resources/css/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
@@ -24,7 +24,9 @@
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/backend/vendor/select2.full.js') }}" defer></script>
-    <script src="{{ asset('js/backend/vendor/bootstrap-notify.min.js') }}" defer></script>
+
+
+{{--    <script src="{{ asset('js/backend/vendor/bootstrap-notify.min.js') }}" defer></script>--}}
     <style>
 
         {{--.iti__flag {background-image: url("{{ Vite::asset('resources/img/vendor/intltel.flags.png') }}");}--}}
@@ -73,7 +75,7 @@
     </script>
 </head>
 <body id="app-container" class="menu-default show-spinner rounded">
-@include('user.include.layouts.loading')
+{{--    @include('user.include.layouts.loading')--}}
     <div id="app">
         @include('admin.include.layout.header')
         @include('admin.include.layout.sidebar')

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Modules\Admin\User\Services\AdminService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Modules\Admin\User\Services\UserService;
 use App\Traits\ApiResponser;

@@ -1,10 +1,9 @@
 let actionBtnId = ''
 let optional = {
-scrollY:        "46vh",
+scrollY:        "44vh",
 scrollX:        true,
 scrollCollapse: true,
 sDom: '<"row view-filter"<"col-sm-12"<"float-right"l><"float-left"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
-paging:true,
 language: {
 paginate: {
 previous: "<i class='simple-icon-arrow-left'></i>",
@@ -13,6 +12,9 @@ next: "<i class='simple-icon-arrow-right'></i>"
 search: "_INPUT_",
 searchPlaceholder: "Search...",
 lengthMenu: "Items Per Page _MENU_"
+},
+"fnPreDrawCallback":function(){
+$(%2$s).setLoader({fullScreen: true});
 },
 "fnInitComplete": function(oSettings, json) {
 let input = document.querySelector('div.dataTables_filter input');
@@ -31,8 +33,7 @@ $(".dataTables_wrapper .pagination").addClass("pagination-sm");
 $(".dataTables_wrapper .pagination").addClass("pagination-sm");
 var api = $(this).dataTable().api();
 $("#pageCountDatatable span").html("Displaying " + parseInt(api.page.info().start + 1) + "-" + api.page.info().end + " of " + api.page.info().recordsTotal + " items");
-$('[data-toggle="tooltip"]').tooltip();
-
+initialTable()
 },
 fixedColumns:{
 leftColumns: 1,
@@ -41,7 +42,7 @@ rightColumns: 1
 columnDefs: [
 { "targets": -1,
 "createdCell": function (td, cellData, rowData, row, col) {
-$(td).css('padding-right', '90px')
+$(td).css('padding-right', '30px')
 },
 },
 {
@@ -50,10 +51,12 @@ $(td).css('padding-right', '90px')
 $(td).css('padding-right', '50px')
 },
 }],
-responsive: false,
+processing: true,
+responsive: true,
 searching: true,
-info: false,
+info: true,
 ordering: true,
+paging:true,
 };
 let obj = Object.assign(%2$s, optional);
 $(function(){

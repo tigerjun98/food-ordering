@@ -86,7 +86,7 @@ class User extends Authenticatable
          */
 
         return [
-            'name_en'   => ['type' => 'text', 'label'=> 'full_name'],
+            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'nric'      => ['type' => 'text'],
             'phone'     => ['type' => 'text' ],
             'email'     => ['type' => 'text' ],
@@ -98,6 +98,13 @@ class User extends Authenticatable
 
     public function scopeFilter($query)
     {
+        if(request()->filled('full_name')){
+            $query->where(function ($q) {
+                $q->where('name_en', 'like', '%'.request()->full_name.'%')
+                    ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
         return $this->searchAll(
             $this->parentFilterTrait($query), ['nric', 'name_en', 'name_cn', 'phone', 'email']
         );

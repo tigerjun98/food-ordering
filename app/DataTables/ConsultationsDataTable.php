@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Consultation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -20,17 +21,13 @@ class ConsultationsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = User::query();
+        $query = Consultation::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
             ->addColumn('full_name', function($row){
-                return $row->full_name;
+                return $row->user->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
-            })->editColumn('state', function($row){
-                return $row->state_name;
-            })->editColumn('gender', function($row){
-                return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
             })->rawColumns(['image', 'action'])

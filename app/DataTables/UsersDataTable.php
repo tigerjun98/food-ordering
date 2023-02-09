@@ -93,6 +93,23 @@ class UsersDataTable extends DataTable
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle()
+//                    ->parameters([
+//                        'language' => [
+//                            'info' => "Showing <b>_START_ to _END_</b> (of _TOTAL_)",
+//                            'infoEmpty' => "No records found",
+//                            'infoFiltered' => "",
+//                            'lengthMenu' => "Items Per Page _MENU_",
+//                            'processing' => "<div class='spinner'>Loading...</div>",
+//                            'loadingRecords' => "Loading data...",
+//                            'zeroRecords' => "Sorry no records found",
+//                            'search' => "_INPUT_",
+//                            'searchPlaceholder' => "Search...",
+//                            'paginate' => [
+//                                'previous' => "<i class='simple-icon-arrow-left'></i>",
+//                                'next' => "<i class='simple-icon-arrow-right'></i>",
+//                            ]
+//                        ],
+//                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),

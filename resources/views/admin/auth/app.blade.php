@@ -3,41 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
     <!-- CSRF Token -->
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-    <title>{{ config('app.name', 'Yale') }}</title>
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+    <title>{{ config('app.name', 'Yilin') }}</title>
 
-    {{ Illuminate\Support\Facades\Vite::useBuildDirectory('/backendAssets') }}
+    {{ Vite::useBuildDirectory('/backendAssets') }}
     @vite(['resources/css/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
 
     <!-- Scripts -->
-    <script src="{{ asset('assets/admin/js/vendor/jquery-3.3.1.min.js') }}"></script>
-{{--    <script src="{{ asset('assets/admin/js/vendor/bootstrap.bundle.min.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/vendor/bootstrap-tagsinput.min.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/vendor/bootstrap-notify.min.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/vendor/bootstrap-datepicker.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/vendor/jquery.smartWizard.min.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/vendor/jquery.validate/jquery.validate.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/vendor/jquery.validate/additional-methods.js') }}"></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/dore.script.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/dore-plugins/select.from.library.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/scripts.single.theme.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('assets/admin/js/scripts.js') }}" defer></script>--}}
+    <script
+        src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+        crossorigin="anonymous"></script>
 
-    <!-- Fonts -->
-{{--    <link href="{{ asset('assets/admin/font/iconsmind-s/css/iconsminds.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/font/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">--}}
-
-    <!-- Styles -->
-{{--    <link href="{{ asset('vendor') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap.min.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap.rtl.only.min.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-float-label.min.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-datepicker3.min.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/dore.light.blue.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/vendor/smart_wizard.min.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ asset('assets/admin/css/vendor/bootstrap-tagsinput.css') }}" rel="stylesheet">--}}
     <style>
         .fixed-background {
             background: url('/images/admin/balloon.jpg') no-repeat center center fixed;
@@ -118,6 +97,7 @@
             <button onclick="hideAlert()">x</button>
             <ul id="alert_message"></ul>
         </div>
+        <x-admin.layout.alert />
         @yield('content')
     </main>
     <script>

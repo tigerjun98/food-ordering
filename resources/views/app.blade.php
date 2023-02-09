@@ -149,7 +149,7 @@
                 data: settings.data,
                 beforeSend: function() {
                     if(settings.loading.show){
-                        $('#'+settings.id).showLoading(settings.loading);
+                        $('#'+settings.id).setLoader(settings.loading);
                     }
                 },
                 success: function(response) {
@@ -191,12 +191,7 @@
                 },
                 error: function(response) {
                     if(settings.loading.show){
-                        $(elem).showLoading({
-                            id: settings.id,
-                            show: false,
-                            fullScreen: settings.loading.fullScreen,
-                            focus: settings.loading.focus,
-                        });
+                        $('#'+settings.id).hideLoader(settings.loading);
                     }
                     $("#app-alert").showAlert({
                         status : 'danger', response, delay: 0

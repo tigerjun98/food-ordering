@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\AdminsDataTable;
+use App\DataTables\ConsultationsDataTable;
 use App\DataTables\MedicinesDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
-use App\Modules\Admin\Medicine\Services\MedicineService;
+use App\Modules\Admin\Consultation\Services\ConsultationService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -25,19 +27,19 @@ class ConsultationController extends Controller {
 
     use ApiResponser;
 
-    private Medicine $model;
-    private MedicineService $service;
+    private Consultation $model;
+    private ConsultationService $service;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->model = new Medicine();
-        $this->service = new MedicineService();
+        $this->model = new Consultation();
+        $this->service = new ConsultationService();
     }
 
-    public function index(MedicinesDataTable $dataTable)
+    public function index(ConsultationsDataTable $dataTable)
     {
-        return $dataTable->render('admin.medicine.datatable', [
+        return $dataTable->render('admin.consultation.datatable', [
             'filter' => $this->model->Filter()
         ]);
     }

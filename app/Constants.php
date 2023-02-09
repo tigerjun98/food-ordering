@@ -16,22 +16,6 @@ class Constants
     public const BANNED = 200;
     public const BLOCKED = 201;
 
-    public const UNPAID = 300;
-    public const PAID = 301;
-    public const PENDING = 302;
-    public const PROCESSING = 303;
-    public const COMPLETED = 304;
-    public const CANCELLED = 305;
-    public const REFUNDING = 306;
-    public const REFUNDED = 307;
-
-    public const DEPOSIT = 401;
-    public const WITHDRAW = 402;
-    public const EARN = 403;
-    public const LOSS = 404;
-    public const BUY = 405;
-    public const SELL = 406;
-
     public const JOHOR = 801;
     public const KEDAH = 802;
     public const KELANTAN = 803;
@@ -49,37 +33,27 @@ class Constants
     public const SEMBILAN = 815;
     public const TERENGGANU = 816;
 
+    // CONSULTATION SPECIALTIES
+    public const ANAESTHESIOLOGY = 901;
+    public const CARDIOLOGY = 902;
 
     public static $typeRange = [
         'gender'        => [1,2],
-        'state'         => [801, 816]
+        'state'         => [801, 816],
+        'specialist'    => [1,2],
     ];
 
     public static $statusTexts = [
-        self::MALE          => 'Male',
+        self::MALE          => 'male',
         self::FEMALE        => 'Female',
         self::ACTIVE        => 'Active',
         self::INACTIVE      => 'Inactive',
         self::BANNED        => 'Banned',
         self::BLOCKED       => 'Blocked',
-        self::UNPAID        => 'Unpaid',
-        self::PAID          => 'Paid',
-        self::PENDING       => 'Pending',
-        self::PROCESSING    => 'Processing',
-        self::COMPLETED     => 'Completed',
-        self::CANCELLED     => 'Cancelled',
-        self::REFUNDING     => 'Refund',
-        self::REFUNDED      => 'Refunded',
-        self::DEPOSIT       => 'Deposit',
-        self::WITHDRAW      => 'Withdraw',
-        self::EARN          => 'Earn',
-        self::LOSS          => 'Loss',
-        self::BUY           => 'Buy',
-        self::SELL          => 'Sell',
         self::JOHOR         => 'Johor',
         self::KEDAH         => 'Kedah',
         self::KELANTAN      => 'Kelantan',
-        self::KL            => 'Kuala Lumpur',
+        self::KL            => 'KL',
         self::LABUAN        => 'Labuan',
         self::MELAKA        => 'Melaka',
         self::PAHANG        => 'Pahang',
@@ -97,12 +71,21 @@ class Constants
     public int $statusCode;
     public ?string $statusText;
 
+    public static function translation($v)
+    {
+        return trans('constant.'.strtolower($v));
+    }
+
     public static function getLists($name): array
     {
         $range = self::$typeRange[$name];
-        return array_filter(self::$statusTexts, function($k) use($range) {
+        $filter = array_filter(self::$statusTexts, function($k) use($range) {
             return $k >= $range[0] && $k <= $range[1];
         }, ARRAY_FILTER_USE_KEY);
+
+        return array_map(function($item) {
+            return self::translation($item);
+        }, $filter);
     }
 
     public function isInvalid(): bool

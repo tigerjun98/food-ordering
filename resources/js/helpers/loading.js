@@ -27,7 +27,7 @@ class Loading {
     }
 
     setBodySpinner(){
-        $('#content').addClass('show-spinner');
+        $('#app-container').addClass('show-spinner');
     }
 
     setButtonSpinner(){

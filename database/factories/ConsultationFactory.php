@@ -24,12 +24,8 @@ class ConsultationFactory extends Factory
         $dobAndNric = $this->getRandDobAndNric();
         $gender = $this->getRandGender();
 
-        $specialist = ['儿科', '骨科'];
-
         return [
             'user_id' => User::all()->random()->id,
-            'name' => $this->faker->userName(),
-            'name_en' => $this->faker->name($gender[1]),
             'phone' => '601'.$this->faker->randomNumber(8),
             'gender' => $gender[0],
             'dob' => $dobAndNric[0],

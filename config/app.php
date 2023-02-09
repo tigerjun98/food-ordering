@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Yajra\DataTables\HtmlServiceProvider::class, // https://yajrabox.com/docs/laravel-datatables/10.0/html-installation
         Overtrue\LaravelPinyin\ServiceProvider::class, // https://github.com/overtrue/laravel-pinyin
 
         /*

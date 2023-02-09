@@ -54,7 +54,7 @@
         <div class="p-4 h-100">
             <div class="scroll">
                 <div class="modal-header mb-5">
-                    <h4 class="mt-1 text-capitalize">{{ __('common.filter') }}</h4>
+                    <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
                 </div>
 
                 <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
@@ -164,11 +164,20 @@
 @endif
 <script type="text/javascript">
     const refreshDataTable = () => {
-        $('#{{ $dataTableId ?? 'dataTable' }}').DataTable().ajax.reload()
+        $(this).setLoader({fullScreen: true});
+        $('#{{ $dataTableId ?? 'dataTable' }}').DataTable().ajax.reload( function(){
+            $(this).hideLoader({fullScreen: true});
+        });
         window.history.replaceState({ id: "100" }, "Filter", "?"+$('#js-datatable-filter-form').serialize());
     };
 
+    function setSearchAllVal(){
+        let val = '{{request()->query('search_all')}}'
+        $('#dataTable_filter').find("[type='search']").val(val);
+    }
+
     $(document).ready(function(){
+        setSearchAllVal()
         // initialTable();
         // $.updateTableFunction()
     });
@@ -196,10 +205,10 @@
     }
 
     function initialTable(){
-
         if ($().tooltip) {
             $('[data-toggle="tooltip"]').tooltip();
         }
+        $(this).hideLoader({fullScreen: true});
         lazyLoadInstance.update();
     }
 </script>
