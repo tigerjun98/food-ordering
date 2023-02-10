@@ -29,6 +29,7 @@ $.fn.showAlert = function(options) {
             let errorsMsg = settings.response.message;
             if (errorsMsg) {
                 errorsHtml += '<li>' + errorsMsg + '</li>';
+
             } else {
                 let errors = settings.response.responseJSON;
                 if (errors.errors && Object.keys(errors.errors).length > 0) {
@@ -51,9 +52,11 @@ $.fn.showAlert = function(options) {
 
     errorsHtml += '</ul>'
 
+    // https://grotesquegentleadvance--samkhaled.repl.co
     $.notify(
         errorsHtml,
         {
+            spacing: 10,
             z_index: 2000,
             class: 'alert alert-dismissible fade show rounded mb-0 w-100',
             type: settings.status,

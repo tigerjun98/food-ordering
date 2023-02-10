@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('prescription_amount')->nullable();
             $table->integer('labeling')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

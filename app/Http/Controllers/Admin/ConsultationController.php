@@ -46,16 +46,18 @@ class ConsultationController extends Controller {
 
     public function create()
     {
-        return html('admin.medicine.form.create',[
-            'data' => null
-        ]);
+        // use edit() to create consultation.
+        abort(404);
     }
 
-    public function edit($userId)
+    public function edit($id) // $id == userId ? create, $id == consultationId ? edit
     {
-        return html('admin.medicine.form.create',[
-            'data' => $this->model->findOrFail($userId)
-        ]);
+        $consultation = Consultation::find($id) ?? [];
+        $patient = $consultation ? $consultation->patient : User::find($id);
+        if(!$patient)
+            return redirect()->route('admin.user.index')->with('fail', trans('messages.patient_not_found'));
+
+        return html('admin.consultation.form.create', compact('consultation', 'patient'));
     }
 
     public function store(MedicineStoreRequest $request)
@@ -66,7 +68,7 @@ class ConsultationController extends Controller {
 
     public function delete($adminId)
     {
-        return html('admin.medicine.form.delete',[
+        return html('admin.consultation.form.delete',[
             'data' => $this->model->findOrFail($adminId)
         ]);
     }

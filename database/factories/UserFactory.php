@@ -31,11 +31,16 @@ class UserFactory extends Factory
             'gender' => $gender[0],
             'dob' => $dobAndNric[0],
             'nric' => $dobAndNric[1],
+            'occupation' => $this->faker->jobTitle(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
             'remember_token' => Str::random(10),
-            'state' => array_rand(User::getStatesList())
+            'address' => $this->faker->address(),
+            'area' => $this->faker->city(),
+            'postcode' => $this->faker->numberBetween(11111, 99999),
+            'state' => array_rand(User::getStatesList()),
+            'remark_allergic' => $this->faker->realText(),
         ];
     }
 

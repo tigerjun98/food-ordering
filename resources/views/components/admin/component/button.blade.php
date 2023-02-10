@@ -7,7 +7,7 @@
         unset($attributes['openModal']);
     }
 
-    if(isset($redirect)){
+    if(isset($redirect) && $redirect){
         $attributes['onclick'] = "location.href='$redirect'";
         unset($attributes['redirect']);
     }

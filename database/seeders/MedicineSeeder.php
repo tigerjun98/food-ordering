@@ -21,6 +21,7 @@ class MedicineSeeder extends Seeder
     {
         foreach ($this->getMedicines() as $var){
             $model = new Medicine();
+            $model->type = array_rand(Medicine::getTypeList());
             foreach ($var as $col => $val){
                 $model->{$col} = $val;
             }

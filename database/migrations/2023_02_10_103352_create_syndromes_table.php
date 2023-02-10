@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('prescription_combinations', function (Blueprint $table) {
+        Schema::create('syndromes', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->integer('quantity')->nullable();
-            $table->unsignedBigInteger('prescription_id')->nullable();
-            $table->unsignedBigInteger('medicine_id')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('name_en')->nullable();
+            $table->string('name_cn')->nullable();
+            $table->longText('desc_en')->nullable();
+            $table->longText('desc_cn')->nullable();
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prescription_combinations');
+        Schema::dropIfExists('syndromes');
     }
 };

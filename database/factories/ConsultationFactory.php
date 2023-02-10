@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Admin;
+use App\Models\Diagnose;
+use App\Models\Specialist;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,58 +24,16 @@ class ConsultationFactory extends Factory
      */
     public function definition()
     {
-        $dobAndNric = $this->getRandDobAndNric();
-        $gender = $this->getRandGender();
-
         return [
+            'admin_id' => Admin::all()->random()->id,
             'user_id' => User::all()->random()->id,
-            'phone' => '601'.$this->faker->randomNumber(8),
-            'gender' => $gender[0],
-            'dob' => $dobAndNric[0],
-            'nric' => $dobAndNric[1],
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
-            'remember_token' => Str::random(10),
+            'advise' => $this->faker->realText(),
+            'symptom' => $this->faker->realText(),
+            'remark' => $this->faker->realText(),
+            'diagnose' => implode(',', Diagnose::all()->random(rand(1,2))->pluck('id')->toArray()),
+            'syndrome' => implode(',', Specialist::all()->random(rand(1,2))->pluck('id')->toArray()),
+            'specialist' => implode(',', Specialist::all()->random(rand(1,5))->pluck('id')->toArray()),
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return string
-     */
-
-    /**
-     * NRIC = National Registration Identity Card
-     * DOB = DateOfBirth;
-     */
-
-    public function getRandGender()
-    {
-        $gender = array("male", "female");
-        $randomGenderKey = array_rand($gender,1);
-        return [$randomGenderKey+1, $gender[$randomGenderKey]]; // Refer Constants.php to understand KEY value
-    }
-
-    public function getRandDobAndNric()
-    {
-        $birthDate = Carbon::now()->addYears(-10)->format('Y-m-d');
-        $date = explode("-", $birthDate);
-        $lastTwoDigitYear = substr($date[0], -2);
-        $nric = $lastTwoDigitYear.$date[1].$date[2]
-            .$this->faker->numberBetween(11,99)
-            .$this->faker->numberBetween(1111,9999);
-
-        return [ $birthDate, $nric ];
-    }
-
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
-    }
 }

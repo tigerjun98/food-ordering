@@ -1,4 +1,6 @@
-<div class="modal-header pb-0">
+<div class="app-alert" id="app-alert"></div>
+
+<div class="modal-header pb-0 alert-box">
     <x-admin.component.modal.header
         :lang="$lang ?? false"
         :title="$title"
@@ -7,7 +9,6 @@
 </div>
 
 <div class="modal-body">
-
     @if(isset($submit))
         <x-admin.form
             :route="$submit"

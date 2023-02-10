@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('medicines', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
+            $table->integer('type')->nullable();
             $table->string('slug')->nullable();
             $table->string('name_en')->nullable();
             $table->string('name_cn')->nullable();
@@ -26,8 +27,8 @@ return new class extends Migration
             $table->text('description_cn')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

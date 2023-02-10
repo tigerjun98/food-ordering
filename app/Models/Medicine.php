@@ -42,6 +42,15 @@ class Medicine extends Model
         });
     }
 
+    public static function getTypeList()
+    {
+        return [
+            1 => trans('common.external_use'), // 外用药
+            2 => trans('common.acupuncture'), // 针灸
+            3 => trans('common.massage'), // 推拿
+        ];
+    }
+
     public static function getVolumeMetricUnitList()
     {
         return [

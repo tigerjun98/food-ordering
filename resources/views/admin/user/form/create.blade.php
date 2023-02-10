@@ -125,7 +125,7 @@
 
             <x-admin.form.textarea
                 :data="$data"
-                :name="'remark'"
+                :name="'remark_allergic'"
                 :rows="4"
                 :required="false"
             />

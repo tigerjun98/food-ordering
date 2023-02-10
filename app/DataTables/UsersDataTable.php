@@ -54,9 +54,13 @@ class UsersDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
+            'consultation' => [
+                'icon'      => 'simple-icon-calendar',
+                'redirect'  => route('admin.consultation.edit', $row->id)
+            ],
             'edit' => [
-                'icon' => 'simple-icon-pencil',
-                'modal' => route('admin.user.edit', $row->id)
+                'icon'      => 'simple-icon-pencil',
+                'modal'     => route('admin.user.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]

@@ -6,12 +6,14 @@
                     :class="isset($action['class']) ? 'action-icon '.$action['class'] : ' action-icon '"
                     :icon="$action['icon'] ?? 'simple-icon-eye'"
                     :tooltip="$action['text'] ?? $type"
+                    :redirect="$action['redirect'] ?? ''"
                 >
                     @if(isset($action['modal']))
                         @slot('openModal')
                             { url: '{{ $action['modal'] }}', header: 'EDIT', size: '{{ isset($action['size']) ? $action['size'] : 'lg' }}' }
                         @endslot
                     @endif
+
 
                     @slot('body')
                         @if(isset($count))

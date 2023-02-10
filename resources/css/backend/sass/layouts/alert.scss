@@ -4,9 +4,18 @@
     }
 }
 
-/* for backend */
-.container-fluid .app-alert{
+.form-side{
+    .app-alert {
+        top: 15px;
+    }
+}
+.modal-content{
+    .app-alert {
+        top: 0;
+    }
+}
 
+.app-alert {
     width: 100%;
     z-index: 10000;
     padding: 0 30px;
@@ -15,21 +24,37 @@
     transform: translateX(-50%);
     height: auto;
     position: absolute;
-    top: -85px;
+     top: -40px;
 
-    @include mobile(){
-        top: -62px;
+    div[data-notify=container]{
+        margin: 0 15px !important;
+
+        //&:first-child{
+        //    margin-top: -20px !important;
+        //}
     }
 
-    .alert{
+    @include mobile() {
+        top: -40px;
+    }
+
+    .alert {
         border-radius: 6px;
 
-        ul{
+        ul {
             margin-left: -10px;
 
-            li{
+            li {
                 font-size: 14px;
             }
         }
+    }
+}
+
+.app-row{
+    .app-alert {
+        position: relative;
+        padding-right: 295px;
+        padding-left: 15px;
     }
 }

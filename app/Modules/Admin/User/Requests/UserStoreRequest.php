@@ -42,6 +42,7 @@ class UserStoreRequest extends FormRequest
             'occupation'                        => ['nullable', 'string'],
             'dob'                               => ['nullable', 'date_format:Y-m-d', 'before:'.Carbon::now()],
             'remark'                            => ['nullable', 'string'],
+            'remark_allergic'                   => ['nullable', 'string'],
             'gender'                            => ['required', 'in:'.arrayToString(User::getGenderList())],
             'emergency_contact_name'            => ['nullable', 'string'],
             'emergency_contact_no'              => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/'],

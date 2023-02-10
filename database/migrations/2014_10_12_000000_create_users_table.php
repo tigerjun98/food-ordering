@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('occupation')->nullable();
             $table->text('remark')->nullable();
+            $table->text('remark_allergic')->nullable();
             $table->string('avatar')->nullable();
             $table->integer('status')->nullable();
             $table->integer('gender')->nullable();

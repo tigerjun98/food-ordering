@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
+            $table->longText('symptom')->nullable();
+            $table->longText('advise')->nullable();
+            $table->longText('remark')->nullable();
             $table->string('specialist')->nullable();
             $table->string('syndrome')->nullable();
             $table->string('diagnose')->nullable();
-            $table->longText('advise')->nullable();
-            $table->longText('symptom')->nullable();
-            $table->longText('remark')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

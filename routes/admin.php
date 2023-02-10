@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MedicineController;
+use App\Http\Controllers\Admin\ConsultationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,10 +21,10 @@ use App\Http\Controllers\Admin\MedicineController;
 Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::customResources([
-        'user'      => UserController::class,
-        'account'   => AccountController::class,
-        'medicine'   => MedicineController::class,
-        'consultation'   => MedicineController::class,
+        'user'          => UserController::class,
+        'account'       => AccountController::class,
+        'medicine'      => MedicineController::class,
+        'consultation'  => ConsultationController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');

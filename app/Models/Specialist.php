@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants;
 use App\Traits\Models\FilterTrait;
+use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,31 +16,17 @@ use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 use phpDocumentor\Reflection\Types\Integer;
 
-class Consultation extends Model
+class Specialist extends Model
 {
-    use SoftDeletes, ModelTrait, HasFactory, ObserverTrait;
+    use SoftDeletes, ModelTrait, HasFactory, HasSlug;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
-    protected $table = 'consultations';
+    protected $table = 'specialists';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
-
-    public function patient()
-    {
-        return $this->belongsTo(User::class, 'id', 'user_id');
-    }
-
-    public static function getSpecialistList()
-    {
-        return [
-            1 => trans('common.bottle'),
-            5 => trans('common.unit'),
-        ];
-    }
-
 
     public static function getStatusList()
     {

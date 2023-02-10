@@ -35,12 +35,13 @@ class Constants
 
     // CONSULTATION SPECIALTIES
     public const ANAESTHESIOLOGY = 901;
+    public const ACUPUNCTURE = 901;
     public const CARDIOLOGY = 902;
 
     public static $typeRange = [
         'gender'        => [1,2],
         'state'         => [801, 816],
-        'specialist'    => [1,2],
+        'specialist'    => [901,1000],
     ];
 
     public static $statusTexts = [

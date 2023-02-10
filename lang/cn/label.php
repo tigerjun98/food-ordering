@@ -7,7 +7,6 @@ return [
     'gender' => 'Gender',
     'full_name' => 'Full name',
     'occupation' => 'Occupation',
-    'remark_allergic' => 'Remark (Allergic)',
     'remark' => 'Remark',
     'name_cn' => 'Name (CN)',
     'name_en' => 'Name (EN)',
@@ -22,6 +21,6 @@ return [
     'emergency_contact_name' => 'Emergency contact name',
     'emergency_contact_no' => 'Emergency contact number',
     'emergency_contact_relationship' => 'Emergency contact relationship',
-    'symptom' => 'Symptom',
+    'symptom' => '证型',
 
 ];

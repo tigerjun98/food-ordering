@@ -14,7 +14,7 @@
                             <a href="{{ route('login') }}" class="white">login here</a>.
                         </p>
                     </div>
-                    <div class="form-side">
+                    <div class="form-side alert-box">
 
                         <h6 class="mb-4">Login</h6>
 

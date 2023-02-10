@@ -19,5 +19,6 @@ return [
     'confirm_alert' => 'Are you sure you want to proceed?',
     'confirm_alert_desc' => 'If you proceed this you can\'t recover it.',
     'incorrect_old_password' => 'Incorrect old password',
+    'patient_not_found' => 'Patient not found!'
 
 ];

@@ -23,5 +23,6 @@ return [
     'sembilan' => 'Sembilan',
     'terengganu' => 'Terengganu',
 
+    'anaesthesiology' => 'ANAESTHESIOLOGY',
 
 ];
