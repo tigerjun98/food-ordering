@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use Faker\Provider\zh_CN\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
@@ -24,6 +25,7 @@ class ClinicFactory extends Factory
     {
         return [
             'name_en' => $this->faker->company(),
+            'name_cn' => Company::companyPrefix().Company::companySuffix(),
             'contact' => '601'.$this->faker->randomNumber(8),
             'email' => $this->faker->companyEmail(),
             'url' => $this->faker->url(),

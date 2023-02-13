@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Faker\Provider\zh_CN\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
@@ -27,6 +28,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->userName(),
             'name_en' => $this->faker->name($gender[1]),
+            'name_cn' => Company::companyPrefix().Company::companyPrefix(),
             'phone' => '601'.$this->faker->randomNumber(8),
             'gender' => $gender[0],
             'dob' => $dobAndNric[0],

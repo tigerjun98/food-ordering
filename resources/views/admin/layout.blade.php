@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="theme-color" content="#ffffff">
 {{--    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">--}}
-    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
+{{--    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">--}}
 
     <!-- CSRF Token -->
 {{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
@@ -18,13 +18,14 @@
 {{--    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/favicon/favicon-32x32.png') }}">--}}
     <!-- Scripts -->
 
-    <script src="{{ asset('assets/admin/js/lazyload.min.js') }}"></script>
-    <script
-        src="https://code.jquery.com/jquery-3.6.3.min.js"
+    <script src="{{ asset('js/backend/vendor/lazyload.min.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         crossorigin="anonymous"></script>
-    <script src="{{ asset('js/backend/vendor/select2.full.js') }}" defer></script>
 
+    <script src="{{ asset('js/backend/vendor/select2.full.js') }}" defer></script>
+    <script src="{{ asset('js/backend/vendor/perfect-scrollbar.min.js') }}" defer></script>
 
 {{--    <script src="{{ asset('js/backend/vendor/bootstrap-notify.min.js') }}" defer></script>--}}
     <style>

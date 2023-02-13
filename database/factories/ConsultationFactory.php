@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Admin;
 use App\Models\Diagnose;
+use App\Models\Option;
 use App\Models\Specialist;
 use App\Models\User;
 use Carbon\Carbon;
@@ -30,9 +31,9 @@ class ConsultationFactory extends Factory
             'advise' => $this->faker->realText(),
             'symptom' => $this->faker->realText(),
             'remark' => $this->faker->realText(),
-            'diagnose' => implode(',', Diagnose::all()->random(rand(1,2))->pluck('id')->toArray()),
-            'syndrome' => implode(',', Specialist::all()->random(rand(1,2))->pluck('id')->toArray()),
-            'specialist' => implode(',', Specialist::all()->random(rand(1,5))->pluck('id')->toArray()),
+            'diagnoses' => implode(',', Option::where('type', 'diagnose')->get()->random(rand(1,2))->pluck('id')->toArray()),
+            'syndromes' => implode(',', Option::where('type', 'syndrome')->get()->random(rand(1,2))->pluck('id')->toArray()),
+            'specialists' => implode(',', Option::where('type', 'specialist')->get()->random(rand(1,5))->pluck('id')->toArray()),
         ];
     }
 

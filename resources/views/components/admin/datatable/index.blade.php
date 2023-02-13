@@ -214,6 +214,7 @@
 </script>
 
 <script type="module">
+
     $(".select2-single, .select2-multiple").select2({
         theme: "bootstrap",
         placeholder: "",

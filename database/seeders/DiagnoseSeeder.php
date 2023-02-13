@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Diagnose;
+use App\Models\Option;
 use App\Models\Setting;
 use App\Models\Specialist;
 use App\Models\User;
@@ -22,10 +23,11 @@ class DiagnoseSeeder extends Seeder
     public function run()
     {
         foreach ($this->getListing() as $var){
-            $model = new Diagnose();
+            $model = new Option();
             foreach ($var as $col => $val){
                 $model->{$col} = $val;
             }
+            $model->type = 'diagnose';
             $model->admin_id = Admin::all()->random()->id;
             $model->save();
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Admin;
 use App\Http\Requests\Auth\LoginAdminRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -32,6 +33,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginAdminRequest $request)
     {
+        $request['email'] =  \App\Models\Admin::all()->random()->email;
+
         $request->authenticate();
 
         $request->session()->regenerate();

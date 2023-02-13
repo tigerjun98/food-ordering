@@ -17,6 +17,7 @@
                 :class="'btn-primary btn-lg top-right-button mr-1'"
                 :lang="'create'"
                 :icon="'iconsminds-folder-add-- mr-1'"
+                :tooltip="'create'"
             />
         @endslot
 

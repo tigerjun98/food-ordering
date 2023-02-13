@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
+use App\Traits\Models\TimestampFormat;
 use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SoftDeletes, TimestampFormat;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -53,10 +54,24 @@ class User extends Authenticatable
         );
     }
 
+    protected function nricFormat(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => strlen($this->nric) == 12 ? nricFormat($this->nric) : $this->nric
+        );
+    }
+
     protected function stateName(): Attribute
     {
         return Attribute::make(
             get: fn () => ucfirst(static::getStatesList()[$this->state] ?? '')
+        );
+    }
+
+    protected function fullAddress(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->address.', '.$this->postcode.' '.$this->area.', '.$this->state
         );
     }
 
@@ -98,6 +113,8 @@ class User extends Authenticatable
 
     public function scopeFilter($query)
     {
+        request()->nric = str_replace('-', '', request()->nric);
+
         if(request()->filled('full_name')){
             $query->where(function ($q) {
                 $q->where('name_en', 'like', '%'.request()->full_name.'%')

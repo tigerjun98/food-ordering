@@ -9,8 +9,11 @@ use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 use phpDocumentor\Reflection\Types\Integer;
@@ -29,7 +32,7 @@ class Consultation extends Model
 
     public function patient()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public static function getSpecialistList()
@@ -53,6 +56,27 @@ class Consultation extends Model
     {
         return Attribute::make(
             get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
+        );
+    }
+
+    protected function specialistsExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getExplainFromDb($this->specialists),
+        );
+    }
+
+    protected function syndromesExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getExplainFromDb($this->syndromes),
+        );
+    }
+
+    protected function diagnosesExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getExplainFromDb($this->diagnoses),
         );
     }
 

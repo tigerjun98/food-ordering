@@ -36,7 +36,7 @@ class UserStoreRequest extends FormRequest
             'id'                                => ['integer'],
             'name_en'                           => ['required', 'string'],
             'name_cn'                           => ['nullable', 'string'],
-            'nric'                              => ['required', 'string'],
+            'nric'                              => ['required', 'string', 'min:12', 'max:14'],
             'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'email'                             => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
             'occupation'                        => ['nullable', 'string'],
@@ -52,5 +52,10 @@ class UserStoreRequest extends FormRequest
             'postcode'                          => ['nullable', 'digits:5'],
             'address'                           => ['nullable', 'string'],
         ];
+    }
+
+    protected function passedValidation()
+    {
+        $this->replace(['nric' => str_replace('-', '', request()->nric)]);
     }
 }

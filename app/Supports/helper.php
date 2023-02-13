@@ -65,6 +65,7 @@ function throwErr($msg){
 }
 
 function dateFormat($col, $format = 'd-m-Y'){
+    if($format == 'r') $format = 'd M, Y H:i A';
     return date($format, strtotime($col));
 }
 
@@ -480,6 +481,13 @@ function makeResponse($code, $message = null, $data = [])
 function arrayToString($arr)
 {
     return implode(",", array_keys($arr));
+}
+
+function nricFormat($str)
+{
+    return strlen($str) == 12
+        ? substr($str, 0, 6).'-'.substr($str, 6, 2).'-'.substr($str, 8, 4)
+        : $str;
 }
 
 function fundFormat($fund, $decimal = 2)

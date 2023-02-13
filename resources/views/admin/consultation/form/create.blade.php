@@ -31,17 +31,32 @@
                             @slot('body')
                                 <h5 class="mb-4">Basic</h5>
                                 <div class="row">
-                                    <x-admin.form.text
+                                    <x-admin.form.select
+                                        :ajax="route('admin.consultation.get-opt', 'specialist')"
+                                        :multiple="'multiple'"
                                         :data="$consultation"
-                                        :col="'md-6'"
-                                        :name="'password'"
-                                        :required="false"
+                                        :col="'md-12'"
+                                        :name="'specialists[]'"
                                     />
-                                    <x-admin.form.text
+                                </div>
+
+                                <div class="row">
+                                    <x-admin.form.select
+                                        :ajax="route('admin.consultation.get-opt', 'syndrome')"
+                                        :multiple="'multiple'"
                                         :data="$consultation"
-                                        :col="'md-6'"
-                                        :name="'password_confirmation'"
-                                        :required="false"
+                                        :col="'md-12'"
+                                        :name="'syndromes[]'"
+                                    />
+                                </div>
+
+                                <div class="row">
+                                    <x-admin.form.select
+                                        :ajax="route('admin.consultation.get-opt', 'diagnose')"
+                                        :multiple="'multiple'"
+                                        :data="$consultation"
+                                        :col="'md-12'"
+                                        :name="'diagnoses[]'"
                                     />
                                 </div>
 

@@ -18,9 +18,9 @@ return new class extends Migration
             $table->longText('symptom')->nullable();
             $table->longText('advise')->nullable();
             $table->longText('remark')->nullable();
-            $table->string('specialist')->nullable();
-            $table->string('syndrome')->nullable();
-            $table->string('diagnose')->nullable();
+            $table->string('specialists')->nullable();
+            $table->string('syndromes')->nullable();
+            $table->string('diagnoses')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->timestamps();

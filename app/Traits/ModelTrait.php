@@ -5,11 +5,19 @@ namespace App\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 trait ModelTrait {
 
+    public static function getExplainFromDb(string $items, $tableName = 'options' ): ?array
+    {
+        return DB::table($tableName)
+            ->whereIn('id', str_convert($items))
+            ->pluck('name_'.App::currentLocale())->toArray();
+    }
 
     public function getImgNotFoundSrc()
     {

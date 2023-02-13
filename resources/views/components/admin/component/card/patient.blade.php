@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
-        <h5 class="mb-4">{{ trans('common.patient_details') }}</h5>
-        <div class="row">
+        <h3 class="mb-5">{{ trans('common.patient_details') }}</h3>
+        <div class="row mb-2">
             <div class="col-md-6">
                 <x-admin.layout.info
                     :data="$data"
@@ -15,7 +15,29 @@
                 />
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <x-admin.layout.info
+                    :value="$data->genderExplain"
+                    :name="'gender'"
+                />
+            </div>
+            <div class="col-md-6">
+                <x-admin.layout.info
+                    :value="$data->nric_format"
+                    :name="'nric'"
+                />
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <x-admin.layout.info
+                    :data="$data"
+                    :name="'full_address'"
+                />
+            </div>
+        </div>
+        <div class="row mb-2">
             <div class="col-md-12">
                 <x-admin.layout.info
                     :data="$data"
@@ -23,5 +45,17 @@
                 />
             </div>
         </div>
+
+        <div class="modal-footer d-flex align-items-center mt-4">
+            <x-admin.component.button
+                :openModal="'{ header: `Edit`, url: `'.route('admin.user.edit', $data->id).'` }'"
+                :class="'btn-primary'" :text="'Edit'"/>
+        </div>
+
     </div>
 </div>
+<script>
+    function refreshDataTable(){
+        location.reload()
+    }
+</script>

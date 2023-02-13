@@ -24,24 +24,36 @@ class ConsultationsDataTable extends DataTable
         $query = Consultation::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->addColumn('full_name', function($row){
-                return $row->user->full_name;
+            ->editColumn('specialists', function($row){
+
+                $arr = '';
+                foreach ($row->specialists_explain as $item){
+                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$item.'</span>';
+                }
+                return $arr;
+
+            })->editColumn('created_at', function($row){
+                return dateFormat($row->created_at, 'r');
+            })->addColumn('nric', function($row){
+                return $row->patient->nric;
+            })->addColumn('full_name', function($row){
+                return $row->patient->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
+            })->rawColumns(['image', 'action', 'specialists'])
             ->orderColumn('created_at', 'desc');
     }
 
     public function getColumns(): array
     {
         return [
+            Column::make('id')->title('ref_id'),
             Column::make('nric'),
+            Column::make('specialists'),
             Column::make('full_name'),
-            Column::make('phone'),
-            Column::make('gender'),
-            Column::make('state'),
+            Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -34,6 +34,7 @@
     "dependencies": {
         "intl-tel-input": "^17.0.19",
         "laravel-vite-plugin": "^0.7.3",
+        "perfect-scrollbar": "^1.5.5",
         "vite": "^4.0.4"
     }
 }

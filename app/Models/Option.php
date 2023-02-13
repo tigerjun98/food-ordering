@@ -16,32 +16,17 @@ use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 use phpDocumentor\Reflection\Types\Integer;
 
-class Diagnose extends Model
+class Option extends Model
 {
     use SoftDeletes, ModelTrait, HasFactory, HasSlug;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
-    protected $table = 'diagnoses';
+    protected $table = 'options';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
-
-    public static function getStatusList()
-    {
-        return [
-            1 => trans('common.bottle'),
-            5 => trans('common.unit'),
-        ];
-    }
-
-    protected function statusExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
-        );
-    }
 
     public static function Filter(){
         return [

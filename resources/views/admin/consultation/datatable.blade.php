@@ -12,7 +12,7 @@
 {{--            </button>--}}
 
             <x-admin.component.button
-                :openModal="'{ header: `CREATE`, url: `'.route('admin.medicine.create').'` }'"
+                :redirect="'{ header: `CREATE`, url: `'.route('admin.medicine.create', '').'` }'"
                 :class="'btn-outline-primary btn-lg top-right-button mr-1'"
                 :lang="'create'"
                 :icon="'iconsminds-folder-add-- mr-1'"

@@ -29,12 +29,16 @@ class UsersDataTable extends DataTable
                 return $this->action($row);
             })->editColumn('state', function($row){
                 return $row->state_name;
+            })->editColumn('nric', function($row){
+                return nricFormat($row->nric);
             })->editColumn('gender', function($row){
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
             })->rawColumns(['image', 'action'])
-            ->orderColumn('created_at', 'desc');
+            ->order(function ($query) {
+                $query->orderBy('updated_at', 'desc');
+            });
     }
 
     public function getColumns(): array
@@ -45,6 +49,7 @@ class UsersDataTable extends DataTable
             Column::make('phone'),
             Column::make('gender'),
             Column::make('state'),
+            Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -95,7 +100,6 @@ class UsersDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
                     ->selectStyleSingle()
 //                    ->parameters([
 //                        'language' => [

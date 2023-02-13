@@ -23,5 +23,5 @@ return [
     'emergency_contact_no' => 'Emergency contact number',
     'emergency_contact_relationship' => 'Emergency contact relationship',
     'symptom' => 'Symptom',
-
+    'full_address' => 'Full Address',
 ];

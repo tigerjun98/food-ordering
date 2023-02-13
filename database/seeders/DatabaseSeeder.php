@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Clinic;
 use App\Models\Consultation;
+use App\Models\Option;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,15 +21,14 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory(100)->create();
-        Admin::factory(25)->create();
-
+        Admin::factory(100)->create();
         $this->call([
             SpecialistSeeder::class,
             MedicineSeeder::class,
             SyndromeSeeder::class,
-            DiagnoseSeeder::class,
         ]);
 
+        Option::factory(55)->create();
         Clinic::factory(15)->create();
         Consultation::factory(100)->create();
 

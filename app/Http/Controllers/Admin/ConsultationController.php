@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
+use App\Models\Option;
+use App\Models\Specialist;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
@@ -16,6 +18,7 @@ use App\Modules\Admin\Consultation\Services\ConsultationService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -35,6 +38,20 @@ class ConsultationController extends Controller {
         parent::__construct($request);
         $this->model = new Consultation();
         $this->service = new ConsultationService();
+    }
+
+    public function getSelectOpt($type)
+    {
+        $data = Option::where('type', $type)
+            ->select("name_".App::getLocale()." as name", "id")
+            ->where(function ($q) {
+                $q->where('name_en', 'LIKE', '%'. request()->get('search'). '%')
+                    ->orWhere('name_cn', 'LIKE', '%'. request()->get('search'). '%');
+            })->paginate(10);
+
+        $data->appends(['more' => false]);
+
+        return response()->json($data);
     }
 
     public function index(ConsultationsDataTable $dataTable)

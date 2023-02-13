@@ -101,5 +101,7 @@ return [
     'operation_success' => 'Operation success',
     'patients' => 'Patients',
     'consultations' => 'Consultations',
-    'medicines' => 'Medicines'
+    'medicines' => 'Medicines',
+    'patient_details' => 'Patient details',
+
 ];

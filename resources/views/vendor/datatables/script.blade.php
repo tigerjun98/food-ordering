@@ -17,15 +17,15 @@ lengthMenu: "Items Per Page _MENU_"
 $(%2$s).setLoader({fullScreen: true});
 },
 "fnInitComplete": function(oSettings, json) {
+{{--let dataTablePs = new PerfectScrollbar('.dataTables_scrollBody', { suppressScrollX: true });--}}
+{{--dataTablePs.isRtl = false;--}}
 let input = document.querySelector('div.dataTables_filter input');
 input.addEventListener('keyup', function () {
 document.getElementById("searchVal").value = this.value;
 });
 },
 drawCallback: function () {
-$($(".dataTables_wrapper .pagination li:first-of-type"))
-.find("a")
-.addClass("prev");
+$($(".dataTables_wrapper .pagination li:first-of-type")).find("a").addClass("prev");
 $($(".dataTables_wrapper .pagination li:last-of-type"))
 .find("a")
 .addClass("next");

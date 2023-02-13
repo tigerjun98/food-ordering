@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('/', [AdminController::class, 'index'])->name('home');
+
+    Route::get('/consultation/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('consultation.get-opt');
     // Route::customResource('user', UserController::class);
 
     Route::name('user.')->group(function () {
