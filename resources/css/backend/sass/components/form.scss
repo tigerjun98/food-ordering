@@ -1,4 +1,10 @@
+.select2-container--bootstrap .select2-selection.form-control{
+    height: auto !important;
+}
+
 form{
+
+
     label.has-float-label {
         position: relative;
         span{

@@ -40,18 +40,18 @@ class ConsultationController extends Controller {
         $this->service = new ConsultationService();
     }
 
+    public function getMedicineOpt()
+    {
+        return response()->json(
+            Medicine::FilterOption()->paginate(10)
+        );
+    }
+
     public function getSelectOpt($type)
     {
-        $data = Option::where('type', $type)
-            ->select("name_".App::getLocale()." as name", "id")
-            ->where(function ($q) {
-                $q->where('name_en', 'LIKE', '%'. request()->get('search'). '%')
-                    ->orWhere('name_cn', 'LIKE', '%'. request()->get('search'). '%');
-            })->paginate(10);
-
-        $data->appends(['more' => false]);
-
-        return response()->json($data);
+        return response()->json(
+            Option::where('type', $type)->FilterOption()->paginate(10)
+        );
     }
 
     public function index(ConsultationsDataTable $dataTable)

@@ -12,6 +12,9 @@
     $attributes['type'] = isset($type) && !$isDate ? $type : 'text';
     $attributes['id'] = isset($id) ? $id : $name;
 
+    $label = isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) );
+    $label = str_replace('[]', '', $label);
+
     if( !isset($value) && isset($data->{$name}) ){
         $value = $data->{$name};
         if($isDate){
@@ -27,6 +30,7 @@
          $attributes['value'] = $value;
     }
 
+    unset($attributes['icon-end']);
     unset($attributes['extraLabel']);
     unset($attributes['data']);
     unset($attributes['required']);
@@ -39,11 +43,24 @@
 
 @if(isset($col))<div class="col-{{ $col }}">@endif
 <label class="form-group has-float-label tooltip-center-bottom mb-3">
-    <input {!! $attrString !!} {{$action ?? '' }}
-        {{ isset($required) && $required ? 'required' : ''  }}
-    />
 
-    <span>{{ isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) ) }}
+    @if(isset($iconEnd))
+        <div class="input-group">
+    @endif
+
+            <input {!! $attrString !!} {{$action ?? '' }}
+                {{ isset($required) && $required ? 'required' : ''  }}
+            />
+
+    @if(isset($iconEnd))
+            <span class="input-group-text input-group-append input-group-addon" id="icon-end-{{ $attributes['id'] }}">
+                {!! $iconEnd !!}
+            </span>
+        </div>
+    @endif
+
+
+    <span>{{ $label }}
         <span class="text-danger">{{isset($required) && !$required ? '' : '*' }}</span>
     </span>
 

@@ -6,6 +6,7 @@ use App\Constants;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
+use App\Traits\Models\SelectOption;
 use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class Option extends Model
 {
-    use SoftDeletes, ModelTrait, HasFactory, HasSlug;
+    use SoftDeletes, ModelTrait, HasFactory, HasSlug, SelectOption;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -33,6 +34,13 @@ class Option extends Model
             'name_cn'     => ['type' => 'text', 'label' => 'Full name' ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+        );
     }
 
     public function scopeFilter($query)

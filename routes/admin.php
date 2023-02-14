@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/', [AdminController::class, 'index'])->name('home');
 
     Route::get('/consultation/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('consultation.get-opt');
+    Route::get('/consultation/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('consultation.get-medicine-opt');
     // Route::customResource('user', UserController::class);
 
     Route::name('user.')->group(function () {

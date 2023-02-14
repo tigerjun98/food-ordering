@@ -37,6 +37,7 @@ class MedicinesDataTable extends DataTable
     {
         return [
             Column::make('id'),
+            Column::make('sku'),
             Column::make('name_cn')->title('Name'),
             Column::make('description_cn')->title('Description'),
             Column::computed('action')

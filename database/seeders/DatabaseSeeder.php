@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(100)->create();
         Admin::factory(100)->create();
+
         $this->call([
             SpecialistSeeder::class,
             MedicineSeeder::class,
