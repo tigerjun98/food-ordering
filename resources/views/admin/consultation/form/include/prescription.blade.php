@@ -37,6 +37,7 @@
             <x-admin.form.textarea :rows="5" :name="'remark[*009b*]'"/>
         </div>
 
+        <input type="hidden" name="metric[*009b*]" id="metricUnit*009b*">
         <div id="medicineWrapper*009b*" class="hide ref-category-*009b*">
             <div class="" id="prescriptionCombination*009b*"></div>
             <div class="mt-2 border-top">
@@ -81,7 +82,9 @@
                 <div class="col-md-4">
                     <label class="form-group has-float-label tooltip-center-bottom mb-3">
                         <div class="input-group">
-                            <input type="number" name="dose[*009b*]" min="1" step="1" class="form-control"
+                            <input type="number"
+                                   name="dose_per_time[*009b*]"
+                                   min="1" step="1" class="form-control"
                                    id="timePerDose*009b*"
                                    onkeydown="countDailyDose('*009b*')"
                                    onchange="countDailyDose('*009b*')"
@@ -94,7 +97,9 @@
                 <div class="col-md-4">
                     <label class="form-group has-float-label tooltip-center-bottom mb-3">
                         <div class="input-group">
-                            <input type="number" class="form-control"
+                            <input type="number"
+                                   name="dose_daily[*009b*]"
+                                   class="form-control"
                                    id="totalDailyDoseVal*009b*"
                                    readonly
                             >
@@ -111,7 +116,7 @@
                     @foreach(\App\Models\Prescription::getDirectionList() as $key => $label)
                     <div class="custom-control custom-radio">
                         <input  type="radio"
-                                name="'direction[*009b*]'"
+                                name="direction[*009b*]"
                                 id="direction-{{$key}}-*009b*"
                                 value="{{ $key }}"
                                 class="custom-control-input"

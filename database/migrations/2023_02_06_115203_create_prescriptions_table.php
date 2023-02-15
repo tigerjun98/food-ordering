@@ -17,12 +17,13 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->integer('category')->nullable();
             $table->integer('time_per_day')->nullable();
-            $table->integer('dose')->nullable();
+            $table->integer('dose_per_time')->nullable();
+            $table->integer('dose_daily')->nullable();
             $table->integer('metric')->nullable();
             $table->integer('prescription_amount')->nullable();
             $table->integer('direction')->nullable();
+            $table->unsignedBigInteger('consultation_id')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

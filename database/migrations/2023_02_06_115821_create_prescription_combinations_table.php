@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('prescription_id')->nullable();
             $table->unsignedBigInteger('medicine_id')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

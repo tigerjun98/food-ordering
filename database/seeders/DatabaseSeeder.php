@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         User::factory(100)->create();
         Admin::factory(100)->create();
 
@@ -32,6 +31,5 @@ class DatabaseSeeder extends Seeder
         Option::factory(55)->create();
         Clinic::factory(15)->create();
         Consultation::factory(100)->create();
-
     }
 }

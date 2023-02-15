@@ -129,9 +129,11 @@
 
             let metrics = '{{ implode(',', \App\Models\Prescription::getMetricList()) }}';
             const refs = document.getElementsByClassName(`metric-unit-${id}`);
+            let metric = metrics.split(',')[val - 1];
             Array.prototype.forEach.call(refs, function (el) { // loop classes
-                $(el).text(metrics.split(',')[val - 1])
+                $(el).text(metric)
             });
+            $(`#metricUnit${id}`).val(metric)
         }
 
         const changeCategory = (e, id) => {

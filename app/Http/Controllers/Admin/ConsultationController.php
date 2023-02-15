@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Consultation\Services\ConsultationService;
+use App\Modules\Admin\Consultation\Services\PrescriptionService;
 use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
@@ -71,6 +72,12 @@ class ConsultationController extends Controller {
     {
         $consultation = Consultation::find($id) ?? [];
         $patient = $consultation ? $consultation->patient : User::find($id);
+
+//        dd(
+//            $consultation->prescriptions,
+//            $consultation->prescription_combinations
+//        );
+
         if(!$patient)
             return redirect()->route('admin.user.index')->with('fail', trans('messages.patient_not_found'));
 
@@ -80,6 +87,7 @@ class ConsultationController extends Controller {
     public function store(ConsultationStoreRequest $request)
     {
         $this->service->store($request->validated());
+        dd('12');
         return makeResponse(200);
     }
 

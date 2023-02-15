@@ -26,6 +26,7 @@ class Authenticate extends Middleware
 
     protected function redirectTo($request)
     {
+
         if (! $request->expectsJson()) {
 
             if($request->path() == 'admin/horizon/dashboard'){

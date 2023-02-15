@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
+use App\Models\Prescription;
 use App\Models\User;
 use App\Modules\Admin\Option\Services\OptionService;
 use Carbon\Carbon;
@@ -20,9 +21,9 @@ class ConsultationService
         $this->model = new Consultation();
     }
 
-    public function store(array $request): Medicine
+    public function store(array $request): Consultation
     {
-        $request = $this->handleMultiSelectOpt($request);
+        $request = $this->optionExistsOrCreate($request);
 
         $model = isset($request['id'])
             ? $this->model->find($request['id'])
@@ -35,7 +36,7 @@ class ConsultationService
         return $model;
     }
 
-    public function handleMultiSelectOpt(array $request): array
+    public function optionExistsOrCreate(array $request): array
     {
         $columns = ['specialists', 'syndromes', 'diagnoses'];
         foreach ($columns as $type){
@@ -47,12 +48,18 @@ class ConsultationService
         return $request;
     }
 
-    public function create(array $request)
+    public function create(array $request): Consultation
     {
+
         $consultation = array_only($request, [
             'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
         ]);
-        Consultation::create($consultation);
+
+        $consultation = Consultation::create($consultation);
+        (new ConsultationPrescriptionService($consultation))->store($request);
+
+        return $consultation;
+
     }
 
 

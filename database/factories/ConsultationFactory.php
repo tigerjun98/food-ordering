@@ -30,7 +30,7 @@ class ConsultationFactory extends Factory
             'user_id' => User::all()->random()->id,
             'advise' => $this->faker->realText(),
             'symptom' => $this->faker->realText(),
-            'remark' => $this->faker->realText(),
+            'internal_remark' => $this->faker->realText(),
             'diagnoses' => implode(',', Option::where('type', 'diagnose')->get()->random(rand(1,2))->pluck('id')->toArray()),
             'syndromes' => implode(',', Option::where('type', 'syndrome')->get()->random(rand(1,2))->pluck('id')->toArray()),
             'specialists' => implode(',', Option::where('type', 'specialist')->get()->random(rand(1,5))->pluck('id')->toArray()),

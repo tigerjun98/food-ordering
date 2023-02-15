@@ -7,6 +7,7 @@ use App\Traits\Models\FilterTrait;
 use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\ModelTrait;
+use Carbon\Traits\Options;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 use phpDocumentor\Reflection\Types\Integer;
 
-class Prescription extends Model
+class PrescriptionCombination extends Model
 {
     use ModelTrait, HasFactory, ObserverTrait;
     use FilterTrait {
@@ -24,44 +25,15 @@ class Prescription extends Model
     }
 
     public $incrementing = false;
-    protected $table = 'prescriptions';
+    protected $table = 'prescription_combinations';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
 
-    public function combinations()
+    protected function statusExplain(): Attribute
     {
-        return $this->hasMany(PrescriptionCombination::class, 'prescription_id', 'id');
-    }
-
-    public static function getDirectionList()
-    {
-        return [
-            1 => trans('common.before_meal'),
-            2 => trans('common.after_meal'),
-            3 => trans('common.empty_stomach'),
-            4 => trans('common.when_need'),
-        ];
-    }
-
-    public static function getMetricList()
-    {
-        return [
-            1 => trans('common.pill'),
-            2 => trans('common.gram'),
-            3 => trans('common.ml'),
-        ];
-    }
-
-    public static function getCategoryList()
-    {
-        return [
-            1 => trans('common.tablet_or_capsule'),
-            2 => trans('common.granule_or_powder'),
-            3 => trans('common.liquid'),
-            4 => trans('common.external_use'),
-            5 => trans('common.acupuncture'),
-            6 => trans('common.massage'),
-        ];
+        return Attribute::make(
+            get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
+        );
     }
 
     public static function Filter(){
