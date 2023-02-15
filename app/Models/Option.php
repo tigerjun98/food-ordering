@@ -28,6 +28,7 @@ class Option extends Model
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+    public $incrementing = false;
 
     public static function Filter(){
         return [

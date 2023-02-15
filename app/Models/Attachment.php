@@ -9,6 +9,7 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Attachment extends Model
 {
+    public $incrementing = false;
     protected $table = 'attachments';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';

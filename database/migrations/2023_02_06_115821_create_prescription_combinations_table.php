@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('prescription_combinations', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->integer('quantity')->nullable();
+            $table->longText('remark')->nullable();
             $table->unsignedBigInteger('prescription_id')->nullable();
             $table->unsignedBigInteger('medicine_id')->nullable();
             $table->timestamps();

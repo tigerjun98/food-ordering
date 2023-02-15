@@ -9,7 +9,7 @@ use App\Models\Admin;
 use App\Models\Medicine;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
-use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
+use App\Modules\Admin\Medicine\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Medicine\Services\MedicineService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
@@ -56,7 +56,7 @@ class MedicineController extends Controller {
         ]);
     }
 
-    public function store(MedicineStoreRequest $request)
+    public function store(ConsultationStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

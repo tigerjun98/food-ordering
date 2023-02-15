@@ -25,6 +25,7 @@ class Consultation extends Model
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
+    public $incrementing = false;
     protected $table = 'consultations';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';

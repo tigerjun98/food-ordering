@@ -17,6 +17,7 @@
     unset($attributes['extraLabel']);
     unset($attributes['data']);
     unset($attributes['required']);
+    unset($attributes['ajax']);
 
     $attrString = "";
     foreach($attributes as $attrKey => $attrValue){
@@ -84,7 +85,7 @@
             maximumSelectionSize: 6,
             containerCssClass: ":all:",
             tags: true,
-            tokenSeparators: [',', ' '],
+            tokenSeparators: [','],
             createTag: function (params) {
                 var term = $.trim(params.term);
                 if (term === '') {

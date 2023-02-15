@@ -10,11 +10,11 @@ use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
-use App\Models\Specialist;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
-use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
+use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Consultation\Services\ConsultationService;
+use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -77,7 +77,7 @@ class ConsultationController extends Controller {
         return html('admin.consultation.form.create', compact('consultation', 'patient'));
     }
 
-    public function store(MedicineStoreRequest $request)
+    public function store(ConsultationStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

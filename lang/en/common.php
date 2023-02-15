@@ -103,5 +103,9 @@ return [
     'consultations' => 'Consultations',
     'medicines' => 'Medicines',
     'patient_details' => 'Patient details',
-
+    'prescription_combination' => 'Prescription combination',
+    'prescription' => 'Prescription',
+    'pill' => 'pill',
+    'gram' => 'G',
+    'ml' => 'ML',
 ];

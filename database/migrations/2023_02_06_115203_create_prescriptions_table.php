@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('dose')->nullable();
             $table->integer('metric')->nullable();
             $table->integer('prescription_amount')->nullable();
-            $table->integer('labeling')->nullable();
+            $table->integer('direction')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

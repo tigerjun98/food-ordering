@@ -24,4 +24,9 @@ return [
     'emergency_contact_relationship' => 'Emergency contact relationship',
     'symptom' => 'Symptom',
     'full_address' => 'Full Address',
+    'prescription_category' => 'Prescription category',
+    'time_per_day' => 'Time/day',
+    'time_per_dose' => 'Time/dose',
+    'daily_dose' => 'Daily dosage'
+
 ];

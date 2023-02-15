@@ -23,6 +23,7 @@ class Medicine extends Model
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
+    public $incrementing = false;
     protected $table = 'medicines';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';

@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="modal-footer d-flex align-items-center mt-4">
+        <div class="modal-footer d-flex align-items-center mt-4 pb-0">
             <x-admin.component.button
                 :openModal="'{ header: `Edit`, url: `'.route('admin.user.edit', $data->id).'` }'"
                 :class="'btn-primary'" :text="'Edit'"/>

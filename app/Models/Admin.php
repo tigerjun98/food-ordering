@@ -21,6 +21,7 @@ class Admin extends Authenticatable
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
+    public $incrementing = false;
     protected $table = 'admins';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';

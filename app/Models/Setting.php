@@ -8,6 +8,7 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Setting extends Model
 {
+    public $incrementing = false;
     protected $table = 'setting';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';

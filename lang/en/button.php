@@ -16,5 +16,7 @@ return [
     'close' => 'Close',
     'confirm_delete' => 'Confirm delete',
     'submit' => 'Submit',
-
+    'remove' => 'Remove',
+    'add_combination' => 'Add combination',
+    'add_prescription' => 'Add prescription',
 ];

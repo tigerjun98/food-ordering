@@ -23,10 +23,30 @@ class Prescription extends Model
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
+    public $incrementing = false;
     protected $table = 'prescriptions';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
+
+    public static function getDirectionList()
+    {
+        return [
+            1 => trans('common.before_meal'),
+            2 => trans('common.after_meal'),
+            3 => trans('common.empty_stomach'),
+            4 => trans('common.when_need'),
+        ];
+    }
+
+    public static function getMetricList()
+    {
+        return [
+            1 => trans('common.pill'),
+            2 => trans('common.gram'),
+            3 => trans('common.ml'),
+        ];
+    }
 
     public static function getCategoryList()
     {
@@ -34,8 +54,9 @@ class Prescription extends Model
             1 => trans('common.tablet_or_capsule'),
             2 => trans('common.granule_or_powder'),
             3 => trans('common.liquid'),
-            4 => trans('common.bottle'),
-            5 => trans('common.unit'),
+            4 => trans('common.external_use'),
+            5 => trans('common.acupuncture'),
+            6 => trans('common.massage'),
         ];
     }
 

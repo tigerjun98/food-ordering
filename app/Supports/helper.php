@@ -2,6 +2,14 @@
 
 use App\Exceptions\CommonException;
 
+function array_only(array $request, array $key): array
+{
+    return array_filter(
+        $request, fn ($index) => in_array($index, $key),
+        ARRAY_FILTER_USE_KEY
+    );
+}
+
 function new_id(): int
 {
     return abs( crc32( uniqid() ) );
@@ -12,7 +20,7 @@ function request_has($params): bool
     return request()->filled($params) && request()->{$params} != '';
 }
 
-function request_str_convert($params)
+function request_str_convert($params): array
 {
     if(is_array(request()->{$params})) return request()->{$params};
 
