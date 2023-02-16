@@ -50,21 +50,18 @@
 </label>
 @if(isset($col))</div>@endif
 
-<script type="module">
-
-</script>
-@if(isset($onchange) && $onchange)
-    <script>
-        $("#{{$id ?? $name}}").change(function() {
-            $("#{{ $attributes['id'] }}").updateOption({
-                id: '{{$onchange}}',
-                @if(isset($onchangeValue) && $onchangeValue)
-                val: '{{$onchangeValue}}'
-                @endif
-            });
-        });
-    </script>
-@endif
+{{--@if(isset($onchange) && $onchange)--}}
+{{--    <script>--}}
+{{--        $("#{{$id ?? $name}}").change(function() {--}}
+{{--            $("#{{ $attributes['id'] }}").updateOption({--}}
+{{--                id: '{{$onchange}}',--}}
+{{--                @if(isset($onchangeValue) && $onchangeValue)--}}
+{{--                val: '{{$onchangeValue}}'--}}
+{{--                @endif--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--@endif--}}
 
 <script type="module">
     $('#{{ $attributes['id'] }}').change(function (){
@@ -74,7 +71,10 @@
         });
     });
 
+    @if(!isset($multiple))
     $('#{{ $attributes['id'] }}').val('{{ $value ?? '' }}').trigger('change');
+    @endif
+
 
     @if(isset($ajax))
         $('#{{ $attributes['id'] }}').select2({

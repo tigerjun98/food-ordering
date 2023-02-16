@@ -28,6 +28,11 @@ class Prescription extends Model
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
 
+    public function consultation()
+    {
+        return $this->belongsTo(Consultation::class);
+    }
+
     public function combinations()
     {
         return $this->hasMany(PrescriptionCombination::class, 'prescription_id', 'id');
@@ -41,6 +46,13 @@ class Prescription extends Model
             3 => trans('common.empty_stomach'),
             4 => trans('common.when_need'),
         ];
+    }
+
+    protected function metricExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->metric ? self::getMetricList()[$this->metric] : '',
+        );
     }
 
     public static function getMetricList()

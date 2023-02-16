@@ -29,6 +29,16 @@ class PrescriptionCombination extends Model
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
 
+    public function prescription()
+    {
+        return $this->belongsTo(Prescription::class);
+    }
+
+    public function medicine()
+    {
+        return $this->belongsTo(Medicine::class);
+    }
+
     protected function statusExplain(): Attribute
     {
         return Attribute::make(

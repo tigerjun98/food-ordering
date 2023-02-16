@@ -33,7 +33,7 @@ class Consultation extends Model
 
     public function prescriptions()
     {
-        return $this->hasMany(Prescription::class, 'id', 'consultation_id');
+        return $this->hasMany(Prescription::class, 'consultation_id', 'id');
     }
 
     public function patient()
@@ -64,6 +64,15 @@ class Consultation extends Model
             get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
         );
     }
+
+//    protected function specialists(): Attribute
+//    {
+//        // explode(',', $this->specialists);
+//
+//        return Attribute::make(
+//            get: fn () => self::getExplainFromDb($this->specialists),
+//        );
+//    }
 
     protected function specialistsExplain(): Attribute
     {

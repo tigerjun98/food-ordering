@@ -6,6 +6,8 @@ use App\Models\Admin;
 use App\Models\Clinic;
 use App\Models\Consultation;
 use App\Models\Option;
+use App\Models\Prescription;
+use App\Models\PrescriptionCombination;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,6 +32,8 @@ class DatabaseSeeder extends Seeder
 
         Option::factory(55)->create();
         Clinic::factory(15)->create();
-        Consultation::factory(100)->create();
+//        Consultation::factory(100)->create();
+//        Prescription::factory(150)->create();
+//        PrescriptionCombination::factory(250)->create();
     }
 }

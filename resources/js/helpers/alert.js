@@ -1,5 +1,42 @@
 import 'bootstrap-notify';
 
+function getPos(ele){
+    var x=0;
+    var y=0;
+    while(true){
+        x += ele.offsetLeft;
+        y += ele.offsetTop;
+        if(ele.offsetParent === null){
+            break;
+        }
+        ele = ele.offsetParent;
+    }
+    return [x, y];
+}
+
+const setAlertPosition = async () => {
+
+    let openingModalIds = $(this).getModalId();
+    if(openingModalIds.length > 0){
+        let elem = document.getElementById($(this).getModalId({latest: true}))
+        $('#app-alert').css({
+            'width' : elem.style.width,
+        });
+
+    } else{
+
+        let elem = document.getElementById('main_row')
+        const width = parseInt($('#main_row').css('width')) - parseInt($('#main_row').css('padding-right'))
+        const elemPosition = getPos(elem)
+
+        $('#app-alert').css({
+            'width' : width,
+            'left' : elemPosition[0]+'px',
+        });
+    }
+}
+
+
 $.fn.showAlert = function(options) {
     // default options.
     const settings = $.extend({
@@ -10,6 +47,7 @@ $.fn.showAlert = function(options) {
     }, options);
 
     let id = Date.now(), errorsHtml = '<ul>';
+    setAlertPosition();
 
     if (settings.status == 'success') {
 

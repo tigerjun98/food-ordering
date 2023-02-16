@@ -32,14 +32,14 @@ class ConsultationTest extends TestCase
             'diagnoses' => Option::take(2)->pluck('id'),
             'symptom' => $faker->realText,
             'category' => [
-                '123' => rand(1, 6),
-                '456' => rand(1, 6),
-                '789' => rand(1, 6),
+                '123' => array_rand(Prescription::getCategoryList()),
+                '456' => array_rand(Prescription::getCategoryList()),
+                '789' => array_rand(Prescription::getCategoryList()),
             ],
             'metric' => [
-                '123' => rand(1, 3),
-                '456' => rand(1, 3),
-                '789' => rand(1, 3),
+                '123' => array_rand(Prescription::getMetricList()),
+                '456' => array_rand(Prescription::getMetricList()),
+                '789' => array_rand(Prescription::getMetricList()),
             ],
             'time_per_day' => [
                 '123' => rand(1, 6),
@@ -57,9 +57,9 @@ class ConsultationTest extends TestCase
                 '789' => rand(1, 6),
             ],
             'direction' => [
-                '123' => rand(1, 4),
-                '456' => rand(1, 4),
-                '789' => rand(1, 4),
+                '123' => array_rand(Prescription::getDirectionList()),
+                '456' => array_rand(Prescription::getDirectionList()),
+                '789' => array_rand(Prescription::getDirectionList()),
             ],
             'medicine_id' => [
                 '123' => Medicine::take(2)->pluck('id')->toArray(),

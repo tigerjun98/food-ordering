@@ -20,8 +20,9 @@ return new class extends Migration
             $table->integer('dose_per_time')->nullable();
             $table->integer('dose_daily')->nullable();
             $table->integer('metric')->nullable();
-            $table->integer('prescription_amount')->nullable();
+            $table->integer('combination_amount')->nullable();
             $table->integer('direction')->nullable();
+            $table->longText('remark')->nullable();
             $table->unsignedBigInteger('consultation_id')->nullable();
             $table->timestamps();
         });

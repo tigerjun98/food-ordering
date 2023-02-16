@@ -30,19 +30,23 @@ class ConsultationPrescriptionService
         foreach( $combinationColumn as $column ){
             $combination[$column] = $request[$column][$key] ?? '';
         }
-        (new ConsultationPrescriptionCombinationService($prescription))->store($combination);
+
+        if( is_array($combination['medicine_id']) ){
+            (new ConsultationPrescriptionCombinationService($prescription))->store($combination);
+        }
     }
 
     public function storePrescription(array $request, int $key): Prescription
     {
-        $columns = ['category', 'time_per_day', 'dose_per_time', 'dose_daily', 'metric', 'direction'];
+        $columns = ['remark', 'category', 'time_per_day', 'dose_per_time', 'dose_daily', 'metric', 'direction', 'combination_amount'];
 
         $prescription = [
             'consultation_id' => $this->relation->id,
         ];
 
+
         foreach( $columns as $column ){
-            $prescription[$column] = $request[$column][$key];
+            $prescription[$column] = $request[$column][$key] ?? null;
         }
         $prescription = $this->model->create($prescription);
         return $prescription;
@@ -54,12 +58,8 @@ class ConsultationPrescriptionService
         $this->reset();
 
         foreach ( $request['category'] as $key => $item ){
-
             $prescription = $this->storePrescription($request, $key);
-
-            if($item < 4){
-                $this->handleCombination($request, $prescription, $key);
-            }
+            if($item < 4) $this->handleCombination($request, $prescription, $key);
         }
 
         return Consultation::find($this->relation->id);

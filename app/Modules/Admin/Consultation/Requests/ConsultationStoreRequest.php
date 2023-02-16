@@ -36,12 +36,13 @@ class ConsultationStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'                                => ['integer'],
+            'id'                                => ['nullable', 'integer'],
             'user_id'                           => ['required', 'exists:users,id'],
             'medicine_id.*.*'                   => ['required'],
             'quantity.*.*'                      => ['required', 'integer'],
             'time_per_day.*'                    => ['nullable', 'integer'],
             'dose_per_time.*'                   => ['nullable', 'integer'],
+            'combination_amount.*'              => ['nullable', 'integer'],
             'dose_daily.*'                      => ['nullable', 'integer'],
             'metric.*'                          => ['nullable', 'in:'.arrayToString(Prescription::getMetricList())],
             'diagnoses.*'                       => ['nullable', 'string'],

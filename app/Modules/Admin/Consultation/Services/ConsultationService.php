@@ -24,15 +24,12 @@ class ConsultationService
     public function store(array $request): Consultation
     {
         $request = $this->optionExistsOrCreate($request);
+        $consultation = array_only($request, [
+            'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
+        ]);
 
-        $model = isset($request['id'])
-            ? $this->model->find($request['id'])
-            : null; // generate unique id
-
-        $model = $model
-            ? $model->update($request)
-            : self::create($request);
-
+        $model = $this->model->updateOrCreate(['id' => $request['id'] ], $consultation);
+        (new ConsultationPrescriptionService($model))->store($request);
         return $model;
     }
 
@@ -48,20 +45,17 @@ class ConsultationService
         return $request;
     }
 
-    public function create(array $request): Consultation
-    {
-
-        $consultation = array_only($request, [
-            'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
-        ]);
-
-        $consultation = Consultation::create($consultation);
-        (new ConsultationPrescriptionService($consultation))->store($request);
-
-        return $consultation;
-
-    }
-
+//    public function create(array $request): Consultation
+//    {
+//        $consultation = array_only($request, [
+//            'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
+//        ]);
+//
+//        $consultation = Consultation::create($consultation);
+//        (new ConsultationPrescriptionService($consultation))->store($request);
+//
+//        return $consultation;
+//    }
 
     public function delete(Consultation $model)
     {

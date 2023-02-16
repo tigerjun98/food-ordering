@@ -82,11 +82,13 @@
         @include('admin.include.layout.sidebar')
 {{--        @include('admin.include.layout.loading')--}}
 
+        <x-admin.layout.alert />
+
         <main>
             <div id="modalWrapper"></div>
 
             <div class="container-fluid">
-                <x-admin.layout.alert />
+
 {{--                @include('user.include.layouts.alert')--}}
                 @yield('content')
             </div>

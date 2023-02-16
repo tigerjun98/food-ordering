@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants;
 use App\Traits\Models\FilterTrait;
+use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
 use App\Traits\ModelTrait;
@@ -18,7 +19,7 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class Medicine extends Model
 {
-    use SoftDeletes, ModelTrait, HasFactory, SelectOption;
+    use SoftDeletes, ModelTrait, HasFactory, SelectOption, HasSlug;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -29,19 +30,11 @@ class Medicine extends Model
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
 
-    protected static function boot()
+    protected function fullName(): Attribute
     {
-        parent::boot();
-        static::creating(function($data) {
-            if(!$data->id) $data->id = abs( crc32( uniqid() ) );
-        });
-
-        static::saving(function ($model) {
-            $pinyin = implode(' ', Pinyin::convert($model->name_cn));
-            $model->slug = slugify($pinyin);
-            if(!$model->name_en)
-                $model->name_en = $pinyin;
-        });
+        return Attribute::make(
+            get: fn () => $this->name_cn ? $this->name_cn.' '.$this->name_en : $this->name_en
+        );
     }
 
     public static function getTypeList()

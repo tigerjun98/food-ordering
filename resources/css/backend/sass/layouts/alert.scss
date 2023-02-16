@@ -24,7 +24,7 @@
     transform: translateX(-50%);
     height: auto;
     position: absolute;
-     top: -40px;
+    top: 30px;
 
     div[data-notify=container]{
         margin: 0 15px !important;
@@ -52,9 +52,12 @@
 }
 
 .app-row{
+
     .app-alert {
-        position: relative;
-        padding-right: 295px;
-        padding-left: 15px;
+        position: fixed;
+        left: 120px;
+        top: 77px;
+        transform: initial;
     }
 }
+

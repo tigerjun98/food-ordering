@@ -26,6 +26,7 @@
 
             <x-admin.form :route="route('admin.consultation.store')">
                 @slot('body')
+                    <input type="hidden" name="id" value="{{ $consultation->id ?? null }}">
                     <input type="hidden" name="user_id" value="{{ $patient->id }}">
                     <div class="row mb-4">
                         <div class="col-lg-6 mt-4">
@@ -36,10 +37,17 @@
                                         <x-admin.form.select
                                             :ajax="route('admin.consultation.get-opt', 'specialist')"
                                             :multiple="'multiple'"
-                                            :data="$consultation"
                                             :col="'md-12'"
                                             :name="'specialists[]'"
-                                        />
+                                        >
+                                            @if($consultation)
+                                                @slot('customOption')
+                                                    @foreach($consultation->specialists_explain as $key => $item)
+                                                        <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
+                                                    @endforeach
+                                                @endslot
+                                            @endif
+                                        </x-admin.form.select>
                                     </div>
 
                                     <div class="row">
@@ -49,7 +57,15 @@
                                             :data="$consultation"
                                             :col="'md-12'"
                                             :name="'syndromes[]'"
-                                        />
+                                        >
+                                            @if($consultation)
+                                                @slot('customOption')
+                                                    @foreach($consultation->syndromes_explain as $key => $item)
+                                                        <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
+                                                    @endforeach
+                                                @endslot
+                                            @endif
+                                        </x-admin.form.select>
                                     </div>
 
                                     <div class="row">
@@ -59,22 +75,46 @@
                                             :data="$consultation"
                                             :col="'md-12'"
                                             :name="'diagnoses[]'"
-                                        />
+                                        >
+                                            @if($consultation)
+                                                @slot('customOption')
+                                                    @foreach($consultation->diagnoses_explain as $key => $item)
+                                                        <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
+                                                    @endforeach
+                                                @endslot
+                                            @endif
+                                        </x-admin.form.select>
                                     </div>
 
-                                    <x-admin.form.textarea :name="'symptom'" :rows="6"/>
-
+                                    <x-admin.form.textarea
+                                        :data="$consultation"
+                                        :name="'symptom'"
+                                        :rows="10"
+                                    />
 
                                     <div class="separator"></div>
 
-
-                                    <x-admin.form.textarea :name="'advise'"/>
-                                    <x-admin.form.textarea :name="'internal_remark'"/>
+                                    <x-admin.form.textarea
+                                        :data="$consultation"
+                                        :name="'advise'"
+                                        :rows="5"
+                                    />
+                                    <x-admin.form.textarea
+                                        :data="$consultation"
+                                        :name="'internal_remark'"
+                                        :rows="5"
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-4">
-                            <div class="" id="prescriptionsWrapper"></div>
+                            <div class="" id="prescriptionsWrapper">
+                                @if($consultation)
+                                    @foreach($consultation->prescriptions as $key => $prescription)
+                                        @include('admin.consultation.form.include.prescription', ['data' => $prescription])
+                                    @endforeach
+                                @endif
+                            </div>
 
                             <x-admin.component.button
                                 :onclick="'addPrescriptions()'"
@@ -103,7 +143,8 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            addPrescriptions()
+            @if(!$consultation) addPrescriptions(); @endif
+            initializeMedicineSelect2()
         })
 
         const countDailyDose = (id) => {
@@ -133,7 +174,7 @@
             Array.prototype.forEach.call(refs, function (el) { // loop classes
                 $(el).text(metric)
             });
-            $(`#metricUnit${id}`).val(metric)
+            $(`#metricUnit${id}`).val(val)
         }
 
         const changeCategory = (e, id) => {
@@ -142,6 +183,7 @@
                 $(el).addClass('hide')
             });
 
+            $(`#remark${id}`).val('')
             countTotalMetric(id) // reset total amount
 
             let arr = [1, 2, 3], val = Number($(e).val());

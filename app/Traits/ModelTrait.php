@@ -14,9 +14,17 @@ trait ModelTrait {
 
     public static function getExplainFromDb(string $items, $tableName = 'options' ): ?array
     {
-        return DB::table($tableName)
+        $items = DB::table($tableName)
             ->whereIn('id', str_convert($items))
-            ->pluck('name_'.App::currentLocale())->toArray();
+            ->select(DB::raw("( CASE WHEN name_cn != '' THEN CONCAT(name_cn,' ',name_en) ELSE name_en END) as name"), 'id')
+            ->get();
+
+        $arr = [];
+        foreach ( $items as $item ) {
+            $arr[$item->id] = $item->name;
+        }
+
+        return $arr;
     }
 
     public function getImgNotFoundSrc()

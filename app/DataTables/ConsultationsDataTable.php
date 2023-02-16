@@ -64,8 +64,8 @@ class ConsultationsDataTable extends DataTable
     {
         $actions = [
             'edit' => [
-                'icon' => 'simple-icon-pencil',
-                'modal' => route('admin.user.edit', $row->id)
+                'icon'      => 'simple-icon-pencil',
+                'redirect'  => route('admin.consultation.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
@@ -100,7 +100,6 @@ class ConsultationsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
