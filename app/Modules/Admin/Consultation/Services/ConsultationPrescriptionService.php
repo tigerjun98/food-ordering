@@ -16,6 +16,7 @@ class ConsultationPrescriptionService
 {
     private Prescription $model;
     private Consultation $relation;
+    private int $sorting = 0;
 
     public function __construct(Consultation $consultation)
     {
@@ -41,7 +42,8 @@ class ConsultationPrescriptionService
         $columns = ['remark', 'category', 'time_per_day', 'dose_per_time', 'dose_daily', 'metric', 'direction', 'combination_amount'];
 
         $prescription = [
-            'consultation_id' => $this->relation->id,
+            'consultation_id'   => $this->relation->id,
+            'sorting'           => $this->sorting++
         ];
 
 
@@ -55,7 +57,7 @@ class ConsultationPrescriptionService
 
     public function store(array $request): Consultation
     {
-        $this->reset();
+        $this->delete();
 
         foreach ( $request['category'] as $key => $item ){
             $prescription = $this->storePrescription($request, $key);
@@ -65,10 +67,11 @@ class ConsultationPrescriptionService
         return Consultation::find($this->relation->id);
     }
 
-    public function reset()
+    public function delete()
     {
         foreach ($this->relation->prescriptions as $prescription){
             $prescription->delete();
+            (new ConsultationPrescriptionCombinationService($prescription))->delete();
         }
     }
 }

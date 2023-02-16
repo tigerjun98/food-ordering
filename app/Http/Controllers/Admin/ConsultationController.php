@@ -62,9 +62,8 @@ class ConsultationController extends Controller {
         ]);
     }
 
-    public function create()
+    public function create() // use edit() to create consultation.
     {
-        // use edit() to create consultation.
         abort(404);
     }
 
@@ -74,9 +73,13 @@ class ConsultationController extends Controller {
         $patient = $consultation ? $consultation->patient : User::find($id);
 
         if(!$patient)
-            return redirect()->route('admin.user.index')->with('fail', trans('messages.patient_not_found'));
+            return redirect()
+                ->route('admin.user.index')
+                ->with('fail', trans('messages.patient_not_found'));
 
-        return html('admin.consultation.form.create', compact('consultation', 'patient'));
+        return html('admin.consultation.form.create', compact(
+            'consultation', 'patient'
+        ));
     }
 
     public function store(ConsultationStoreRequest $request)

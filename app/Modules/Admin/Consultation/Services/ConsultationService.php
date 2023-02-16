@@ -60,5 +60,6 @@ class ConsultationService
     public function delete(Consultation $model)
     {
         $model->delete();
+        (new ConsultationPrescriptionService($model))->delete();
     }
 }

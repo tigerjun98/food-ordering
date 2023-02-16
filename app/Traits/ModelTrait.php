@@ -12,17 +12,21 @@ use Illuminate\Support\Facades\DB;
 
 trait ModelTrait {
 
-    public static function getExplainFromDb(string $items, $tableName = 'options' ): ?array
+    public static function getExplainFromDb($items, $tableName = 'options' ): ?array
     {
-        $items = DB::table($tableName)
-            ->whereIn('id', str_convert($items))
-            ->select(DB::raw("( CASE WHEN name_cn != '' THEN CONCAT(name_cn,' ',name_en) ELSE name_en END) as name"), 'id')
-            ->get();
-
         $arr = [];
-        foreach ( $items as $item ) {
-            $arr[$item->id] = $item->name;
+
+        if($items){
+            $items = DB::table($tableName)
+                ->whereIn('id', str_convert($items))
+                ->select(DB::raw("( CASE WHEN name_cn != '' THEN CONCAT(name_cn,' ',name_en) ELSE name_en END) as name"), 'id')
+                ->get();
+
+            foreach ( $items as $item ) {
+                $arr[$item->id] = $item->name;
+            }
         }
+
 
         return $arr;
     }

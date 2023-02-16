@@ -35,7 +35,8 @@ class Prescription extends Model
 
     public function combinations()
     {
-        return $this->hasMany(PrescriptionCombination::class, 'prescription_id', 'id');
+        return $this->hasMany(PrescriptionCombination::class, 'prescription_id', 'id')
+            ->orderBy('sorting', 'asc');
     }
 
     public static function getDirectionList()

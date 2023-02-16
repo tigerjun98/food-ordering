@@ -6,6 +6,9 @@
     $attributes['rows'] = $rows ?? 2;
     $attributes['id'] = isset($id) ? $id : $name;
 
+    $label = isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) );
+    $label = str_replace('[]', '', $label);
+
     if( !isset($value) && isset($data->{$name}) ){
         $value = $data->{$name};
     }
@@ -30,7 +33,7 @@
         {{ isset($required) && $required ? 'required' : ''  }}
     >{{ $value ?? '' }}</textarea>
 
-    <span>{{ isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) ) }}
+    <span>{{ $label }}
         <span class="text-danger">{{isset($required) && !$required ? '' : '*' }}</span>
     </span>
 

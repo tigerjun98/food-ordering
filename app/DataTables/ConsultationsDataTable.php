@@ -71,7 +71,7 @@ class ConsultationsDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.user.destroy', $row->id)
+                'modal'     => route('admin.consultation.destroy', $row->id)
             ]
         ];
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('combination_amount')->nullable();
             $table->integer('direction')->nullable();
             $table->longText('remark')->nullable();
+            $table->integer('sorting')->nullable();
             $table->unsignedBigInteger('consultation_id')->nullable();
             $table->timestamps();
         });

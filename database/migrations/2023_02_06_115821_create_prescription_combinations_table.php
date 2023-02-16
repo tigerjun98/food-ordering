@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->integer('quantity')->nullable();
             $table->longText('remark')->nullable();
+            $table->integer('sorting')->nullable();
             $table->unsignedBigInteger('prescription_id')->nullable();
             $table->unsignedBigInteger('medicine_id')->nullable();
             $table->timestamps();

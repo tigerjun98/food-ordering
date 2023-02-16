@@ -38,7 +38,7 @@
                             <option value="{{ $key }}" @if(isset($data) && $data->category == $key)selected="selected"@endif>{{ $cate }}</option>
                         @endforeach
                     </select>
-                    <span>Medicine
+                    <span>{{ trans('label.prescription_category') }}
                         <span class="text-danger">*</span>
                     </span>
                 </label>
@@ -89,7 +89,7 @@
                                        id="metricTotalVal{{$id}}" readonly>
                                 <span class="input-group-text input-group-append input-group-addon metric-unit-{{$id}}">{{ $data->metric_explain ?? '' }}</span>
                             </div>
-                            <span>{{ trans('label.combination_amount') }}</span>
+                            <span>{{ trans('label.total_combination') }}</span>
                         </label>
                     </div>
                 </div>

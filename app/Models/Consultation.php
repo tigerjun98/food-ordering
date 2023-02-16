@@ -33,7 +33,8 @@ class Consultation extends Model
 
     public function prescriptions()
     {
-        return $this->hasMany(Prescription::class, 'consultation_id', 'id');
+        return $this->hasMany(Prescription::class, 'consultation_id', 'id')
+            ->orderBy('sorting', 'asc');
     }
 
     public function patient()

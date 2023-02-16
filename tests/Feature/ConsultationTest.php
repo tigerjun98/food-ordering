@@ -23,13 +23,11 @@ class ConsultationTest extends TestCase
 
         $faker = \Faker\Factory::create();
 
-        $admin = Admin::all()->random();
-
         $reqData = [
             'user_id' => User::all()->random()->id,
-            'specialists' => Option::take(3)->pluck('id'),
-            'syndromes' => Option::take(2)->pluck('id'),
-            'diagnoses' => Option::take(2)->pluck('id'),
+            'specialists' => Option::take(3)->pluck('id')->toArray(),
+            'syndromes' => Option::take(2)->pluck('id')->toArray(),
+            'diagnoses' => Option::take(2)->pluck('id')->toArray(),
             'symptom' => $faker->realText,
             'category' => [
                 '123' => array_rand(Prescription::getCategoryList()),
@@ -73,11 +71,14 @@ class ConsultationTest extends TestCase
             ],
         ];
 
+        // dd($reqData);
+
         $admin = Admin::factory()->create();
         $response = $this->actingAs($admin, 'admin')->postJson(
             route('admin.consultation.store'), $reqData
         );
 
+        dd('done');
 
         $response->assertStatus(200);
     }

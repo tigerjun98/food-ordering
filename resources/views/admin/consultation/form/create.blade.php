@@ -39,6 +39,7 @@
                                             :multiple="'multiple'"
                                             :col="'md-12'"
                                             :name="'specialists[]'"
+                                            :lang="'specialists'"
                                         >
                                             @if($consultation)
                                                 @slot('customOption')
@@ -57,6 +58,7 @@
                                             :data="$consultation"
                                             :col="'md-12'"
                                             :name="'syndromes[]'"
+                                            :lang="'syndromes'"
                                         >
                                             @if($consultation)
                                                 @slot('customOption')
@@ -75,6 +77,7 @@
                                             :data="$consultation"
                                             :col="'md-12'"
                                             :name="'diagnoses[]'"
+                                            :lang="'diagnoses'"
                                         >
                                             @if($consultation)
                                                 @slot('customOption')
@@ -98,6 +101,7 @@
                                         :data="$consultation"
                                         :name="'advise'"
                                         :rows="5"
+                                        :lang="'doctor_advise'"
                                     />
                                     <x-admin.form.textarea
                                         :data="$consultation"

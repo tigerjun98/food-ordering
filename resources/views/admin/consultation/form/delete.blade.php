@@ -1,10 +1,10 @@
 <x-admin.component.modal
     :delete="true"
     :title="'Delete Confirmation'"
-    :submit="route('admin.medicine.destroy', $data->id)"
+    :submit="route('admin.consultation.destroy', $data->id)"
 >
     @slot('body')
-        <h6>Do you really want to delete <span class="font-weight-bold">{{ $data->name_cn }}</span>?
+        <h6>Do you really want to delete Consultation <span class="font-weight-bold">Ref Id: {{ $data->id }}</span>?
             This process cannot be undone.</h6>
     @endslot
 </x-admin.component.modal>
