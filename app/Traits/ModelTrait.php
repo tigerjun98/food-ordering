@@ -85,7 +85,6 @@ trait ModelTrait {
             if($since_start->i > 1) $str.= $since_start->i .'m';
         }
 
-
         return $str;
     }
 

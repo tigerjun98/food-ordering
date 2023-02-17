@@ -111,7 +111,7 @@ return [
     'before_meal' => 'Before meal',
     'after_meal' => 'After meal',
     'empty_stomach' => 'Empty stomach',
-    'when_need' => 'When need',
+    'when_need' => 'As needed',
     'tablet_or_capsule' => 'Table/Capsule',
     'granule_or_powder' => 'Granule/Powder',
     'liquid' => 'Liquid',

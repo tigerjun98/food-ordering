@@ -37,8 +37,6 @@ $.fn.sendRequest = function(options) {
         alertRedirect: true, // allow redirect when response have redirect
     }, options);
 
-    if(settings.showLoading) $(this).setLoader()
-
     return $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -49,6 +47,9 @@ $.fn.sendRequest = function(options) {
         cache: false,
         contentType: false,
         processData: false,
+        beforeSend: function() {
+            if(settings.showLoading) $(this).setLoader()
+        },
         success: function(data) {
             if(settings.showLoading) $(this).hideLoader()
             switch(data.status) {
@@ -71,7 +72,6 @@ $.fn.sendRequest = function(options) {
                 $('#'+item).modal('hide');
                 $('.modal-backdrop').remove();
             });
-
         },
         error: function(xhr) {
             if(settings.showLoading) $(this).hideLoader()

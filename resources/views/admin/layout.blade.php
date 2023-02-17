@@ -9,7 +9,7 @@
 
     <!-- CSRF Token -->
 {{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-    <title>{{ config('app.name', 'Yilin') }}</title>
+{{--    <title>{{ config('app.name', 'Yilin') }}</title>--}}
 
     {{ Vite::useBuildDirectory('/backendAssets') }}
     @vite(['resources/css/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
@@ -23,9 +23,10 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         crossorigin="anonymous"></script>
-
-    <script src="{{ asset('js/backend/vendor/select2.full.js') }}" defer></script>
-    <script src="{{ asset('js/backend/vendor/perfect-scrollbar.min.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"
+            integrity="sha512-osQTlub0mspbF8cmq5xylJ5kCJi42xglqltwx2pMI0/I78Y55dKpr3TtLB7nCTYka1AxpF1dOAeSFbgByDvS0Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+{{--    <script src="{{ asset('js/backend/vendor/perfect-scrollbar.min.js') }}" defer></script>--}}
 
 {{--    <script src="{{ asset('js/backend/vendor/bootstrap-notify.min.js') }}" defer></script>--}}
     <style>

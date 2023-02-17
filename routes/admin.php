@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::get('/consultation/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('consultation.get-opt');
     Route::get('/consultation/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('consultation.get-medicine-opt');
+    Route::get('/consultation/get-patient-history/{patientId}', [ConsultationController::class, 'getPatientHistory'])->name('consultation.get-patient-history');
     // Route::customResource('user', UserController::class);
 
     Route::name('user.')->group(function () {

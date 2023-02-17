@@ -67,9 +67,17 @@ class ConsultationController extends Controller {
         abort(404);
     }
 
+    public function getPatientHistory($patientId)
+    {
+        $consultations = $this->model
+            ->where('user_id', $patientId)
+            ->latest()->paginate(10);
+        return html('admin.consultation.include.patient-history', compact('consultations'));
+    }
+
     public function edit($id) // $id == userId ? create, $id == consultationId ? edit
     {
-        $consultation = Consultation::find($id) ?? [];
+        $consultation = $this->model->find($id) ?? [];
         $patient = $consultation ? $consultation->patient : User::find($id);
 
         if(!$patient)

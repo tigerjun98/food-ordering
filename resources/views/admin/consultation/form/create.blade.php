@@ -40,14 +40,16 @@
                                             :col="'md-12'"
                                             :name="'specialists[]'"
                                             :lang="'specialists'"
+                                            id="hahaha"
                                         >
-                                            @if($consultation)
-                                                @slot('customOption')
+                                            @slot('customOption')
+                                                @if($consultation)
                                                     @foreach($consultation->specialists_explain as $key => $item)
                                                         <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
                                                     @endforeach
-                                                @endslot
-                                            @endif
+                                                @endif
+                                            @endslot
+
                                         </x-admin.form.select>
                                     </div>
 
@@ -145,6 +147,13 @@
     </div>
 
     <script type="text/javascript">
+
+        // const ps = new PerfectScrollbar('.scroll');
+
+        // function initialiseScrollbar(){
+        //     var ps = new PerfectScrollbar('.scroll');
+        //     // ps.update();
+        // }
 
         $(document).ready(function() {
             @if(!$consultation) addPrescriptions(); @endif
@@ -282,9 +291,53 @@
     <div class="app-menu">
         <div class="p-4 h-100">
             <div class="scroll">
-                <div class="modal-header mb-5">
-                    <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
+                <div class="border-bottom pb-2">
+                    <h4 class="mt-1 text-capitalize">{{ __('common.history') }}</h4>
                 </div>
+
+                <div>
+                    <div class="" id="patientHistoryList"></div>
+                    <div class="ajax-load text-center hide">
+                        <div class="spinner"></div>
+                        <br>Loading...
+                    </div>
+                    <div class="load-max text-center hide">
+                        <p>No more data!</p>
+                    </div>
+                </div>
+
+                <script type="module">
+                    let page = 1;
+                    let loading = false;
+                    const ps = $('#patientHistoryList').initialiseScrollbar()
+                    const loadPatientHistoryList = async () => {
+
+                        if(page == 'stop') return true;
+
+                        $('.ajax-load').removeClass('hide')
+                        let res = await $(this).sendRequest({
+                            method: 'GET',
+                            url: `{{ route('admin.consultation.get-patient-history', $patient->id) }}?page=${page}`
+                        });
+
+                        if(res.html === ""){
+                            page = 'stop'
+                            $('.load-max').removeClass('hide')
+                        } else{
+                            page++
+                        }
+
+                        $("#patientHistoryList").append(res.html);
+                        $('.ajax-load').addClass('hide')
+                        ps.update();
+                    }
+
+                    document.querySelector('#patientHistoryList').addEventListener('ps-y-reach-end', () => {
+                        loadPatientHistoryList()
+                    });
+
+                    loadPatientHistoryList()
+                </script>
 
                 <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
 

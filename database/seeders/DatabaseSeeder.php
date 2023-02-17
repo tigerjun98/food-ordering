@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
 
         Option::factory(55)->create();
         Clinic::factory(15)->create();
-//        Consultation::factory(100)->create();
-//        Prescription::factory(150)->create();
-//        PrescriptionCombination::factory(250)->create();
+        Consultation::factory(100)->create();
+        Prescription::factory(150)->create();
+        PrescriptionCombination::factory(250)->create();
     }
 }

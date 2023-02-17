@@ -1,0 +1,29 @@
+.app-menu{
+    .spinner{
+        position: relative;
+        padding-bottom: 2px;
+
+        &:after{
+            content: "";
+            display: inline-block;
+            @include square(20px);
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            border-top-color: #075aa2;
+            animation: spin 1s ease-in-out infinite;
+            -webkit-animation: spin 1s ease-in-out infinite;
+            left: calc(50% - 15px);
+            top: calc(50% - 15px);
+            position: absolute;
+            z-index: 9999;
+        }
+    }
+}
+
+#patientHistoryList{
+    height: 74vh;
+    padding-top: 1.5rem;
+
+
+
+}

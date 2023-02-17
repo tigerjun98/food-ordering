@@ -78,7 +78,7 @@
 
     @if(isset($ajax))
         $('#{{ $attributes['id'] }}').select2({
-            minimumInputLength: 1,
+            minimumInputLength: 0,
             theme: "bootstrap",
             dir: "ltr",
             placeholder: "",
