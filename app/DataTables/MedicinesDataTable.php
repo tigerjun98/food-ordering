@@ -25,7 +25,9 @@ class MedicinesDataTable extends DataTable
         $query = Medicine::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->addColumn('action', function($row){
+            ->addColumn('full_name', function($row){
+                return $row->full_name;
+            })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
@@ -38,7 +40,7 @@ class MedicinesDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('sku'),
-            Column::make('name_cn')->title('Name'),
+            Column::make('full_name')->title('Name'),
             Column::make('description_cn')->title('Description'),
             Column::computed('action')
                 ->exportable(false)

@@ -30,13 +30,22 @@ class UserStoreRequest extends FormRequest
      *
      * @return array
      */
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'nric' => str_replace('-', '', $this->nric),
+            'phone' => str_replace('+', '', $this->phone)
+        ]);
+    }
+
     public function rules()
     {
         return [
             'id'                                => ['integer'],
             'name_en'                           => ['required', 'string'],
             'name_cn'                           => ['nullable', 'string'],
-            'nric'                              => ['required', 'string', 'min:12', 'max:14'],
+            'nric'                              => ['required', 'string', 'min:12', 'max:12'],
             'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'email'                             => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
             'occupation'                        => ['nullable', 'string'],
@@ -56,6 +65,9 @@ class UserStoreRequest extends FormRequest
 
     protected function passedValidation()
     {
-        $this->replace(['nric' => str_replace('-', '', request()->nric)]);
+        // https://stackoverflow.com/questions/31662977/how-to-modify-request-input-after-validation-in-laravel
+        $this->merge(
+            [ 'nric' => str_replace('-', '', $this->nric) ]
+        );
     }
 }

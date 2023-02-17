@@ -103,6 +103,15 @@ const handleAjaxErr = (xhr) => {
     }
 }
 
+const handleValidationErr = (err) => {
+    let resJson = err.responseJSON;
+    if (resJson.errors && Object.keys(resJson.errors).length > 0) {
+        $.each(resJson.errors, function(k, v) {
+            appendErrMsg(k, v)
+        });
+    }
+}
+
 const handleServerErr = (xhr) => {
     $("#app-alert").showAlert({
         status : 'danger', message: xhr.responseJSON.message, delay: 0

@@ -11,12 +11,12 @@
 {{--                {{ __('common.create') }}--}}
 {{--            </button>--}}
 
-            <x-admin.component.button
-                :redirect="'{ header: `CREATE`, url: `'.route('admin.medicine.create', '').'` }'"
-                :class="'btn-outline-primary btn-lg top-right-button mr-1'"
-                :lang="'create'"
-                :icon="'iconsminds-folder-add-- mr-1'"
-            />
+{{--            <x-admin.component.button--}}
+{{--                :redirect="'{ header: `CREATE`, url: `'.route('admin.medicine.create', '').'` }'"--}}
+{{--                :class="'btn-outline-primary btn-lg top-right-button mr-1'"--}}
+{{--                :lang="'create'"--}}
+{{--                :icon="'iconsminds-folder-add-- mr-1'"--}}
+{{--            />--}}
         @endslot
 
 

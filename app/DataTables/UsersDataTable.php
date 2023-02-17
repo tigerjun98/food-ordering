@@ -29,6 +29,8 @@ class UsersDataTable extends DataTable
                 return $this->action($row);
             })->editColumn('state', function($row){
                 return $row->state_name;
+            })->editColumn('phone', function($row){
+                return $row->phone_format;
             })->editColumn('nric', function($row){
                 return nricFormat($row->nric);
             })->editColumn('gender', function($row){

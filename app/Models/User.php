@@ -55,6 +55,13 @@ class User extends Authenticatable
         );
     }
 
+    protected function phoneFormat(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->phone ? '+'.$this->phone : ''
+        );
+    }
+
     protected function nricFormat(): Attribute
     {
         return Attribute::make(

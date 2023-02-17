@@ -2,6 +2,7 @@
 
 namespace App\Modules\Admin\Medicine\Services;
 
+use App\Exceptions\CommonException;
 use App\Models\Admin;
 use App\Models\Medicine;
 use App\Models\User;
@@ -29,6 +30,12 @@ class MedicineService
 
     public function delete(Medicine $medicine)
     {
+        $this->deleteValidation($medicine);
         $medicine->delete();
+    }
+
+    public function deleteValidation(Medicine $medicine)
+    {
+        throw new CommonException('Permission denied!');
     }
 }
