@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('medicines', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
+            $table->integer('category')->nullable();
             $table->integer('type')->nullable();
             $table->string('slug')->nullable();
             $table->string('name_en')->nullable();

@@ -17,8 +17,8 @@ lengthMenu: "Items Per Page _MENU_"
 $(%2$s).setLoader({fullScreen: true});
 },
 "fnInitComplete": function(oSettings, json) {
-$('.dataTables_scrollBody').attr('id', 'hahaha')
-$('#hahaha').initialiseScrollbar()
+$('.dataTables_scrollBody').attr('id', 'dataTablesScrollBody')
+$('#dataTablesScrollBody').initialiseScrollbar({})
 {{--let dataTablePs = new PerfectScrollbar('.dataTables_scrollBody', { suppressScrollX: true });--}}
 {{--dataTablePs.isRtl = false;--}}
 let input = document.querySelector('div.dataTables_filter input');

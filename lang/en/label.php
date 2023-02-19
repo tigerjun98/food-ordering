@@ -36,7 +36,7 @@ return [
     'medicine' => 'Medicine',
     'total_combination' => 'Total combination',
     'quantity' => 'Quantity',
-    'specialists' => 'Specialists',
+    'total' => 'Total',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',

@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Console\Commands\DataTables;
+namespace App\Console\Commands\DataTables\Medicine;
 
 use App\Jobs\Order\CancelExpiredOrder;
 use App\Models\Medicine;
 use App\Models\Order;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\App;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 
-class UpdateMedicinesName extends Command
+class UpdateMedicinesType extends Command
 {
-    protected $signature = 'db:medicine:update_name';
+    protected $signature = 'db:medicine:update_type';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Set name_en to Pinyin from name_cn';
+    protected $description = 'Set type refer from metric unit';
     private $bar;
     private Medicine $model;
 
@@ -53,18 +51,29 @@ class UpdateMedicinesName extends Command
 
     public function count(): int
     {
-        return Medicine::whereNull('name_en')->count();
+        return Medicine::all()->count();
+    }
+
+    public function getType($row)
+    {
+        $unit = $row->metric_unit_volume_id;
+        switch ($unit){
+            case 2:
+                return 5;
+            case 3:
+                return 1;
+            case 4:
+                return 4;
+            default:
+                return 0;
+        }
     }
 
     public function update()
     {
-        Medicine::whereNull('name_en')
-            ->chunk(100, function($rows){
+        Medicine::chunk(100, function($rows){
                 foreach($rows as $row) {
-                    $pinyin = implode(' ', Pinyin::convert($row->name_cn));
-                    $row->slug = slugify($pinyin);
-                    if(!$row->name_en)
-                        $row->name_en = $pinyin;
+                    $row->type = $this->getType($row);
                     $row->save();
                     $this->bar->advance();
                 }

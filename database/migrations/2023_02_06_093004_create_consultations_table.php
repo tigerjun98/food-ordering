@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
+            $table->string('ref_id')->nullable();
             $table->longText('symptom')->nullable();
             $table->longText('advise')->nullable();
             $table->longText('internal_remark')->nullable();

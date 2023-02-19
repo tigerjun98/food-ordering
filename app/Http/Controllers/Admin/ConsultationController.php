@@ -44,7 +44,7 @@ class ConsultationController extends Controller {
     public function getMedicineOpt()
     {
         return response()->json(
-            Medicine::FilterOption()->paginate(10)
+            Medicine::whereIn('category', [0, request()->category])->FilterOption()->paginate(10)
         );
     }
 

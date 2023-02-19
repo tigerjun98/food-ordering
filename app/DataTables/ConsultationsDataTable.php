@@ -49,7 +49,7 @@ class ConsultationsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('ref_id'),
+            Column::make('ref_id'),
             Column::make('nric'),
             Column::make('specialists'),
             Column::make('full_name'),

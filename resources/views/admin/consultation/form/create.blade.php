@@ -156,8 +156,14 @@
         // }
 
         $(document).ready(function() {
-            @if(!$consultation) addPrescriptions(); @endif
-            initializeMedicineSelect2()
+            @if(!$consultation)
+                addPrescriptions();
+            @else
+                @foreach($consultation->prescriptions as $key => $prescription)
+                console.log({{ $prescription->id }})
+                    initializeMedicineSelect2({{ $prescription->id }})
+                @endforeach
+            @endif
         })
 
         const countDailyDose = (id) => {
@@ -220,7 +226,7 @@
             let html = `@include('admin.consultation.form.include.prescription-combination')`;
             html = html.replaceAll('*009b*', id)
             $(`#prescriptionCombination${id}`).append(html)
-            initializeMedicineSelect2()
+            initializeMedicineSelect2(id)
             setMetricUnit(id)
         }
 
@@ -235,16 +241,18 @@
             $('#prescriptionsWrapper').append(html)
         }
 
-        const initializeMedicineSelect2 = () => {
+        const initializeMedicineSelect2 = (id) => {
+
+            // let a = document.querySelector(".medicine_opt").closest(".near.ancestor")
             $('.medicine_opt').select2({
-                minimumInputLength: 1,
+                // minimumInputLength: 1,
                 theme: "bootstrap",
                 dir: "ltr",
                 placeholder: "",
                 maximumSelectionSize: 6,
                 containerCssClass: ":all:",
                 tags: true,
-                tokenSeparators: [',', ' '],
+                tokenSeparators: [','],
                 allowClear: true,
                 createTag: function (params) {
                     var term = $.trim(params.term);
@@ -259,16 +267,22 @@
                     }
                 },
                 ajax: {
-                    url: "{{ route('admin.consultation.get-medicine-opt') }}",
+                    // url: "{{ route('admin.consultation.get-medicine-opt') }}",
                     dataType: 'json',
                     delay: 250,
-                    data: function (params) {
-                        var query = {
-                            search: params.term,
-                            page: params.page || 1
-                        }
-                        return query;
-                    }, processResults: function (data, params) {
+                    url: function (params) {
+                        var cateVal = $(this).closest("div.card-body").find(".category-filter").val();
+                        return `{{ route('admin.consultation.get-medicine-opt') }}?search=${params.term}&page=${params.page || 1}&category=${cateVal}`;
+                    },
+                    // data: function (params) {
+                    //     var query = {
+                    //         category: 3,
+                    //         search: params.term,
+                    //         page: params.page || 1
+                    //     }
+                    //     return query;
+                    // },
+                    processResults: function (data, params) {
                         params.page = params.page || 1;
                         return {
                             results: $.map(data.data, function (item) {
@@ -292,7 +306,7 @@
         <div class="p-4 h-100">
             <div class="scroll">
                 <div class="border-bottom pb-2">
-                    <h4 class="mt-1 text-capitalize">{{ __('common.history') }}</h4>
+                    <h4 class="mt-1 text-capitalize">{{ __('common.patient_history') }}</h4>
                 </div>
 
                 <div>

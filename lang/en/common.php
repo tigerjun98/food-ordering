@@ -119,4 +119,5 @@ return [
     'acupuncture' => 'Acupuncture',
     'massage' => 'Massage',
     'consultation' => 'Consultation',
+    'patient_history' => 'Patient history',
 ];

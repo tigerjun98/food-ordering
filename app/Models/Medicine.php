@@ -40,9 +40,14 @@ class Medicine extends Model
     public static function getTypeList()
     {
         return [
-            1 => trans('common.external_use'), // 外用药
-            2 => trans('common.acupuncture'), // 针灸
-            3 => trans('common.massage'), // 推拿
+            1 => trans('common.tablet'),
+            2 => trans('common.capsule'),
+            3 => trans('common.granule'),
+            4 => trans('common.powder'),
+            5 => trans('common.liquid'),
+            6 => trans('common.external_use'), // 外用药
+            7 => trans('common.acupuncture'), // 针灸
+            8 => trans('common.massage'), // 推拿
         ];
     }
 

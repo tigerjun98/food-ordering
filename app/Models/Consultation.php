@@ -20,7 +20,7 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class Consultation extends Model
 {
-    use SoftDeletes, ModelTrait, HasFactory, ObserverTrait;
+    use SoftDeletes, ModelTrait, HasFactory;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
