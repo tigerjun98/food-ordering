@@ -30,10 +30,24 @@ class Medicine extends Model
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
 
+    public function prescriptionCombinations()
+    {
+        return $this->hasMany(PrescriptionCombination::class, 'medicine_id', 'id');
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->name_cn ? $this->name_cn.' '.$this->name_en : $this->name_en
+        );
+    }
+
+    protected function typeExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => isset(self::getTypeList()[$this->type])
+                ? self::getTypeList()[$this->type]
+                : ''
         );
     }
 
@@ -86,6 +100,7 @@ class Medicine extends Model
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'type'      => ['type' => 'select', 'label'=> 'type', 'option' => static::getTypeList()],
         ];
     }
 
@@ -99,7 +114,7 @@ class Medicine extends Model
         }
 
         return $this->searchAll(
-            $this->parentFilterTrait($query), ['name_en', 'name_cn']
+            $this->parentFilterTrait($query), ['name_en', 'name_cn', 'sku']
         );
     }
 }

@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Admin;
 use App\Models\Medicine;
+use App\Models\Option;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class MedicinesDataTable extends DataTable
+class OptionsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,28 +23,30 @@ class MedicinesDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Medicine::query();
+        $query = Option::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
             ->editColumn('type', function($row){
                 return $row->type_explain;
             })->addColumn('full_name', function($row){
                 return $row->full_name;
+            })->addColumn('description', function($row){
+                return '<p class="max-line-2 text-xs">'.$row->{'desc_'. app()->getLocale()}.'</p>';
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
+            })->rawColumns(['image', 'action', 'description'])
             ->orderColumn('created_at', 'desc');
     }
 
     public function getColumns(): array
     {
         return [
-            Column::make('sku'),
+            Column::make('slug'),
             Column::make('type'),
             Column::make('full_name')->title('Name'),
-            Column::make('description_cn')->title('Description'),
+            Column::make('description')->width(450),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -55,13 +58,13 @@ class MedicinesDataTable extends DataTable
         $actions = [
             'edit' => [
                 'icon' => 'iconsminds-pen-2',
-                'modal' => route('admin.medicine.edit', $row->id)
+                'modal' => route('admin.option.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.medicine.destroy', $row->id)
+                'modal'     => route('admin.option.destroy', $row->id)
             ]
         ];
 
@@ -89,6 +92,7 @@ class MedicinesDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+//                    ->autoWidth(false)
                     //->dom('Bfrtip')
 //                    ->orderBy(0)
                     ->selectStyleSingle()

@@ -37,6 +37,7 @@ trait FilterTrait {
                     break;
 
                 case 'select':
+
                     $query = $this->filterOptionType($query);
                     break;
 

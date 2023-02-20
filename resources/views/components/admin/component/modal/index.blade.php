@@ -40,6 +40,7 @@
                         :class="'btn-danger'"
                         :lang="'confirm_delete'"
                         :type="'submit'"
+                        :disabled="!$delete"
                     />
                 @else
                     <x-admin.component.button

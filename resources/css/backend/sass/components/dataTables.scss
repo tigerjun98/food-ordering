@@ -3,10 +3,17 @@
 @import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
 @import 'datatables.net-select-bs5/css/select.bootstrap5.css';
 
+.max-line-2{
+    @include max-line(2)
+}
 .dataTables_scroll, #dataTable{
     min-height: 150px;
 }
-
+table.dataTable tbody td {
+    word-wrap: break-word;
+    word-break: break-all;
+    //vertical-align: top;
+}
 .dtfc-fixed-left{
     background: #fff;
     box-shadow: 3px 0 3px rgb(0 0 0 / 2%);

@@ -258,7 +258,13 @@ function getValidImageExtension()
     ];
 }
 
-function get_string_between($string, $start, $end){
+function get_string_between($string, $start, $end = null){
+
+    if(!$end || !str_contains($string, $end)){
+        return substr($string, strpos($string, $start) + 1);
+    }
+
+
     $string = ' ' . $string;
     $ini = strpos($string, $start);
     if ($ini == 0) return '';

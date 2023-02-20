@@ -7,6 +7,12 @@
         unset($attributes['openModal']);
     }
 
+     if(isset($disabled) && $disabled){
+         $attributes['disabled'] = 'disabled';
+     } else{
+       unset($attributes['disabled']);
+     }
+
     if(isset($redirect) && $redirect){
         $attributes['onclick'] = "location.href='$redirect'";
         unset($attributes['redirect']);

@@ -20,12 +20,14 @@ class MedicineService
 
     public function store(array $request): Medicine
     {
-        $medicine = $this->model->find($request['id']);
-        $medicine
-            ? $medicine->update($request)
-            : $this->model::create($request);
+        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
 
-        return $this->model->find($request['id']);
+//        $medicine = $this->model->find($request['id']);
+//        $medicine
+//            ? $medicine->update($request)
+//            : $this->model::create($request);
+//
+//        return $this->model->find($request['id']);
     }
 
     public function delete(Medicine $medicine)

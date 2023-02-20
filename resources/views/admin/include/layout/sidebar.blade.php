@@ -1,15 +1,18 @@
 @php
     $route = Route::current()->getName();
     $items = [
-        ['name'=> 'dashboard', 'route'=> 'home', 'icon'=>'monitor-analytics'],
-        ['name'=> 'patients', 'route'=> 'user.index', 'icon'=>'conference'],
-        ['name'=> 'consultations', 'route'=> 'consultation.index', 'icon'=>'stethoscope'],
-        ['name'=> 'admins', 'route'=> 'account.', 'icon'=>'user', 'permission'=> 'admin_management'],
-
+        ['name'=> 'dashboard', 'route'=> route('admin.home'), 'icon'=>'monitor-analytics'],
+        ['name'=> 'patients', 'route'=> route('admin.user.index'), 'icon'=>'conference'],
+        ['name'=> 'consultations', 'route'=> route('admin.consultation.index'), 'icon'=>'stethoscope'],
+//        ['name'=> 'admins', 'route'=> 'account.', 'icon'=>'user', 'permission'=> 'admin_management'],
+//
         ['name'=> 'settings', 'link'=> 'setting', 'icon'=>'gears',
 
             'subMenu' => [
-                'name'=> 'medicines', 'route'=> 'medicine.index', 'icon'=>'iconsminds-medicine-3'
+                ['name'=> 'medicines', 'route'=> route('admin.medicine.index'), 'icon'=>'iconsminds-medicine-3'],
+//                'name'=> 'medicines', 'route'=> 'option.index', 'icon'=>'iconsminds-medicine-3',
+//                'name'=> 'medicines', 'route'=> 'medicine.index', 'icon'=>'iconsminds-medicine-3',
+//                'name'=> 'medicines', 'route'=> route('admin.'.$item['route']), 'icon'=>'iconsminds-medicine-3'
             ]
         ]
 
@@ -35,36 +38,41 @@
                 </script>
 
                 @foreach($items as $key => $item)
+                    @php
+                       $redirect = isset($item['route']) ? $item['route'] : '#';
+                       $link = isset($item['link']) ? ( '#'.$item['link'] ) : $redirect;
+
+                       $currentUrl = get_string_between(url()->current(), '/admin', '?');
+                       $itemUrl = isset($item['route']) ? get_string_between($item['route'], '/admin', '?') : '';
+                       $isActive = $currentUrl == $itemUrl;
+
+                       $class = '';
+                       $class .= isset($item['link']) ? '' : '';
+
+                       if(isset($item['subMenu']) && count($item['subMenu']) > 0){
+                          foreach($item['subMenu'] as $key2 => $menu){
+                              $subItemUrl = get_string_between($menu['route'], '/admin', '?');
+                              $isSubActive = $currentUrl == $subItemUrl;
+                              $items[$key]['subMenu'][$key2]['active'] = $isSubActive;
+                              $isActive = $isSubActive;
+                          }
+                       }
+
+                    @endphp
 
                     @if(!isset($item['permission']))
-
-                        @php
-                            $redirect = isset($item['route']) ? route('admin.'.$item['route'].'') : '#';
-                            $link = isset($item['link']) ? ( '#'.$item['link'] ) : $redirect;
-
-                            $class = $item['route'] ?? '';
-                            $class.= isset($item['link']) ? '' : '';
-
-                            if(isset($item['link'])){
-                                foreach($item['subMenu'] as $menu){
-                                    $class.= ' '.$item['subMenu']['route'].' ';
-                                }
-                            }
-
-                        @endphp
-
-                        <li class="main_nav {{ $class }}">
+                        <li class="main_nav {{ $isActive ? 'active' : '' }}">
                             <a href="{{ $link }}">
                                 <i class="iconsminds-{{$item['icon']}}"></i>
-                                <span>{{ __('common.'.$item['name']) }}</span>
+                                <span>{{ trans('common.'.$item['name']) }}</span>
                             </a>
                         </li>
 
                     @elseif(\Illuminate\Support\Facades\Gate::allows($item['permission']))
                         <li class="main_nav">
-                            <a href="{{ route('admin.'.$item['route'].'') }}">
+                            <a href="{{ $item['route'] }}">
                                 <i class="iconsminds-{{$item['icon']}}"></i>
-                                <span>{{ __('common.'.$item['name'].'') }}</span>
+                                <span>{{ trans('common.'.$item['name']) }}</span>
                             </a>
                         </li>
                     @endif
@@ -79,10 +87,10 @@
                 @if(isset($item['subMenu']))
                     <ul class="list-unstyled" data-link="{{ $item['link'] }}">
                         @foreach($item['subMenu'] as $key => $menu)
-                            <li class="{{ $item['subMenu']['route'] ?? '' }}">
-                                <a href="{{ route('admin.'.$item['subMenu']['route'].'') }}">
-                                    <i class="{{ $item['subMenu']['icon'] }}"></i>
-                                    <span class="d-inline-block">{{ $item['subMenu']['name'] }}</span>
+                            <li class="{{ $menu['active'] ? 'active' : '' }}">
+                                <a href="{{ $menu['route'] }}">
+                                    <i class="{{ $menu['icon'] }}"></i>
+                                    <span class="d-inline-block">{{ $menu['name'] }}</span>
                                 </a>
                             </li>
                         @endforeach

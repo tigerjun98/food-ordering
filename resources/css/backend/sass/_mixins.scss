@@ -37,12 +37,12 @@
     min-height: $size;
 }
 
-@mixin max-2-line{
+@mixin max-line($row){
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    line-clamp: 2;
+    -webkit-line-clamp: $row; /* number of lines to show */
+    line-clamp: $row;
     -webkit-box-orient: vertical;
 }
 

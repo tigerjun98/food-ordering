@@ -124,7 +124,11 @@
                         @if($item['type'] == 'select')
                             <label class="form-group has-float-label mt-4 mb-3">
                                 <input type="hidden" name="{{$name}}" id="setMulti{{$name}}Val">
-                                <select class="form-control select2-multiple" id="select2{{$name}}" multiple="multiple" data-width="100%" onchange="setMultiSelectVal('{{$name}}')">
+                                <select class="form-control select2-multiple" id="select2{{$name}}"
+                                        @if(!isset($item['multiple']) || $item['multiple']) multiple="multiple" @endif
+                                        data-width="100%"
+                                        onchange="setMultiSelectVal('{{$name}}')"
+                                >
                                     {{--                                <option label="&nbsp;">&nbsp;</option>--}}
                                     @foreach($item['option'] as $value  => $opt)
                                         <option value="{{$value}}">{{$opt}}</option>
@@ -144,7 +148,7 @@
                     <input type="hidden" name="search" id="searchBar" value="{{ $filter[0] ?? '' }}">
                     <input type="hidden" name="column" id="columnVal" class="column" value="{{$filter[1] ?? ''}}">
                     <input type="hidden" name="page" id="pageVal" class="page" value="{{ $filter[5] ?? '' }}">
-                    <input type="hidden" name="type" id="typeVal" class="type">
+{{--                    <input type="hidden" name="type" id="typeVal" class="type">--}}
 
                     <div style="position:fixed; bottom: 0; width: 100%;">
                         <div class="separator mt-5 mb-3"></div>

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Modules\Admin\Medicine\Requests;
+namespace App\Modules\Admin\Option\Requests;
 
 use App\Models\Medicine;
+use App\Models\Option;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
@@ -14,7 +15,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
-class MedicineStoreRequest extends FormRequest
+class OptionStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +36,7 @@ class MedicineStoreRequest extends FormRequest
     {
         return [
             'id'                                => ['integer'],
-            'type'                              => ['required', 'in:'.arrayToString(Medicine::getTypeList())],
+            'type'                              => ['required', 'in:'.arrayToString(Option::getTypeList())],
             'name_en'                           => ['nullable', 'string', 'regex:/^[\w\-\s]+$/'],
             'name_cn'                           => ['required', 'string'],
             'description_en'                    => ['nullable', 'string'],

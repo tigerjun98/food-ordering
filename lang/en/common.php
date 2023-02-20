@@ -120,4 +120,11 @@ return [
     'massage' => 'Massage',
     'consultation' => 'Consultation',
     'patient_history' => 'Patient history',
+    'tablet' => 'Tablet',
+    'granule' => 'Granule',
+    'capsule' => 'Capsule',
+    'powder' => 'Powder',
+    'syndrome' => 'Syndrome',
+    'diagnose' => 'Diagnose',
+    'specialist' => 'Specialist',
 ];

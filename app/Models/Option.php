@@ -30,22 +30,51 @@ class Option extends Model
     protected $dates = ['deleted_at'];
     public $incrementing = false;
 
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_cn ? $this->name_cn.' '.$this->name_en : $this->name_en
+        );
+    }
+
+    protected function typeExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => isset(self::getTypeList()[$this->type])
+                ? self::getTypeList()[$this->type]
+                : ''
+        );
+    }
+
+    public static function getTypeList()
+    {
+        return [
+            'diagnose'      => trans('common.diagnose'),
+            'syndrome'      => trans('common.syndrome'),
+            'specialist'    => trans('common.specialist'),
+        ];
+    }
+
     public static function Filter(){
         return [
-            'name_cn'     => ['type' => 'text', 'label' => 'Full name' ],
+            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'type'      => [
+                'type' => 'select', 'label'=> 'type', 'option' => static::getTypeList(),
+                'multiple' => false
+            ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }
 
-    protected function fullName(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
-        );
-    }
-
     public function scopeFilter($query)
     {
+        if(request()->filled('full_name')){
+            $query->where(function ($q) {
+                $q->where('name_en', 'like', '%'.request()->full_name.'%')
+                    ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
         return $this->searchAll(
             $this->parentFilterTrait($query), ['name_en', 'name_cn']
         );

@@ -8,6 +8,7 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\User;
 use Carbon\Carbon;
+use PhpParser\Node\Expr\AssignOp\Plus;
 use function PHPUnit\Framework\throwException;
 
 class OptionService
@@ -37,15 +38,16 @@ class OptionService
 
     public function store(array $request): Option
     {
-        $model = isset($request['id'])
-            ? $this->model->find($request['id'])
-            : null; // generate unique id
-
-        $model = $model
-            ? $model->update($request)
-            : $this->model->create($request);
-
-        return $model;
+        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
     }
+
+    public function occupied(Option $option): bool
+    {
+        return Consultation::where('specialists', 'like', '%'.$option->id.'%')
+            ->orWhere('syndromes', 'like', '%'.$option->id.'%')
+            ->orWhere('diagnoses', 'like', '%'.$option->id.'%')
+            ->count() >= 0;
+    }
+
 
 }

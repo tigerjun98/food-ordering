@@ -22,9 +22,12 @@ $('#dataTablesScrollBody').initialiseScrollbar({})
 {{--let dataTablePs = new PerfectScrollbar('.dataTables_scrollBody', { suppressScrollX: true });--}}
 {{--dataTablePs.isRtl = false;--}}
 let input = document.querySelector('div.dataTables_filter input');
+if(input){
 input.addEventListener('keyup', function () {
 document.getElementById("searchVal").value = this.value;
 });
+}
+
 },
 drawCallback: function () {
 $($(".dataTables_wrapper .pagination li:first-of-type")).find("a").addClass("prev");
@@ -55,7 +58,7 @@ $(td).css('padding-right', '50px')
 }],
 processing: true,
 responsive: true,
-searching: true,
+searching: false,
 info: true,
 ordering: true,
 paging:true,

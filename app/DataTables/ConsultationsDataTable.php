@@ -65,13 +65,13 @@ class ConsultationsDataTable extends DataTable
         $actions = [
             'edit' => [
                 'icon'      => 'simple-icon-pencil',
-                'redirect'  => route('admin.consultation.edit', $row->id)
+                'redirect'  => route('admin.option.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.consultation.destroy', $row->id)
+                'modal'     => route('admin.option.destroy', $row->id)
             ]
         ];
 

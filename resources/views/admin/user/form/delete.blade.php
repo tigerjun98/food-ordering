@@ -5,6 +5,6 @@
 >
     @slot('body')
         <h6>Do you really want to delete <span class="font-weight-bold">{{ $data->full_name }}</span>?
-            This process cannot be undone.</h6>
+            This process cannot be undo.</h6>
     @endslot
 </x-admin.component.modal>
