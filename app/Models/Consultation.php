@@ -98,7 +98,8 @@ class Consultation extends Model
 
     public static function Filter(){
         return [
-            'name_cn'     => ['type' => 'text', 'label' => 'Full name' ],
+            'nric'          => ['type' => 'text', 'label' => 'nric' ],
+            'created_at'    => ['type' => 'date', 'label'=> 'created_at' ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }

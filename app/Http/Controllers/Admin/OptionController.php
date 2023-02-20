@@ -78,9 +78,9 @@ class OptionController extends Controller {
         ]);
     }
 
-    public function destroy($adminId)
+    public function destroy($optionId)
     {
-        $this->service->delete($this->model->findOrFail($adminId));
+        $this->service->delete($this->model->findOrFail($optionId));
         return makeResponse(200);
     }
 }

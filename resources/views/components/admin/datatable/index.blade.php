@@ -63,7 +63,7 @@
 
                         @php
                             $label = isset($item['label']) ? $item['label'] : $name
-                        @endphp
+//                        @endphp
 
                         @if($item['type'] == 'date')
                             <div class="mt-3">
@@ -72,7 +72,7 @@
                             </div>
 
                             <input class="form-control datepicker-monthly ds" placeholder="Month" id="{{$name}}MonthPicker" onchange="splitToDateRange('{{$name}}')">
-                            <script>
+                            <script type="module">
                                 $("#{{$name}}MonthPicker").datepicker({
                                     autoclose: true, format: "mm-yyyy", minViewMode: 1, maxViewMode: 2, orientation: "bottom auto",
                                     templates: {
@@ -93,7 +93,7 @@
                                        name="{{$name}}_before" id="{{$name}}BeforeVal"
                                        placeholder="Before">
                             </div>
-                            <script>
+                            <script type="module">
                                 $("#{{$name}}Datepicker").datepicker({
                                     autoclose: true,
                                     format: "dd-mm-yyyy",
@@ -106,11 +106,8 @@
                                     refreshDataTable()
                                 });
 
-                                let dateRange = '{{request()->query($name)}}';
-                                if(dateRange){
-                                    $('#{{$name}}AfterVal').val(dateRange.split('~')[0]);
-                                    $('#{{$name}}BeforeVal').val(dateRange.split('~')[1]).trigger('change');
-                                }
+                                $('#{{$name}}AfterVal').val('{{ request()->query($name.'_after') }}');
+                                $('#{{$name}}BeforeVal').val('{{ request()->query($name.'_before') }}');
                             </script>
                         @endif
 

@@ -10,9 +10,9 @@
 
             'subMenu' => [
                 ['name'=> 'medicines', 'route'=> route('admin.medicine.index'), 'icon'=>'iconsminds-medicine-3'],
-//                'name'=> 'medicines', 'route'=> 'option.index', 'icon'=>'iconsminds-medicine-3',
-//                'name'=> 'medicines', 'route'=> 'medicine.index', 'icon'=>'iconsminds-medicine-3',
-//                'name'=> 'medicines', 'route'=> route('admin.'.$item['route']), 'icon'=>'iconsminds-medicine-3'
+                ['name'=> 'specialists', 'route'=> route('admin.option.index', 'type=specialist'), 'icon'=>'iconsminds-microscope'],
+                ['name'=> 'syndromes', 'route'=> route('admin.option.index', 'type=syndrome'), 'icon'=>'iconsminds-flask'],
+                ['name'=> 'diagnoses', 'route'=> route('admin.option.index', 'type=diagnose'), 'icon'=>'iconsminds-pulse'],
             ]
         ]
 
@@ -23,39 +23,23 @@
     <div class="main-menu" id="main-menu">
         <div class="scroll">
             <ul class="list-unstyled">
-                <script type="module">
-
-                    const activeCurrentNavbar = () => {
-                        let route = '{{ $route }}'.replaceAll('admin.', '')
-                        route = document.getElementsByClassName(route);
-                        Array.prototype.forEach.call(route, function (el) { // loop classes
-                            $(el).addClass('active')
-                        });
-                    }
-
-                    activeCurrentNavbar()
-
-                </script>
-
                 @foreach($items as $key => $item)
                     @php
                        $redirect = isset($item['route']) ? $item['route'] : '#';
                        $link = isset($item['link']) ? ( '#'.$item['link'] ) : $redirect;
 
                        $currentUrl = get_string_between(url()->current(), '/admin', '?');
-                       $itemUrl = isset($item['route']) ? get_string_between($item['route'], '/admin', '?') : '';
-                       $isActive = $currentUrl == $itemUrl;
-
-                       $class = '';
-                       $class .= isset($item['link']) ? '' : '';
+                       $itemUrl = isset($item['route']) ? get_string_between($item['route'], '/admin') : '';
+                       $isActive = str_contains(url()->full(), $itemUrl);
 
                        if(isset($item['subMenu']) && count($item['subMenu']) > 0){
-                          foreach($item['subMenu'] as $key2 => $menu){
-                              $subItemUrl = get_string_between($menu['route'], '/admin', '?');
-                              $isSubActive = $currentUrl == $subItemUrl;
-                              $items[$key]['subMenu'][$key2]['active'] = $isSubActive;
-                              $isActive = $isSubActive;
-                          }
+                            $isActive = false;
+                            foreach($item['subMenu'] as $key2 => $menu){
+                                $subItemUrl = get_string_between($menu['route'], '/admin');
+                                $isSubActive = str_contains(url()->full(), $subItemUrl);
+                                $items[$key]['subMenu'][$key2]['active'] = $isSubActive;
+                                if(!$isActive) $isActive = $isSubActive;
+                            }
                        }
 
                     @endphp

@@ -7,6 +7,7 @@ use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\User;
+use App\Modules\Admin\User\Services\UserService;
 use Carbon\Carbon;
 use PhpParser\Node\Expr\AssignOp\Plus;
 use function PHPUnit\Framework\throwException;
@@ -46,7 +47,12 @@ class OptionService
         return Consultation::where('specialists', 'like', '%'.$option->id.'%')
             ->orWhere('syndromes', 'like', '%'.$option->id.'%')
             ->orWhere('diagnoses', 'like', '%'.$option->id.'%')
-            ->count() >= 0;
+            ->count() > 0;
+    }
+
+    public function delete(Option $option)
+    {
+        !self::occupied($option) ? $option->delete() : throwErr(trans('common.permission_denied'));
     }
 
 

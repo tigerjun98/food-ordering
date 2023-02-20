@@ -5,6 +5,8 @@ namespace App\Modules\Admin\Medicine\Services;
 use App\Exceptions\CommonException;
 use App\Models\Admin;
 use App\Models\Medicine;
+use App\Models\Option;
+use App\Models\PrescriptionCombination;
 use App\Models\User;
 use Carbon\Carbon;
 use function PHPUnit\Framework\throwException;
@@ -21,23 +23,17 @@ class MedicineService
     public function store(array $request): Medicine
     {
         return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
-
-//        $medicine = $this->model->find($request['id']);
-//        $medicine
-//            ? $medicine->update($request)
-//            : $this->model::create($request);
-//
-//        return $this->model->find($request['id']);
     }
+
+    public function occupied(Medicine $medicine): bool
+    {
+        return PrescriptionCombination::where('medicine_id', $medicine->id)
+                ->count() > 0;
+    }
+
 
     public function delete(Medicine $medicine)
     {
-        $this->deleteValidation($medicine);
-        $medicine->delete();
-    }
-
-    public function deleteValidation(Medicine $medicine)
-    {
-        throw new CommonException('Permission denied!');
+        !self::occupied($medicine) ? $medicine->delete() : throwErr(trans('common.permission_denied'));
     }
 }

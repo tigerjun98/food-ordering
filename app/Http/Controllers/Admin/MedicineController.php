@@ -65,11 +65,10 @@ class MedicineController extends Controller {
 
     public function delete($medicineId)
     {
-        $data = $this->model->findOrFail($medicineId);
-        $canDelete = !($data->prescriptionCombinations->count() > 0);
+        $model = $this->model->findOrFail($medicineId);
         return html('admin.medicine.form.delete',[
-            'canDelete' => $canDelete,
-            'data' => $data
+            'canDelete' => !$this->service->occupied($model),
+            'data' => $model
         ]);
     }
 

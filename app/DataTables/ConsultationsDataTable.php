@@ -24,18 +24,19 @@ class ConsultationsDataTable extends DataTable
         $query = Consultation::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->editColumn('specialists', function($row){
-
-                $arr = '';
-                foreach ($row->specialists_explain as $item){
-                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$item.'</span>';
-                }
-                return $arr;
-
-            })->editColumn('created_at', function($row){
+//            ->editColumn('specialists', function($row){
+//
+//                $arr = '';
+//                foreach ($row->specialists_explain as $item){
+//                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$item.'</span>';
+//                }
+//                return $arr;
+//
+//            })
+            ->editColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');
             })->addColumn('nric', function($row){
-                return $row->patient->nric;
+                return nricFormat($row->patient->nric);
             })->addColumn('full_name', function($row){
                 return $row->patient->full_name;
             })->addColumn('action', function($row){
@@ -50,10 +51,9 @@ class ConsultationsDataTable extends DataTable
     {
         return [
             Column::make('ref_id'),
-            Column::make('nric'),
-            Column::make('specialists'),
-            Column::make('full_name'),
             Column::make('created_at'),
+            Column::make('full_name'),
+            Column::make('symptom'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -65,13 +65,13 @@ class ConsultationsDataTable extends DataTable
         $actions = [
             'edit' => [
                 'icon'      => 'simple-icon-pencil',
-                'redirect'  => route('admin.option.edit', $row->id)
+                'redirect'  => route('admin.consultation.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.option.destroy', $row->id)
+                'modal'     => route('admin.consultation.destroy', $row->id)
             ]
         ];
 

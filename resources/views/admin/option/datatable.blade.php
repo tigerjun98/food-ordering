@@ -2,7 +2,7 @@
 
 @section('content')
     <x-admin.datatable :dataTable="$dataTable"
-                       :title="'Option Management'"
+                       :title="trans('common.'.$_GET['type']).' Management'"
                        :filter="$filter"
     >
         @slot('action')

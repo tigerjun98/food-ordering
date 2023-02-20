@@ -37,7 +37,6 @@ trait FilterTrait {
                     break;
 
                 case 'select':
-
                     $query = $this->filterOptionType($query);
                     break;
 
@@ -54,7 +53,7 @@ trait FilterTrait {
     {
         if( isset($item['default']) && !$item['default'] ) return true;
         if(!Schema::hasColumn(self::getTable(), $column)) return false; // column exist in the table
-        if(!request()->filled($column)) return false; // not empty value
+        // if(!request()->filled($column)) return false; // not empty value
 
         return true;
     }
@@ -64,7 +63,6 @@ trait FilterTrait {
         foreach (self::Filter() as $column => $item){
 
             if(!$this->validation($column)) return true;
-
             $this->value = request()->input($column);
             $this->item = $item;
             $this->column = $column;

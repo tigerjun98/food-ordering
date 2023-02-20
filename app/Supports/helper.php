@@ -261,7 +261,7 @@ function getValidImageExtension()
 function get_string_between($string, $start, $end = null){
 
     if(!$end || !str_contains($string, $end)){
-        return substr($string, strpos($string, $start) + 1);
+        return strrchr( $string, '/admin'); // get string after
     }
 
 
