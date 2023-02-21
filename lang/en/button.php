@@ -15,8 +15,11 @@ return [
     'create' => 'Create',
     'close' => 'Close',
     'confirm_delete' => 'Confirm delete',
+    'edit' => 'Edit',
     'submit' => 'Submit',
     'remove' => 'Remove',
     'add_combination' => 'Add combination',
     'add_prescription' => 'Add prescription',
+    'consult' => 'Consult',
+    'serve' => 'Serve',
 ];

@@ -1,11 +1,22 @@
 .queue-list{
 
     .footer{
-        display: none;
+        gap: 6px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .show-when-first{
+            display: none;
+        }
+
     }
     &:first-child{
-        .footer{
+        .show-when-first{
             display: block;
         }
     }
+}
+
+li.queue-list{
+    list-style: none;
 }

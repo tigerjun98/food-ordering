@@ -21,57 +21,18 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h3>{{ trans('common.waiting_list') }}</h3>
+                    <h2 class="mb-3">{{ trans('common.waiting_list') }}</h2>
                     <ul id="queueListing-waiting" class="pl-0">
                         @foreach($waiting as $data)
-                            <li class="card mb-2 queue-list" data-id="{{ $data->id }}" id="queueBox-{{ $data->id }}">
-
-                                <div class="position-absolute card-top-buttons">
-                                    <button class="btn btn-header-light icon-button text-danger">
-                                        <i class="simple-icon-trash"></i>
-                                    </button>
-                                </div>
-
-                                <div class="card-body">
-
-                                    <div class="justify-content-between">
-                                        <div class="">
-                                            <a href="#">
-                                                <p class="font-weight-medium mb-0">{{ $data->patient->full_name }}</p>
-                                                <p class="text-muted mb-0 text-small">
-                                                    {{ get_time_ago( strtotime($data->created_at) ) }}
-                                                </p>
-                                            </a>
-                                            @if($data->doctor)
-                                                <div class="">
-                                                    <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $data->doctor->name_en ?? '' }}</span>
-                                                </div>
-                                            @endif
-                                            <p class="mt-3 mb-0 text-small text-semi-muted">
-                                                {{ $data->remark }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-2 border-top pt-3 footer">
-                                        <x-admin.component.button
-                                            :onclick="'servePatient('.$data->id.')'"
-                                            :lang="'serve'"
-                                            :class="'btn-primary'"
-                                        />
-                                        <x-admin.component.button
-                                            :redirect="route('admin.consultation.edit', $data->user_id)"
-                                            :lang="'consult'"
-                                            :class="'btn-primary'"
-                                        />
-                                    </div>
-                                </div>
+                            <li class="mb-2 queue-list" data-id="{{ $data->id }}" id="queueBox-{{ $data->id }}">
+                                <x-admin.component.card.queue :queue="$data" />
                             </li>
                         @endforeach
                     </ul>
                 </div>
 
                 <div class="col-md-6">
-                    <h3>{{ trans('common.pending_list') }}</h3>
+                    <h2 class="mb-3">{{ trans('common.pending_list') }}</h2>
                     <ul id="items2" class="pl-0">
                         <li class="card" data-id="4">
                             <div class="card-body">

@@ -72,14 +72,11 @@ $.fn.openModal = async function(options) {
     }, options);
 
     let id = !settings.refresh ? Date.now() : openingModalIds.at(-1);
-    if(!settings.refresh) setOpeningModalIds(id)
 
     modalIsOpening = true
     let modal = new Modal(settings, id);
-
-    changeThemeColor(getColorCodeByClassName('modal-content'));
-
     return modal.handle()
+
 }
 
 class Modal{
@@ -137,7 +134,13 @@ class Modal{
             }).catch((res)=>{
                 modalIsOpening = false;
                 console.log(res);
+                return false;
             })
+        }
+
+        if(!this.isRefreshContent()){
+            setOpeningModalIds(this.id)
+            changeThemeColor(getColorCodeByClassName('modal-content'));
         }
     }
 

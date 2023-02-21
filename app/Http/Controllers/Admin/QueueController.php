@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Medicine;
 use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
@@ -52,27 +50,30 @@ class QueueController extends Controller {
 
     public function store(QueueStoreRequest $request)
     {
-        $queue = $this->service->create($request->validated());
+        $queue = $this->service->store($request->validated());
         return makeResponse(200, 'success', $queue);
     }
 
-    public function edit($userId)
+    public function edit($queueId)
     {
-        return html('admin.user.form.create',[ 'data' => User::findOrFail($userId) ]);
+        return html('admin.queue.form.create',[ 'data' => Queue::findOrFail($queueId) ]);
     }
 
-
-
-    public function delete($userId)
+    public function editBox($queueId)
     {
-        return html('admin.user.form.delete',[
-            'data' => User::findOrFail($userId)
+        return html('components.admin.component.card.queue',[ 'queue' => Queue::findOrFail($queueId) ]);
+    }
+
+    public function delete($queueId)
+    {
+        return html('admin.queue.form.delete',[
+            'data' => Queue::findOrFail($queueId)
         ]);
     }
 
-    public function destroy($userId)
+    public function destroy($queueId)
     {
-        (new UserService())->delete(User::findOrFail($userId));
+        $this->service->delete(Queue::findOrFail($queueId));
         return makeResponse(200);
     }
 }

@@ -30,13 +30,19 @@ class QueueService
         return $this->model->find($queue->id);
     }
 
-    public function create($request): Queue
+    public function store($request): Queue
     {
-        $request['status'] = Queue::WAITING;
+        $request['doctor_id'] = $request['doctor_id'] ?? null;
+        $request['status'] = $request['status'] ?? Queue::WAITING;
         $request['admin_id'] = Auth::user()->id;
         $request['appointment_date'] = Carbon::now();
-        return $this->model->create($request);
 
+        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
+    }
+
+    public function delete(Queue $queue): bool
+    {
+        return $queue->delete();
     }
 
 

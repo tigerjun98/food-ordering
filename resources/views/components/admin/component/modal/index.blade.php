@@ -32,7 +32,7 @@
                 <x-admin.component.button
                     :class="'btn-outline-primary'"
                     :lang="'close'"
-                    :data-dismiss="'modal'"
+                    :onclick="'$(this).closeModal({closeLatestModal: true})'"
                 />
 
                 @if(isset($delete))
@@ -54,6 +54,7 @@
 
             @slot('script')
                 $('this').closeModal({closeLatestModal: true})
+                {{ $script ?? '' }}
                 refreshDataTable()
             @endslot
         </x-admin.form>

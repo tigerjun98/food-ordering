@@ -28,9 +28,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"
             integrity="sha512-osQTlub0mspbF8cmq5xylJ5kCJi42xglqltwx2pMI0/I78Y55dKpr3TtLB7nCTYka1AxpF1dOAeSFbgByDvS0Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-{{--    <script src="{{ asset('js/backend/vendor/perfect-scrollbar.min.js') }}" defer></script>--}}
 
-{{--    <script src="{{ asset('js/backend/vendor/bootstrap-notify.min.js') }}" defer></script>--}}
     <style>
 
         {{--.iti__flag {background-image: url("{{ Vite::asset('resources/img/vendor/intltel.flags.png') }}");}--}}
@@ -85,9 +83,11 @@
         @include('admin.include.layout.sidebar')
 {{--        @include('admin.include.layout.loading')--}}
 
-        <x-admin.layout.alert />
+
 
         <main>
+            <x-admin.layout.alert />
+
             <div id="modalWrapper"></div>
 
             <div class="container-fluid">

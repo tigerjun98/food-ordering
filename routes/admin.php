@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\MainController;
 
 Route::group(['middleware' => ['auth:admin']], function () {
 
+    // Route::customResource('user', UserController::class);
+
     Route::customResources([
         'user'          => UserController::class,
         'queue'         => QueueController::class,
@@ -31,7 +33,6 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'option'        => OptionController::class,
         'consultation'  => ConsultationController::class,
     ]);
-
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
@@ -48,9 +49,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
+        Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
     });
 
-    // Route::customResource('user', UserController::class);
+
 
     Route::name('user.')->group(function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);

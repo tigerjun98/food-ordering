@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return makeResponse(200, 'Login success', [
+        return makeResponse(201, 'Login success', [
             'redirect' => Session::pull('url.intended', \route('admin.home'))
         ]);
     }

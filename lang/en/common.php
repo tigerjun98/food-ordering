@@ -127,4 +127,11 @@ return [
     'syndrome' => 'Syndrome',
     'diagnose' => 'Diagnose',
     'specialist' => 'Specialist',
+    'waiting_list' => 'Waiting list',
+    'pending_list' => 'Pending list',
+    'waiting' => 'Waiting',
+    'serving' => 'Serving',
+    'pending' => 'Pending',
+    'expired' => 'Expired',
+    'queues' => 'Queues',
 ];

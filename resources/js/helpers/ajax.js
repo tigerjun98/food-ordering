@@ -52,16 +52,16 @@ $.fn.sendRequest = function(options) {
         },
         success: function(data) {
             if(settings.showLoading) $(this).hideLoader()
+
             switch(data.status) {
                 case 200: // success message
                     if(data.message){
                         if(!settings.alertSuccess) return true;
                         $('#app-alert').showAlert({message: data.message, wait: 100});
                     }
-
-                    if(data.redirect){
-                        window.location.href = data.redirect
-                    }
+                    break;
+                case 201: // redirect require
+                    if(data.data && data.data.redirect) window.location.href = data.data.redirect
                     break;
                 default:
                 // code block

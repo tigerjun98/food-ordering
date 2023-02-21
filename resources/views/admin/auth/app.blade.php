@@ -16,7 +16,6 @@
         src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
         crossorigin="anonymous"></script>
-    <script src="{{ asset('js/backend/vendor/select2.full.js') }}" defer></script>
 
     <style>
         .fixed-background {
@@ -94,51 +93,7 @@
 <body class="background show-spinner">
     <div class="fixed-background"></div>
     <main>
-        <div class="alert_wrapper" id="alert_wrapper">
-            <button onclick="hideAlert()">x</button>
-            <ul id="alert_message"></ul>
-        </div>
         <x-admin.layout.alert />
         @yield('content')
     </main>
-    <script>
-        $.showLoading = function showLoading(id){
-            $('body').addClass('show-spinner');
-            $('#app').css('opacity','0.8');
-            if(id){
-                $('#'+id).prop('disabled',true);
-                $('#'+id).addClass('disabled');
-            }
-        }
-
-        $.hideLoading = function hideLoading(id){
-            $('body').removeClass('show-spinner');
-            $('#app').css('opacity','1');
-            if(id){
-                $('#'+id).prop('disabled',false);
-                $('#'+id).removeClass('disabled');
-            }
-        }
-
-        function hideAlert(){
-            $("#alert_wrapper").hide().slideUp(700);
-        }
-        function showAlert(response, type='danger'){
-            var errors = response.responseJSON;
-            let errorsHtml = '';
-            if(errors.errors && Object.keys(errors.errors).length > 0){
-                $.each(errors.errors, function (k, v) {
-                    errorsHtml += '<li>' + v + '</li>';
-                });
-            } else{
-                errorsHtml = errors.message
-            }
-
-
-            $('#alert_message').html(errorsHtml);
-            $("#alert_wrapper").hide().slideDown(700);
-            $('#alert_wrapper').addClass(type);
-        }
-    </script>
 </body>
-</html>

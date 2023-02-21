@@ -74,7 +74,7 @@
         });
     });
 
-    @if(!isset($multiple))
+    @if(!isset($multiple) && !isset($customOption))
     $('#{{ $attributes['id'] }}').val('{{ $value ?? '' }}').trigger('change');
     @endif
 

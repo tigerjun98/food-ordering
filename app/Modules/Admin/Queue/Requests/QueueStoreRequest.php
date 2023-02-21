@@ -4,6 +4,7 @@ namespace App\Modules\Admin\Queue\Requests;
 
 use App\Models\Medicine;
 use App\Models\Option;
+use App\Models\Queue;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
@@ -39,6 +40,7 @@ class QueueStoreRequest extends FormRequest
             'user_id'       => ['required', 'exists:users,id'],
             'doctor_id'     => ['nullable', 'exists:admins,id'],
             'remark'        => ['nullable', 'string'],
+            'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
         ];
     }
 }

@@ -5,3 +5,12 @@ const servePatient = async (queueId) => {
     let target = $(`#queueBox-${queueId}`)
     target.hide('slow', function(){ target.remove(); });
 }
+
+const deleteQueue = async (queueId) => {
+    let url = `/admin/queue/destroy/${queueId}`
+    $(this).openModal({ url, size: 'md' });
+}
+
+function refreshDataTable() {
+    console.log('123');
+}

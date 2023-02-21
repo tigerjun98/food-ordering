@@ -1,19 +1,5 @@
 import 'bootstrap-notify';
 
-function getPos(ele){
-    var x=0;
-    var y=0;
-    while(true){
-        x += ele.offsetLeft;
-        y += ele.offsetTop;
-        if(ele.offsetParent === null){
-            break;
-        }
-        ele = ele.offsetParent;
-    }
-    return [x, y];
-}
-
 const setAlertPosition = () => {
 
     let openingModalIds = $(this).getModalId();
@@ -22,21 +8,25 @@ const setAlertPosition = () => {
         let elemId =  $(this).getModalId( {latest: true} )
         let elem = $(`#modal-content-${elemId.replace('modalId', '')}`);
 
-        $('#app-alert').css({
-            'width' : parseInt(elem.css('width')),
-            'left' : parseInt(elem.offset().left),
-            'top' : parseInt(elem.offset().top)
-        });
 
-    } else{
 
-        let elem = document.getElementById('main_row')
-        const width = parseInt($('#main_row').css('width')) - parseInt($('#main_row').css('padding-right'))
-        const elemPosition = getPos(elem)
+        if(!!document.getElementById(`modal-content-${elemId.replace('modalId', '')}`)){
+            $('#app-alert').css({
+                'width' : parseInt(elem.css('width')),
+                'left' : parseInt(elem.offset().left),
+                'top' : parseInt(elem.offset().top)
+            });
+        }
+
+
+    } else if(!!document.getElementById('main_row')){
+
+        let elem = $(`#main_row`);
+        const width = parseInt(elem.css('width')) - parseInt(elem.css('padding-right'))
 
         $('#app-alert').css({
             'width' : width,
-            'left' : elemPosition[0]+'px',
+            'left' : elem.offset().left,
         });
     }
 }
