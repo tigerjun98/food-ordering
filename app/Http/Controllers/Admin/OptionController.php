@@ -15,8 +15,8 @@ use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
 use App\Modules\Admin\Medicine\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
 use App\Modules\Admin\Medicine\Services\MedicineService;
-use App\Modules\Admin\Option\Requests\OptionStoreRequest;
-use App\Modules\Admin\Option\Services\OptionService;
+use App\Modules\Admin\Option\Requests\QueueStoreRequest;
+use App\Modules\Admin\Option\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -32,13 +32,13 @@ class OptionController extends Controller {
     use ApiResponser;
 
     private Option $model;
-    private OptionService $service;
+    private QueueService $service;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
         $this->model = new Option();
-        $this->service = new OptionService();
+        $this->service = new QueueService();
     }
 
     public function index(OptionsDataTable $dataTable)
@@ -63,7 +63,7 @@ class OptionController extends Controller {
         ]);
     }
 
-    public function store(OptionStoreRequest $request)
+    public function store(QueueStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

@@ -61,6 +61,10 @@ class UsersDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
+            'queue' => [
+                'icon'      => 'iconsminds-mens',
+                'modal'     => route('admin.queue.create', 'user_id='.$row->id)
+            ],
             'consultation' => [
                 'icon'      => 'simple-icon-calendar',
                 'redirect'  => route('admin.consultation.edit', $row->id)

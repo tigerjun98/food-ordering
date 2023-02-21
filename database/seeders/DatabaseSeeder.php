@@ -8,6 +8,7 @@ use App\Models\Consultation;
 use App\Models\Option;
 use App\Models\Prescription;
 use App\Models\PrescriptionCombination;
+use App\Models\Queue;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,5 +36,6 @@ class DatabaseSeeder extends Seeder
         Consultation::factory(100)->create();
         Prescription::factory(150)->create();
         PrescriptionCombination::factory(250)->create();
+        Queue::factory(55)->create();
     }
 }

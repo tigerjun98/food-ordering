@@ -1,0 +1,11 @@
+.queue-list{
+
+    .footer{
+        display: none;
+    }
+    &:first-child{
+        .footer{
+            display: block;
+        }
+    }
+}

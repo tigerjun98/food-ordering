@@ -14,13 +14,18 @@ function getPos(ele){
     return [x, y];
 }
 
-const setAlertPosition = async () => {
+const setAlertPosition = () => {
 
     let openingModalIds = $(this).getModalId();
     if(openingModalIds.length > 0){
-        let elem = document.getElementById($(this).getModalId({latest: true}))
+
+        let elemId =  $(this).getModalId( {latest: true} )
+        let elem = $(`#modal-content-${elemId.replace('modalId', '')}`);
+
         $('#app-alert').css({
-            'width' : elem.style.width,
+            'width' : parseInt(elem.css('width')),
+            'left' : parseInt(elem.offset().left),
+            'top' : parseInt(elem.offset().top)
         });
 
     } else{
@@ -36,17 +41,20 @@ const setAlertPosition = async () => {
     }
 }
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
-$.fn.showAlert = function(options) {
+$.fn.showAlert = async function(options) {
     // default options.
     const settings = $.extend({
         status: 'success',
         response: null,
         message: null,
-        delay: 6000
+        delay: 6000,
+        wait: 0, // execute the function after * Wait the modal close so that the set position will won't affect by the closing modal
     }, options);
 
     let id = Date.now(), errorsHtml = '<ul>';
+    if(settings.wait > 0) await delay(settings.wait);
     setAlertPosition();
 
     if (settings.status == 'success') {

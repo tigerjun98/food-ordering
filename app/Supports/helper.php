@@ -442,7 +442,7 @@ function html($view, $compact, $code = 200, $message = null, $title = null)
     }
 }
 
-function makeResponse($code, $message = null, $data = [])
+function makeResponse($code, $message = null, $options = [])
 {
     if ($message instanceof \Exception) {
         $debug = config('env.APP_DEBUG');
@@ -460,6 +460,7 @@ function makeResponse($code, $message = null, $data = [])
     }
 
     $data['status'] = $code;
+    $data['data'] = is_array($options) ? $options : json_decode($options);
 
     if (request()->ajax() || request()->wantsJson()) {
         if ($message != null) {

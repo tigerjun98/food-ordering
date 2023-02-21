@@ -39,7 +39,7 @@
     @endif
 
     data-toggle="tooltip"
-    data-placement="{{ $position ?? 'top' }}"
+    data-placement="{{ $position ?? 'right' }}"
     title="{{ $title ?? $tooltip }}"
     data-original-title="{{ $title ?? $tooltip }}"
 @endif

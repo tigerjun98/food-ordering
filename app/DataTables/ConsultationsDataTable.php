@@ -25,13 +25,11 @@ class ConsultationsDataTable extends DataTable
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
 //            ->editColumn('specialists', function($row){
-//
 //                $arr = '';
 //                foreach ($row->specialists_explain as $item){
 //                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$item.'</span>';
 //                }
 //                return $arr;
-//
 //            })
             ->editColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');

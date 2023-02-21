@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Mixins\RouteMixin;
 use App\Traits\ApiResponser;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
 //            return static::length($str) == $length;
 //        });
 
+        Vite::macro('backendJs', fn ($asset) => $this->asset("resources/js/backend/pages/{$asset}"));
         Route::mixin(new RouteMixin);
     }
 

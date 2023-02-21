@@ -1,5 +1,8 @@
 @php
-    $defaultClass= ' form-control select2-single ';
+    $defaultClass= ' form-control ';
+    if(!isset($ajax))
+        $defaultClass .= ' select2-single ';
+
     $attributes['class'] = isset($class) ? $class.$defaultClass : $defaultClass;
     $attributes['name'] = $name;
     $attributes['id'] = isset($id) ? $id : $name;
@@ -77,54 +80,7 @@
 
 
     @if(isset($ajax))
-        $('#{{ $attributes['id'] }}').select2({
-            minimumInputLength: 0,
-            theme: "bootstrap",
-            dir: "ltr",
-            placeholder: "",
-            maximumSelectionSize: 6,
-            containerCssClass: ":all:",
-            tags: true,
-            tokenSeparators: [','],
-            createTag: function (params) {
-                var term = $.trim(params.term);
-                if (term === '') {
-                    return null;
-                }
-
-                return {
-                    id: term,
-                    text: term,
-                    newTag: true // add additional parameters
-                }
-            },
-            ajax: {
-                url: "{{ $ajax }}",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    var query = {
-                        search: params.term,
-                        page: params.page || 1
-                    }
-                    return query;
-                }, processResults: function (data, params) {
-                    params.page = params.page || 1;
-                    return {
-                        results: $.map(data.data, function (item) {
-                            return {
-                                text: item.name,
-                                id: item.id
-                            }
-                        }),
-                        pagination: {
-                            more: data.next_page_url != null && data.next_page_url.length > 0
-                        }
-                    };
-                },
-            cache: true
-        }
-    });
+        $('#{{ $attributes['id'] }}').initialiseDynamicSelect2({url: '{{ $ajax }}'});
     @endif
 </script>
 

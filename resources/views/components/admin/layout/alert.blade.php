@@ -2,12 +2,12 @@
 
 <script type="module">
 
-    if(!!document.querySelector('div.alert-box')){
-        $('div.alert-box').prepend(`<div class="app-alert" id="app-alert"></div>`)
-
-    } else if(!!document.getElementById('main_row')){
+    // if(!!document.querySelector('div.alert-box')){
+    //     $('div.alert-box').prepend(`<div class="app-alert" id="app-alert"></div>`)
+    //
+    // } else if(!!document.getElementById('main_row')){
         $('#main_row').prepend(`<div class="app-alert" id="app-alert"></div>`)
-    }
+    // }
 
     let message = [];
 

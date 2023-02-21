@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
+use App\Traits\Models\SelectOption;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait, SelectOption;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }

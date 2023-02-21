@@ -56,7 +56,7 @@ $.fn.sendRequest = function(options) {
                 case 200: // success message
                     if(data.message){
                         if(!settings.alertSuccess) return true;
-                        $('#app-alert').showAlert({message: data.message});
+                        $('#app-alert').showAlert({message: data.message, wait: 100});
                     }
 
                     if(data.redirect){

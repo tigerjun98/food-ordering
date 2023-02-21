@@ -14,8 +14,6 @@ use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Consultation\Services\ConsultationService;
-use App\Modules\Admin\Consultation\Services\PrescriptionService;
-use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -73,6 +71,12 @@ class ConsultationController extends Controller {
             ->where('user_id', $patientId)
             ->latest()->paginate(10);
         return html('admin.consultation.include.patient-history', compact('consultations'));
+    }
+
+    public function getPatientCard($patientId)
+    {
+        $patient = User::findOrFail($patientId);
+        return html('components.admin.component.card.patient', compact('patient'));
     }
 
     public function edit($id) // $id == userId ? create, $id == consultationId ? edit

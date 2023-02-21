@@ -26,7 +26,7 @@ trait FilterTrait {
     {
         foreach (static::Filter() as $column => $item){
 
-            if(!$this->validation($column)) continue;
+            if(!$this->validation($column) && $item['type'] != 'date') continue;
 
             $this->column = $column;
             $this->value = request()->{$column};
@@ -53,7 +53,7 @@ trait FilterTrait {
     {
         if( isset($item['default']) && !$item['default'] ) return true;
         if(!Schema::hasColumn(self::getTable(), $column)) return false; // column exist in the table
-        // if(!request()->filled($column)) return false; // not empty value
+        if(!request()->filled($column)) return false; // not empty value
 
         return true;
     }

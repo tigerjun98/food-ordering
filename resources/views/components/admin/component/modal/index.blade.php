@@ -1,4 +1,4 @@
-<div class="app-alert" id="app-alert"></div>
+{{--<div class="app-alert" id="app-alert"></div>--}}
 
 <div class="modal-header pb-0 alert-box">
     <x-admin.component.modal.header

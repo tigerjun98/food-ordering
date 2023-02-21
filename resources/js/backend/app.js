@@ -17,6 +17,7 @@ import.meta.glob([
 import.meta.glob([
     '../backend/vite/*.js',
     '../backend/vendor/*.js',
+
     // '../vendor/*.js',
     // '../images/**',
     // '../fonts/**',

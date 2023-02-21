@@ -20,8 +20,8 @@
                 <div class="separator mb-4 mt-2"></div>
             </div>
 
-            <div class="mb-4">
-                <x-admin.component.card.patient :data="$patient"/>
+            <div class="mb-4" id="patientCard">
+                <x-admin.component.card.patient :patient="$patient"/>
             </div>
 
             <x-admin.form :route="route('admin.consultation.store')">
@@ -40,7 +40,6 @@
                                             :col="'md-12'"
                                             :name="'specialists[]'"
                                             :lang="'specialists'"
-                                            id="hahaha"
                                         >
                                             @slot('customOption')
                                                 @if($consultation)
@@ -148,6 +147,11 @@
 
     <script type="text/javascript">
 
+        const getPatientCard = () => {
+            $('#patientCard').setHtml({
+                url: '{{ route('admin.consultation.get-patient-card', $patient->id) }}'
+            })
+        }
         // const ps = new PerfectScrollbar('.scroll');
 
         // function initialiseScrollbar(){
