@@ -66,24 +66,3 @@ const updateSorting = async () => {
     });
     console.log(result)
 }
-
-var initialOrder = sortable.toArray();
-console.log(initialOrder)
-
-$('#items2').initialiseSortable({
-    filter: '.filtered', // 'filtered' class is not draggable
-    group: 'shared',
-    animation: 150,
-    ghostClass: 'blue-background-class',
-    store: {
-        get: function (sortable) {
-            var order = localStorage.getItem('sortable-holding');
-            return order ? order.split(',') : [];
-        },
-        set: function (sortable) {
-            var order = sortable.toArray();
-            localStorage.setItem('sortable-holding', order.join(','));
-            console.log(localStorage.getItem('sortable-holding'))
-        }
-    }
-})

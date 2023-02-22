@@ -25,10 +25,15 @@ class QueueService
 
     public function index()
     {
-        $data['waiting'] = $this->model->Today()->Waiting()->Sort()->get();
-        $data['pending'] = $this->model->Today()->Pending()->Sort()->get();
+        if(request()->filled('status')){
+            $queues = $this->model->Today()->Sort()->Filter()->get();
 
-        return $data;
+        } else{
+            $queues['waiting'] = $this->model->Today()->Waiting()->Sort()->Filter()->get();
+            $queues['pending'] = $this->model->Today()->Pending()->Sort()->Filter()->get();
+        }
+
+        return $queues;
 
     }
 

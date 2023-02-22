@@ -12,5 +12,9 @@ const deleteQueue = async (queueId) => {
 }
 
 function refreshDataTable() {
-    console.log('123');
+    let filterForm = $('#js-datatable-filter-form').serialize()
+    window.history.replaceState({ id: "100" }, "Filter", "?"+filterForm);
+    $('#queueListingWrapper').setHtml({
+        url: `/admin/queue/listing?${filterForm}`
+    })
 }

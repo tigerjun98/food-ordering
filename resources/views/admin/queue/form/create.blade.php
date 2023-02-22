@@ -9,6 +9,7 @@
 
         <div class="row">
             <x-admin.form.select
+                :multiple="true"
                 :col="'md-12'"
                 :name="'doctor_id'"
                 :ajax="route('admin.get-doctor-opt')"

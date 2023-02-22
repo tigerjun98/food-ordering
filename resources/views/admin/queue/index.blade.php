@@ -19,46 +19,27 @@
                 <div class="separator mb-4 mt-2"></div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <h2 class="mb-3">{{ trans('common.waiting_list') }}</h2>
-                    <ul id="queueListing-waiting" class="pl-0 sortable-listing">
-                        @foreach($queues['waiting'] as $data)
-                            <li class="mb-2 queue-list" data-id="{{ $data->id }}" id="queueBox-{{ $data->id }}">
-                                <x-admin.component.card.queue :queue="$data" />
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <div class="col-md-6">
-                    <h2 class="mb-3">{{ trans('common.pending_list') }}</h2>
-                    <ul id="queueListing-pending" class="pl-0 sortable-listing">
-                        @foreach($queues['pending'] as $data)
-                            <li class="mb-2 queue-list" data-id="{{ $data->id }}" id="queueBox-{{ $data->id }}">
-                                <x-admin.component.card.queue :queue="$data" />
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="row" id="queueListingWrapper">
+                <x-admin.page.queue.receptionist :queues="$queues" />
             </div>
         </div>
     </div>
 
-    <div class="app-menu">
-        <div class="p-4 h-100">
-            <div class="scroll">
-                <div class="modal-header mb-5">
-                    <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
-                </div>
-
+    <x-admin.layout.search-menu
+        :filter="\App\Models\Queue::Filter()"
+    >
+        @slot('extraFilter')
+            <div class="mt-2">
+                <x-admin.form.select
+                    :name="'doctor_id'"
+                    :ajax="route('admin.get-doctor-opt')"
+                    :required="false"
+                    :onchange="'refreshDataTable()'"
+                ></x-admin.form.select>
             </div>
-        </div>
 
-        <a class="app-menu-button d-inline-block d-xl-none" href="#">
-            <i class="simple-icon-options"></i>
-        </a>
-    </div>
+        @endslot
+    </x-admin.layout.search-menu>
 
     <script type="text/javascript" src="{{ Vite::backendJs('queue-function.js') }}"></script>
     <script type="module" src="{{ Vite::backendJs('queue-init.js') }}"></script>

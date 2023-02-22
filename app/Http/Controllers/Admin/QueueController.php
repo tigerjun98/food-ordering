@@ -31,6 +31,14 @@ class QueueController extends Controller {
         return view('admin.queue.index', compact('queues'));
     }
 
+    public function listing()
+    {
+        return html('components.admin.page.queue.receptionist',[
+            'queues' => $this->service->index()
+        ]);
+    }
+
+
     public function serve($queueId)
     {
         $this->service->serve( $this->model->findOrFail($queueId) );

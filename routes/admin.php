@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
+        Route::get('/listing', [QueueController::class, 'listing'])->name('listing');
     });
 
     Route::name('user.')->group(function () {
