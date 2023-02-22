@@ -11,16 +11,26 @@
         <div class="justify-content-between">
             <div class="">
                 <a href="#">
-                    <p class="font-weight-medium mb-0">{{ $queue->patient->full_name }}</p>
+                    <p class="font-weight-medium mb-1">
+                        <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
+                        {{ $queue->patient->full_name }}
+                    </p>
                     <p class="text-muted mb-0 text-small">
                         {{ get_time_ago( strtotime($queue->created_at) ) }}
                     </p>
                 </a>
-                @if($queue->doctor)
-                    <div class="">
+                <div class="">
+                    @if($queue->doctor)
                         <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor->name_en ?? '' }}</span>
-                    </div>
-                @endif
+                    @endif
+                    @if($queue->priority > 0)
+                        <span class="badge badge-pill badge-danger mr-1 mt-2">
+                            <i class="simple-icon-star"></i>
+                            {{ $queue->priority ?? '' }}
+                        </span>
+                    @endif
+                </div>
+
                 <p class="mt-3 mb-0 text-small text-semi-muted">
                     {{ $queue->remark }}
                 </p>

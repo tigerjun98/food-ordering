@@ -24,6 +24,7 @@ class ClinicFactory extends Factory
     public function definition()
     {
         return [
+            'code' => strtoupper($this->faker->lexify('???')),
             'name_en' => $this->faker->company(),
             'name_cn' => Company::companyPrefix().Company::companySuffix(),
             'contact' => '601'.$this->faker->randomNumber(8),
@@ -31,11 +32,10 @@ class ClinicFactory extends Factory
             'url' => $this->faker->url(),
             'address' => $this->faker->address(),
             'area' => $this->faker->city(),
-            'postcode' => $this->faker->numberBetween(11111, 99999),
+            'postcode' => $this->faker->postcode(),
             'state' => array_rand(User::getStatesList()),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
-            'admin_id' => Admin::all()->random()->id,
         ];
     }
 }

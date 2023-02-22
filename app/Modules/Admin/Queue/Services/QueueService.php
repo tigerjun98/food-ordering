@@ -23,6 +23,15 @@ class QueueService
         $this->model = new Queue();
     }
 
+    public function index()
+    {
+        $data['waiting'] = $this->model->Today()->Waiting()->Sort()->get();
+        $data['pending'] = $this->model->Today()->Pending()->Sort()->get();
+
+        return $data;
+
+    }
+
     public function serve(Queue $queue): Queue
     {
         $queue->status = Queue::SERVING;

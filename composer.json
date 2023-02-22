@@ -13,6 +13,8 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.7",
+        "league/flysystem-aws-s3-v3": "^3.12",
+        "league/flysystem-path-prefixing": "^3.0",
         "overtrue/laravel-pinyin": "~4.0",
         "predis/predis": "^1.1",
         "revenuemonster/sdk": "^2.0",

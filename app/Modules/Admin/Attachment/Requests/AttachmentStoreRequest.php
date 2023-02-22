@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Modules\Admin\Queue\Requests;
+namespace App\Modules\Admin\Attachment\Requests;
 
-use App\Models\Medicine;
-use App\Models\Option;
-use App\Models\Queue;
+use App\Models\Order;
 use App\Models\User;
+use App\Modules\Users\Account\Rules\MatchOldPassword;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,7 +15,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
-class QueueStoreRequest extends FormRequest
+class AttachmentStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,11 +36,11 @@ class QueueStoreRequest extends FormRequest
     {
         return [
             'id'            => ['integer'],
-            'priority'      => ['nullable', 'integer'],
-            'user_id'       => ['required', 'exists:users,id'],
-            'doctor_id'     => ['nullable', 'exists:admins,id'],
-            'remark'        => ['nullable', 'string'],
-            'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
+            'ref_id'        => ['required', 'string'],
+            'table'         => ['nullable', 'string'],
+            'path'          => ['nullable', 'string'],
+            'type'          => ['required', 'string'],
+            'file'          => ['file', 'mimes:jpeg,png,jpg', 'max:10240'],
         ];
     }
 }

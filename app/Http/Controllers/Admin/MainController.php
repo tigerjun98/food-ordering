@@ -6,7 +6,7 @@ use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
-use App\Modules\Admin\Account\Services\AdminAccountService;
+use App\Modules\Admin\Account\Services\AttachmentService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use DB;

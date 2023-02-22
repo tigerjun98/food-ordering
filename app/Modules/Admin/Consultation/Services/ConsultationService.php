@@ -8,6 +8,7 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Prescription;
 use App\Models\User;
+use App\Modules\Admin\Attachment\Services\AttachmentService;
 use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\Option\Services\QueueService;
 use Carbon\Carbon;
@@ -60,7 +61,10 @@ class ConsultationService
 
     public function delete(Consultation $model)
     {
-        $model->delete();
+        foreach ($model->attachments as $attachment){
+            (new AttachmentService)->delete($attachment);
+        }
         (new ConsultationPrescriptionService($model))->delete();
+        $model->delete();
     }
 }

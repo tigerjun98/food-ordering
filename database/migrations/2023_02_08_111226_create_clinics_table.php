@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('clinics', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
             $table->integer('status')->nullable();
+            $table->string('code')->nullable();
             $table->string('slug')->nullable();
             $table->string('name_en')->nullable();
             $table->string('name_cn')->nullable();

@@ -12,6 +12,7 @@ use App\Models\Queue;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Clinic::factory(15)->create();
         User::factory(100)->create();
         Admin::factory(100)->create();
 
@@ -32,10 +34,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Option::factory(55)->create();
-        Clinic::factory(15)->create();
-        Consultation::factory(100)->create();
-        Prescription::factory(150)->create();
-        PrescriptionCombination::factory(250)->create();
+//        Consultation::factory(100)->create();
+//        Prescription::factory(150)->create();
+//        PrescriptionCombination::factory(250)->create();
         Queue::factory(55)->create();
+
+        Artisan::call("db:medicine:update_name");
+        Artisan::call("db:medicine:update_type");
+        Artisan::call("db:medicine:update_category");
     }
 }

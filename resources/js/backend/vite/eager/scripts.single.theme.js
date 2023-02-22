@@ -1,4 +1,4 @@
-/* Dore Single Theme Initializer Script 
+/* Dore Single Theme Initializer Script
 
 Table of Contents
 
@@ -8,9 +8,9 @@ Table of Contents
 /* 01. Single Theme Initializer */
 
 (function ($) {
-  if ($().dropzone) {
-    Dropzone.autoDiscover = false;
-  }
+  // if ($().dropzone) {
+  //   Dropzone.autoDiscover = false;
+  // }
 
   var direction = "ltr";
   var radius = "rounded";

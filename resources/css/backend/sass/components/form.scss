@@ -1,6 +1,24 @@
 .select2-container--bootstrap .select2-selection.form-control{
     height: auto !important;
 }
+.dropzone{
+    .dz-preview{
+        &.dz-image-preview, &.dz-file-preview{
+            .remove{
+                color: var(--danger) !important;
+            }
+        }
+    }
+
+    &.dz-clickable{
+        position: relative;
+
+        .dz-message{
+            width: 80%;
+            @include center();
+        }
+    }
+}
 
 form{
 

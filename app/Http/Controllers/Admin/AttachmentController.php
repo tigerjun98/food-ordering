@@ -5,22 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Attachment;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
-use App\Modules\Admin\Account\Services\AttachmentService;
+use App\Modules\Admin\Attachment\Requests\AttachmentStoreRequest;
+use App\Modules\Admin\Attachment\Services\AttachmentService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use DB;
 
-class AccountController extends Controller {
+class AttachmentController extends Controller {
 
     use ApiResponser;
-    private Admin $model;
+    private Attachment $model;
     private AttachmentService $service;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->model = new Admin();
+        $this->model = new Attachment();
         $this->service = new AttachmentService();
     }
 
@@ -44,10 +46,10 @@ class AccountController extends Controller {
         ]);
     }
 
-    public function store(AdminAccountStoreRequest $request)
+    public function store(AttachmentStoreRequest $request)
     {
-        $this->service->store($request->validated());
-        return makeResponse(200);
+        $model = $this->service->store($request->validated());
+        return makeResponse(200, null, $model);
     }
 
     public function delete($adminId)
@@ -57,9 +59,9 @@ class AccountController extends Controller {
         ]);
     }
 
-    public function destroy($adminId)
+    public function destroy($attachId)
     {
-        $this->service->delete($this->model->findOrFail($adminId));
+        $this->service->delete($this->model->findOrFail($attachId));
         return makeResponse(200);
     }
 }

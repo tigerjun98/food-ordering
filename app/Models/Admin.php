@@ -60,6 +60,11 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(

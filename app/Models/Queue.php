@@ -19,15 +19,19 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class Queue extends Model
 {
-    use ModelTrait, HasFactory, ObserverTrait;
+    use ModelTrait, HasFactory;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
-    public const WAITING = 1;
-    public const SERVING = 2;
-    public const PENDING = 3;
-    public const EXPIRED = 4;
+    public const WAITING = 101;
+    public const SERVING = 102;
+    public const PENDING = 103;
+    public const EXPIRED = 104;
+
+    public const CONSULTATION = 201;
+    public const MEDICINE = 202;
+    public const PAYMENT = 203;
 
     public $incrementing = false;
     protected $table = 'queues';
@@ -48,6 +52,23 @@ class Queue extends Model
     {
         return $this->belongsTo(User::class,'user_id', 'id');
     }
+
+    public static function getTypeList()
+    {
+        return [
+            self::CONSULTATION => trans('common.consultation'),
+            self::MEDICINE => trans('common.medicine'),
+            self::PAYMENT => trans('common.payment'),
+        ];
+    }
+
+    protected function typeExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => static::getTypeList()[$this->type] ?? __('common.unknown_status'),
+        );
+    }
+
 
     public static function getStatusList()
     {
@@ -71,14 +92,24 @@ class Queue extends Model
         return $query->where('status', self::WAITING);
     }
 
+    public function scopePending($query)
+    {
+        return $query->where('status', self::PENDING);
+    }
+
     public function scopeToday($query)
     {
         return $query->whereDate('appointment_date', Carbon::now());
     }
 
-    public function scopeOrderBySorting($query)
+    public function scopePriority($query)
     {
-        return $query->orderBy('sorting', 'asc');
+        return $query->orderBy('priority', 'desc');
+    }
+
+    public function scopeSort($query)
+    {
+        return $query->orderBy('priority', 'desc')->orderBy('sorting', 'asc');
     }
 
     public static function Filter(){

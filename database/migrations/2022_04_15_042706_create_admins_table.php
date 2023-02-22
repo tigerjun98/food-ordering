@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->integer('status')->nullable();
             $table->rememberToken()->nullable();
+            $table->unsignedBigInteger('clinic_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Clinic;
 use Carbon\Carbon;
 use Faker\Provider\zh_CN\Company;
 use Faker\Provider\zh_CN\Person;
@@ -38,6 +39,7 @@ class AdminFactory extends Factory
             'email' => $this->faker->companyEmail(),
             'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
             'remember_token' => Str::random(10),
+            'clinic_id' => Clinic::all()->random()->id
         ];
     }
 }

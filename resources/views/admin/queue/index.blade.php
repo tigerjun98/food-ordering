@@ -22,8 +22,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="mb-3">{{ trans('common.waiting_list') }}</h2>
-                    <ul id="queueListing-waiting" class="pl-0">
-                        @foreach($waiting as $data)
+                    <ul id="queueListing-waiting" class="pl-0 sortable-listing">
+                        @foreach($queues['waiting'] as $data)
                             <li class="mb-2 queue-list" data-id="{{ $data->id }}" id="queueBox-{{ $data->id }}">
                                 <x-admin.component.card.queue :queue="$data" />
                             </li>
@@ -33,22 +33,12 @@
 
                 <div class="col-md-6">
                     <h2 class="mb-3">{{ trans('common.pending_list') }}</h2>
-                    <ul id="items2" class="pl-0">
-                        <li class="card" data-id="4">
-                            <div class="card-body">
-                                Item 4
-                            </div>
-                        </li>
-                        <li class="card" data-id="5">
-                            <div class="card-body">
-                                Item 5
-                            </div>
-                        </li>
-                        <li class="card" data-id="6">
-                            <div class="card-body">
-                                Item 6
-                            </div>
-                        </li>
+                    <ul id="queueListing-pending" class="pl-0 sortable-listing">
+                        @foreach($queues['pending'] as $data)
+                            <li class="mb-2 queue-list" data-id="{{ $data->id }}" id="queueBox-{{ $data->id }}">
+                                <x-admin.component.card.queue :queue="$data" />
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

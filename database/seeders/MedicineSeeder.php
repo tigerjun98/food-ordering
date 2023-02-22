@@ -19,7 +19,8 @@ class MedicineSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->getMedicines() as $var){
+        foreach ($this->getMedicines() as $key => $var){
+            if($key > 100) break;
             $model = new Medicine();
             $model->type = array_rand(Medicine::getTypeList());
             foreach ($var as $col => $val){

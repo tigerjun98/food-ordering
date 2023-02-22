@@ -25,12 +25,10 @@ class QueueController extends Controller {
         $this->service = new QueueService();
     }
 
-
     public function index()
     {
-        $query = Queue::query()->Today();
-        $waiting = $query->Waiting()->get();
-        return view('admin.queue.index', compact('waiting'));
+        $queues = $this->service->index();
+        return view('admin.queue.index', compact('queues'));
     }
 
     public function serve($queueId)
@@ -62,6 +60,15 @@ class QueueController extends Controller {
     public function editBox($queueId)
     {
         return html('components.admin.component.card.queue',[ 'queue' => Queue::findOrFail($queueId) ]);
+    }
+
+    public function update($queueId)
+    {
+        dd( request()->all() );
+
+        $model = Queue::findOrFail($queueId);
+        dd($model);
+        return makeResponse(200);
     }
 
     public function delete($queueId)

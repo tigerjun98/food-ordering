@@ -134,4 +134,6 @@ return [
     'pending' => 'Pending',
     'expired' => 'Expired',
     'queues' => 'Queues',
+    'attachments' => 'Attachments',
+    'drop_file_to_upload' => 'Drop files here to upload',
 ];

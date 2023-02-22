@@ -46,7 +46,7 @@ return [
     'password' => 'Password',
     'status' => 'Status',
     'doctor_id' => 'Doctor',
-    'specialists' => 'Specialists',
+    'priority' => 'Priority',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',

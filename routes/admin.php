@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ConsultationController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\QueueController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\AttachmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'medicine'      => MedicineController::class,
         'option'        => OptionController::class,
         'consultation'  => ConsultationController::class,
+        'attachment'    => AttachmentController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
@@ -44,15 +46,12 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('get-medicine-opt');
         Route::get('/get-patient-history/{patientId}', [ConsultationController::class, 'getPatientHistory'])->name('get-patient-history');
         Route::get('/get-patient-card/{patientId}', [ConsultationController::class, 'getPatientCard'])->name('get-patient-card');
-
     });
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
     });
-
-
 
     Route::name('user.')->group(function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);

@@ -25,8 +25,8 @@ class QueueFactory extends Factory
     public function definition()
     {
         return [
-            'sorting'           => rand(1,9999),
             'status'            => array_rand(Queue::getStatusList()),
+            'type'              => array_rand(Queue::getTypeList()),
             'remark'            => $this->faker->realText(),
             'appointment_date'  => Carbon::now(),
             'user_id'           => User::all()->random()->id,

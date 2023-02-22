@@ -29,6 +29,7 @@ class Clinic extends Model
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
 
+
     public static function getStatusList()
     {
         return [

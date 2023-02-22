@@ -44,5 +44,14 @@
             @endslot
         @endif
 
+        <div class="row">
+            <x-admin.form.text
+                :type="'number'"
+                :col="'md-12'"
+                :name="'priority'"
+                :data="$data"
+            />
+        </div>
+
     @endslot
 </x-admin.component.modal>

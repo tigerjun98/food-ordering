@@ -6,6 +6,7 @@ use App\Constants;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\ModelTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,12 @@ class Consultation extends Model
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
 
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'ref_id', 'id')
+            ->orderBy('created_at', 'desc');
+    }
+
     public function prescriptions()
     {
         return $this->hasMany(Prescription::class, 'consultation_id', 'id')
@@ -39,7 +46,12 @@ class Consultation extends Model
 
     public function patient()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
     }
 
     public static function getSpecialistList()
@@ -102,6 +114,11 @@ class Consultation extends Model
             'created_at'    => ['type' => 'date', 'label'=> 'created_at' ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('created_at', Carbon::now());
     }
 
     public function scopeFilter($query)

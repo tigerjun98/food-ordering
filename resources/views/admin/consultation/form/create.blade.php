@@ -4,8 +4,7 @@
     <div id="main_row" class="row app-row">
         <div class="col-12">
             <div class="mb-0">
-                <h1 class="pr-3 text-capitalize">Consultation</h1>
-
+                <h1 class="pr-3 text-capitalize">{{ $consultation ? '#'.$consultation->ref_id : trans('common.consultation') }}</h1>
                 <div class="top-right-button-container">
                     <button onclick="location.href='{{ url()->previous() }}';"
                             type="button" class="btn btn-outline-primary btn-lg top-right-button mr-1 text-capitalize">
@@ -13,24 +12,24 @@
                         {{ __('common.back') }}
                     </button>
                 </div>
-
             </div>
 
-            <div class="mb-4" id="headerSearch">
+            <div class="mb-3" id="headerSearch">
                 <div class="separator mb-4 mt-2"></div>
             </div>
 
-            <div class="mb-4" id="patientCard">
+            <div class="mb-3" id="patientCard">
                 <x-admin.component.card.patient :patient="$patient"/>
             </div>
 
             <x-admin.form :route="route('admin.consultation.store')">
                 @slot('body')
-                    <input type="hidden" name="id" value="{{ $consultation->id ?? null }}">
+                    <input type="hidden" name="id" value="{{ $consultation->id ?? new_id() }}">
                     <input type="hidden" name="user_id" value="{{ $patient->id }}">
+
                     <div class="row mb-4">
-                        <div class="col-lg-6 mt-4">
-                            <div class="card">
+                        <div class="col-lg-6 mb-3">
+                            <div class="card mb-3">
                                 <div class="card-body">
                                     <h3 class="mb-5">{{ trans('common.consultation') }}</h3>
                                     <div class="row">
@@ -111,8 +110,37 @@
                                     />
                                 </div>
                             </div>
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h3 class="mb-3">{{ trans('common.attachments') }}</h3>
+                                    <input type="hidden" class="dropzone-sending-data" name="type" value="{{ $patient->id }}">
+                                    <x-admin.form.dropzone
+                                        :id="$consultation ? $consultation->id : null"
+                                        :submitUrl="route('admin.attachment.store')"
+                                        :deleteUrl="route('admin.attachment.destroy', ':id')"
+                                        :sendingData="['type' => 'consultations']"
+                                    >
+                                        @if($consultation)
+                                            @slot('data')
+                                                @foreach($consultation->attachments as $key => $attachment)
+                                                    <x-admin.form.dropzone-preview
+                                                        :id="$consultation->id"
+                                                        :refId="$attachment->id"
+                                                        :src="$attachment->url"
+                                                    />
+                                                @endforeach
+                                            @endslot
+                                        @endif
+
+
+                                    </x-admin.form.dropzone>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="col-lg-6 mt-4">
+
+                        <div class="col-lg-6 mb-3">
                             <div class="" id="prescriptionsWrapper">
                                 @if($consultation)
                                     @foreach($consultation->prescriptions as $key => $prescription)
@@ -128,6 +156,7 @@
 
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card mb-4">
