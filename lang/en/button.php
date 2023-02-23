@@ -22,4 +22,5 @@ return [
     'add_prescription' => 'Add prescription',
     'consult' => 'Consult',
     'serve' => 'Serve',
+    'consulted' => 'Consulted',
 ];

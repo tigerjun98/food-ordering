@@ -3,12 +3,13 @@
 @section('content')
     <div id="main_row" class="row app-row">
         <div class="col-12">
-            <div class="mb-0">
+             <div class="mb-0">
                 <h1 class="pr-3 text-capitalize">Queue management</h1>
-
                 <div class="top-right-button-container">
                     <button onclick="location.href='{{ url()->previous() }}';"
-                            type="button" class="btn btn-outline-primary btn-lg top-right-button mr-1 text-capitalize">
+                            type="button"
+                            class="btn btn-outline-primary btn-lg top-right-button mr-1 text-capitalize"
+                    >
                         <i class="iconsminds-left-1 mr-1"></i>
                         {{ __('common.back') }}
                     </button>
@@ -19,7 +20,7 @@
                 <div class="separator mb-4 mt-2"></div>
             </div>
 
-            <div class="row" id="queueListingWrapper">
+            <div class="" id="queueListingWrapper">
                 <x-admin.page.queue.receptionist :queues="$queues" />
             </div>
         </div>
@@ -41,6 +42,7 @@
         @endslot
     </x-admin.layout.search-menu>
 
-    <script type="text/javascript" src="{{ Vite::backendJs('queue-function.js') }}"></script>
-    <script type="module" src="{{ Vite::backendJs('queue-init.js') }}"></script>
+    <script type="text/javascript" src="{{ Vite::backendJs('queue/sortable.js') }}"></script>
+    <script type="text/javascript" src="{{ Vite::backendJs('queue/function.js') }}"></script>
+    <script type="module" src="{{ Vite::backendJs('queue/init.js') }}"></script>
 @stop

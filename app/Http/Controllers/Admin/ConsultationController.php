@@ -97,7 +97,9 @@ class ConsultationController extends Controller {
     public function store(ConsultationStoreRequest $request)
     {
         $this->service->store($request->validated());
-        return makeResponse(200);
+        return makeResponse(201, null, [
+            'redirect' => route('admin.queue.index', 'role=doctor')
+        ]);
     }
 
     public function delete($adminId)

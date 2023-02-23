@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
+use App\Modules\Admin\Queue\Requests\QueueUpdateSortingRequest;
 use App\Modules\Admin\Queue\Services\QueueService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -38,7 +39,6 @@ class QueueController extends Controller {
         ]);
     }
 
-
     public function serve($queueId)
     {
         $this->service->serve( $this->model->findOrFail($queueId) );
@@ -70,13 +70,11 @@ class QueueController extends Controller {
         return html('components.admin.component.card.queue',[ 'queue' => Queue::findOrFail($queueId) ]);
     }
 
-    public function update($queueId)
+    public function updateSorting(QueueUpdateSortingRequest $request, $queueId)
     {
-        dd( request()->all() );
-
-        $model = Queue::findOrFail($queueId);
-        dd($model);
-        return makeResponse(200);
+        $model = $this->model->findOrFail($queueId);
+        $queue = $this->service->setSorting( $model, $request->validated() );
+        return makeResponse(200, null, $queue);
     }
 
     public function delete($queueId)

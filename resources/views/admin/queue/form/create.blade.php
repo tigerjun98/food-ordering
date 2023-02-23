@@ -14,12 +14,11 @@
                 :name="'doctor_id'"
                 :ajax="route('admin.get-doctor-opt')"
             >
-                @if($data)
+                @if($data && $data->doctor)
                     @slot('customOption')
                         <option value="{{ $data->doctor_id }}" selected="selected"> {{ $data->doctor->full_name }}</option>
                     @endslot
                 @endif
-
             </x-admin.form.select>
         </div>
 

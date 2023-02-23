@@ -28,6 +28,7 @@ class Queue extends Model
     public const SERVING = 102;
     public const PENDING = 103;
     public const EXPIRED = 104;
+    public const COMPLETED = 105;
 
     public const CONSULTATION = 201;
     public const MEDICINE = 202;
@@ -37,6 +38,11 @@ class Queue extends Model
     protected $table = 'queues';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
+
+    public function consultation()
+    {
+        return $this->belongsTo(Consultation::class,'consultation_id', 'id');
+    }
 
     public function admin()
     {
@@ -69,7 +75,6 @@ class Queue extends Model
         );
     }
 
-
     public static function getStatusList()
     {
         return [
@@ -77,6 +82,7 @@ class Queue extends Model
             self::SERVING => trans('common.serving'),
             self::PENDING => trans('common.pending'),
             self::EXPIRED => trans('common.expired'),
+            self::COMPLETED => trans('common.completed'),
         ];
     }
 
@@ -107,21 +113,28 @@ class Queue extends Model
         return $query->orderBy('priority', 'desc');
     }
 
-    public function scopeSort($query)
-    {
-        return $query->orderBy('priority', 'desc')->orderBy('sorting', 'asc');
-    }
-
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'type'      => ['label'=> 'type', 'type' => 'select', 'option' => static::getTypeList()],
-            'status'    => ['label'=> 'status', 'type' => 'select', 'multiple' => false, 'option' => static::getStatusList()],
+            // 'type'      => ['label'=> 'type', 'type' => 'select', 'option' => static::getTypeList()],
+            // 'status'    => ['label'=> 'status', 'type' => 'select', 'multiple' => false, 'option' => static::getStatusList()],
+            'role'      => ['label'=> 'role', 'type' => 'select', 'multiple' => false, 'default' => false, 'option' => [
+                'receptionist'  => 'Receptionist',
+                'doctor'        => 'Doctor',
+                'medicine'      => 'Pharmacy',
+                'cashier'       => 'Cashier',
+            ]],
         ];
     }
 
     public function scopeFilter($query)
     {
+        if(request()->filled('doctor_id')){
+            $query->whereHas('doctor', function ($q) {
+                $q->where('id', request()->doctor_id);
+            });
+        }
+
         if(request()->filled('full_name')){
             $query->whereHas('patient', function ($q) {
                 $q->where(function ($q) {
@@ -129,6 +142,20 @@ class Queue extends Model
                         ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
                 });
             });
+        }
+
+        if(request()->filled('role')){
+            switch (request()->role){
+                case 'payment':
+                    $query->where('type', self::PAYMENT);
+                    break;
+                case 'medicine':
+                    $query->where('type', self::MEDICINE);
+                    break;
+                default:
+                    $query->where('type', self::CONSULTATION);
+                    break;
+            }
         }
 
         return $this->searchAll(

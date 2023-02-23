@@ -16,7 +16,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
-class QueueStoreRequest extends FormRequest
+class QueueUpdateSortingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,13 +35,14 @@ class QueueStoreRequest extends FormRequest
      */
     public function rules()
     {
+        // dd(request()->higher_queue_id != null, request()->higher_queue_id);
+
         return [
-            'id'            => ['integer'],
-            'priority'      => ['nullable', 'decimal:0,2'],
-            'user_id'       => ['required', 'exists:users,id'],
-            'doctor_id'     => ['nullable', 'exists:admins,id'],
-            'remark'        => ['nullable', 'string'],
-            'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
+            'id'                => ['integer'],
+            'status'            => ['required', 'in:'.arrayToString(Queue::getStatusList())],
+            'lower_queue_id'    => ['nullable', 'exists:queues,id'],
+            'higher_queue_id'   => ['nullable', 'exists:queues,id'],
+//            'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
         ];
     }
 }

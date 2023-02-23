@@ -15,7 +15,7 @@
         <x-admin.form.textarea
             :data="$data"
             :rows="6"
-            :name="'desc_en'"
+            :name="'desc_cn'"
             :required="false"
         />
     @endslot

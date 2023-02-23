@@ -47,7 +47,7 @@ return [
     'status' => 'Status',
     'doctor_id' => 'Doctor',
     'priority' => 'Priority',
-    'specialists' => 'Specialists',
+    'role' => 'Role',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',

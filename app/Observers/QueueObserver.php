@@ -10,16 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class QueueObserver
 {
-    public function getRunningNo(): string
+
+    public function getRunningNo(): array
     {
-        $lastRunningNo = Queue::Today()->latest()->count();
-        return str_pad($lastRunningNo + 1, 3, 0, STR_PAD_LEFT);
+        $max = 999;
+        $totalQueueToday = Queue::Today()->latest()->count();
+        $arr['sorting'] = str_pad($totalQueueToday + 1, 3, 0, STR_PAD_LEFT);
+        $arr['priority'] = $max - $totalQueueToday;
+        return $arr;
     }
 
     public function creating(Queue $model)
     {
+        $sortingNo = self::getRunningNo();
         $model->id = $model->id ?? abs( crc32( uniqid() ) );
-        $model->sorting = self::getRunningNo();
+        $model->sorting = $sortingNo['sorting'];
+        $model->priority = $sortingNo['priority'];
     }
 
 }

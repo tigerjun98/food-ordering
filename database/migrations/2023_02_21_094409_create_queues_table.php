@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->string('sorting')->nullable();
             $table->integer('type')->nullable();
             $table->integer('status')->nullable();
-            $table->longText('remark')->nullable();
-            $table->integer('priority')->default(0);
+            $table->string('sorting')->nullable();
+            $table->float('priority')->default(0);
             $table->date('appointment_date')->nullable();
+            $table->longText('remark')->nullable();
+            $table->unsignedBigInteger('consultation_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->unsignedBigInteger('admin_id')->nullable();

@@ -21,37 +21,48 @@
                 </a>
                 <div class="">
                     @if($queue->doctor)
-                        <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor->name_en ?? '' }}</span>
+                        <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
                     @endif
-                    @if($queue->priority > 0)
-                        <span class="badge badge-pill badge-danger mr-1 mt-2">
-                            <i class="simple-icon-star"></i>
-                            {{ $queue->priority ?? '' }}
-                        </span>
-                    @endif
+{{--                    @if($queue->priority > 0)--}}
+{{--                        <span class="badge badge-pill badge-danger mr-1 mt-2">--}}
+{{--                            <i class="simple-icon-star"></i>--}}
+{{--                            {{ $queue->priority ?? '' }}--}}
+{{--                        </span>--}}
+{{--                    @endif--}}
                 </div>
 
                 <p class="mt-3 mb-0 text-small text-semi-muted">
-                    {{ $queue->remark }}
+                    {{ $queue->consultation ? $queue->consultation->symptom : $queue->remark }}
                 </p>
             </div>
         </div>
         <div class="mt-2 border-top pt-3 footer">
-            <x-admin.component.button
-                :openModal="'{ header: `EDIT`, url: `'.route('admin.queue.edit', $queue->id).'` }'"
-                :lang="'edit'"
-                :class="'btn-outline-primary'"
-            />
-            <x-admin.component.button
-                :onclick="'servePatient('.$queue->id.')'"
-                :lang="'serve'"
-                :class="'btn-primary show-when-first '"
-            />
-            <x-admin.component.button
-                :redirect="route('admin.consultation.edit', $queue->user_id)"
-                :lang="'consult'"
-                :class="'btn-primary show-when-first '"
-            />
+
+            @if(request()->role != 'medicine')
+                <x-admin.component.button
+                    :openModal="'{ header: `EDIT`, url: `'.route('admin.queue.edit', $queue->id).'` }'"
+                    :lang="'edit'"
+                    :class="'btn-outline-primary'"
+                />
+            @endif
+
+            @if($queue->status == \App\Models\Queue::WAITING)
+                <x-admin.component.button
+                    :onclick="'servePatient('.$queue->id.')'"
+                    :lang="'serve'"
+                    :class="'btn-primary show-when-first '"
+                />
+            @endif
+
+            @if(request()->role == 'doctor')
+                <x-admin.component.button
+                    :redirect="route('admin.consultation.edit', $queue->user_id)"
+                    :lang="'consult'"
+                    :class="'btn-primary show-when-first '"
+                />
+            @endif
+
+
         </div>
     </div>
 </div>

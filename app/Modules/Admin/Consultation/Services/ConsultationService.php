@@ -10,7 +10,8 @@ use App\Models\Prescription;
 use App\Models\User;
 use App\Modules\Admin\Attachment\Services\AttachmentService;
 use App\Modules\Admin\Option\Services\OptionService;
-use App\Modules\Admin\Option\Services\QueueService;
+use App\Modules\Admin\Queue\Services\QueueService;
+use App\Modules\Users\Auction\Services\AuctionBuyNowService;
 use Carbon\Carbon;
 use function PHPUnit\Framework\throwException;
 
@@ -30,9 +31,13 @@ class ConsultationService
             'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
         ]);
 
-        $model = $this->model->updateOrCreate(['id' => $request['id'] ], $consultation);
-        (new ConsultationPrescriptionService($model))->store($request);
-        return $model;
+        return \DB::transaction(function () use($request, $consultation) {
+            $model = $this->model->updateOrCreate(['id' => $request['id'] ], $consultation);
+            (new ConsultationPrescriptionService($model))->store($request);
+            (new QueueService())->consulted($model);
+            return $model;
+
+        });
     }
 
     public function optionExistsOrCreate(array $request): array

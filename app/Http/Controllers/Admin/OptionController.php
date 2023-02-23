@@ -16,6 +16,7 @@ use App\Modules\Admin\Medicine\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
 use App\Modules\Admin\Medicine\Services\MedicineService;
 use App\Modules\Admin\Option\Requests\QueueStoreRequest;
+use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\Option\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
@@ -32,13 +33,13 @@ class OptionController extends Controller {
     use ApiResponser;
 
     private Option $model;
-    private QueueService $service;
+    private OptionService $service;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
         $this->model = new Option();
-        $this->service = new QueueService();
+        $this->service = new OptionService();
     }
 
     public function index(OptionsDataTable $dataTable)
