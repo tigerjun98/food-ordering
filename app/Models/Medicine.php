@@ -51,17 +51,37 @@ class Medicine extends Model
         );
     }
 
+    public const SOLID = 201;
+    public const PARTICLE = 202;
+    public const LIQUID = 203;
+
+    public static function getCategoryList()
+    {
+        return [
+            self::SOLID => trans('common.tablet_or_capsule'),
+            self::PARTICLE => trans('common.granule_or_powder'),
+            self::LIQUID => trans('common.liquid'),
+        ];
+    }
+
+    protected function categoryExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => static::getCategoryList()[$this->category] ?? __('common.unknown_status'),
+        );
+    }
+
     public static function getTypeList()
     {
         return [
-            1 => trans('common.tablet'),
-            2 => trans('common.capsule'),
-            3 => trans('common.granule'),
-            4 => trans('common.powder'),
-            5 => trans('common.liquid'),
-            6 => trans('common.external_use'), // 外用药
-            7 => trans('common.acupuncture'), // 针灸
-            8 => trans('common.massage'), // 推拿
+            201 => trans('common.tablet'),
+            202 => trans('common.capsule'),
+            203 => trans('common.granule'),
+            204 => trans('common.powder'),
+            205 => trans('common.liquid'),
+            206 => trans('common.external_use'), // 外用药
+            207 => trans('common.acupuncture'), // 针灸
+            208 => trans('common.massage'), // 推拿
         ];
     }
 
@@ -90,12 +110,7 @@ class Medicine extends Model
         ];
     }
 
-    protected function statusExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => static::getStatusList()[$this->status] ?? __('common.unknown_status'),
-        );
-    }
+
 
     public static function Filter(){
         return [

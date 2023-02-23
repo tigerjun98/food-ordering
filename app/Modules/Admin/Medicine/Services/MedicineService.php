@@ -20,8 +20,23 @@ class MedicineService
         $this->model = new Medicine();
     }
 
+    public function getCategory($type)
+    {
+        switch (true) {
+            case ($type == 1 || $type == 2):
+                return Medicine::SOLID;
+            case ($type == 3 || $type == 4):
+                return Medicine::PARTICLE;
+            case ($type == 5):
+                return Medicine::LIQUID;
+            default:
+                return 0;
+        }
+    }
+
     public function store(array $request): Medicine
     {
+        $request['category'] = $this->getCategory($request['type']);
         return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
     }
 

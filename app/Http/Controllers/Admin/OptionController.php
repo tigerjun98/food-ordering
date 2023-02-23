@@ -12,12 +12,13 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
-use App\Modules\Admin\Medicine\Requests\ConsultationStoreRequest;
+use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
 use App\Modules\Admin\Medicine\Services\MedicineService;
-use App\Modules\Admin\Option\Requests\QueueStoreRequest;
+use App\Modules\Admin\Option\Requests\OptionStoreRequest;
+use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
 use App\Modules\Admin\Option\Services\OptionService;
-use App\Modules\Admin\Option\Services\QueueService;
+use App\Modules\Admin\Queue\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class OptionController extends Controller {
         ]);
     }
 
-    public function store(QueueStoreRequest $request)
+    public function store(OptionStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

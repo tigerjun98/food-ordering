@@ -19,7 +19,7 @@
             <div class="input-group">
                 <input type="number"
                        value="{{ $data->quantity ?? 0 }}"
-                       name="quantity[{{$id}}][]" min="1" max="9999" class="form-control metric-val-{{$id}}"
+                       name="quantity[{{$id}}][]" max="9999" class="form-control metric-val-{{$id}}"
                        onkeydown="countTotalMetric('{{$id}}')"
                        onchange="countTotalMetric('{{$id}}')"
                 >

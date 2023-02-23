@@ -110,7 +110,8 @@ class Consultation extends Model
 
     public static function Filter(){
         return [
-            'nric'          => ['type' => 'text', 'label' => 'nric' ],
+            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'ref_id'    => ['type' => 'text', 'label'=> 'ref_id'],
             'created_at'    => ['type' => 'date', 'label'=> 'created_at' ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
@@ -123,6 +124,16 @@ class Consultation extends Model
 
     public function scopeFilter($query)
     {
+        if(request()->filled('full_name')){
+            $query->whereHas('patient', function ($q) {
+                $q->where(function ($q) {
+                    $q->where('name_en', 'like', '%'.request()->full_name.'%')
+                        ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+                });
+            });
+        }
+
+
         return $this->searchAll(
             $this->parentFilterTrait($query), ['name_en', 'name_cn']
         );

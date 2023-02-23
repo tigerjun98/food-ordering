@@ -56,10 +56,12 @@ class QueueService
         return $this->model->find($queue->id);
     }
 
-    public function consulted(Consultation $consultation): ?Queue
+    public function consulted(Consultation $consultation)
     {
         $queue = $this->model
             ->where('user_id', $consultation->user_id)
+            ->where('type', Queue::CONSULTATION)
+            ->where('status', Queue::SERVING)
             ->Today()
             ->first();
 
@@ -72,8 +74,21 @@ class QueueService
         }
     }
 
+    public function exists($request): bool
+    {
+        $queue = $this->model->where('user_id', $request['user_id'])
+            ->where('status', Queue::WAITING)
+            ->Today()->first();
+
+        return (bool)$queue;
+    }
+
     public function store($request): Queue
     {
+        if(!$this->model->find($request['id'])){
+            $this->exists($request) ? throwErr('Patient on queue!') : null;
+        }
+
         $request['doctor_id'] = $request['doctor_id'] ?? null;
         $request['status'] = $request['status'] ?? Queue::WAITING;
         $request['admin_id'] = Auth::user()->id;
@@ -91,6 +106,10 @@ class QueueService
     {
         $higherQueue = $this->model->find($request['higher_queue_id'] ?? null);
         $lowerQueue = $this->model->find($request['lower_queue_id'] ?? null);
+
+        if(!$higherQueue && !$lowerQueue){
+            return 999;
+        }
 
         if(!$higherQueue)
             $higherQueue = $this->model->where('priority', '>', $lowerQueue->priority)
@@ -110,14 +129,11 @@ class QueueService
 
     public function setSorting(Queue $queue, array $request): ?Queue
     {
-        if(request()->filled('lower_queue_id') && request()->filled('higher_queue_id')){
-            $queue->status = $request['status'];
-            $queue->priority = $this->getBetweenQueuePriority($request);
-            $queue->save();
-        }
+        $queue->status = $request['status'];
+        $queue->priority = $this->getBetweenQueuePriority($request);
+        $queue->save();
         return $queue;
     }
-
 
     public function delete(Queue $queue): bool
     {

@@ -6,7 +6,7 @@ import.meta.glob([
     // '../vendor/*.js',
     '../backend/vite/eager/*.js',
     '../helpers/*.js',
-
+    '../backend/pages/queue/*.js',
 ], { eager: true })
 
 // import.meta.glob([

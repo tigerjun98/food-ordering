@@ -9,7 +9,7 @@ $id = $id ?? uniqid();
 <div class="form-row position-relative">
     <div class="col-md-12 mb-1 mt-2">
         <p class="mb-1 text-semi-muted text-small">{{$small ?? ''}}</p>
-        <p class="mb-1 text-muted text-small">Max size : 10MB</p>
+        <p class="mb-1 text-muted text-small">Max size : 5MB</p>
         <p class="text-muted text-small">Support : .png | .jpg | .jpeg</p>
     </div>
 </div>
@@ -18,7 +18,7 @@ $id = $id ?? uniqid();
     var myDropzone{{$id ?? ''}} = $('#dropzone-{{$id ?? ''}}').initialiseDropzone({
         url: "{{$submitUrl ?? ''}}",
         paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 10,
+        maxFilesize: 5000,
         maxFiles: {{ $maxFile ?? 100 }},
         timeout: 30000,
         acceptedFiles: ".jpeg,.jpg,.png",

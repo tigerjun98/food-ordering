@@ -89,6 +89,8 @@ class ConsultationController extends Controller {
                 ->route('admin.user.index')
                 ->with('fail', trans('messages.patient_not_found'));
 
+        session(['redirect' => url()->previous()]);
+
         return html('admin.consultation.form.create', compact(
             'consultation', 'patient'
         ));
@@ -98,7 +100,7 @@ class ConsultationController extends Controller {
     {
         $this->service->store($request->validated());
         return makeResponse(201, null, [
-            'redirect' => route('admin.queue.index', 'role=doctor')
+            'redirect' => session('redirect', url()->previous())
         ]);
     }
 

@@ -42,3 +42,11 @@
     @endif
 </label>
 
+<script type="module">
+    document.getElementById('{{ $attributes['id'] }}').addEventListener('input', function (evt) {
+        let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
+        $(parent).find('div.error-msg').each(function(i, obj) {
+            $(obj).remove()
+        });
+    });
+</script>

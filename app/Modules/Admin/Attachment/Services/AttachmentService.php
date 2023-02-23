@@ -26,6 +26,9 @@ class AttachmentService
         $request['table'] = $request['table'] ?? $request['type'];
         $request['size'] = request()->file->getSize();
         $request['path'] = Storage::disk('s3')->putFileAs($request['path'] ?? $request['type'], request()->file, $request['file']);
+        if(!$request['path']){
+            throwErr('Failed upload to s3 bucket');
+        }
 
         return $this->model->create($request);
     }

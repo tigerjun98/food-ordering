@@ -5,6 +5,7 @@ namespace App\Console\Commands\DataTables\Medicine;
 use App\Jobs\Order\CancelExpiredOrder;
 use App\Models\Medicine;
 use App\Models\Order;
+use App\Modules\Admin\Medicine\Services\MedicineService;
 use Illuminate\Console\Command;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 
@@ -59,11 +60,11 @@ class UpdateMedicinesCategory extends Command
         $type = $row->type;
         switch (true) {
             case ($type == 1 || $type == 2):
-                return 1;
+                return Medicine::SOLID;
             case ($type == 3 || $type == 4):
-                return 2;
+                return Medicine::PARTICLE;
             case ($type == 5):
-                return 3;
+                return Medicine::LIQUID;
             default:
                 return 0;
         }
@@ -71,9 +72,10 @@ class UpdateMedicinesCategory extends Command
 
     public function update()
     {
-        Medicine::chunk(100, function($rows){
+        $medicineService = (new MedicineService());
+        Medicine::chunk(100, function($rows) use($medicineService){
                 foreach($rows as $row) {
-                    $row->category = $this->getCategory($row);
+                    $row->category = $medicineService->getCategory($row);
                     $row->save();
                     $this->bar->advance();
                 }

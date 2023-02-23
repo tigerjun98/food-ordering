@@ -42,7 +42,9 @@
         @endslot
     </x-admin.layout.search-menu>
 
-    <script type="text/javascript" src="{{ Vite::backendJs('queue/sortable.js') }}"></script>
-    <script type="text/javascript" src="{{ Vite::backendJs('queue/function.js') }}"></script>
-    <script type="module" src="{{ Vite::backendJs('queue/init.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/backend/pages/queue/sortable.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/backend/pages/queue/function.js') }}"></script>
+{{--    <script type="text/javascript" src="{{ Vite::backendJs('queue/sortable.js') }}"></script>--}}
+{{--    <script type="text/javascript" src="{{ Vite::backendJs('queue/function.js') }}"></script>--}}
+{{--    <script type="module" src="{{ Vite::backendJs('queue/init.js') }}"></script>--}}
 @stop

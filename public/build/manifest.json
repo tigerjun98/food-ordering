@@ -11,6 +11,10 @@
     "file": "assets/Simple-Line-Icons-104673f4.woff2",
     "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.woff2"
   },
+  "resources/font/simple-line-icons/fonts/Simple-Line-Icons.ttf": {
+    "file": "assets/Simple-Line-Icons-3f501ddb.ttf",
+    "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.ttf"
+  },
   "resources/font/iconsmind-s/font/iconsminds.woff2": {
     "file": "assets/iconsminds-5995192b.woff2",
     "src": "resources/font/iconsmind-s/font/iconsminds.woff2"
@@ -19,25 +23,21 @@
     "file": "assets/intltel.flags-0a012cf8.png",
     "src": "resources/img/vendor/intltel.flags.png"
   },
-  "resources/font/simple-line-icons/fonts/Simple-Line-Icons.ttf": {
-    "file": "assets/Simple-Line-Icons-3f501ddb.ttf",
-    "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.ttf"
-  },
-  "resources/font/iconsmind-s/font/iconsminds.woff": {
-    "file": "assets/iconsminds-5da3a2f4.woff",
-    "src": "resources/font/iconsmind-s/font/iconsminds.woff"
+  "resources/img/vendor/intltel.flags@2x.png": {
+    "file": "assets/intltel.flags@2x-8ab4e961.png",
+    "src": "resources/img/vendor/intltel.flags@2x.png"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
     "file": "assets/bootstrap-icons-966620f9.woff2",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
-  "resources/img/vendor/intltel.flags@2x.png": {
-    "file": "assets/intltel.flags@2x-8ab4e961.png",
-    "src": "resources/img/vendor/intltel.flags@2x.png"
-  },
   "resources/font/simple-line-icons/fonts/Simple-Line-Icons.woff": {
     "file": "assets/Simple-Line-Icons-14b825d7.woff",
     "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.woff"
+  },
+  "resources/font/iconsmind-s/font/iconsminds.woff": {
+    "file": "assets/iconsminds-5da3a2f4.woff",
+    "src": "resources/font/iconsmind-s/font/iconsminds.woff"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
     "file": "assets/bootstrap-icons-c6569d46.woff",
@@ -56,17 +56,17 @@
     "src": "resources/font/iconsmind-s/font/iconsminds.svg"
   },
   "resources/css/backend/app.css": {
-    "file": "assets/app-b3718cf7.css",
+    "file": "assets/app-fe592596.css",
     "src": "resources/css/backend/app.css",
     "isEntry": true
   },
   "resources/css/backend/app.scss": {
-    "file": "assets/app-97868627.css",
+    "file": "assets/app-e64d0de0.css",
     "src": "resources/css/backend/app.scss",
     "isEntry": true
   },
   "resources/js/backend/app.js": {
-    "file": "assets/app-a758430e.js",
+    "file": "assets/app-d3d8d7fe.js",
     "src": "resources/js/backend/app.js",
     "isEntry": true
   }
