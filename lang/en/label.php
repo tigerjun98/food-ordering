@@ -51,6 +51,6 @@ return [
     'ref_id' => 'Reference Id',
     'created_at' => 'Created at',
     'settings' => 'Settings',
-    'specialists' => 'Specialists',
+    'patient' => 'Patient',
     'specialists' => 'Specialists',
 ];

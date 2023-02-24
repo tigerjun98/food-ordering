@@ -27,30 +27,55 @@
 {{--    </div>--}}
 {{--</div>--}}
 
+<div class="">
+    @php
+       $arr = '<span class="badge badge-pill badge-outline-secondary mr-1">Haha</span>';
+       foreach ($consultation->specialists_explain as $item){
+           $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$item.'</span>';
+       }
+    @endphp
+    {!! $arr !!}
+
+
+</div>
 <div class="row mb-2">
-    <div class="col-md-12">
-        <x-admin.layout.info
-            :data="$consultation"
-            :name="'symptom'"
-        />
-    </div>
+    <x-admin.layout.info
+        :col="'md-12'"
+        :value="$arr"
+        :name="'specialists'"
+    />
+</div>
+
+
+<div class="row mb-2">
+    <x-admin.layout.info
+        :col="'md-12'"
+        :data="$consultation"
+        :name="'symptom'"
+    />
 </div>
 
 <div class="row mb-2">
-    <div class="col-md-12">
-        <x-admin.layout.info
-            :data="$consultation"
-            :name="'advise'"
-            :lang="'doctor_advise'"
-        />
-    </div>
+    <x-admin.layout.info
+        :col="'md-12'"
+        :data="$consultation"
+        :name="'symptom'"
+    />
 </div>
 
 <div class="row mb-2">
-    <div class="col-md-12">
-        <x-admin.layout.info
-            :data="$consultation"
-            :name="'internal_remark'"
-        />
-    </div>
+    <x-admin.layout.info
+        :col="'md-12'"
+        :data="$consultation"
+        :name="'advise'"
+        :label="trans('label.doctor_advise')"
+    />
+</div>
+
+<div class="row mb-2">
+    <x-admin.layout.info
+        :col="'md-12'"
+        :data="$consultation"
+        :name="'internal_remark'"
+    />
 </div>

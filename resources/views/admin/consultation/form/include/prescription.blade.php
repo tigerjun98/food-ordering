@@ -54,7 +54,7 @@
 
         <div id="remarkWrapper{{$id}}" class="@if( !$showOnlyRemark || $hideAll ) hide @endif ref-category-{{$id}}">
             <label class="form-group has-float-label tooltip-center-bottom mb-3">
-                <textarea class="form-control" rows="5" name="remark[{{$id}}]">{{ $data->remark ?? ''}}</textarea>
+                <textarea class="form-control" rows="5" id="remark{{$id}}" name="remark[{{$id}}]">{{ $data->remark ?? ''}}</textarea>
                 <span>{{ trans('label.remark') }}<span class="text-danger">*</span></span>
             </label>
         </div>

@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Prescription;
 use App\Models\User;
 use App\Modules\Users\Account\Rules\MatchOldPassword;
+use App\Rules\RequiredMedicine;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -50,7 +51,7 @@ class ConsultationStoreRequest extends FormRequest
             'syndromes.*'                       => ['nullable', 'regex:/^[a-z0-9 ]*$/i'],
             'direction.*'                       => ['nullable', 'in:'.arrayToString(Prescription::getDirectionList())],
             'remark.*'                          => ['nullable', 'string'],
-            'category.*'                        => ['required', 'in:'.arrayToString(Prescription::getCategoryList())],
+            'category.*'                        => ['required', 'in:'.arrayToString(Prescription::getCategoryList()), new RequiredMedicine()],
             'advise'                            => ['nullable', 'string'],
             'symptom'                           => ['required', 'string'],
             'internal_remark'                   => ['nullable', 'string'],
