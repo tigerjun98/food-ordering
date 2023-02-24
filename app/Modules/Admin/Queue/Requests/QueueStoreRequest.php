@@ -37,10 +37,11 @@ class QueueStoreRequest extends FormRequest
     {
         return [
             'id'            => ['integer'],
-            'priority'      => ['nullable', 'decimal:0,2'],
+            'prioritise'    => ['nullable', 'bool'],
             'user_id'       => ['required', 'exists:users,id'],
             'doctor_id'     => ['nullable', 'exists:admins,id'],
             'remark'        => ['nullable', 'string'],
+            'type'          => ['nullable', 'in:'.arrayToString(Queue::getTypeList())],
             'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
         ];
     }

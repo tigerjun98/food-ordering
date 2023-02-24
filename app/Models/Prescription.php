@@ -56,25 +56,28 @@ class Prescription extends Model
         );
     }
 
-    public static function getMetricList()
+    public static function getMetricList(): array
     {
         return [
-            1 => trans('common.pill'),
-            2 => trans('common.gram'),
-            3 => trans('common.ml'),
+            Medicine::SOLID => trans('common.pill'),
+            Medicine::PARTICLE => trans('common.gram'),
+            Medicine::FLUID => trans('common.ml'),
         ];
     }
 
-    public static function getCategoryList()
+    // continue Medicine 201, 202, 203
+    public const EXTERNAL = 204;
+    public const ACUPUNCTURE = 205;
+    public const MASSAGE = 206;
+
+    public static function getCategoryList(): array
     {
-        return [
-            1 => trans('common.tablet_or_capsule'),
-            2 => trans('common.granule_or_powder'),
-            3 => trans('common.liquid'),
-            4 => trans('common.external_use'),
-            5 => trans('common.acupuncture'),
-            6 => trans('common.massage'),
+        $arr = [
+            self::EXTERNAL => trans('common.external_use'), // 外用药
+            self::ACUPUNCTURE => trans('common.acupuncture'), // 针灸
+            self::MASSAGE => trans('common.massage'), // 推拿
         ];
+        return Medicine::getCategoryList() + $arr;
     }
 
     public static function Filter(){

@@ -59,11 +59,11 @@ class UpdateMedicinesType extends Command
         $unit = $row->metric_unit_volume_id;
         switch ($unit){
             case 2:
-                return 5;
+                return Medicine::LIQUID;
             case 3:
-                return 1;
+                return Medicine::TABLET;
             case 4:
-                return 4;
+                return Medicine::POWDER;
             default:
                 return 0;
         }

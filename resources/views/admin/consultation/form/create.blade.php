@@ -39,6 +39,7 @@
                                             :col="'md-12'"
                                             :name="'specialists[]'"
                                             :lang="'specialists'"
+                                            :required="false"
                                         >
                                             @slot('customOption')
                                                 @if($consultation)
@@ -59,6 +60,7 @@
                                             :col="'md-12'"
                                             :name="'syndromes[]'"
                                             :lang="'syndromes'"
+                                            :required="false"
                                         >
                                             @if($consultation)
                                                 @slot('customOption')
@@ -78,6 +80,7 @@
                                             :col="'md-12'"
                                             :name="'diagnoses[]'"
                                             :lang="'diagnoses'"
+                                            :required="false"
                                         >
                                             @if($consultation)
                                                 @slot('customOption')
@@ -102,11 +105,13 @@
                                         :name="'advise'"
                                         :rows="5"
                                         :lang="'doctor_advise'"
+                                        :required="false"
                                     />
                                     <x-admin.form.textarea
                                         :data="$consultation"
                                         :name="'internal_remark'"
                                         :rows="5"
+                                        :required="false"
                                     />
                                 </div>
                             </div>
@@ -132,8 +137,6 @@
                                                 @endforeach
                                             @endslot
                                         @endif
-
-
                                     </x-admin.form.dropzone>
                                 </div>
                             </div>
@@ -220,9 +223,10 @@
                 val = $(`#category-${id}`).val()
             }
 
-            let metrics = '{{ implode(',', \App\Models\Prescription::getMetricList()) }}';
+
+            const metrics = @json( \App\Models\Prescription::getMetricList() );
             const refs = document.getElementsByClassName(`metric-unit-${id}`);
-            let metric = metrics.split(',')[val - 1];
+            const metric = metrics[val]
             Array.prototype.forEach.call(refs, function (el) { // loop classes
                 $(el).text(metric)
             });
@@ -238,7 +242,8 @@
             $(`#remark${id}`).val('')
             countTotalMetric(id) // reset total amount
 
-            let arr = [1, 2, 3], val = Number($(e).val());
+            let arr = JSON.parse('{{ json_encode(array_keys(\App\Models\Medicine::getCategoryList())) }}');
+            let val = Number($(e).val());
             if (arr.includes(val)) {
                 $(`#medicineWrapper${id}`).removeClass('hide')
                 $(`#doseWrapper${id}`).removeClass('hide')
@@ -247,6 +252,7 @@
                 setMetricUnit(id, val)
 
             } else {
+                $(`#metricUnit${id}`).val(null)
                 $(`#remarkWrapper${id}`).removeClass('hide')
             }
         }

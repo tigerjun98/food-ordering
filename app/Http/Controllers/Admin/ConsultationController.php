@@ -60,6 +60,15 @@ class ConsultationController extends Controller {
         ]);
     }
 
+    public function show($consultationId)
+    {
+        $consultation = Consultation::findOrFail($consultationId);
+        $tabs = ['medicine', 'details', 'patient'];
+        return html('admin.consultation.modal.view',
+            compact('consultation', 'tabs')
+        );
+    }
+
     public function create() // use edit() to create consultation.
     {
         abort(404);

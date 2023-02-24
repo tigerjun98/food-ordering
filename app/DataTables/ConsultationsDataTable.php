@@ -31,7 +31,7 @@ class ConsultationsDataTable extends DataTable
 //                }
 //                return $arr;
 //            })
-            ->editColumn('created_at', function($row){
+            ->addColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');
             })->addColumn('nric', function($row){
                 return nricFormat($row->patient->nric);
@@ -42,7 +42,12 @@ class ConsultationsDataTable extends DataTable
             })->filter(function ($model) {
                 return $model->filter();
             })->rawColumns(['image', 'action', 'specialists'])
-            ->orderColumn('created_at', 'desc');
+            ->orderColumn('created_at', function ($query, $order) {
+                $query->orderByRaw("ISNULL(created_at), created_at $order");
+            });
+//            ->orderColumn('created_at', function ($query, $order) {
+//                $query->orderBy('created_at', 'desc');
+//            });
     }
 
     public function getColumns(): array
@@ -61,6 +66,10 @@ class ConsultationsDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
+            'view' => [
+                'icon'      => 'simple-icon-eye',
+                'modal'     => route('admin.consultation.show', $row->id)
+            ],
             'edit' => [
                 'icon'      => 'simple-icon-pencil',
                 'redirect'  => route('admin.consultation.edit', $row->id)
@@ -97,6 +106,7 @@ class ConsultationsDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                     ->orderBy(1)
                     //->dom('Bfrtip')
                     ->selectStyleSingle()
                     ->buttons([

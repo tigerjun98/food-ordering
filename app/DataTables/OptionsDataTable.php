@@ -26,7 +26,9 @@ class OptionsDataTable extends DataTable
         $query = Option::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->editColumn('type', function($row){
+            ->editColumn('updated_at', function($row){
+                return dateFormat($row->updated_at, 'r');
+            })->editColumn('type', function($row){
                 return $row->type_explain;
             })->addColumn('full_name', function($row){
                 return $row->full_name;
@@ -47,6 +49,7 @@ class OptionsDataTable extends DataTable
             Column::make('type'),
             Column::make('full_name')->title('Name'),
             Column::make('description')->width(450),
+            Column::make('updated_at')->width(450),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -92,6 +95,7 @@ class OptionsDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->orderBy(4)
 //                    ->autoWidth(false)
                     //->dom('Bfrtip')
 //                    ->orderBy(0)

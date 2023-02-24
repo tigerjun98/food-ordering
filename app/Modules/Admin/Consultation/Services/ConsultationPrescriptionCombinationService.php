@@ -30,7 +30,8 @@ class ConsultationPrescriptionCombinationService
         $medicine = Medicine::find($medicineId);
         if(!$medicine){
             $medicine = Medicine::create([
-                'name_'.app()->getLocale() => $medicineId
+                'name_'.app()->getLocale() => $medicineId,
+                'category' => $this->relation->category
             ]);
         }
 

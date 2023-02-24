@@ -50,7 +50,7 @@ return [
     'role' => 'Role',
     'ref_id' => 'Reference Id',
     'created_at' => 'Created at',
-    'specialists' => 'Specialists',
+    'settings' => 'Settings',
     'specialists' => 'Specialists',
     'specialists' => 'Specialists',
 ];

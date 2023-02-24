@@ -22,7 +22,7 @@ class MedicineSeeder extends Seeder
         foreach ($this->getMedicines() as $key => $var){
             if($key > 100) break;
             $model = new Medicine();
-            $model->type = array_rand(Medicine::getTypeList());
+            // $model->type = array_rand(Medicine::getTypeList());
             foreach ($var as $col => $val){
                 $model->{$col} = $val;
             }

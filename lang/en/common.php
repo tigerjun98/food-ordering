@@ -105,7 +105,7 @@ return [
     'patient_details' => 'Patient details',
     'prescription_combination' => 'Prescription combination',
     'prescription' => 'Prescription',
-    'pill' => 'pill',
+    'pill' => 'Pill',
     'gram' => 'G',
     'ml' => 'ML',
     'before_meal' => 'Before meal',
@@ -136,4 +136,8 @@ return [
     'queues' => 'Queues',
     'attachments' => 'Attachments',
     'drop_file_to_upload' => 'Drop files here to upload',
+    'pharmacy' => 'Pharmacy',
+    'cashier' => 'Cashier',
+    'attachments' => 'Attachments',
+    'attachments' => 'Attachments',
 ];

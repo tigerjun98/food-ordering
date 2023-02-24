@@ -30,6 +30,17 @@ class Medicine extends Model
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
 
+    public const TABLET = 101;
+    public const CAPSULE = 102;
+    public const GRANULE = 103;
+    public const POWDER = 104;
+    public const LIQUID = 105;
+
+    public const SOLID = 201;
+    public const PARTICLE = 202;
+    public const FLUID = 203;
+    // 204, 205, 206 Reserve by Prescription
+
     public function prescriptionCombinations()
     {
         return $this->hasMany(PrescriptionCombination::class, 'medicine_id', 'id');
@@ -51,16 +62,15 @@ class Medicine extends Model
         );
     }
 
-    public const SOLID = 201;
-    public const PARTICLE = 202;
-    public const LIQUID = 203;
-
-    public static function getCategoryList()
+    public static function getCategoryList(): array
     {
         return [
             self::SOLID => trans('common.tablet_or_capsule'),
             self::PARTICLE => trans('common.granule_or_powder'),
-            self::LIQUID => trans('common.liquid'),
+            self::FLUID => trans('common.liquid'),
+//            self::EXTERNAL => trans('common.external_use'), // 外用药
+//            self::ACUPUNCTURE => trans('common.acupuncture'), // 针灸
+//            self::MASSAGE => trans('common.massage'), // 推拿
         ];
     }
 
@@ -71,17 +81,14 @@ class Medicine extends Model
         );
     }
 
-    public static function getTypeList()
+    public static function getTypeList(): array
     {
         return [
-            201 => trans('common.tablet'),
-            202 => trans('common.capsule'),
-            203 => trans('common.granule'),
-            204 => trans('common.powder'),
-            205 => trans('common.liquid'),
-            206 => trans('common.external_use'), // 外用药
-            207 => trans('common.acupuncture'), // 针灸
-            208 => trans('common.massage'), // 推拿
+            self::TABLET => trans('common.tablet'),
+            self::CAPSULE => trans('common.capsule'),
+            self::GRANULE=> trans('common.granule'),
+            self::POWDER => trans('common.powder'),
+            self::LIQUID => trans('common.liquid'),
         ];
     }
 
@@ -109,8 +116,6 @@ class Medicine extends Model
             5 => trans('common.unit'),
         ];
     }
-
-
 
     public static function Filter(){
         return [

@@ -105,6 +105,7 @@ class UsersDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->orderBy(5)
                     //->dom('Bfrtip')
                     ->selectStyleSingle()
 //                    ->parameters([

@@ -89,12 +89,18 @@ class QueueService
             $this->exists($request) ? throwErr('Patient on queue!') : null;
         }
 
+        $prioritise = $request['prioritise'] ?? 0;
+        if($prioritise){
+            unset($request['prioritise']);
+            $request['priority'] = 1000;
+        }
+
         $request['doctor_id'] = $request['doctor_id'] ?? null;
         $request['status'] = $request['status'] ?? Queue::WAITING;
         $request['admin_id'] = Auth::user()->id;
         $request['appointment_date'] = Carbon::now();
 
-        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
+        return $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
     }
 
     public function abs_diff($v1, $v2) {

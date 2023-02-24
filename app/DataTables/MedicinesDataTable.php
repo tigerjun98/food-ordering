@@ -25,7 +25,9 @@ class MedicinesDataTable extends DataTable
         $query = Medicine::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->editColumn('type', function($row){
+            ->editColumn('updated_at', function($row){
+                return dateFormat($row->updated_at, 'r');
+            })->editColumn('type', function($row){
                 return $row->type_explain;
             })->addColumn('full_name', function($row){
                 return $row->full_name;
@@ -44,6 +46,7 @@ class MedicinesDataTable extends DataTable
             Column::make('type'),
             Column::make('full_name')->title('Name'),
             Column::make('description_cn')->title('Description'),
+            Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -89,6 +92,7 @@ class MedicinesDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->orderBy(4)
                     //->dom('Bfrtip')
 //                    ->orderBy(0)
                     ->selectStyleSingle()

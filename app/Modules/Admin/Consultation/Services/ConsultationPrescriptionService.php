@@ -61,7 +61,9 @@ class ConsultationPrescriptionService
 
         foreach ( $request['category'] as $key => $item ){
             $prescription = $this->storePrescription($request, $key);
-            if($item < 4) $this->handleCombination($request, $prescription, $key);
+            if (array_key_exists($item, Medicine::getCategoryList())) { // array key contain
+                $this->handleCombination($request, $prescription, $key);
+            }
         }
 
         return Consultation::find($this->relation->id);

@@ -45,17 +45,14 @@ leftColumns: 1,
 rightColumns: 1
 },
 columnDefs: [
-{ "targets": -1,
-"createdCell": function (td, cellData, rowData, row, col) {
-$(td).css('padding-right', '30px')
-},
-},
+{ "targets": -1, "createdCell": function (td, cellData, rowData, row, col) { $(td).css('padding-right', '30px') }, },
 {
 "targets": '_all',
 "createdCell": function (td, cellData, rowData, row, col) {
-$(td).css('padding-right', '50px')
+$(td).css('padding-right', '25px')
 },
 }],
+aaSorting: [], // remove default sorting
 processing: true,
 responsive: true,
 searching: false,

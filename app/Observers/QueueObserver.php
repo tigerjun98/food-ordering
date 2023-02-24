@@ -25,7 +25,7 @@ class QueueObserver
         $sortingNo = self::getRunningNo();
         $model->id = $model->id ?? abs( crc32( uniqid() ) );
         $model->sorting = $sortingNo['sorting'];
-        $model->priority = $sortingNo['priority'];
+        $model->priority = $model->priority ?? $sortingNo['priority'];
     }
 
 }

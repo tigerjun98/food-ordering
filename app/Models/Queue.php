@@ -63,8 +63,8 @@ class Queue extends Model
     {
         return [
             self::CONSULTATION => trans('common.consultation'),
-            self::MEDICINE => trans('common.medicine'),
-            self::PAYMENT => trans('common.payment'),
+            self::MEDICINE => trans('common.pharmacy'),
+            self::PAYMENT => trans('common.cashier'),
         ];
     }
 

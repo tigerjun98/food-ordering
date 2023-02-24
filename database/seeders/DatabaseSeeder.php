@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
     {
         Clinic::factory(15)->create();
         User::factory(100)->create();
-        Admin::factory(100)->create();
+        Admin::factory(10)->create();
 
         $this->call([
             SpecialistSeeder::class,
@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Option::factory(55)->create();
-//        Consultation::factory(100)->create();
-//        Prescription::factory(150)->create();
-//        PrescriptionCombination::factory(250)->create();
+        Consultation::factory(100)->create();
+        Prescription::factory(150)->create();
+        PrescriptionCombination::factory(250)->create();
         Queue::factory(55)->create();
 
         Artisan::call("db:medicine:update_name");

@@ -13,7 +13,7 @@ use function PHPUnit\Framework\throwException;
 
 class MedicineService
 {
-    private Medicine $medicine;
+    private Medicine $model;
 
     public function __construct()
     {
@@ -23,12 +23,12 @@ class MedicineService
     public function getCategory($type)
     {
         switch (true) {
-            case ($type == 1 || $type == 2):
+            case ($type == Medicine::TABLET || $type == Medicine::CAPSULE):
                 return Medicine::SOLID;
-            case ($type == 3 || $type == 4):
+            case ($type == Medicine::GRANULE || $type == Medicine::POWDER):
                 return Medicine::PARTICLE;
-            case ($type == 5):
-                return Medicine::LIQUID;
+            case ($type == Medicine::LIQUID):
+                return Medicine::FLUID;
             default:
                 return 0;
         }

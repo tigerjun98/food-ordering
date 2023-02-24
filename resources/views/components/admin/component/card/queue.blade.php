@@ -46,7 +46,7 @@
                 />
             @endif
 
-            @if($queue->status == \App\Models\Queue::WAITING)
+            @if($queue->status == \App\Models\Queue::WAITING || $queue->status == \App\Models\Queue::PENDING)
                 <x-admin.component.button
                     :onclick="'servePatient('.$queue->id.')'"
                     :lang="'serve'"
