@@ -3,7 +3,13 @@
     :nav="$tabs"
 >
     @slot('medicine')
-        <x-admin.component.card.consultation-details
+        <x-admin.component.card.consultation.medicine-details
+            :consultation="$consultation->prescriptions"
+        />
+    @endslot
+
+    @slot('details')
+        <x-admin.component.card.consultation.details
             :consultation="$consultation"
         />
     @endslot
@@ -11,6 +17,14 @@
     @slot('patient')
         <x-admin.component.card.patient-details
             :patient="$consultation->patient"
+        />
+    @endslot
+
+    @slot('footer')
+        <x-admin.component.button
+            :class="'btn-outline-primary'"
+            :lang="'close'"
+            :onclick="'$(this).closeModal({closeLatestModal: true})'"
         />
     @endslot
 

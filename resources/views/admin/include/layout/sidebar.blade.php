@@ -16,7 +16,6 @@
                 ['name'=> 'diagnoses', 'route'=> route('admin.option.index', 'type=diagnose'), 'icon'=>'iconsminds-pulse'],
             ]
         ]
-
     ];
 @endphp
 
