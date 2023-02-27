@@ -11,7 +11,6 @@ use App\Models\User;
 use App\Modules\Admin\Attachment\Services\AttachmentService;
 use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\Queue\Services\QueueService;
-use App\Modules\Users\Auction\Services\AuctionBuyNowService;
 use Carbon\Carbon;
 use function PHPUnit\Framework\throwException;
 
@@ -22,6 +21,17 @@ class ConsultationService
     public function __construct()
     {
         $this->model = new Consultation();
+    }
+
+    public function edit(int $id)
+    {
+        $consultation = $this->model->find($id) ?? [];
+        $patient = $consultation ? $consultation->patient : User::find($id);
+        $onHold = (new QueueService())->canOnHold($patient, $consultation);
+
+        session(['redirect' => url()->previous()]);
+
+        return [$consultation, $patient, $onHold];
     }
 
     public function store(array $request): Consultation

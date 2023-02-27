@@ -27,10 +27,16 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <x-admin.layout.info
-            :data="$patient"
-            :name="'full_address'"
+            :value="'Malaysia'"
+            :name="'nationality'"
+        />
+    </div>
+    <div class="col-md-6">
+        <x-admin.layout.info
+            :value="$patient->dob. ' ('.get_age($patient->dob).' Age)'"
+            :label="trans('dob')"
         />
     </div>
 </div>

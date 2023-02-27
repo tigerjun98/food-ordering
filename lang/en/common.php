@@ -143,4 +143,5 @@ return [
     'doctor' => 'Doctor',
     'holding' => 'Holding',
     'completed' => 'Completed',
+    'age' => 'Age',
 ];

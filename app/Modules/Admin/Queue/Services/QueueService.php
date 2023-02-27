@@ -59,6 +59,15 @@ class QueueService
         return $this->model->find($queue->id);
     }
 
+    public function canOnHold(User $user, $consultation): ?Queue
+    {
+        return $this->model->where('user_id', $user->id)
+            ->where('type', Queue::CONSULTATION)
+            ->whereIn('status', [ Queue::SERVING, Queue::HOLDING ])
+            ->whereDate('appointment_date', $consultation ? $consultation->created_at : Carbon::now())
+            ->first();
+    }
+
     public function consulted(Consultation $consultation)
     {
         $queue = $this->model

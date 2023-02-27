@@ -163,14 +163,17 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <x-admin.component.button
-                                                :onclick="'submitAndHoldPatient(this)'"
-                                                :type="'button'"
-                                                :class="'btn btn-outline-primary btn-block mb-1'" :lang="'on_hold'"
-                                            />
-                                        </div>
-                                        <div class="col-md-8">
+                                        @if($onHold)
+                                            <div class="col-md-4">
+                                                <x-admin.component.button
+                                                    :onclick="'submitAndHoldPatient(this)'"
+                                                    :type="'button'"
+                                                    :class="'btn btn-outline-primary btn-block mb-1'" :lang="'on_hold'"
+                                                />
+                                            </div>
+                                        @endif
+
+                                        <div class="@if($onHold) col-md-8 @else col-md-12 @endif">
                                             <x-admin.component.button
                                                 :onclick="'submitForm(this)'"
                                                 :type="'button'"

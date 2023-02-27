@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('postcode')->nullable();
             $table->string('area')->nullable();
             $table->string('state')->nullable();
+            $table->string('nationality')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_no')->nullable();
             $table->string('emergency_contact_relationship')->nullable();

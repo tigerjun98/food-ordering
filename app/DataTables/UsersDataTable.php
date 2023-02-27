@@ -29,6 +29,8 @@ class UsersDataTable extends DataTable
                 return $this->action($row);
             })->editColumn('state', function($row){
                 return $row->state_name;
+            })->editColumn('dob', function($row){
+                return $row->dob .' ('.get_age($row->dob).' '.trans('common.age').')';
             })->editColumn('phone', function($row){
                 return $row->phone_format;
             })->editColumn('nric', function($row){
@@ -46,11 +48,11 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('nric'),
+            Column::make('nric')->title('NRIC/Passport'),
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),
-            Column::make('state'),
+            Column::make('dob')->title('DOB (Age)'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)

@@ -1,3 +1,11 @@
+<div class="row mb-2">
+    <x-admin.layout.info
+        :col="'md-12'"
+        :data="$consultation"
+        :name="'ref_id'"
+    />
+</div>
+
 @php
     $badges = ['specialists_explain', 'syndromes_explain', 'diagnoses_explain']
 @endphp

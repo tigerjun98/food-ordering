@@ -1,4 +1,4 @@
-@foreach($prescriptions as $prescription)
+@forelse($prescriptions as $prescription)
     <div class="mb-4 hover-box">
         <div class="row mb-2">
             <x-admin.layout.info
@@ -106,5 +106,10 @@
         @endif
 
     </div>
-@endforeach
+@empty
+    <x-admin.component.status-bar
+        :type="'info'"
+        :message="'No medicine found!'"
+    />
+@endforelse
 

@@ -1,0 +1,40 @@
+.components-status-bar{
+    // background: var(--primary);
+    color: #fff;
+    padding: 16px 26px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 3px 3px 20px rgba(0,0,0,.06);
+    margin-bottom: 25px;
+
+    @include mobile(){
+        font-size: 13px;
+        line-height: 19px;
+        padding: 16px 16px;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+
+    .icon{
+        @include square(20px);
+        margin-right: 14px;
+        background-size: contain !important;
+    }
+    .message{
+        vertical-align: middle;
+    }
+
+    &.warning{
+
+        .icon{
+            background: url('@/img/icons/common/danger.svg');
+        }
+
+        // background: var(--warning);
+        color: #000;
+    }
+
+}

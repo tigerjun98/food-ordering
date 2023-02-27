@@ -39,7 +39,7 @@ class OptionService
 
     public function store(array $request): Option
     {
-        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
+        return $this->model->updateOrCreate(['id' => $request['id'] ?? new_id() ], $request);
     }
 
     public function occupied(Option $option): bool

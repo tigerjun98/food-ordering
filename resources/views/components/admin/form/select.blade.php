@@ -1,6 +1,6 @@
 @php
     $defaultClass= ' form-control ';
-    if(!isset($ajax))
+    if(!isset($ajax) || isset($js))
         $defaultClass .= ' select2-single ';
 
     $attributes['class'] = isset($class) ? $class.$defaultClass : $defaultClass;
@@ -67,6 +67,8 @@
 {{--@endif--}}
 
 <script type="module">
+    {{ $js ?? '' }}
+
     $('#{{ $attributes['id'] }}').change(function (){
         let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
         $(parent).find('div.error-msg').each(function(i, obj) {
@@ -82,5 +84,6 @@
     @if(isset($ajax))
         $('#{{ $attributes['id'] }}').initialiseDynamicSelect2({url: '{{ $ajax }}'});
     @endif
+
 </script>
 

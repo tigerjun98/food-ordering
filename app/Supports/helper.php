@@ -2,6 +2,12 @@
 
 use App\Exceptions\CommonException;
 
+function get_age($dateOfBirth)
+{
+    $age = Carbon\Carbon::parse($dateOfBirth)->age;
+    return $age;
+}
+
 function get_time_ago( $time ) // get_time_ago( strtotime("2013-12-01") );
 {
     $time_difference = time() - $time;

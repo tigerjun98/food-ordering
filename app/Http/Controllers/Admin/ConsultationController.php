@@ -10,12 +10,15 @@ use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
+use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Consultation\Services\ConsultationService;
+use App\Modules\Admin\Queue\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Traits\ApiResponser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -92,18 +95,14 @@ class ConsultationController extends Controller {
 
     public function edit($id) // $id == userId ? create, $id == consultationId ? edit
     {
-        $consultation = $this->model->find($id) ?? [];
-        $patient = $consultation ? $consultation->patient : User::find($id);
+        [$consultation, $patient, $onHold] = $this->service->edit($id);
 
         if(!$patient)
-            return redirect()
-                ->route('admin.user.index')
+            return redirect()->route('admin.user.index')
                 ->with('fail', trans('messages.patient_not_found'));
 
-        session(['redirect' => url()->previous()]);
-
         return html('admin.consultation.form.create', compact(
-            'consultation', 'patient'
+            'consultation', 'patient', 'onHold'
         ));
     }
 

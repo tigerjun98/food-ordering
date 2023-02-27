@@ -45,7 +45,7 @@ class UserStoreRequest extends FormRequest
             'id'                                => ['integer'],
             'name_en'                           => ['required', 'string'],
             'name_cn'                           => ['nullable', 'string'],
-            'nric'                              => ['required', 'string', 'min:12', 'max:12'],
+            'nric'                              => ['required', 'string'],
             'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'email'                             => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
             'occupation'                        => ['nullable', 'string'],

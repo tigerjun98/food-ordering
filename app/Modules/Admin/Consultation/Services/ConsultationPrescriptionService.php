@@ -59,7 +59,8 @@ class ConsultationPrescriptionService
     {
         $this->delete();
 
-        foreach ( $request['category'] as $key => $item ){
+        $category = $request['category'] ?? [];
+        foreach ( $category as $key => $item ){
             $prescription = $this->storePrescription($request, $key);
             if (array_key_exists($item, Medicine::getCategoryList())) { // array key contain
                 $this->handleCombination($request, $prescription, $key);
