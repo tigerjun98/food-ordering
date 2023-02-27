@@ -4,7 +4,7 @@
         ['name'=> 'dashboard', 'route'=> route('admin.home'), 'icon'=>'monitor-analytics'],
         ['name'=> 'patients', 'route'=> route('admin.user.index'), 'icon'=>'conference'],
         ['name'=> 'consultations', 'route'=> route('admin.consultation.index'), 'icon'=>'stethoscope'],
-        ['name'=> 'queues', 'route'=> route('admin.queue.index', 'role=receptionist'), 'icon'=>'loading-2'],
+        ['name'=> 'queues', 'route'=> route('admin.queue.index', 'role='.\App\Models\Queue::RECEPTIONIST), 'icon'=>'loading-2'],
 //        ['name'=> 'admins', 'route'=> 'account.', 'icon'=>'user', 'permission'=> 'admin_management'],
 //
         ['name'=> 'settings', 'link'=> 'setting', 'icon'=>'gears',

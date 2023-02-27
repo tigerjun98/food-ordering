@@ -23,4 +23,8 @@ return [
     'consult' => 'Consult',
     'serve' => 'Serve',
     'consulted' => 'Consulted',
+    'completed' => 'Completed',
+    'medicine' => 'Medicine',
+    'continue' => 'Continue',
+    'on_hold' => 'On hold',
 ];

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
 use phpDocumentor\Reflection\Types\Integer;
+use Spatie\Permission\Models\Permission;
 
 class Role extends Model
 {

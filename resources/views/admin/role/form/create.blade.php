@@ -19,15 +19,16 @@
         </div>
 
         <div class="row mb-4">
-            @foreach($permissions as $role => $permission)
+            @foreach(Lang::get('permission') as $role => $permission)
             <div class="col-md-4 mb-4">
                 <div class="custom-control custom-checkbox mb-2">
                     <input type="checkbox"
-                           name="role[]"
+                           name="role[{{$role}}]"
                            class="custom-control-input"
                            id="check-{{ $role }}"
                            value="1"
                            onchange="checkAll('{{ $role }}')"
+                        {{ isset($permissions) && in_array($role.'.*', $permissions) ? 'checked' : '' }}
                     >
                     <label class="custom-control-label font-weight-bold" for="check-{{ $role }}">{{ $role }}</label>
                 </div>
@@ -38,6 +39,9 @@
                                class="custom-control-input role-{{ $role }}"
                                value="1"
                                id="check-{{ $role }}-{{ $name }}"
+                               onchange="uncheckRole('{{ $role }}')"
+                            {{ isset($permissions) && in_array($role.'.'.$name, $permissions) ? 'checked' : '' }}
+                            {{ isset($permissions) && in_array($role.'.*', $permissions) ? 'checked' : '' }}
                         >
                         <label class="custom-control-label" for="check-{{ $role }}-{{ $name }}">{{ $lang }}</label>
                     </div>
@@ -47,8 +51,23 @@
         </div>
 
         <script>
+            const monitorChildCheckbox = (role) => {
+                let allChecked = true;
+                const refs = document.getElementsByClassName(`role-${role}`);
+                Array.prototype.forEach.call(refs, function (el) { // loop classes
+                    if(!$(el).prop('checked')) allChecked = false
+                });
+
+                return allChecked;
+            }
+
+            const uncheckRole = (role) => {
+                $(`#check-${role}`).prop('checked',
+                    monitorChildCheckbox(role) ? 'checked' : false
+                )
+            }
+
             const checkAll = (role) => {
-                console.log($(`#check-${role}`).val())
                 const refs = document.getElementsByClassName(`role-${role}`);
                 if (document.getElementById(`check-${role}`).checked) {
                     Array.prototype.forEach.call(refs, function (el) { // loop classes

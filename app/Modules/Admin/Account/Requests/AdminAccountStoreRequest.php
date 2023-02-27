@@ -35,6 +35,7 @@ class AdminAccountStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'roles.*'                             => ['required', 'exists:roles,id'],
             'id'                                => ['integer'],
             'name_en'                           => ['required', 'string'],
             'name_cn'                           => ['nullable', 'string'],

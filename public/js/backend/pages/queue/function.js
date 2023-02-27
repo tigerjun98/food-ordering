@@ -1,3 +1,10 @@
+const viewMedicine = async (consultationId) => {
+    $(this).openModal({
+        header: 'Medicine details',
+        url: `/admin/consultation/show/${consultationId}?tabs=medicine,details,patient`
+    });
+}
+
 const servePatient = async (queueId) => {
     // let url = '{{ route('admin.queue.serve', ':id') }}'.replace(':id', queueId)
     let url = `/admin/queue/serve/${queueId}`

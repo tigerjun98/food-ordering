@@ -24,15 +24,21 @@ class Queue extends Model
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
-    public const WAITING = 101;
-    public const SERVING = 102;
-    public const PENDING = 103;
-    public const EXPIRED = 104;
-    public const COMPLETED = 105;
+    public const WAITING    = 101;
+    public const SERVING    = 102;
+    public const PENDING    = 103;
+    public const EXPIRED    = 104;
+    public const COMPLETED  = 105;
+    public const HOLDING    = 106;
 
     public const CONSULTATION = 201;
     public const MEDICINE = 202;
     public const PAYMENT = 203;
+
+    public const RECEPTIONIST = 301;
+    public const DOCTOR = 302;
+    public const PHARMACY = 303;
+    public const CASHIER = 304;
 
     public $incrementing = false;
     protected $table = 'queues';
@@ -75,12 +81,23 @@ class Queue extends Model
         );
     }
 
+    public static function getRoleList()
+    {
+        return [
+            self::RECEPTIONIST => trans('common.receptionist'),
+            self::DOCTOR => trans('common.doctor'),
+            self::PHARMACY => trans('common.pharmacy'),
+            self::CASHIER => trans('common.cashier')
+        ];
+    }
+
     public static function getStatusList()
     {
         return [
             self::WAITING => trans('common.waiting'),
             self::SERVING => trans('common.serving'),
             self::PENDING => trans('common.pending'),
+            self::HOLDING => trans('common.holding'),
             self::EXPIRED => trans('common.expired'),
             self::COMPLETED => trans('common.completed'),
         ];
@@ -118,12 +135,7 @@ class Queue extends Model
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             // 'type'      => ['label'=> 'type', 'type' => 'select', 'option' => static::getTypeList()],
             // 'status'    => ['label'=> 'status', 'type' => 'select', 'multiple' => false, 'option' => static::getStatusList()],
-            'role'      => ['label'=> 'role', 'type' => 'select', 'multiple' => false, 'default' => false, 'option' => [
-                'receptionist'  => 'Receptionist',
-                'doctor'        => 'Doctor',
-                'medicine'      => 'Pharmacy',
-                'cashier'       => 'Cashier',
-            ]],
+            'role'      => ['label'=> 'role', 'type' => 'select', 'multiple' => false, 'default' => false, 'option' => self::getRoleList() ],
         ];
     }
 
@@ -146,10 +158,10 @@ class Queue extends Model
 
         if(request()->filled('role')){
             switch (request()->role){
-                case 'payment':
+                case self::CASHIER:
                     $query->where('type', self::PAYMENT);
                     break;
-                case 'medicine':
+                case self::PHARMACY:
                     $query->where('type', self::MEDICINE);
                     break;
                 default:

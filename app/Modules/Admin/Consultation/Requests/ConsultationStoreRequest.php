@@ -55,6 +55,7 @@ class ConsultationStoreRequest extends FormRequest
             'advise'                            => ['nullable', 'string'],
             'symptom'                           => ['required', 'string'],
             'internal_remark'                   => ['nullable', 'string'],
+            'on_hold'                           => ['nullable', 'boolean'],
         ];
     }
 }

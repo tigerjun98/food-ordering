@@ -1,8 +1,19 @@
 <x-admin.component.modal
     :title="'Admin details'"
-    :nav="['details', 'security']"
+    :nav="['details', 'roles', 'security']"
     :submit="route('admin.account.store')"
 >
+    @slot('roles')
+        <div class="row">
+            <x-admin.form.select
+                :multiple="'multiple'"
+                :col="'md-12'"
+                :name="'roles'"
+                :options="\Spatie\Permission\Models\Role::all()->pluck('name','id')"
+                :required="false"
+            />
+        </div>
+    @endslot
 
     @slot('security')
         <div class="row">

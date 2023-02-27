@@ -56,4 +56,6 @@ return [
     'direction' => 'Direction',
     'security' => 'Security',
     'name' => 'Name',
+    'roles' => 'Roles',
+    'password_confirmation' => 'Password_confirmation'
 ];

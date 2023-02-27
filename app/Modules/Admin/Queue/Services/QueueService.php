@@ -25,12 +25,15 @@ class QueueService
 
     public function index(): array
     {
-        $role = request()->role ?? 'receptionist';
+        $role = request()->role ?? Queue::RECEPTIONIST;
 
         $queues = [];
-        $handleStatus['receptionist'] = [Queue::WAITING, Queue::PENDING];
-        $handleStatus['doctor'] = [Queue::SERVING];
-        $handleStatus['medicine'] = [Queue::WAITING, Queue::PENDING];
+        $handleStatus[Queue::RECEPTIONIST] = [Queue::WAITING, Queue::PENDING];
+        $handleStatus[Queue::DOCTOR] = [Queue::SERVING, Queue::HOLDING];
+        $handleStatus[Queue::PHARMACY] = [Queue::WAITING, Queue::PENDING];
+        $handleStatus[Queue::CASHIER] = [Queue::WAITING, Queue::PENDING];
+
+        if(!isset($handleStatus[$role])) $role = Queue::RECEPTIONIST;
 
         foreach ($handleStatus[$role] as $key => $status){
 
@@ -61,14 +64,19 @@ class QueueService
         $queue = $this->model
             ->where('user_id', $consultation->user_id)
             ->where('type', Queue::CONSULTATION)
-            ->where('status', Queue::SERVING)
+            ->whereIn('status', [Queue::SERVING, Queue::HOLDING])
             ->Today()
             ->first();
 
         if($queue){
             $queue->consultation_id = $consultation->id;
-            $queue->status = Queue::WAITING;
-            $queue->type = Queue::MEDICINE;
+
+            if(intval(request()->on_hold) == 1){
+                $queue->status = Queue::HOLDING;
+            } else{
+                $queue->status = Queue::WAITING;
+                $queue->type = Queue::MEDICINE;
+            }
             $queue->save();
             return $this->model->find($queue->id);
         }

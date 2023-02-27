@@ -139,5 +139,8 @@ return [
     'pharmacy' => 'Pharmacy',
     'cashier' => 'Cashier',
     'instruction' => 'Instruction',
-    'attachments' => 'Attachments',
+    'receptionist' => 'Receptionist',
+    'doctor' => 'Doctor',
+    'holding' => 'Holding',
+    'completed' => 'Completed',
 ];

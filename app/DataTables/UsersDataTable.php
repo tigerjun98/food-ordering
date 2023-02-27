@@ -62,8 +62,12 @@ class UsersDataTable extends DataTable
     {
         $actions = [
             'queue' => [
-                'icon'      => 'iconsminds-mens',
+                'icon'      => 'simple-icon-ghost',
                 'modal'     => route('admin.queue.create', 'user_id='.$row->id)
+            ],
+            'history' => [
+                'icon'      => 'simple-icon-event',
+                'redirect'     => route('admin.consultation.index', 'nric='.$row->nric)
             ],
             'consultation' => [
                 'icon'      => 'simple-icon-calendar',

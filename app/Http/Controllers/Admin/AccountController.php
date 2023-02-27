@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
 use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Account\Services\AdminAccountService;
 use App\Modules\Admin\Account\Services\RoleService;
@@ -12,6 +13,7 @@ use App\Modules\Admin\Account\Services\AttachmentService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use DB;
+use Spatie\Permission\Models\Role;
 
 class AccountController extends Controller {
 
@@ -46,7 +48,7 @@ class AccountController extends Controller {
         ]);
     }
 
-    public function store(RoleStoreRequest $request)
+    public function store(AdminAccountStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

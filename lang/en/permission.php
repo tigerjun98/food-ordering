@@ -13,25 +13,25 @@ return [
     |
     */
     'patient'  => [
-        'index' => 'Index',
+        'index' => 'View',
         'create' => 'Create',
         'store' => 'Store',
         'delete' => 'Delete'
     ],
     'consultation'  => [
-        'index' => 'Index',
+        'index' => 'View',
         'create' => 'Create',
         'store' => 'Store',
         'delete' => 'Delete'
     ],
     'queue'  => [
-        'index' => 'Index',
+        'index' => 'View',
         'create' => 'Create',
         'store' => 'Store',
         'delete' => 'Delete'
     ],
     'option'  => [
-        'index' => 'Index',
+        'index' => 'View',
         'create' => 'Create',
         'store' => 'Store',
         'delete' => 'Delete'

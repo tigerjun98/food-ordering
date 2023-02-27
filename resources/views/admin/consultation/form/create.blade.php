@@ -140,7 +140,6 @@
                                     </x-admin.form.dropzone>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="col-lg-6 mb-3">
@@ -156,7 +155,6 @@
                                 :onclick="'addPrescriptions()'"
                                 :class="'btn btn-primary btn-block mb-1'" :lang="'add_prescription'"
                             />
-
                         </div>
                     </div>
 
@@ -164,20 +162,43 @@
                         <div class="col-12">
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <x-admin.component.button
-                                        :type="'submit'"
-                                        :class="'btn btn-primary btn-block mb-1'" :lang="'submit'"
-                                    />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <x-admin.component.button
+                                                :onclick="'submitAndHoldPatient(this)'"
+                                                :type="'button'"
+                                                :class="'btn btn-outline-primary btn-block mb-1'" :lang="'on_hold'"
+                                            />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <x-admin.component.button
+                                                :onclick="'submitForm(this)'"
+                                                :type="'button'"
+                                                :class="'btn btn-primary btn-block mb-1'" :lang="'submit'"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="on_hold" id="holdPatient" value="0" />
                 @endslot
             </x-admin.form>
         </div>
     </div>
 
     <script type="text/javascript">
+
+        const submitForm = (e) => {
+            $('#holdPatient').val(0)
+            $(e).closest("form").submit()
+        }
+
+        const submitAndHoldPatient = (e) => {
+            $('#holdPatient').val(1)
+            $(e).closest("form").submit()
+        }
 
         const getPatientCard = () => {
             $('#patientCard').setHtml({

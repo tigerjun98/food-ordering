@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as SpatieRole;
 use function PHPUnit\Framework\throwException;
@@ -22,7 +23,7 @@ class RoleService
         $this->role = new SpatieRole();
     }
 
-    public function store(array $request): User
+    public function store(array $request): Collection
     {
         $spatieRole = $this->role->findOrCreate($request['name'], self::GUARD);
 
@@ -32,21 +33,27 @@ class RoleService
         }
 
         // sync permission
+        foreach ($request['role'] as $name => $role) {
+            if($role == 1){
+                $spatieRole->givePermissionTo(Permission::findOrCreate($name.'.*', self::GUARD));
+            }
+        }
+
         foreach ($request['permission'] as $role => $permission) {
             foreach ($permission as $name => $value) {
-                if($value){
+                $allChecked = $request['role'][$role] ?? 0;
+                if($value && $allChecked != 1){
                     $name = $role . '.' . $name;
                     $spatieRole->givePermissionTo(Permission::findOrCreate($name, self::GUARD));
                 }
             }
         }
 
-        dd( $spatieRole->getAllPermissions() );
-        return $this->admin->find($request['id']);
+        return $spatieRole->getAllPermissions();
     }
 
-    public function delete(Admin $admin)
+    public function delete(Role $role)
     {
-        $admin->delete();
+        $role->delete();
     }
 }
