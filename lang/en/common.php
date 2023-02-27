@@ -106,7 +106,7 @@ return [
     'prescription_combination' => 'Prescription combination',
     'prescription' => 'Prescription',
     'pill' => 'Pill',
-    'gram' => 'G',
+    'gram' => 'Gram',
     'ml' => 'ML',
     'before_meal' => 'Before meal',
     'after_meal' => 'After meal',
@@ -138,6 +138,6 @@ return [
     'drop_file_to_upload' => 'Drop files here to upload',
     'pharmacy' => 'Pharmacy',
     'cashier' => 'Cashier',
-    'attachments' => 'Attachments',
+    'instruction' => 'Instruction',
     'attachments' => 'Attachments',
 ];

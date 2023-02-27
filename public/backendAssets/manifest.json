@@ -1,4 +1,12 @@
 {
+  "resources/img/vendor/intltel.flags.png": {
+    "file": "assets/intltel.flags-0a012cf8.png",
+    "src": "resources/img/vendor/intltel.flags.png"
+  },
+  "resources/img/vendor/intltel.flags@2x.png": {
+    "file": "assets/intltel.flags@2x-8ab4e961.png",
+    "src": "resources/img/vendor/intltel.flags@2x.png"
+  },
   "resources/font/simple-line-icons/fonts/Simple-Line-Icons.eot": {
     "file": "assets/Simple-Line-Icons-1c823013.eot",
     "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.eot"
@@ -15,25 +23,17 @@
     "file": "assets/iconsminds-5995192b.woff2",
     "src": "resources/font/iconsmind-s/font/iconsminds.woff2"
   },
-  "resources/img/vendor/intltel.flags.png": {
-    "file": "assets/intltel.flags-0a012cf8.png",
-    "src": "resources/img/vendor/intltel.flags.png"
-  },
   "resources/font/simple-line-icons/fonts/Simple-Line-Icons.ttf": {
     "file": "assets/Simple-Line-Icons-3f501ddb.ttf",
     "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.ttf"
-  },
-  "resources/font/iconsmind-s/font/iconsminds.woff": {
-    "file": "assets/iconsminds-5da3a2f4.woff",
-    "src": "resources/font/iconsmind-s/font/iconsminds.woff"
   },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2": {
     "file": "assets/bootstrap-icons-966620f9.woff2",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
-  "resources/img/vendor/intltel.flags@2x.png": {
-    "file": "assets/intltel.flags@2x-8ab4e961.png",
-    "src": "resources/img/vendor/intltel.flags@2x.png"
+  "resources/font/iconsmind-s/font/iconsminds.woff": {
+    "file": "assets/iconsminds-5da3a2f4.woff",
+    "src": "resources/font/iconsmind-s/font/iconsminds.woff"
   },
   "resources/font/simple-line-icons/fonts/Simple-Line-Icons.woff": {
     "file": "assets/Simple-Line-Icons-14b825d7.woff",
@@ -43,25 +43,25 @@
     "file": "assets/bootstrap-icons-c6569d46.woff",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
   },
-  "resources/font/simple-line-icons/fonts/Simple-Line-Icons.svg": {
-    "file": "assets/Simple-Line-Icons-b381f90a.svg",
-    "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.svg"
-  },
   "resources/font/iconsmind-s/font/iconsminds.ttf": {
     "file": "assets/iconsminds-3486fc24.ttf",
     "src": "resources/font/iconsmind-s/font/iconsminds.ttf"
   },
+  "resources/font/simple-line-icons/fonts/Simple-Line-Icons.svg": {
+    "file": "assets/Simple-Line-Icons-51c5b7fb.svg",
+    "src": "resources/font/simple-line-icons/fonts/Simple-Line-Icons.svg"
+  },
   "resources/font/iconsmind-s/font/iconsminds.svg": {
-    "file": "assets/iconsminds-d45e0fe9.svg",
+    "file": "assets/iconsminds-af4ce230.svg",
     "src": "resources/font/iconsmind-s/font/iconsminds.svg"
   },
   "resources/css/backend/app.css": {
-    "file": "assets/app-b3718cf7.css",
+    "file": "assets/app-876a89db.css",
     "src": "resources/css/backend/app.css",
     "isEntry": true
   },
   "resources/css/backend/app.scss": {
-    "file": "assets/app-97868627.css",
+    "file": "assets/app-2014b035.css",
     "src": "resources/css/backend/app.scss",
     "isEntry": true
   },
@@ -69,5 +69,9 @@
     "file": "assets/app-a758430e.js",
     "src": "resources/js/backend/app.js",
     "isEntry": true
+  },
+  "resources/img/intltel.flags.png": {
+    "file": "assets/intltel.flags-0a012cf8.png",
+    "src": "resources/img/vendor/intltel.flags.png"
   }
 }

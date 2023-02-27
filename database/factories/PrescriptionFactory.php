@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Diagnose;
+use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Prescription;
 use App\Models\Specialist;
@@ -27,13 +28,19 @@ class PrescriptionFactory extends Factory
      */
     public function definition()
     {
+        $category = array_rand(Prescription::getCategoryList());
+        $metric = isset(Medicine::getCategoryList()[$category]) ? $category : null;
+        $dayPerTime = rand(1, 6);
+        $dosePerTime = rand(1, 6);
+        $daily = $dayPerTime + $dosePerTime;
+
         return [
-            'category'          => array_rand(Prescription::getCategoryList()),
+            'category'          => $category,
             'direction'         => array_rand(Prescription::getDirectionList()),
-            'metric'            => array_rand(Prescription::getMetricList()),
-            'time_per_day'      => rand(1, 6),
-            'dose_per_time'     => rand(1, 6),
-            'dose_daily'        => rand(1, 6),
+            'metric'            => $metric,
+            'time_per_day'      => $dayPerTime,
+            'dose_per_time'     => $dosePerTime,
+            'dose_daily'        => $daily,
             'consultation_id'   => Consultation::all()->random()->id,
         ];
     }

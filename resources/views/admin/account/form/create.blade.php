@@ -7,13 +7,11 @@
     @slot('security')
         <div class="row">
             <x-admin.form.text
-                :data="$data"
                 :col="'md-6'"
                 :name="'password'"
                 :required="false"
             />
             <x-admin.form.text
-                :data="$data"
                 :col="'md-6'"
                 :name="'password_confirmation'"
                 :required="false"

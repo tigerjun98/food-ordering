@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
-use phpDocumentor\Reflection\Types\Integer;
 
 class Prescription extends Model
 {
@@ -28,18 +27,23 @@ class Prescription extends Model
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
 
-    public function consultation()
+    // continue Medicine 201, 202, 203
+    public const EXTERNAL = 204;
+    public const ACUPUNCTURE = 205;
+    public const MASSAGE = 206;
+
+    public function consultation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Consultation::class);
     }
 
-    public function combinations()
+    public function combinations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(PrescriptionCombination::class, 'prescription_id', 'id')
             ->orderBy('sorting', 'asc');
     }
 
-    public static function getDirectionList()
+    public static function getDirectionList(): array
     {
         return [
             1 => trans('common.before_meal'),
@@ -49,26 +53,37 @@ class Prescription extends Model
         ];
     }
 
+    protected function directionExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getDirectionList()[$this->direction] ?? ''
+        );
+    }
+
     protected function metricExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->metric ? self::getMetricList()[$this->metric] : '',
+            get: fn () => self::getMetricList()[$this->metric] ?? ''
         );
     }
 
     public static function getMetricList(): array
     {
         return [
-            Medicine::SOLID => trans('common.pill'),
-            Medicine::PARTICLE => trans('common.gram'),
+            Medicine::TABLET_OR_CAPSULE => trans('common.pill'),
+            Medicine::GRANULE_OR_POWDER => trans('common.gram'),
             Medicine::FLUID => trans('common.ml'),
         ];
     }
 
-    // continue Medicine 201, 202, 203
-    public const EXTERNAL = 204;
-    public const ACUPUNCTURE = 205;
-    public const MASSAGE = 206;
+
+
+    protected function categoryExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getCategoryList()[$this->category] ?? '',
+        );
+    }
 
     public static function getCategoryList(): array
     {

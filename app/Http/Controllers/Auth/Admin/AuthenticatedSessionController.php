@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginAdminRequest $request)
     {
-        $request['email'] =  \App\Models\Admin::all()->random()->email;
+        // $request['email'] =  \App\Models\Admin::all()->random()->email;
 
         $request->authenticate();
 

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
+use App\Modules\Admin\Account\Requests\RoleStoreRequest;
+use App\Modules\Admin\Account\Services\AdminAccountService;
+use App\Modules\Admin\Account\Services\RoleService;
 use App\Modules\Admin\Account\Services\AttachmentService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -15,13 +17,13 @@ class AccountController extends Controller {
 
     use ApiResponser;
     private Admin $model;
-    private AttachmentService $service;
+    private AdminAccountService $service;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
         $this->model = new Admin();
-        $this->service = new AttachmentService();
+        $this->service = new AdminAccountService();
     }
 
     public function index(AdminsDataTable $dataTable)
@@ -44,7 +46,7 @@ class AccountController extends Controller {
         ]);
     }
 
-    public function store(AdminAccountStoreRequest $request)
+    public function store(RoleStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

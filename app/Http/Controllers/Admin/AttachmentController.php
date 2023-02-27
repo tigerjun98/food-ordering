@@ -6,7 +6,7 @@ use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Attachment;
-use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
+use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Attachment\Requests\AttachmentStoreRequest;
 use App\Modules\Admin\Attachment\Services\AttachmentService;
 use App\Traits\ApiResponser;

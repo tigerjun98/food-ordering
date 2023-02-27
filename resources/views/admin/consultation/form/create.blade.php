@@ -363,6 +363,7 @@
                     let page = 1;
                     let loading = false;
                     const ps = $('#patientHistoryList').initialiseScrollbar()
+
                     const loadPatientHistoryList = async () => {
 
                         if(page == 'stop') return true;
@@ -410,6 +411,13 @@
         </a>
     </div>
 
+    <script type="text/javascript">
+        const viewConsultationDetails = (id) => {
+            $(this).openModal({
+                url: `/admin/consultation/show/${id}`
+            });
+        }
+    </script>
 @stop
 
 

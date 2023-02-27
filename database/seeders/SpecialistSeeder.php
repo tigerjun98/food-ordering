@@ -27,7 +27,7 @@ class SpecialistSeeder extends Seeder
                 $model->{$col} = $val;
             }
             $model->type = 'specialist';
-            $model->admin_id = Admin::all()->random()->id;
+            // $model->admin_id = Admin::all()->random()->id;
             $model->save();
         }
     }

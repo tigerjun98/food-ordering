@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\QueueController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\AttachmentController;
+use App\Http\Controllers\Admin\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     // Route::customResource('user', UserController::class);
 
     Route::customResources([
+        'role'          => RoleController::class,
         'user'          => UserController::class,
         'queue'         => QueueController::class,
         'account'       => AccountController::class,

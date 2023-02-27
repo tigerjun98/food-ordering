@@ -28,7 +28,7 @@ class SyndromeSeeder extends Seeder
                 $model->{$col} = $val;
             }
             $model->type = 'syndrome';
-            $model->admin_id = Admin::all()->random()->id;
+            // $model->admin_id = Admin::all()->random()->id;
             $model->save();
         }
     }

@@ -24,15 +24,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Clinic::factory(15)->create();
-        User::factory(100)->create();
-        Admin::factory(10)->create();
 
         $this->call([
             SpecialistSeeder::class,
             MedicineSeeder::class,
             SyndromeSeeder::class,
+            RoleAndPermissionSeeder::class,
         ]);
 
+        User::factory(100)->create();
+        Admin::factory(10)->create();
         Option::factory(55)->create();
         Consultation::factory(100)->create();
         Prescription::factory(150)->create();

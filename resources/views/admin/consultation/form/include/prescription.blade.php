@@ -47,8 +47,7 @@
         </div>
 
         @php
-
-            $showOnlyRemark = isset($data) && !count($data->combinations) > 0 ;
+            $showOnlyRemark = isset($data) && !array_key_exists($data->category, \App\Models\Medicine::getCategoryList());
             $hideAll = !isset($data);
         @endphp
 
@@ -129,7 +128,7 @@
                             <span
                                 class="input-group-text input-group-append input-group-addon metric-unit-{{$id}}">{{ $data->metric_explain ?? '' }}</span>
                         </div>
-                        <span>{{ trans('label.time_per_dose') }}<span class="text-danger">*</span></span>
+                        <span>{{ trans('label.dose_per_time') }}<span class="text-danger">*</span></span>
                     </label>
                 </div>
                 <div class="col-md-4">

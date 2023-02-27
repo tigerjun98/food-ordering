@@ -39,7 +39,7 @@ class ConsultationStoreRequest extends FormRequest
         return [
             'id'                                => ['nullable', 'integer'],
             'user_id'                           => ['required', 'exists:users,id'],
-            'medicine_id.*.*'                   => ['required'],
+            'medicine_id.*.*'                   => ['nullable', 'exists:medicines,id'],
             'quantity.*.*'                      => ['required', 'integer'],
             'time_per_day.*'                    => ['nullable', 'integer'],
             'dose_per_time.*'                   => ['nullable', 'integer'],

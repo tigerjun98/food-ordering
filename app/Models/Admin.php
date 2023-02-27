@@ -14,20 +14,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Validation\Rule;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait, SelectOption;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait, SelectOption, HasRoles;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
 
+
     public $incrementing = false;
     protected $table = 'admins';
-    protected $guarded= []; // remove this replace with {$fillable} to strict input col
+    protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     protected $dates = ['deleted_at'];
     protected $guard = 'admin';
+    protected $guard_name = 'admin'; // for spatie role & permission
+
     /**
      *
      * The attributes that are mass assignable.

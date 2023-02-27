@@ -75,6 +75,8 @@ $.fn.openModal = async function(options) {
 
     modalIsOpening = true
     let modal = new Modal(settings, id);
+
+    // $('#queueListing-2').initialiseSortable()
     return modal.handle()
 
 }

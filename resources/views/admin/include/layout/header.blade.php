@@ -65,11 +65,11 @@
             </button>
 
             <div class="dropdown-menu dropdown-menu-right mt-3">
-                @if(\Illuminate\Support\Facades\Gate::allows('log_management'))
-                    <a class="dropdown-item" href="{{route('admin.log.')}}">
-                        <i class="iconsminds-monitoring mr-1"></i>{{ __('common.logs') }}
-                    </a>
-                @endif
+{{--                @if(\Illuminate\Support\Facades\Gate::allows('log_management'))--}}
+{{--                    <a class="dropdown-item" href="{{route('admin.log.')}}">--}}
+{{--                        <i class="iconsminds-monitoring mr-1"></i>{{ __('common.logs') }}--}}
+{{--                    </a>--}}
+{{--                @endif--}}
                 <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="iconsminds-anchor mr-1"></i>
                     {{ __('common.logout') }}

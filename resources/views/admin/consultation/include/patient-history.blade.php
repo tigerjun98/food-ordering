@@ -1,5 +1,6 @@
 @foreach($consultations as $data)
-    <div class="mb-3 border-bottom">
+    <div class="mb-3 border-bottom"
+         onclick="viewConsultationDetails('{{$data->id}}')">
         <div class="d-flex flex-row justify-content-between">
             <div class="">
                 <a href="#">

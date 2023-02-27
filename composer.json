@@ -18,6 +18,7 @@
         "overtrue/laravel-pinyin": "~4.0",
         "predis/predis": "^1.1",
         "revenuemonster/sdk": "^2.0",
+        "spatie/laravel-permission": "^5.9",
         "tightenco/ziggy": "^1.0",
         "yajra/laravel-datatables": "^9.0",
         "yajra/laravel-datatables-html": "9.0"

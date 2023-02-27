@@ -1,5 +1,7 @@
 {{--<div class="app-alert" id="app-alert"></div>--}}
-
+@php
+    $id = new_id();
+@endphp
 <div class="modal-header pb-0 alert-box">
     <x-admin.component.modal.header
         :lang="$lang ?? false"
@@ -8,7 +10,7 @@
     />
 </div>
 
-<div class="modal-body">
+<div class="modal-body {{ $modalBodyClass ?? '' }}" id="modal-body-{{$id}}">
     @if(isset($submit))
         <x-admin.form
             :route="$submit"
@@ -80,6 +82,10 @@
         {{ $footer ?? '' }}
     </div>
 @endif
+
+<script type="module">
+    $('#modal-body-{{ $id }}').initialiseScrollbar()
+</script>
 
 
 

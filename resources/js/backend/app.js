@@ -5,8 +5,9 @@ import.meta.glob([
     // '../backend/vendor/*.js',
     // '../vendor/*.js',
     '../backend/vite/eager/*.js',
+    '../backend/pages/**',
     '../helpers/*.js',
-    '../backend/pages/queue/*.js',
+
 ], { eager: true })
 
 // import.meta.glob([
@@ -18,8 +19,7 @@ import.meta.glob([
     '../backend/vite/*.js',
     '../backend/vendor/*.js',
 
-    // '../vendor/*.js',
-    // '../images/**',
+    '../../img/**',
     // '../fonts/**',
     // '@/js/vendor/*.js',
 ])

@@ -26,14 +26,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        foreach (Admin::getPermissionsLists() as $key => $list){
-            Gate::define($key, function ($user) use($key){
-                $permissions = explode(",", $user->permissions);
-                if (in_array($key, $permissions)) {
-                    return true;
-                }
-                return false;
-            });
-        }
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('super-admin') ? true : null;
+        });
+
+//        foreach (Admin::getPermissionsLists() as $key => $list){
+//            Gate::define($key, function ($user) use($key){
+//                $permissions = explode(",", $user->permissions);
+//                if (in_array($key, $permissions)) {
+//                    return true;
+//                }
+//                return false;
+//            });
+//        }
     }
 }

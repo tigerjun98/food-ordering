@@ -30,4 +30,5 @@
 {{--        @endslot--}}
 
     </x-admin.datatable>
+
 @stop

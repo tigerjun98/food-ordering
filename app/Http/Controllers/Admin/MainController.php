@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Modules\Admin\Account\Requests\AdminAccountStoreRequest;
+use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Account\Services\AttachmentService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;

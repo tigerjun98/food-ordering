@@ -170,6 +170,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\HtmlServiceProvider::class, // https://yajrabox.com/docs/laravel-datatables/10.0/html-installation
         Overtrue\LaravelPinyin\ServiceProvider::class, // https://github.com/overtrue/laravel-pinyin
+        Spatie\Permission\PermissionServiceProvider::class, // https://spatie.be/docs/laravel-permission/v5/installation-laravel
 
         /*
          * Application Service Providers...

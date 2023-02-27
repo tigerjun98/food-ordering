@@ -36,8 +36,8 @@ class Medicine extends Model
     public const POWDER = 104;
     public const LIQUID = 105;
 
-    public const SOLID = 201;
-    public const PARTICLE = 202;
+    public const TABLET_OR_CAPSULE = 201;
+    public const GRANULE_OR_POWDER = 202;
     public const FLUID = 203;
     // 204, 205, 206 Reserve by Prescription
 
@@ -65,8 +65,8 @@ class Medicine extends Model
     public static function getCategoryList(): array
     {
         return [
-            self::SOLID => trans('common.tablet_or_capsule'),
-            self::PARTICLE => trans('common.granule_or_powder'),
+            self::TABLET_OR_CAPSULE => trans('common.tablet_or_capsule'),
+            self::GRANULE_OR_POWDER => trans('common.granule_or_powder'),
             self::FLUID => trans('common.liquid'),
 //            self::EXTERNAL => trans('common.external_use'), // 外用药
 //            self::ACUPUNCTURE => trans('common.acupuncture'), // 针灸

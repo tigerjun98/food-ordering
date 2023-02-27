@@ -12,10 +12,28 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'dashboard'  => 'Dashboard',
-    'admin_management'  => 'Admins management',
-    'user_management'  => 'Users management',
-    'deposit_management'  => 'Deposit management',
-    'setting_management'  => 'Settings management',
-    'log_management'  => 'Logs management',
+    'patient'  => [
+        'index' => 'Index',
+        'create' => 'Create',
+        'store' => 'Store',
+        'delete' => 'Delete'
+    ],
+    'consultation'  => [
+        'index' => 'Index',
+        'create' => 'Create',
+        'store' => 'Store',
+        'delete' => 'Delete'
+    ],
+    'queue'  => [
+        'index' => 'Index',
+        'create' => 'Create',
+        'store' => 'Store',
+        'delete' => 'Delete'
+    ],
+    'option'  => [
+        'index' => 'Index',
+        'create' => 'Create',
+        'store' => 'Store',
+        'delete' => 'Delete'
+    ],
 ];

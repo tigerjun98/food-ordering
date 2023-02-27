@@ -28,11 +28,30 @@ class PrescriptionCombinationFactory extends Factory
      */
     public function definition()
     {
+        $prescription = Prescription::all()->random();
+        if(array_key_exists($prescription->category, Medicine::getCategoryList())){
+            $medicineId = Medicine::all()->random()->id;
+        } else{
+            $remark = $this->faker->realText();
+        }
+
+        $qty = rand(1, 99);
+        $prescription->increment('combination_amount',$qty);
+
+        // no combination for remark; Hence remove previous medicines
+        if(isset($remark)){
+            foreach ($prescription->combinations as $combination){
+                $combination->delete();
+            }
+            $prescription->remark = $remark;
+            $prescription->save();
+        }
+
         return [
-            'quantity'          => rand(1, 6),
-            'remark'            => $this->faker->realText(),
-            'prescription_id'   => Prescription::all()->random()->id,
-            'medicine_id'       => Medicine::all()->random()->id,
+            'quantity'          => $qty,
+            'remark'            => $remark ?? null,
+            'prescription_id'   => $prescription->id,
+            'medicine_id'       => $medicineId ?? null,
         ];
     }
 

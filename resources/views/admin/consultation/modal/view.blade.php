@@ -1,10 +1,11 @@
 <x-admin.component.modal
     :title="'Consultation details'"
     :nav="$tabs"
+    :modalBodyClass="'fixed-height'"
 >
     @slot('medicine')
         <x-admin.component.card.consultation.medicine-details
-            :consultation="$consultation->prescriptions"
+            :prescriptions="$consultation->prescriptions"
         />
     @endslot
 

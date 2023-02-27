@@ -7,7 +7,7 @@
         <label class="form-group has-float-label tooltip-center-bottom mb-3">
             <select data-width="100%" name="medicine_id[{{$id}}][]" class="medicine_opt">
                 @if(isset($data) && $data)
-                    <option value="{{ $data->medicine_id }}" selected="selected">{{ $data->medicine->full_name }}</option>
+                    <option value="{{ $data->medicine_id }}" selected="selected">{{ $data->medicine->full_name ?? '' }}</option>
                 @endif
             </select>
             <span>{{ trans('label.medicine') }}</span>

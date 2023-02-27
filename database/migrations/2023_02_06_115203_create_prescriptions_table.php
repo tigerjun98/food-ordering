@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('dose_per_time')->nullable();
             $table->integer('dose_daily')->nullable();
             $table->integer('metric')->nullable();
-            $table->integer('combination_amount')->nullable();
+            $table->integer('combination_amount')->default(0);
             $table->integer('direction')->nullable();
             $table->longText('remark')->nullable();
             $table->integer('sorting')->nullable();

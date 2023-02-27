@@ -24,9 +24,9 @@ class MedicineService
     {
         switch (true) {
             case ($type == Medicine::TABLET || $type == Medicine::CAPSULE):
-                return Medicine::SOLID;
+                return Medicine::TABLET_OR_CAPSULE;
             case ($type == Medicine::GRANULE || $type == Medicine::POWDER):
-                return Medicine::PARTICLE;
+                return Medicine::GRANULE_OR_POWDER;
             case ($type == Medicine::LIQUID):
                 return Medicine::FLUID;
             default:
