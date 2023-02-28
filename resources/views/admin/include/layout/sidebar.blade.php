@@ -1,10 +1,10 @@
 @php
     $settingChildren = [
         'consultation' => [
-            'medicines'     => ['route'=> route('admin.medicine.index'), 'icon'=>'iconsminds-medicine-3'],
-            'specialists'   => ['route'=> route('admin.option.show', 'specialist'), 'icon'=>'iconsminds-microscope'],
-            'syndromes'     => ['route'=> route('admin.option.show', 'syndrome'), 'icon'=>'iconsminds-flask'],
-            'diagnoses'     => ['route'=> route('admin.option.show', 'diagnose'), 'icon'=>'iconsminds-pulse'],
+            'medicines'     => ['route'=> route('admin.medicine.index'), 'icon'=>'iconsminds-medicine-3', 'permission' => 'setting-consultation.medicine'],
+            'specialists'   => ['route'=> route('admin.option.show', 'specialist'), 'icon'=>'iconsminds-microscope', 'permission' => 'setting-consultation.specialist'],
+            'syndromes'     => ['route'=> route('admin.option.show', 'syndrome'), 'icon'=>'iconsminds-flask', 'permission' => 'setting-consultation.syndrome'],
+            'diagnoses'     => ['route'=> route('admin.option.show', 'diagnose'), 'icon'=>'iconsminds-pulse', 'permission' => 'setting-consultation.diagnose'],
         ],
         'admin' => [
             'account'       => ['route'=> route('admin.account.index'), 'icon'=>'iconsminds-medicine-3'],
@@ -13,10 +13,10 @@
     ];
 
     $navs = [
-        'dashboard'         => ['route'=> route('admin.home'), 'icon'=>'iconsminds-monitor-analytics'],
-        'patients'          => ['route'=> route('admin.user.index'), 'icon'=>'iconsminds-conference'],
-        'consultations'     => ['route'=> route('admin.consultation.index'), 'icon'=>'iconsminds-stethoscope'],
-        'queues'            => ['route'=> route('admin.queue.index', 'role='.\App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-loading-2'],
+//        'dashboard'         => ['route'=> route('admin.home'), 'icon'=>'iconsminds-monitor-analytics'],
+        'patients'          => ['route'=> route('admin.user.index'), 'icon'=>'iconsminds-conference', 'permission' => 'patient.index'],
+        'consultations'     => ['route'=> route('admin.consultation.index'), 'icon'=>'iconsminds-stethoscope', 'permission' => 'consultation.index'],
+        'queues'            => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-loading-2', 'permission' => 'queue.show'],
         'settings'          => ['icon' => 'iconsminds-gears', 'children' => $settingChildren]
     ];
 
@@ -39,6 +39,14 @@
         return str_contains(url()->full(), $itemUrl);
     }
 
+    function hasPermission($data): bool
+    {
+     if( !isset($data['permission']) || ( isset($data['permission']) &&  auth()->user()->hasPermissionTo( $data['permission'] ) ) ){
+         return true;
+     }
+     return false;
+    }
+
 @endphp
 
 <div class="menu cc">
@@ -46,12 +54,14 @@
         <div class="scroll">
             <ul class="list-unstyled">
                 @foreach($navs as $name => $nav)
-                    <li class="main_nav {{ isActive($nav['route'] ?? '', $nav['children'] ?? []) ? 'active' : '' }}">
-                        <a href="{{ $nav['route'] ?? '#'.$name }}">
-                            <i class="{{ $nav['icon'] }}"></i>
-                            <span>{{ trans('common.'.$name) }}</span>
-                        </a>
-                    </li>
+                    @if( hasPermission($nav) )
+                        <li class="main_nav {{ isActive($nav['route'] ?? '', $nav['children'] ?? []) ? 'active' : '' }}">
+                            <a href="{{ $nav['route'] ?? '#'.$name }}">
+                                <i class="{{ $nav['icon'] }}"></i>
+                                <span>{{ trans('common.'.$name) }}</span>
+                            </a>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
@@ -63,10 +73,11 @@
                 @if(isset($nav['children']))
                     <ul class="list-unstyled" data-link="{{ $name }}">
                         @foreach($nav['children'] as $childrenName => $children)
-                            <x-admin.component.module.nav.dropdown-link
-                                :name="$childrenName"
-                                :children="$children"
-                            />
+                                <x-admin.component.module.nav.dropdown-link
+                                    :name="$childrenName"
+                                    :children="$children"
+                                />
+
                         @endforeach
                     </ul>
                 @endif

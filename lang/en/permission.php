@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Queue;
+
 return [
 
     /*
@@ -13,27 +15,29 @@ return [
     |
     */
     'patient'  => [
-        'index' => 'View',
-        'create' => 'Create',
-        'store' => 'Store',
-        'delete' => 'Delete'
+        'index' => 'Patient management',
     ],
     'consultation'  => [
-        'index' => 'View',
-        'create' => 'Create',
-        'store' => 'Store',
-        'delete' => 'Delete'
+        'index' => 'Consultation management',
     ],
+
     'queue'  => [
-        'index' => 'View',
-        'create' => 'Create',
-        'store' => 'Store',
-        'delete' => 'Delete'
+        'show'      => 'Listing',
+        Queue::RECEPTIONIST => Queue::getRoleList()[Queue::RECEPTIONIST],
+        Queue::DOCTOR       => Queue::getRoleList()[Queue::DOCTOR],
+        Queue::PHARMACY     => Queue::getRoleList()[Queue::PHARMACY],
+        Queue::CASHIER      => Queue::getRoleList()[Queue::CASHIER],
     ],
-    'option'  => [
-        'index' => 'View',
-        'create' => 'Create',
-        'store' => 'Store',
-        'delete' => 'Delete'
+
+    'setting-consultation'  => [
+        'medicine'      => 'Medicine management',
+        'specialist'    => 'Specialist management',
+        'syndrome'      => 'Syndrome management',
+        'diagnose'      => 'Diagnose management',
+    ],
+
+    'setting-admin'  => [
+        'account'       => 'Admin account management',
+        'role'          => 'Role management',
     ],
 ];

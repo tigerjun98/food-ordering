@@ -16,12 +16,29 @@
                 </div>
             </div>
 
-            <div class="mb-4" id="headerSearch">
-                <div class="separator mb-4 mt-2"></div>
-            </div>
+            <ul class="nav nav-tabs separator-tabs ml-0 mb-5">
+                <?php $permissions = [] ?>
+                @foreach(\App\Models\Queue::getRoleList() as $key => $type)
+                    <?php $permissions[] = 'queue.'.$key ?>
+                    @if(auth()->user()->hasPermissionTo( 'queue.'.$key ) )
+                        <li class="nav-item">
+                            <a class="nav-link role-link {{ $role == $key ? 'active' : '' }}"
+                               id="tab-{{$key}}"
+                               href="javascript:setQueueRoleValue({{$key}})"
+                            >
+                                {{ $type }}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+
+            @if( !auth()->user()->hasAnyPermission($permissions ) )
+                <x-admin.component.status-bar :type="'danger'" :message="'Permission denied!'"/>
+            @endif
 
             <div class="" id="queueListingWrapper">
-                <x-admin.page.queue.receptionist :queues="$queues" />
+
             </div>
         </div>
     </div>
@@ -30,20 +47,29 @@
         :filter="\App\Models\Queue::Filter()"
     >
         @slot('extraFilter')
+            <input type="hidden" name="role" id="setMultiroleVal" value="{{ $role }}">
             <div class="mt-2">
                 <x-admin.form.select
                     :name="'doctor_id'"
                     :ajax="route('admin.get-doctor-opt')"
                     :required="false"
-                    :onchange="'refreshDataTable()'"
+{{--                    :onchange="'refreshDataTable()'"--}}
                 ></x-admin.form.select>
             </div>
-
         @endslot
     </x-admin.layout.search-menu>
 
+
     <script type="text/javascript" src="{{ asset('js/backend/pages/queue/sortable.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/backend/pages/queue/function.js') }}"></script>
+    <script type="module">
+        @foreach(\App\Models\Queue::getRoleList() as $key => $type)
+            @if( auth()->user()->hasPermissionTo( 'queue.'.$key ) )
+                setQueueRoleValue({{$key}})
+                @break
+            @endif
+        @endforeach
+    </script>
 {{--    <script type="text/javascript" src="{{ Vite::backendJs('queue/sortable.js') }}"></script>--}}
 {{--    <script type="text/javascript" src="{{ Vite::backendJs('queue/function.js') }}"></script>--}}
 {{--    <script type="module" src="{{ Vite::backendJs('queue/init.js') }}"></script>--}}

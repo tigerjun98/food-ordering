@@ -135,7 +135,7 @@ class Queue extends Model
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             // 'type'      => ['label'=> 'type', 'type' => 'select', 'option' => static::getTypeList()],
             // 'status'    => ['label'=> 'status', 'type' => 'select', 'multiple' => false, 'option' => static::getStatusList()],
-            'role'      => ['label'=> 'role', 'type' => 'select', 'multiple' => false, 'default' => false, 'option' => self::getRoleList() ],
+            // 'role'      => ['label'=> 'role', 'type' => 'select', 'multiple' => false, 'default' => false, 'option' => self::getRoleList() ],
         ];
     }
 

@@ -1,6 +1,3 @@
-@php
-
-@endphp
 <li>
     <a
         href="#" data-toggle="collapse" data-target="#collapse{{$name}}"
@@ -13,12 +10,14 @@
     <div id="collapse{{$name}}" class="collapse show">
         <ul class="list-unstyled inner-level-menu">
             @foreach($children as $childrenName => $child)
-                <li class="{{ isActive($child['route'] ?? '') ? 'active' : '' }}">
-                    <a href="{{$child['route']}}">
-                        <i class="{{ $child['icon'] }}"></i>
-                        <span class="d-inline-block">{{ trans('common.'.$childrenName) }}</span>
-                    </a>
-                </li>
+                @if( hasPermission($child) )
+                    <li class="{{ isActive($child['route'] ?? '') ? 'active' : '' }}">
+                        <a href="{{$child['route']}}">
+                            <i class="{{ $child['icon'] }}"></i>
+                            <span class="d-inline-block">{{ trans('common.'.$childrenName) }}</span>
+                        </a>
+                    </li>
+                @endif
             @endforeach
         </ul>
     </div>

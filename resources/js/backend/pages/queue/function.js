@@ -27,3 +27,7 @@ function refreshDataTable() {
     })
 }
 
+const setQueueRoleValue = (typeId) => {
+    $('#setMultiroleVal').val(typeId).trigger('change')
+    refreshDataTable();
+}

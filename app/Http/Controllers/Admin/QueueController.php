@@ -35,6 +35,11 @@ class QueueController extends Controller {
         return view('admin.queue.index', compact('queues'));
     }
 
+    public function show($role)
+    {
+        return view('admin.queue.index', compact('role'));
+    }
+
     public function listing()
     {
         return html('components.admin.page.queue.receptionist',[

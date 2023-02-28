@@ -68,7 +68,6 @@
 
 <script type="module">
 
-
     $('#{{ $attributes['id'] }}').change(function (){
         let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
         $(parent).find('div.error-msg').each(function(i, obj) {

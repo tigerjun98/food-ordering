@@ -148,4 +148,5 @@ return [
     'syndromes' => 'Syndromes',
     'diagnoses' => 'Diagnoses',
     'other' => 'Other',
+    'roles' => 'Roles',
 ];
