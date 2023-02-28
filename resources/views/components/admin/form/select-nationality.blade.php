@@ -82,7 +82,7 @@
     });
 
     @if(!isset($multiple) && !isset($customOption))
-    $('#{{ $attributes['id'] }}').val('{{ $value }}').trigger('change');
+    $('#{{ $attributes['id'] }}').val('{{ $value ?? '' }}').trigger('change');
     @endif
 
 </script>
