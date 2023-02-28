@@ -10,7 +10,7 @@
                 >
                     @if(isset($action['modal']))
                         @slot('openModal')
-                            { url: '{{ $action['modal'] }}', header: 'EDIT', size: '{{ isset($action['size']) ? $action['size'] : 'lg' }}' }
+                            { url: '{{ $action['modal'] }}', header: '{{ $modalHeader ?? 'Edit' }}', size: '{{ isset($action['size']) ? $action['size'] : 'lg' }}' }
                         @endslot
                     @endif
 

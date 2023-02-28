@@ -8,10 +8,15 @@
             <x-admin.form.select
                 :multiple="'multiple'"
                 :col="'md-12'"
-                :name="'roles'"
+                :name="'roles[]'"
+                :id="'rolesIds'"
                 :options="\Spatie\Permission\Models\Role::all()->pluck('name','id')"
                 :required="false"
-            />
+            >
+                @slot('js')
+                    $('#rolesIds').val([{{ implode(',', $data->roles->pluck('id')->toArray()) }}]).trigger('change')
+                @endslot
+            </x-admin.form.select>
         </div>
     @endslot
 
@@ -66,7 +71,7 @@
                     :data="$data"
                     :col="'md-6'"
                     :name="'gender'"
-                    :options="\App\Models\Admin::getGenderList()"
+                    :options="\App\Entity\Enums\GenderEnum::getListing()"
                 />
             </div>
 

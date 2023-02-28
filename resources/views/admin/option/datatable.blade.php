@@ -2,7 +2,7 @@
 
 @section('content')
     <x-admin.datatable :dataTable="$dataTable"
-                       :title="trans('common.'.$_GET['type']).' Management'"
+                       :title="trans('common.'.$type).' Management'"
                        :filter="$filter"
     >
         @slot('action')
@@ -12,7 +12,7 @@
 {{--            </button>--}}
 
             <x-admin.component.button
-                :openModal="'{ header: `CREATE`, url: `'.route('admin.option.create').'?type='.$_GET['type'].'` }'"
+                :openModal="'{ header: `CREATE`, url: `'.route('admin.option.create').'?type='.$type.'` }'"
                 :class="'btn-outline-primary btn-lg top-right-button mr-1'"
                 :lang="'create'"
                 :icon="'iconsminds-folder-add-- mr-1'"

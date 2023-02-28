@@ -35,12 +35,12 @@ class OptionStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'                                => ['integer'],
-            'type'                              => ['required', 'in:'.arrayToString(Option::getTypeList())],
-            'name_en'                           => ['nullable', 'string', 'regex:/^[\w\-\s]+$/'],
-            'name_cn'                           => ['required', 'string'],
-            'description_en'                    => ['nullable', 'string'],
-            'description_cn'                    => ['nullable', 'string'],
+            'id'        => ['integer'],
+            'type'      => ['required', 'in:'.arrayToString(Option::getTypeList())],
+            'name_en'   => ['nullable', 'string', 'regex:/^[\w\-\s]+$/'],
+            'name_cn'   => ['required', 'string'],
+            'desc_en'   => ['nullable', 'string'],
+            'desc_cn'   => ['nullable', 'string'],
         ];
     }
 }

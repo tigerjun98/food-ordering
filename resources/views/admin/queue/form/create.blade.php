@@ -67,10 +67,5 @@
                 <label class="custom-control-label" for="customCheckThis">Check this to prioritise the patient</label>
             </div>
         </div>
-
-
-
-
-
     @endslot
 </x-admin.component.modal>

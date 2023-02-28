@@ -28,6 +28,9 @@ class QueueController extends Controller {
 
     public function index()
     {
+        if(!request()->role)
+            return redirect()->route('admin.queue.index', 'role='.Queue::RECEPTIONIST);
+
         $queues = $this->service->index();
         return view('admin.queue.index', compact('queues'));
     }

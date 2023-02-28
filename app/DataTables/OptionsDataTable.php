@@ -23,7 +23,7 @@ class OptionsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Option::query();
+        $query = Option::query()->where('type', request()->type);
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
             ->editColumn('updated_at', function($row){
@@ -61,7 +61,8 @@ class OptionsDataTable extends DataTable
         $actions = [
             'edit' => [
                 'icon' => 'iconsminds-pen-2',
-                'modal' => route('admin.option.edit', $row->id)
+                'modal' => route('admin.option.edit', $row->id),
+                'modalHeader' => $row->type. ' details'
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]

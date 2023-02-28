@@ -25,7 +25,7 @@ return [
     'symptom' => 'Symptom',
     'full_address' => 'Full Address',
     'prescription_category' => 'Prescription category',
-    'time_per_day' => 'Day/time',
+    'time_per_day' => 'Time/day',
     'dose_per_time' => 'Dose/time',
     'daily_dose' => 'Daily dosage',
     'specialists' => 'Specialists',
@@ -60,4 +60,5 @@ return [
     'password_confirmation' => 'Password_confirmation',
     'nric_or_passport' => 'NRIC / Passport',
     'nationality' => 'Nationality',
+    'dose' => 'Dose'
 ];

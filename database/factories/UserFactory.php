@@ -65,7 +65,7 @@ class UserFactory extends Factory
     public function getRandGender()
     {
         $randomGenderKey = array_rand(GenderEnum::getListing());
-        return [$randomGenderKey+1, GenderEnum::getListing()[$randomGenderKey]]; // Refer Constants.php to understand KEY value
+        return [$randomGenderKey, GenderEnum::getListing()[$randomGenderKey]]; // Refer Constants.php to understand KEY value
     }
 
     public function getRandDobAndNric()

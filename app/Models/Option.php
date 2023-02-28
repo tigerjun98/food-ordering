@@ -58,10 +58,10 @@ class Option extends Model
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'type'      => [
-                'type' => 'select', 'label'=> 'type', 'option' => static::getTypeList(),
-                'multiple' => false
-            ],
+//            'type'      => [
+//                'type' => 'select', 'label'=> 'type', 'option' => static::getTypeList(),
+//                'multiple' => false
+//            ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }

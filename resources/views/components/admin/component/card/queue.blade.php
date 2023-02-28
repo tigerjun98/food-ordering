@@ -76,7 +76,8 @@
                     :lang="'completed'"
                     :class="'btn-outline-primary show-when-first '"
                 />
-                @if( $queue->status == \App\Models\Queue::PENDING && $queue->consultation_id )
+
+                @if( $queue->consultation_id )
                     <x-admin.component.button
                         :onclick="'viewMedicine('.$queue->consultation_id.')'"
                         :lang="'medicine'"

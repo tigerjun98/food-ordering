@@ -82,23 +82,14 @@
         @include('admin.include.layout.header')
         @include('admin.include.layout.sidebar')
 {{--        @include('admin.include.layout.loading')--}}
-
-
-
         <main>
             <x-admin.layout.alert />
 
             <div id="modalWrapper"></div>
 
             <div class="container-fluid">
-
-{{--                @include('user.include.layouts.alert')--}}
                 @yield('content')
             </div>
-
-            @include('admin.include.modal.update')
-            @include('admin.include.modal.delete')
-
             <script>
                 lazyLoadInstance.update();
             </script>

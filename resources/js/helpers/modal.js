@@ -49,9 +49,13 @@ function setOpeningModalIds(modalId, type = 'open'){
 
 const getColorCodeByClassName = (className) => {
     let elem, style;
-    elem = document.querySelector('.'+className);
-    style = getComputedStyle(elem);
-    return style.backgroundColor;
+
+    if(!!document.querySelector('.'+className)){
+        elem = document.querySelector('.'+className);
+        style = getComputedStyle(elem);
+        return style.backgroundColor;
+    }
+    return '#fff';
 }
 const changeThemeColor = (colorCode) => {
     let metaThemeColor = document.querySelector("meta[name=theme-color]");
@@ -180,7 +184,9 @@ class Modal{
     }
 
     getHeaderTitle(){
+
         let header = this.settings.header == null ? prevHeader : this.settings.header
+        console.log(header);
         prevHeader = header
         return !header ? '' : header
     }

@@ -23,15 +23,15 @@ class RoleService
         $this->role = new SpatieRole();
     }
 
+    public function assignPermission(SpatieRole $role, array $permissions): Collection
+    {
+        $role->syncPermissions($permissions);
+    }
+
     public function store(array $request): Collection
     {
         $spatieRole = $this->role->findOrCreate($request['name'], self::GUARD);
-
-        // reset all permission for this role
-        foreach ($spatieRole->getAllPermissions() as $permission) {
-            $permission->delete();
-        }
-
+        self::resetRolePermission($spatieRole);
         // sync permission
         foreach ($request['role'] as $name => $role) {
             if($role == 1){
@@ -50,6 +50,14 @@ class RoleService
         }
 
         return $spatieRole->getAllPermissions();
+    }
+
+    public function resetRolePermission(SpatieRole $spatieRole)
+    {
+        // reset all permission for the role
+        foreach ($spatieRole->getAllPermissions() as $permission) {
+            $permission->delete();
+        }
     }
 
     public function delete(Role $role)

@@ -4,27 +4,38 @@ namespace App\Modules\Admin\Account\Services;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Modules\Admin\Role\Services\RoleService;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Spatie\Permission\Models\Role;
 use function PHPUnit\Framework\throwException;
 
 class AdminAccountService
 {
-    private Admin $admin;
+    private Admin $model;
 
     public function __construct()
     {
-        $this->admin = new Admin();
+        $this->model = new Admin();
     }
 
-    public function store(array $request): User
+    public function store(array $request): Admin
     {
-        $account = $this->admin->find($request['id']);
+        $data = array_except($request, ['roles']);
+        $admin = $this->model->updateOrCreate([ 'id' => $request['id'] ], $data);
+        $this->assignRoles($admin, $request['roles']);
 
-        $account
-            ? $account->update($request)
-            : Admin::create($request);
+        return $admin;
+    }
 
-        return $this->admin->find($request['id']);
+    public function assignRoles(Admin $admin, array $roleIds = []): Collection
+    {
+        foreach ($roleIds as $roleId){
+            $role = Role::findById($roleId);
+            $admin->assignRole($role);
+        }
+
+        return $admin->getRoleNames();
     }
 
     public function delete(Admin $admin)

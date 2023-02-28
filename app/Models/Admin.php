@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants;
+use App\Entity\Enums\GenderEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
@@ -79,15 +80,9 @@ class Admin extends Authenticatable
     protected function genderExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => ucfirst(static::getGenderList()[$this->gender] ?? '')
+            get: fn () => ucfirst(GenderEnum::getListing()[$this->gender] ?? '')
         );
     }
-
-    public static function getGenderList(): array
-    {
-        return Constants::getLists('gender');
-    }
-
     public static function getPermissionsLists()
     {
         $lang = app()->getLocale();

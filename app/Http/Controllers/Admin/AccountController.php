@@ -42,11 +42,10 @@ class AccountController extends Controller {
         ]);
     }
 
-    public function edit($userId)
+    public function edit(int $adminId)
     {
-        return html('admin.account.form.create',[
-            'data' => $this->model->findOrFail($userId)
-        ]);
+        $data = $this->model->findOrFail($adminId);
+        return html('admin.account.form.create', compact('data'));
     }
 
     public function store(AdminAccountStoreRequest $request)

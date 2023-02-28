@@ -67,7 +67,7 @@
 {{--@endif--}}
 
 <script type="module">
-    {{ $js ?? '' }}
+
 
     $('#{{ $attributes['id'] }}').change(function (){
         let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
@@ -76,14 +76,18 @@
         });
     });
 
-    @if(!isset($multiple) && !isset($customOption))
-    $('#{{ $attributes['id'] }}').val('{{ $value ?? '' }}').trigger('change');
+    @if(!isset($customOption) )
+        @if(!isset($multiple))
+            $('#{{ $attributes['id'] }}').val('{{ $value ?? '' }}').trigger('change');
+        @endif
     @endif
 
 
     @if(isset($ajax))
         $('#{{ $attributes['id'] }}').initialiseDynamicSelect2({url: '{{ $ajax }}'});
     @endif
+
+    {{ $js ?? '' }}
 
 </script>
 

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Admin\Account\Requests;
 
+use App\Entity\Enums\GenderEnum;
 use App\Models\Order;
 use App\Models\User;
 use App\Modules\Users\Account\Rules\MatchOldPassword;
@@ -35,14 +36,14 @@ class AdminAccountStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'roles.*'                             => ['required', 'exists:roles,id'],
-            'id'                                => ['integer'],
-            'name_en'                           => ['required', 'string'],
-            'name_cn'                           => ['nullable', 'string'],
-            'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
-            'email'                             => ['required', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
-            'gender'                            => ['required', 'in:'.arrayToString(User::getGenderList())],
-            'password'                          => ['nullable', 'confirmed', Password::min(6)->uncompromised()],
+            'id'        => ['integer'],
+            'name_en'   => ['required', 'string'],
+            'name_cn'   => ['nullable', 'string'],
+            'phone'     => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
+            'email'     => ['required', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
+            'gender'    => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
+            'password'  => ['nullable', 'confirmed', Password::min(6)->uncompromised()],
+            'roles.*'   => ['required', 'exists:roles,id'],
         ];
     }
 }

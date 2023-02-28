@@ -76,7 +76,7 @@
                                 <p class="font-weight-medium mb-0">{{ trans('label.dose_per_time') }}</p>
                                 <div class="comment-likes">
                               <span class="post-icon">
-                                 {{ $prescription->dose_per_time }} {{ trans('label.time') }}
+                                 {{ $prescription->dose_per_time }} {{ trans('label.dose') }}
                               </span>
                                 </div>
                             </a>
@@ -86,7 +86,7 @@
                                 <p class="mb-0">{{ trans('label.daily_dose') }}</p>
                                 <div class="comment-likes">
                               <span class="post-icon">
-                                  {{ $prescription->dose_daily }} {{ trans('label.time') }}
+                                  {{ $prescription->dose_daily }} {{ $prescription->metric_explain }}
                               </span>
                                 </div>
                             </a>
@@ -109,7 +109,7 @@
 @empty
     <x-admin.component.status-bar
         :type="'info'"
-        :message="'No medicine found!'"
+        :message="'No medicine assigned!'"
     />
 @endforelse
 

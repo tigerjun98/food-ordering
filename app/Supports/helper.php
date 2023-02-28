@@ -177,7 +177,8 @@ function splitAddress($full_address){
     }
 }
 
-function array_except($array, $keys){
+function array_except($array, array $keys){
+
     foreach($keys as $key){
         unset($array[$key]);
     }

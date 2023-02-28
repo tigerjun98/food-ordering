@@ -1,5 +1,5 @@
 <x-admin.component.modal
-    :title="'Admin details'"
+    :title="$data->type ?? request()->type.' details'"
     :nav="['details', 'description']"
     :submit="route('admin.option.store')"
 >
@@ -22,15 +22,15 @@
 
     @slot('details')
         <input type="hidden" name="id" value="{{ $data ? $data->id : new_id() }}" />
-{{--        <input type="hidden" name="type" value="{{ $data ? $data->type : request()->type }}" />--}}
+        <input type="hidden" name="type" value="{{ $data ? $data->type : request()->type }}" />
 
             <div class="row">
-                <x-admin.form.select
-                    :col="'md-12'"
-                    :name="'type'"
-                    :options="\App\Models\Option::getTypeList()"
-                    :value="$data ? $data->type : $type"
-                />
+{{--                <x-admin.form.select--}}
+{{--                    :col="'md-12'"--}}
+{{--                    :name="'type'"--}}
+{{--                    :options="\App\Models\Option::getTypeList()"--}}
+{{--                    :value="$data ? $data->type : $type"--}}
+{{--                />--}}
 
 {{--                <script type="text/javascript" defer>--}}
 {{--                    @if(!$data)--}}

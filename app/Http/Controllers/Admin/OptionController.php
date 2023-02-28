@@ -10,6 +10,7 @@ use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
+use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
@@ -47,6 +48,15 @@ class OptionController extends Controller {
     {
         return $dataTable->render('admin.option.datatable', [
             'filter' => $this->model->Filter()
+        ]);
+    }
+
+    public function show(OptionsDataTable $dataTable, $type)
+    {
+        request()->type = $type;
+        return $dataTable->render('admin.option.datatable', [
+            'filter' => $this->model->Filter(),
+            'type' => $type
         ]);
     }
 
