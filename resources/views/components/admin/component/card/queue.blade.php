@@ -54,9 +54,8 @@
                 />
             @endif
 
-
             @if(request()->role == \App\Models\Queue::DOCTOR)
-                @if( $queue->status == \App\Models\Queue::HOLDING )
+                @if( $queue->status == \App\Models\Queue::HOLDING && $queue->consultation_id )
                     <x-admin.component.button
                         :redirect="route('admin.consultation.edit', $queue->consultation_id)"
                         :lang="'continue'"
@@ -77,11 +76,14 @@
                     :lang="'completed'"
                     :class="'btn-outline-primary show-when-first '"
                 />
-                <x-admin.component.button
-                    :onclick="'viewMedicine('.$queue->consultation_id.')'"
-                    :lang="'medicine'"
-                    :class="'btn-primary show-when-first '"
-                />
+                @if( $queue->status == \App\Models\Queue::PENDING && $queue->consultation_id )
+                    <x-admin.component.button
+                        :onclick="'viewMedicine('.$queue->consultation_id.')'"
+                        :lang="'medicine'"
+                        :class="'btn-primary show-when-first '"
+                    />
+                @endif
+
             @endif
         </div>
     </div>

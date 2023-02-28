@@ -31,6 +31,7 @@ class Prescription extends Model
     public const EXTERNAL = 204;
     public const ACUPUNCTURE = 205;
     public const MASSAGE = 206;
+    public const OTHER = 207;
 
     public function consultation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -91,6 +92,7 @@ class Prescription extends Model
             self::EXTERNAL => trans('common.external_use'), // 外用药
             self::ACUPUNCTURE => trans('common.acupuncture'), // 针灸
             self::MASSAGE => trans('common.massage'), // 推拿
+            self::OTHER => trans('common.other'), // 推拿
         ];
         return Medicine::getCategoryList() + $arr;
     }

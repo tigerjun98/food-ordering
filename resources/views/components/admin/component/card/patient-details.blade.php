@@ -29,7 +29,7 @@
 <div class="row mb-2">
     <div class="col-md-6">
         <x-admin.layout.info
-            :value="'Malaysia'"
+            :value="$patient->nationality_explain"
             :name="'nationality'"
         />
     </div>

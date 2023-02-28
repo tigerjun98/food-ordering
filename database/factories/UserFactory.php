@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Entity\Enums\CountryEnum;
+use App\Entity\Enums\GenderEnum;
 use App\Models\User;
 use Carbon\Carbon;
 use Faker\Provider\zh_CN\Company;
@@ -44,6 +46,7 @@ class UserFactory extends Factory
             'area' => $this->faker->city(),
             'postcode' => $this->faker->numberBetween(11111, 99999),
             'state' => array_rand(User::getStatesList()),
+            'nationality' => array_rand(CountryEnum::getCountryList(false)),
             'remark_allergic' => $this->faker->realText(),
         ];
     }
@@ -61,9 +64,8 @@ class UserFactory extends Factory
 
     public function getRandGender()
     {
-        $gender = array("male", "female");
-        $randomGenderKey = array_rand($gender,1);
-        return [$randomGenderKey+1, $gender[$randomGenderKey]]; // Refer Constants.php to understand KEY value
+        $randomGenderKey = array_rand(GenderEnum::getListing());
+        return [$randomGenderKey+1, GenderEnum::getListing()[$randomGenderKey]]; // Refer Constants.php to understand KEY value
     }
 
     public function getRandDobAndNric()

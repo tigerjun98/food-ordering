@@ -27,8 +27,8 @@ class UsersDataTable extends DataTable
                 return $row->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
-            })->editColumn('state', function($row){
-                return $row->state_name;
+            })->editColumn('nationality', function($row){
+                return $row->nationality_explain;
             })->editColumn('dob', function($row){
                 return $row->dob .' ('.get_age($row->dob).' '.trans('common.age').')';
             })->editColumn('phone', function($row){
@@ -39,10 +39,10 @@ class UsersDataTable extends DataTable
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
-            ->order(function ($query) {
-                $query->orderBy('updated_at', 'desc');
-            });
+            })->rawColumns(['image', 'action']);
+//            ->order(function ($query) {
+//                $query->orderBy('updated_at', 'desc');
+//            });
     }
 
     public function getColumns(): array
@@ -52,6 +52,7 @@ class UsersDataTable extends DataTable
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),
+            Column::make('nationality'),
             Column::make('dob')->title('DOB (Age)'),
             Column::make('created_at'),
             Column::computed('action')

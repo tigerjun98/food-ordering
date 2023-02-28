@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Constants;
+use App\Entity\Enums\CountryEnum;
+use App\Entity\Enums\GenderEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\TimestampFormat;
@@ -69,6 +71,13 @@ class User extends Authenticatable
         );
     }
 
+    protected function nationalityExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(CountryEnum::getCountryList(false)[$this->nationality] ?? '')
+        );
+    }
+
     protected function stateName(): Attribute
     {
         return Attribute::make(
@@ -86,13 +95,8 @@ class User extends Authenticatable
     protected function genderExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => ucfirst(static::getGenderList()[$this->gender] ?? '')
+            get: fn () => ucfirst(GenderEnum::getListing()[$this->gender] ?? '')
         );
-    }
-
-    public static function getGenderList(): array
-    {
-        return Constants::getLists('gender');
     }
 
     public static function getStatesList(): array
@@ -113,7 +117,7 @@ class User extends Authenticatable
             'nric'      => ['type' => 'text'],
             'phone'     => ['type' => 'text' ],
             'email'     => ['type' => 'text' ],
-            'state'     => ['type' => 'select', 'option' => self::getStatesList()],
+            'nationality'     => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],
 
             // 'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
         ];

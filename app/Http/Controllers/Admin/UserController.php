@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\UsersDataTable;
+use App\Entity\Enums\Country;
+use App\Entity\Enums\GenderEnum;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use DB;
+use App\Entity\Enums\CountryEnum;
 
 class UserController extends Controller {
 
@@ -28,6 +31,7 @@ class UserController extends Controller {
 
     public function create()
     {
+        dd(GenderEnum::getListing());
         return html('admin.user.form.create',[ 'data' => null ]);
     }
 

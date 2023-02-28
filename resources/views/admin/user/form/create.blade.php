@@ -63,13 +63,7 @@
 
     @slot('details')
         <input type="hidden" name="id" value="{{ $data ? $data->id : new_id() }}" />
-            <div class="row">
-                <x-admin.form.select-nationality
-                    :data="$data"
-                    :col="'md-6'"
-                    :name="'nationality'"
-                />
-            </div>
+
         <div class="row">
             <x-admin.form.text
                 :data="$data"
@@ -126,7 +120,15 @@
                     :data="$data"
                     :col="'md-6'"
                     :name="'gender'"
-                    :options="\App\Models\User::getGenderList()"
+                    :options="\App\Entity\Enums\GenderEnum::getListing()"
+                />
+            </div>
+
+            <div class="row">
+                <x-admin.form.select-nationality
+                    :data="$data"
+                    :col="'md-12'"
+                    :name="'nationality'"
                 />
             </div>
 

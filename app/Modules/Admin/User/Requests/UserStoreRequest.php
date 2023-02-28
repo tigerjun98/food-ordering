@@ -2,6 +2,8 @@
 
 namespace App\Modules\Admin\User\Requests;
 
+use App\Entity\Enums\CountryEnum;
+use App\Entity\Enums\GenderEnum;
 use App\Models\Order;
 use App\Models\User;
 use Carbon\Carbon;
@@ -52,7 +54,7 @@ class UserStoreRequest extends FormRequest
             'dob'                               => ['nullable', 'date_format:Y-m-d', 'before:'.Carbon::now()],
             'remark'                            => ['nullable', 'string'],
             'remark_allergic'                   => ['nullable', 'string'],
-            'gender'                            => ['required', 'in:'.arrayToString(User::getGenderList())],
+            'gender'                            => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
             'emergency_contact_name'            => ['nullable', 'string'],
             'emergency_contact_no'              => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'emergency_contact_relationship'    => ['nullable', 'string'],
@@ -60,6 +62,7 @@ class UserStoreRequest extends FormRequest
             'area'                              => ['nullable', 'string'],
             'postcode'                          => ['nullable', 'digits:5'],
             'address'                           => ['nullable', 'string'],
+            'nationality'                       => ['required', 'in:'.arrayToString(CountryEnum::getCountryList(false))],
         ];
     }
 
