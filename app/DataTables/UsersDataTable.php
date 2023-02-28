@@ -39,7 +39,10 @@ class UsersDataTable extends DataTable
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action']);
+            })->rawColumns(['image', 'action'])
+            ->orderColumn('full_name', function ($query, $order) {
+                $query->orderByRaw("ISNULL(name_en), name_en $order");
+            });
 //            ->order(function ($query) {
 //                $query->orderBy('updated_at', 'desc');
 //            });
