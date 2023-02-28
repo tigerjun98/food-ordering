@@ -31,7 +31,6 @@ class UserController extends Controller {
 
     public function create()
     {
-        dd(GenderEnum::getListing());
         return html('admin.user.form.create',[ 'data' => null ]);
     }
 
