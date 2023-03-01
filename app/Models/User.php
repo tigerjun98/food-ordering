@@ -30,7 +30,6 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded= []; // remove this replaces with $fillable to strict input col
     protected $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -48,6 +47,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected function fullName(): Attribute

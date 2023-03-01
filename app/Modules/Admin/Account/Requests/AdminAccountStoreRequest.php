@@ -33,8 +33,19 @@ class AdminAccountStoreRequest extends FormRequest
      *
      * @return array
      */
+
+//    public function rules()
+//    {
+//        'name' => [
+//        function ($attribute, $value, $fail) {
+//            $fail('validation.translation.key')->translate();
+//        },
+//    ],
+//}
+
     public function rules()
     {
+
         return [
             'id'        => ['integer'],
             'name_en'   => ['required', 'string'],

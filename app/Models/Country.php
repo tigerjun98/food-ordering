@@ -27,7 +27,9 @@ class Country extends Model
     protected $table = 'clinics';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
 
 
     public static function getStatusList()

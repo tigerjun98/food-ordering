@@ -28,7 +28,9 @@ class Medicine extends Model
     protected $table = 'medicines';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
 
     public const TABLET = 101;
     public const CAPSULE = 102;

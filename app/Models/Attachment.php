@@ -18,7 +18,9 @@ class Attachment extends Model
     protected $table = 'attachments';
     protected $guarded= []; // remove this replace with {$fillable} to strict input col
     protected $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
     /**
      * The attributes that are mass assignable.
      *

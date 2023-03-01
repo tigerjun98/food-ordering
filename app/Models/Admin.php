@@ -29,9 +29,7 @@ class Admin extends Authenticatable
     protected $table = 'admins';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
     protected $guard = 'admin';
-    protected $guard_name = 'admin'; // for spatie role & permission
 
     /**
      *
@@ -63,6 +61,7 @@ class Admin extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public function clinic()
