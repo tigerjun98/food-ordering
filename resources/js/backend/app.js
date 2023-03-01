@@ -1,13 +1,14 @@
+
+
+
 import.meta.glob([
-    // '../images/**',
-    // '../fonts/**',
-    // '@/js/vendor/*.js',
-    // '../backend/vendor/*.js',
-    // '../vendor/*.js',
     '../backend/vite/eager/*.js',
-    '../backend/pages/**',
     '../helpers/*.js',
 
+], { eager: true })
+
+import.meta.glob([
+    '../backend/pages/**',
 ], { eager: true })
 
 // import.meta.glob([
@@ -22,3 +23,4 @@ import.meta.glob([
     // '../fonts/**',
     // '@/js/vendor/*.js',
 ])
+

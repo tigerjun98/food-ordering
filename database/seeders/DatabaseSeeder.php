@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         Consultation::factory(100)->create();
         Prescription::factory(150)->create();
         PrescriptionCombination::factory(250)->create();
-        Queue::factory(55)->create();
+        // Queue::factory(10)->create();
 
         Artisan::call("db:medicine:update_name");
         Artisan::call("db:medicine:update_type");

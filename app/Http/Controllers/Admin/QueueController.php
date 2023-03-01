@@ -26,6 +26,12 @@ class QueueController extends Controller {
         $this->service = new QueueService();
     }
 
+    public function getSpecificBox($queueId)
+    {
+        $queue = $this->model->findOrFail($queueId);
+        return html('components.admin.component.card.queue', compact('queue'));
+    }
+
     public function index()
     {
         if(!request()->role)
@@ -43,7 +49,8 @@ class QueueController extends Controller {
     public function listing()
     {
         return html('components.admin.page.queue.receptionist',[
-            'queues' => $this->service->index()
+            'queues' => $this->service->index(),
+            'message' => $this->service->getDashboardMessage()
         ]);
     }
 

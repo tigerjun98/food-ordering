@@ -11,6 +11,11 @@ const servePatient = async (queueId) => {
     let res = await $(this).sendRequest({ url });
     let target = $(`#queueBox-${queueId}`)
     target.hide('slow', function(){ target.remove(); });
+
+    if( !! document.getElementById('statusBar-301')){
+        $('#statusBar-301').empty()
+    }
+
 }
 
 const consultedPatient = async (queueId) => {

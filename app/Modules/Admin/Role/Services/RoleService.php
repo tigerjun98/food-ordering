@@ -32,12 +32,17 @@ class RoleService
     {
         $spatieRole = $this->role->findOrCreate($request['name'], self::GUARD);
         self::resetRolePermission($spatieRole);
-        // sync permission
-        foreach ($request['role'] as $name => $role) {
-            if($role == 1){
-                $spatieRole->givePermissionTo(Permission::findOrCreate($name.'.*', self::GUARD));
+
+        if(isset($request['role'])){
+            // sync permission
+            foreach ($request['role'] as $name => $role) {
+                if($role == 1){
+                    $spatieRole->givePermissionTo(Permission::findOrCreate($name.'.*', self::GUARD));
+                }
             }
         }
+
+
 
         foreach ($request['permission'] as $role => $permission) {
             foreach ($permission as $name => $value) {

@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <ul class="nav nav-tabs separator-tabs ml-0 mb-5">
+            <ul class="nav nav-tabs separator-tabs ml-0 mb-3">
                 <?php $permissions = [] ?>
                 @foreach(\App\Models\Queue::getRoleList() as $key => $type)
                     <?php $permissions[] = 'queue.'.$key ?>
@@ -59,18 +59,5 @@
         @endslot
     </x-admin.layout.search-menu>
 
-
-    <script type="text/javascript" src="{{ asset('js/backend/pages/queue/sortable.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/backend/pages/queue/function.js') }}"></script>
-    <script type="module">
-        @foreach(\App\Models\Queue::getRoleList() as $key => $type)
-            @if( auth()->user()->hasPermissionTo( 'queue.'.$key ) )
-                setQueueRoleValue({{$key}})
-                @break
-            @endif
-        @endforeach
-    </script>
-{{--    <script type="text/javascript" src="{{ Vite::backendJs('queue/sortable.js') }}"></script>--}}
-{{--    <script type="text/javascript" src="{{ Vite::backendJs('queue/function.js') }}"></script>--}}
-{{--    <script type="module" src="{{ Vite::backendJs('queue/init.js') }}"></script>--}}
+    @include('admin.queue.js.script')
 @stop

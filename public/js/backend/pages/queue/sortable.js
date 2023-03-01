@@ -46,7 +46,6 @@ const updateSorting = async () => {
         data: setUpdateForm(updateElem),
         alertSuccess: false,
     });
-    console.log(result)
 }
 
 const getQueueType = () => {

@@ -28,13 +28,11 @@ class RoleAndPermissionSeeder extends Seeder
 
         $roles = [
             'super-admin' => [
-                'user.*',
-                'queue.*',
-                'account.*',
-                'medicine.*',
-                'option.*',
+                'patient.*',
                 'consultation.*',
-                'attachment.*',
+                'queue.*',
+                'setting-consultation.*',
+                'setting-admin.*',
             ],
         ];
 

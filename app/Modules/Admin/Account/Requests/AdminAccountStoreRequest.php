@@ -53,7 +53,7 @@ class AdminAccountStoreRequest extends FormRequest
             'phone'     => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'email'     => ['required', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
             'gender'    => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
-            'password'  => ['nullable', 'confirmed', Password::min(6)->uncompromised()],
+            'password'  => ['nullable', 'confirmed', Password::min(6)], // Password::min(6)->uncompromised()
             'roles.*'   => ['required', 'exists:roles,id'],
         ];
     }

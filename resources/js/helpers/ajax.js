@@ -4,6 +4,7 @@ $.fn.setHtml = async function(options) {
         url: '',
         data: [],
         method: 'GET',
+        insertMethod: '', // append or prepend
     }, options);
 
     let res = ''
@@ -15,7 +16,20 @@ $.fn.setHtml = async function(options) {
         });
     }
 
-    $(this).hide().html(settings.url ? res.html : options.html).fadeIn();
+    let elem = settings.url ? res.html : options.html;
+
+    switch (options.insertMethod){
+        case 'append':
+            $(this).append(elem);
+            break;
+        case 'prepend':
+            $(this).prepend(elem);
+            break;
+        default:
+            $(this).hide().html(elem).fadeIn();
+            break;
+    }
+
     myLazyLoad.update();
 }
 

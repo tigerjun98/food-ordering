@@ -25,6 +25,7 @@ class QueueFactory extends Factory
     public function definition()
     {
         return [
+            'id'                => new_id(),
             'status'            => Queue::WAITING, //array_rand(Queue::getStatusList()),
             'type'              => Queue::CONSULTATION, // array_rand(Queue::getTypeList()),
             'remark'            => $this->faker->realText(),

@@ -23,12 +23,11 @@ class AdminAccountService
 
     public function updatePassword(Admin $admin, array $request): bool
     {
-        if($request['password'] && $request['password_confirmation']){
+        if($request['password']){
             return $admin->update([
-               'password' => Hash::make('123123')
+               'password' => Hash::make($request['password'])
             ]);
         }
-
         return false;
     }
 

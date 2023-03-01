@@ -40,6 +40,11 @@ class Queue extends Model
     public const PHARMACY = 303;
     public const CASHIER = 304;
 
+    // QUEUE EVENT -- QueueUpdatedEvent
+    public const NEW_QUEUE  = 401;
+    public const CONSULTED  = 402;
+    public const SERVED     = 403; // Waiting -> Serving (Consultation)
+
     public $incrementing = false;
     protected $table = 'queues';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col

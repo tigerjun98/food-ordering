@@ -22,11 +22,15 @@ return [
     ],
 
     'queue'  => [
-        'show'      => 'Listing',
+        'show'      => 'Show queue tab',
         Queue::RECEPTIONIST => Queue::getRoleList()[Queue::RECEPTIONIST],
         Queue::DOCTOR       => Queue::getRoleList()[Queue::DOCTOR],
         Queue::PHARMACY     => Queue::getRoleList()[Queue::PHARMACY],
         Queue::CASHIER      => Queue::getRoleList()[Queue::CASHIER],
+    ],
+
+    'setting' => [
+        'index'         => 'Show setting tab',
     ],
 
     'setting-consultation'  => [

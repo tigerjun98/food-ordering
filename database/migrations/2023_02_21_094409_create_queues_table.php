@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('status')->nullable();
             $table->string('sorting')->nullable();
             $table->float('priority')->default(0);
+            $table->boolean('priority_checkbox')->default(false);
             $table->date('appointment_date')->nullable();
             $table->longText('remark')->nullable();
             $table->unsignedBigInteger('consultation_id')->nullable();

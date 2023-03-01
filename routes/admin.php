@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::post('/update-sorting/{queueId}', [QueueController::class, 'updateSorting'])->name('update-sorting');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
         Route::get('/listing', [QueueController::class, 'listing'])->name('listing');
+        Route::get('/get-specific-box/{queueId}', [QueueController::class, 'getSpecificBox'])->name('get-specific-box');
     });
 
     Route::name('user.')->group(function () {

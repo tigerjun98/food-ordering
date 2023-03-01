@@ -13,9 +13,11 @@
                 :options="\Spatie\Permission\Models\Role::all()->pluck('name','id')"
                 :required="false"
             >
-                @slot('js')
-                    $('#rolesIds').val([{{ implode(',', $data->roles->pluck('id')->toArray()) }}]).trigger('change')
-                @endslot
+                @if(isset($data->roles))
+                    @slot('js')
+                        $('#rolesIds').val([{{ implode(',', $data->roles->pluck('id')->toArray()) }}]).trigger('change')
+                    @endslot
+                @endif
             </x-admin.form.select>
         </div>
     @endslot
@@ -24,11 +26,13 @@
         <div class="row">
             <x-admin.form.text
                 :col="'md-6'"
+                :type="'password'"
                 :name="'password'"
                 :required="false"
             />
             <x-admin.form.text
                 :col="'md-6'"
+                :type="'password'"
                 :name="'password_confirmation'"
                 :required="false"
             />

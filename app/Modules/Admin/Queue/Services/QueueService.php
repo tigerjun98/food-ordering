@@ -8,6 +8,7 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Queue;
 use App\Models\User;
+use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
 use App\Modules\Admin\User\Services\UserService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,18 @@ class QueueService
     public function __construct()
     {
         $this->model = new Queue();
+    }
+
+    public function getDashboardMessage(): ?string
+    {
+        if(request()->role == Queue::RECEPTIONIST){
+            $serving = $this->model->Today()->where('status', Queue::SERVING)->first();
+            if(!$serving){
+                return 'Doctor room are empty!';
+            }
+        }
+
+        return null;
     }
 
     public function index(): array
@@ -48,14 +61,31 @@ class QueueService
         return $queues;
     }
 
+    public function serveEvent(Queue $queue)
+    {
+        QueueUpdatedEvent::dispatch(Queue::SERVED, '', $queue );
+    }
+
+    public function countServingPatient(): int
+    {
+        return $this->model->where('status', Queue::SERVING)->Today()->count();
+    }
+
     public function serve(Queue $queue): Queue
     {
+
         if($queue->type == Queue::MEDICINE){
             $nextStatus = Queue::COMPLETED;
+        } else{
+            $this->countServingPatient() > 0 ? throwErr('Doctor on serving!') : null;
         }
 
         $queue->status = $nextStatus ?? Queue::SERVING;
         $queue->save();
+
+        if($queue->type == Queue::CONSULTATION){
+            $this->serveEvent($queue);
+        }
         return $this->model->find($queue->id);
     }
 
@@ -87,29 +117,68 @@ class QueueService
                 $queue->type = Queue::MEDICINE;
             }
             $queue->save();
-            return $this->model->find($queue->id);
+            $this->consultedEvent($queue);
+
+            return $queue;
         }
+
+        return false;
     }
 
-    public function exists($request): bool
+    public function consultedEvent(Queue $queue)
+    {
+        QueueUpdatedEvent::dispatch(Queue::CONSULTED, 'Next patient pls!', $queue->with('consultation')->first());
+    }
+
+    public function onQueue($request): bool
     {
         $queue = $this->model->where('user_id', $request['user_id'])
-            ->where('status', Queue::WAITING)
-            ->Today()->first();
+            ->whereNotIn('status', [ Queue::EXPIRED, Queue::COMPLETED ])
+            ->Today()
+            ->first();
 
         return (bool)$queue;
     }
 
+    public function patientOnQueue($patientId): ?Queue
+    {
+        return $this->model
+            ->where('user_id', $patientId)
+            ->whereNotIn('status', [Queue::COMPLETED, Queue::EXPIRED])
+            ->Today()
+            ->first();
+    }
+
+    public function countWaitingPatient(): int
+    {
+        return $this->model->where('status', Queue::WAITING)->Today()->count();
+    }
+
+    public function newQueueEvent(Queue $queue)
+    {
+        $count = $this->countWaitingPatient();
+        QueueUpdatedEvent::dispatch(Queue::NEW_QUEUE, $count.' patient are waiting!', $queue);
+    }
+
+    public function queueExist($queueId)
+    {
+        return $this->model->find($queueId);
+    }
+
     public function store($request): Queue
     {
-        if(!$this->model->find($request['id'])){
-            $this->exists($request) ? throwErr('Patient on queue!') : null;
+        $newQueue = false;
+
+        if( ! $this->queueExist( $request['id'] ) ){
+            $this->patientOnQueue($request['user_id']) ? throwErr('Patient on queue!') : '';
+            $newQueue = true;
         }
 
         $prioritise = $request['prioritise'] ?? 0;
         if($prioritise){
-            unset($request['prioritise']);
+            $request['priority_checkbox'] = $request['prioritise'] ?? false;
             $request['priority'] = 1000;
+            unset($request['prioritise']);
         }
 
         $request['doctor_id'] = $request['doctor_id'] ?? null;
@@ -117,7 +186,10 @@ class QueueService
         $request['admin_id'] = Auth::user()->id;
         $request['appointment_date'] = Carbon::now();
 
-        return $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
+        $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
+        if($newQueue) $this->newQueueEvent($queue);
+
+        return $queue;
     }
 
     public function abs_diff($v1, $v2) {
