@@ -138,13 +138,22 @@ class Queue extends Model
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            // 'type'      => ['label'=> 'type', 'type' => 'select', 'option' => static::getTypeList()],
+            'role'      => ['label'=> 'roles', 'type' => 'select', 'option' => static::getRoleList(), 'multiple' => false],
+            'status'    => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList(), 'multiple' => false],
+            'created_at'    => ['type' => 'date', 'label'=> 'created_at' ],
+
             // 'status'    => ['label'=> 'status', 'type' => 'select', 'multiple' => false, 'option' => static::getStatusList()],
             // 'role'      => ['label'=> 'role', 'type' => 'select', 'multiple' => false, 'default' => false, 'option' => self::getRoleList() ],
         ];
     }
 
-    public function scopeFilter($query)
+    public static function SimpleFilter(){
+        return [
+            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+        ];
+    }
+
+    public function scopeFilter($query, $roleId = null)
     {
         if(request()->filled('doctor_id')){
             $query->whereHas('doctor', function ($q) {
@@ -162,7 +171,11 @@ class Queue extends Model
         }
 
         if(request()->filled('role')){
-            switch (request()->role){
+            $roleId = request()->role;
+        }
+
+        if($roleId){
+            switch ($roleId){
                 case self::CASHIER:
                     $query->where('type', self::PAYMENT);
                     break;
@@ -174,6 +187,7 @@ class Queue extends Model
                     break;
             }
         }
+
 
         return $this->searchAll(
             $this->parentFilterTrait($query), ['name_en', 'name_cn']

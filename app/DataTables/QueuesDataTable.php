@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Consultation;
+use App\Models\Queue;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -11,7 +11,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class ConsultationsDataTable extends DataTable
+class QueuesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,42 +21,38 @@ class ConsultationsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Consultation::query();
+        $query = Queue::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-//            ->editColumn('specialists', function($row){
-//                $arr = '';
-//                foreach ($row->specialists_explain as $item){
-//                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$item.'</span>';
-//                }
-//                return $arr;
-//            })
-            ->addColumn('created_at', function($row){
+            ->editColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');
-            })->addColumn('nric', function($row){
-                return nricFormat($row->patient->nric);
+            })->addColumn('doctor', function($row){
+                return $row->doctor ? $row->doctor->full_name : '';
             })->addColumn('full_name', function($row){
                 return $row->patient->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
+            })->editColumn('status', function($row){
+                return $row->status_explain;
+            })->editColumn('type', function($row){
+                return $row->type_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action', 'specialists'])
-            ->orderColumn('created_at', function ($query, $order) {
-                $query->orderByRaw("ISNULL(created_at), created_at $order");
-            });
-//            ->orderColumn('created_at', function ($query, $order) {
-//                $query->orderBy('created_at', 'desc');
+            })->rawColumns(['image', 'action']);
+//            ->order(function ($query) {
+//                $query->orderBy('updated_at', 'desc');
 //            });
     }
 
     public function getColumns(): array
     {
         return [
-            Column::make('ref_id'),
-            Column::make('created_at'),
             Column::make('full_name'),
-            Column::make('symptom'),
+            Column::make('type'),
+            Column::make('status'),
+            Column::make('doctor'),
+            Column::make('remark'),
+            Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -66,23 +62,15 @@ class ConsultationsDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
-            'view' => [
-                'icon'      => 'simple-icon-eye',
-                'modal'     => route('admin.consultation.show', $row->id)
-            ],
-            'print' => [
-                'icon'      => 'simple-icon-printer',
-                'onclick'   => '$(this).printConsultation({url: "'.route('admin.consultation.print', $row->id).'"})'
-            ],
             'edit' => [
                 'icon'      => 'simple-icon-pencil',
-                'redirect'  => route('admin.consultation.edit', $row->id)
+                'modal'     => route('admin.queue.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.consultation.destroy', $row->id)
+                'modal'     => route('admin.queue.destroy', $row->id)
             ]
         ];
 
@@ -110,9 +98,26 @@ class ConsultationsDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                     ->orderBy(1)
+                    ->orderBy(5)
                     //->dom('Bfrtip')
                     ->selectStyleSingle()
+//                    ->parameters([
+//                        'language' => [
+//                            'info' => "Showing <b>_START_ to _END_</b> (of _TOTAL_)",
+//                            'infoEmpty' => "No records found",
+//                            'infoFiltered' => "",
+//                            'lengthMenu' => "Items Per Page _MENU_",
+//                            'processing' => "<div class='spinner'>Loading...</div>",
+//                            'loadingRecords' => "Loading data...",
+//                            'zeroRecords' => "Sorry no records found",
+//                            'search' => "_INPUT_",
+//                            'searchPlaceholder' => "Search...",
+//                            'paginate' => [
+//                                'previous' => "<i class='simple-icon-arrow-left'></i>",
+//                                'next' => "<i class='simple-icon-arrow-right'></i>",
+//                            ]
+//                        ],
+//                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),

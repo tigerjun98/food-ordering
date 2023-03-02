@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\QueuesDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Queue;
 use App\Models\User;
@@ -32,26 +33,26 @@ class QueueController extends Controller {
         return html('components.admin.component.card.queue', compact('queue'));
     }
 
-    public function index()
+    public function index(QueuesDataTable $dataTable)
     {
-        if(!request()->role)
-            return redirect()->route('admin.queue.index', 'role='.Queue::RECEPTIONIST);
-
-        $queues = $this->service->index();
-        return view('admin.queue.index', compact('queues'));
+        $filter = $this->model->Filter();
+        return $dataTable->render('admin.queue.datatable', compact('filter'));
     }
 
-    public function show($role)
+    public function show($roleId)
     {
-        return view('admin.queue.index', compact('role'));
-    }
+        if(request()->ajax()){
+            return html('components.admin.page.queue.receptionist',[
+                'queues' => $this->service->index($roleId),
+                'message' => $this->service->getDashboardMessage($roleId)
+            ]);
+        }
 
-    public function listing()
-    {
-        return html('components.admin.page.queue.receptionist',[
-            'queues' => $this->service->index(),
-            'message' => $this->service->getDashboardMessage()
-        ]);
+        if( ! array_key_exists( $roleId, Queue::getRoleList() ) ){
+            abort(404);
+        }
+
+        return view('admin.queue.index', compact('roleId'));
     }
 
     public function serve($queueId)

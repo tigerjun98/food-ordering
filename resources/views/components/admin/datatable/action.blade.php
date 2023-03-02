@@ -7,6 +7,7 @@
                     :icon="$action['icon'] ?? 'simple-icon-eye'"
                     :tooltip="$action['text'] ?? $type"
                     :redirect="$action['redirect'] ?? ''"
+                    :onclick="$action['onclick'] ?? ''"
                 >
                     @if(isset($action['modal']))
                         @slot('openModal')

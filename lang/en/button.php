@@ -27,4 +27,5 @@ return [
     'medicine' => 'Medicine',
     'continue' => 'Continue',
     'on_hold' => 'On hold',
+    'print' => 'Print',
 ];

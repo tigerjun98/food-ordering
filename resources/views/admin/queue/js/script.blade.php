@@ -3,40 +3,43 @@
 
 <script type="module">
 
-    let roleIds = '{{ implode( ',', array_keys( \App\Models\Queue::getRoleList() ) ) }}'.split(',')
-    let requestRole = '{{ request()->role }}'
+    @php
+    use App\Models\Queue;
+    @endphp
+    let roleIds = '{{ implode( ',', array_keys( Queue::getRoleList() ) ) }}'.split(',')
+    let requestRole = '{{ $roleId }}'
 
     if(roleIds.includes(requestRole)){
         setQueueRoleValue(requestRole)
-    } else{
-        $(this).showAlert({ status : 'danger', message: 'Permission denied!' });
     }
 
     Echo.channel('channel-name').listen('.QueueUpdatedEvent',(e) => {
 
-        @if($role == \App\Models\Queue::RECEPTIONIST)
-            if(e.type == '{{ \App\Models\Queue::NEW_QUEUE }}'){
-                addNewQueue(e.queue)
-            }
-            if(e.type == '{{ \App\Models\Queue::CONSULTED }}'){
-                patientConsulted(e.message, e.queue.doctor_id)
-            }
-        @endif
+        let roleId = $('#setMultiroleVal').val();
 
-        @if($role == \App\Models\Queue::DOCTOR)
-            if(e.type == '{{ \App\Models\Queue::NEW_QUEUE }}'){
-                newPatientWaiting(e.message)
-            }
-            if(e.type == '{{ \App\Models\Queue::SERVED }}'){
-                addNewQueue(e.queue)
-            }
-        @endif
-
-        @if($role == \App\Models\Queue::PHARMACY)
-            if(e.type == '{{ \App\Models\Queue::CONSULTED }}'){
-                addNewQueue(e.queue)
-            }
-        @endif
+        switch (roleId){
+            case '{{ Queue::RECEPTIONIST }}':
+                if(e.type == '{{ Queue::NEW_QUEUE }}'){
+                    addNewQueue(e.queue)
+                }
+                if(e.type == '{{ Queue::CONSULTED }}'){
+                    patientConsulted(e.message, e.queue.doctor_id)
+                }
+                break;
+            case '{{ Queue::DOCTOR }}':
+                if(e.type == '{{ Queue::NEW_QUEUE }}'){
+                    newPatientWaiting(e.message)
+                }
+                if(e.type == '{{ Queue::SERVED }}'){
+                    addNewQueue(e.queue)
+                }
+                break;
+            case '{{ Queue::PHARMACY }}':
+                if(e.type == '{{ Queue::CONSULTED }}'){
+                    addNewQueue(e.queue)
+                }
+                break;
+        }
     })
 
     const addNewQueue = async (queue) => {
@@ -51,15 +54,14 @@
     }
 
     const newPatientWaiting = (message) => {
-        let id = {{ \App\Models\Queue::DOCTOR }};
+        let id = {{ Queue::DOCTOR }};
         if( !! document.getElementById(`statusBar-${id}`) ){
             $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
         }
     }
 
     const patientConsulted = (message, doctorId) => {
-        console.log(doctorId)
-        let id = {{ \App\Models\Queue::RECEPTIONIST }};
+        let id = {{ Queue::RECEPTIONIST }};
         if( !! document.getElementById(`statusBar-${id}`) ){
             $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
         }

@@ -24,36 +24,49 @@ class QueueService
         $this->model = new Queue();
     }
 
-    public function getDashboardMessage(): ?string
+    public function getDashboardMessage($roleId): ?string
     {
-        if(request()->role == Queue::RECEPTIONIST){
-            $serving = $this->model->Today()->where('status', Queue::SERVING)->first();
-            if(!$serving){
-                return 'Doctor room are empty!';
-            }
-        }
+        if(!$this->hasPermission($roleId)) return 'Permission denied!';
 
+        switch ($roleId){
+            case Queue::RECEPTIONIST:
+                if($this->countServingPatient() == 0){
+                    return 'Doctor room are empty!';
+                }
+                break;
+            case Queue::DOCTOR:
+                $count = $this->countWaitingPatient();
+                return $count > 0
+                    ? $count.' patient are waiting!'
+                    : 'No more patient waiting!';
+                break;
+        }
         return null;
     }
 
-    public function index(): array
+    public function hasPermission($roleId)
     {
-        $role = request()->role ?? Queue::RECEPTIONIST;
+        return auth()->user()->hasPermissionTo( 'queue.'.$roleId );
+    }
 
+    public function index($roleId): array
+    {
         $queues = [];
         $handleStatus[Queue::RECEPTIONIST] = [Queue::WAITING, Queue::PENDING];
         $handleStatus[Queue::DOCTOR] = [Queue::SERVING, Queue::HOLDING];
         $handleStatus[Queue::PHARMACY] = [Queue::WAITING, Queue::PENDING];
         $handleStatus[Queue::CASHIER] = [Queue::WAITING, Queue::PENDING];
 
-        if(!isset($handleStatus[$role])) $role = Queue::RECEPTIONIST;
+        if(!$this->hasPermission($roleId)) return [];
 
-        foreach ($handleStatus[$role] as $key => $status){
+        if(!isset($handleStatus[$roleId])) $roleId = Queue::RECEPTIONIST;
+
+        foreach ($handleStatus[$roleId] as $key => $status){
 
             $query = $this->model->Today();
             $queues[$status] = $query
                 ->where('status', $status)
-                ->Filter()
+                ->Filter($roleId)
                 ->Priority()
                 ->get();
         }
@@ -151,7 +164,7 @@ class QueueService
 
     public function countWaitingPatient(): int
     {
-        return $this->model->where('status', Queue::WAITING)->Today()->count();
+        return $this->model->where('status', Queue::WAITING)->where('type', Queue::CONSULTATION)->Today()->count();
     }
 
     public function newQueueEvent(Queue $queue)

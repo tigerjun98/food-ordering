@@ -1,4 +1,20 @@
 .alert {
+    border-radius: 4px;
+    box-shadow: 3px 3px 6px rgb(0 0 0 / 16%);
+    font-weight: 600;
+
+    &.alert-info {
+        color: #fff;
+        background-color: var(--info);
+    }
+    &.alert-danger {
+        color: #fff;
+        background-color: var(--danger);
+    }
+    &.alert-primary {
+        color: #fff;
+        background-color: var(--theme-color-1);
+    }
     ul {
         margin-bottom: 0;
     }

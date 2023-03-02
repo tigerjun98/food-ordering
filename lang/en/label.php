@@ -60,5 +60,6 @@ return [
     'password_confirmation' => 'Password_confirmation',
     'nric_or_passport' => 'NRIC / Passport',
     'nationality' => 'Nationality',
-    'dose' => 'Dose'
+    'dose' => 'Dose',
+    'advise' => 'Doctor advise'
 ];

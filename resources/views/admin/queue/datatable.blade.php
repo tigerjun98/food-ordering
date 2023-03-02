@@ -2,9 +2,19 @@
 
 @section('content')
     <x-admin.datatable :dataTable="$dataTable"
-                       :title="'Consultation Management'"
+                       :title="'Queue Management'"
                        :filter="$filter"
     >
+        @slot('extraFilter')
+            <div class="mt-2">
+                <x-admin.form.select
+                    :name="'doctor_id'"
+                    :ajax="route('admin.get-doctor-opt')"
+                    :required="false"
+                ></x-admin.form.select>
+            </div>
+        @endslot
+
         @slot('action')
 {{--            <button class="dropdown-item" onclick="refreshModal('{{route('admin.transaction.deposit.create')}}','first')">--}}
 {{--                <i class="iconsminds-folder-add-- mr-1"></i>--}}
@@ -12,7 +22,7 @@
 {{--            </button>--}}
 
 {{--            <x-admin.component.button--}}
-{{--                :redirect="'{ header: `CREATE`, url: `'.route('admin.medicine.create', '').'` }'"--}}
+{{--                :openModal="'{ header: `CREATE`, url: `'.route('admin.role.create').'` }'"--}}
 {{--                :class="'btn-outline-primary btn-lg top-right-button mr-1'"--}}
 {{--                :lang="'create'"--}}
 {{--                :icon="'iconsminds-folder-add-- mr-1'"--}}
@@ -30,6 +40,4 @@
 {{--        @endslot--}}
 
     </x-admin.datatable>
-
-    @include('admin.consultation.js.script')
 @stop

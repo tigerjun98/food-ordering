@@ -1,3 +1,6 @@
+@php
+    use App\Models\Queue;
+@endphp
 <li class="mb-2 queue-list" data-id="{{ $queue->id }}" id="queueBox-{{ $queue->id }}">
     <div class="card">
         <div class="position-absolute card-top-buttons">
@@ -38,46 +41,45 @@
             </div>
             <div class="mt-2 border-top pt-3 footer">
 
-                @if(request()->role != \App\Models\Queue::PHARMACY)
-                    <x-admin.component.button
-                        :openModal="'{ header: `EDIT`, url: `'.route('admin.queue.edit', $queue->id).'` }'"
-                        :lang="'edit'"
-                        :class="'btn-outline-primary'"
-                    />
-                @endif
+                @if($queue->type == Queue::CONSULTATION)
 
-                @if(request()->role == \App\Models\Queue::RECEPTIONIST)
-                    <x-admin.component.button
-                        :onclick="'servePatient('.$queue->id.')'"
-                        :lang="'serve'"
-                        :class="'btn-primary show-when-first '"
-                    />
-                @endif
+                    @if($queue->status == Queue::WAITING || $queue->status == Queue::PENDING)
+                        <x-admin.component.button
+                            :openModal="'{ header: `EDIT`, url: `'.route('admin.queue.edit', $queue->id).'` }'"
+                            :lang="'edit'"
+                            :class="'btn-outline-primary'"
+                        />
+                        <x-admin.component.button
+                            :onclick="'servePatient('.$queue->id.')'"
+                            :lang="'serve'"
+                            :class="'btn-primary show-when-first '"
+                        />
+                    @endif
 
-                @if(request()->role == \App\Models\Queue::DOCTOR)
-                    @if( $queue->status == \App\Models\Queue::HOLDING && $queue->consultation_id )
+                    @if($queue->status == Queue::SERVING)
+                        <x-admin.component.button
+                            :redirect="route('admin.consultation.edit', $queue->consultation ?? $queue->user_id)"
+                            :lang="'consult'"
+                            :class="'btn-primary show-when-first '"
+                        />
+                    @endif
+
+                    @if($queue->status == Queue::HOLDING)
                         <x-admin.component.button
                             :redirect="route('admin.consultation.edit', $queue->consultation_id)"
                             :lang="'continue'"
                             :class="'btn-primary show-when-first '"
                         />
-                    @else
-                        <x-admin.component.button
-                            :redirect="route('admin.consultation.edit', $queue->user_id)"
-                            :lang="'consult'"
-                            :class="'btn-primary show-when-first '"
-                        />
                     @endif
-                @endif
 
-                @if(request()->role == \App\Models\Queue::PHARMACY)
-                    <x-admin.component.button
-                        :onclick="'servePatient('.$queue->id.')'"
-                        :lang="'completed'"
-                        :class="'btn-outline-primary show-when-first '"
-                    />
+                @elseif($queue->type == Queue::MEDICINE)
 
-                    @if( $queue->consultation_id )
+                    @if($queue->status == Queue::WAITING || $queue->status == Queue::PENDING)
+                        <x-admin.component.button
+                            :onclick="'servePatient('.$queue->id.')'"
+                            :lang="'completed'"
+                            :class="'btn-outline-primary show-when-first '"
+                        />
                         <x-admin.component.button
                             :onclick="'viewMedicine('.$queue->consultation_id.')'"
                             :lang="'medicine'"
@@ -86,6 +88,7 @@
                     @endif
 
                 @endif
+
             </div>
         </div>
     </div>

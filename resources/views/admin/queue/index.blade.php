@@ -22,7 +22,7 @@
                     <?php $permissions[] = 'queue.'.$key ?>
                     @if(auth()->user()->hasPermissionTo( 'queue.'.$key ) )
                         <li class="nav-item">
-                            <a class="nav-link role-link {{ $role == $key ? 'active' : '' }}"
+                            <a class="nav-link role-link {{ $roleId == $key ? 'active' : '' }}"
                                id="tab-{{$key}}"
                                href="javascript:setQueueRoleValue({{$key}})"
                             >
@@ -37,17 +37,15 @@
                 <x-admin.component.status-bar :type="'danger'" :message="'Permission denied!'"/>
             @endif
 
-            <div class="" id="queueListingWrapper">
-
-            </div>
+            <div class="" id="queueListingWrapper"></div>
         </div>
     </div>
 
     <x-admin.layout.search-menu
-        :filter="\App\Models\Queue::Filter()"
+        :filter="\App\Models\Queue::SimpleFilter()"
     >
         @slot('extraFilter')
-            <input type="hidden" name="role" id="setMultiroleVal" value="{{ $role }}">
+            <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
             <div class="mt-2">
                 <x-admin.form.select
                     :name="'doctor_id'"

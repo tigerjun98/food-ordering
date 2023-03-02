@@ -42,6 +42,12 @@ class ConsultationController extends Controller {
         $this->service = new ConsultationService();
     }
 
+    public function print($consultId)
+    {
+        $consultation = $this->model->findOrFail($consultId);
+        return view('admin.consultation.print.index', compact('consultation'));
+    }
+
     public function getMedicineOpt()
     {
         return response()->json(

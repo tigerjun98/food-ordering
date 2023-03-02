@@ -32,7 +32,7 @@
                         @endforeach
                         <div class="mt-2 mb-1 pt-2 border-top">
                             <a href="#" class="d-flex flex-row justify-content-between font-weight-bold">
-                                <p class="mb-0">Total</p>
+                                <p class="mb-0">{{ trans('label.total') }}</p>
                                 <div class="comment-likes">
                                       <span class="post-icon">
                                          {{ $prescription->combination_amount }} {{ $prescription->metric_explain }}

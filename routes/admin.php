@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/get-doctor-opt', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
 
     Route::group(['prefix' => 'consultation', 'as' => 'consultation.'], function () {
+        Route::get('/print/{consultId}', [ConsultationController::class, 'print'])->name('print');
         Route::get('/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('get-opt');
         Route::get('/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('get-medicine-opt');
         Route::get('/get-patient-history/{patientId}', [ConsultationController::class, 'getPatientHistory'])->name('get-patient-history');
@@ -54,7 +55,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
         Route::post('/update-sorting/{queueId}', [QueueController::class, 'updateSorting'])->name('update-sorting');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
-        Route::get('/listing', [QueueController::class, 'listing'])->name('listing');
+        // Route::get('/listing/{roleId}', [QueueController::class, 'listing'])->name('listing');
         Route::get('/get-specific-box/{queueId}', [QueueController::class, 'getSpecificBox'])->name('get-specific-box');
     });
 

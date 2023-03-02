@@ -23,6 +23,11 @@
 
     @slot('footer')
         <x-admin.component.button
+            :class="'btn-primary'"
+            :lang="'print'"
+            :onclick="'$(this).printConsultation({url: `'.route('admin.consultation.print', $consultation->id).'`})'"
+        />
+        <x-admin.component.button
             :class="'btn-outline-primary'"
             :lang="'close'"
             :onclick="'$(this).closeModal({closeLatestModal: true})'"

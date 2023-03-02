@@ -12,11 +12,24 @@
         ]
     ];
 
+      $queueChildren = [
+        'roles' => [
+            'receptionist'  => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-business-woman', 'permission' => 'queue.'.\App\Models\Queue::RECEPTIONIST],
+            'doctor'        => ['route'=> route('admin.queue.show', \App\Models\Queue::DOCTOR), 'icon'=>'iconsminds-stethoscope', 'permission' => 'queue.'.\App\Models\Queue::DOCTOR],
+            'pharmacy'      => ['route'=> route('admin.queue.show', \App\Models\Queue::PHARMACY), 'icon'=>'iconsminds-chemical', 'permission' => 'queue.'.\App\Models\Queue::PHARMACY],
+            'cashier'       => ['route'=> route('admin.queue.show', \App\Models\Queue::CASHIER), 'icon'=>'iconsminds-cash-register-2', 'permission' => 'queue.'.\App\Models\Queue::CASHIER],
+        ],
+        'overview' => [
+            'history'       => ['route'=> route('admin.queue.index'), 'icon'=>'iconsminds-check', 'permission' => 'queue.index'],
+        ]
+    ];
+
     $navs = [
 //        'dashboard'         => ['route'=> route('admin.home'), 'icon'=>'iconsminds-monitor-analytics'],
         'patients'          => ['route'=> route('admin.user.index'), 'icon'=>'iconsminds-conference', 'permission' => 'patient.index'],
         'consultations'     => ['route'=> route('admin.consultation.index'), 'icon'=>'iconsminds-stethoscope', 'permission' => 'consultation.index'],
-        'queues'            => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-loading-2', 'permission' => 'queue.show'],
+//        'queues'            => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-loading-2', 'permission' => 'queue.show'],
+        'queues'            => ['icon'=>'iconsminds-loading-2', 'children' => $queueChildren, 'permission' => 'queue.tab'],
         'settings'          => ['icon' => 'iconsminds-gears', 'children' => $settingChildren, 'permission' => 'setting.index'],
     ];
 
@@ -41,10 +54,10 @@
 
     function hasPermission($data): bool
     {
-     if( !isset($data['permission']) || ( isset($data['permission']) &&  auth()->user()->hasPermissionTo( $data['permission'] ) ) ){
+        if( !isset($data['permission']) || ( isset($data['permission']) &&  auth()->user()->hasPermissionTo( $data['permission'] ) ) ){
          return true;
-     }
-     return false;
+        }
+        return false;
     }
 
 @endphp
@@ -71,13 +84,12 @@
         <div class="scroll" id="sub-menu">
             @foreach($navs as $name => $nav)
                 @if(isset($nav['children']))
-                    <ul class="list-unstyled" data-link="{{ $name }}">
+                    <ul class="list-unstyled" data-link="{{ $name }}" id="innerLevelMenuParent-{{ $name }}">
                         @foreach($nav['children'] as $childrenName => $children)
-                                <x-admin.component.module.nav.dropdown-link
-                                    :name="$childrenName"
-                                    :children="$children"
-                                />
-
+                            <x-admin.component.module.nav.dropdown-link
+                                :name="$childrenName"
+                                :children="$children"
+                            />
                         @endforeach
                     </ul>
                 @endif

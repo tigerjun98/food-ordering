@@ -102,7 +102,7 @@
                     <div class="separator mt-5 mb-3"></div>
                     <div class="d-flex mt-1 mb-4">
                         <button type="button" class="btn btn-primary mb-1 text-capitalize" onclick="refreshDataTable()">{{ __('common.filter') }}</button>
-                        <button type="button" class="btn btn-light-primary mb-1 text-capitalize" onclick="location.href='{{ url()->full() }}';">{{ __('common.reset') }}</button>
+                        <button type="button" class="btn btn-light-primary mb-1 text-capitalize" onclick="location.href='/{{ request()->path() }}';">{{ __('common.reset') }}</button>
                     </div>
                 </div>
             </form>

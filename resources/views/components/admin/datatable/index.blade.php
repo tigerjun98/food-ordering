@@ -51,6 +51,7 @@
 @if(isset($filter) && count($filter) > 0)
     <x-admin.layout.search-menu
         :filter="$filter"
+        :extraFilter="$extraFilter ?? null"
     />
 @endif
 

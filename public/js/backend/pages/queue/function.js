@@ -32,24 +32,21 @@ const deleteQueue = async (queueId) => {
 }
 
 function refreshDataTable() {
+    let roleId = $('#setRoleVal').val()
     let filterForm = $('#js-datatable-filter-form').serialize()
-    window.history.replaceState({ id: "100" }, "Filter", "?"+filterForm);
+    window.history.replaceState({ id: "100" }, "Filter", `/admin/queue/show/${roleId}?${filterForm}`);
     $('#queueListingWrapper').setHtml({
-        url: `/admin/queue/listing?${filterForm}`
+        url: `/admin/queue/show/${roleId}?${filterForm}`
     })
 }
 
 const setQueueRoleValue = (roleId) => {
-
     const refs = document.getElementsByClassName(`role-link`);
     Array.prototype.forEach.call(refs, function (el) { // loop classes
         $(el).removeClass('active')
     });
-
-    window.history.replaceState({ id: "100" }, "Filter", `/admin/queue/show/${roleId}`);
-
     $(`#tab-${roleId}`).addClass('active')
-    $('#setMultiroleVal').val(roleId).trigger('change')
+    $('#setRoleVal').val(roleId)
     refreshDataTable();
 }
 
