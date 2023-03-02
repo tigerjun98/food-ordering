@@ -6,13 +6,18 @@
              <div class="mb-0">
                 <h1 class="pr-3 text-capitalize">Queue management</h1>
                 <div class="top-right-button-container">
-                    <button onclick="location.href='{{ url()->previous() }}';"
-                            type="button"
-                            class="btn btn-outline-primary btn-lg top-right-button mr-1 text-capitalize"
-                    >
-                        <i class="iconsminds-left-1 mr-1"></i>
-                        {{ __('common.back') }}
-                    </button>
+
+                    <x-admin.component.button
+                        :redirect="url()->previous()"
+                        :class="'btn-outline-primary btn-lg top-right-button'"
+                        :icon="'iconsminds-left-1'"
+                        :text="trans('button.back')"
+                    />
+                    <x-admin.component.button
+                        :onclick="'$(this).openModal({url: `'.route('admin.queue.create').'`})'"
+                        :class="'btn-primary btn-lg top-right-button'"
+                        :text="trans('button.create')"
+                    />
                 </div>
             </div>
 

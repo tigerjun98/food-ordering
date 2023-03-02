@@ -18,10 +18,12 @@ use function PHPUnit\Framework\throwException;
 class QueueService
 {
     private Queue $model;
+    private QueueEventService $event;
 
     public function __construct()
     {
         $this->model = new Queue();
+        $this->event = new QueueEventService();
     }
 
     public function getDashboardMessage($roleId): ?string
@@ -74,10 +76,6 @@ class QueueService
         return $queues;
     }
 
-    public function serveEvent(Queue $queue)
-    {
-        QueueUpdatedEvent::dispatch(Queue::SERVED, '', $queue );
-    }
 
     public function countServingPatient(): int
     {
@@ -97,7 +95,7 @@ class QueueService
         $queue->save();
 
         if($queue->type == Queue::CONSULTATION){
-            $this->serveEvent($queue);
+             $this->event->serve($queue);
         }
         return $this->model->find($queue->id);
     }
@@ -121,6 +119,7 @@ class QueueService
             ->first();
 
         if($queue){
+
             $queue->consultation_id = $consultation->id;
 
             if(intval(request()->on_hold) == 1){
@@ -130,17 +129,12 @@ class QueueService
                 $queue->type = Queue::MEDICINE;
             }
             $queue->save();
-            $this->consultedEvent($queue);
+            $this->event->consulted($queue);
 
             return $queue;
         }
 
         return false;
-    }
-
-    public function consultedEvent(Queue $queue)
-    {
-        QueueUpdatedEvent::dispatch(Queue::CONSULTED, 'Next patient pls!', $queue->with('consultation')->first());
     }
 
     public function onQueue($request): bool
@@ -167,12 +161,6 @@ class QueueService
         return $this->model->where('status', Queue::WAITING)->where('type', Queue::CONSULTATION)->Today()->count();
     }
 
-    public function newQueueEvent(Queue $queue)
-    {
-        $count = $this->countWaitingPatient();
-        QueueUpdatedEvent::dispatch(Queue::NEW_QUEUE, $count.' patient are waiting!', $queue);
-    }
-
     public function queueExist($queueId)
     {
         return $this->model->find($queueId);
@@ -183,7 +171,7 @@ class QueueService
         $newQueue = false;
 
         if( ! $this->queueExist( $request['id'] ) ){
-            $this->patientOnQueue($request['user_id']) ? throwErr('Patient on queue!') : '';
+            $this->patientOnQueue($request['user_id']) ? throwErr('Patient on queue!') : null;
             $newQueue = true;
         }
 
@@ -200,7 +188,7 @@ class QueueService
         $request['appointment_date'] = Carbon::now();
 
         $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
-        if($newQueue) $this->newQueueEvent($queue);
+        if($newQueue) $this->event->newQueue($queue, $this->countWaitingPatient());
 
         return $queue;
     }

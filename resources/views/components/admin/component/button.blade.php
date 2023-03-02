@@ -46,7 +46,7 @@
 >
 
     @if(isset($icon))
-        <i class="{{ $icon }}"></i>
+        <i class="mr-1 {{ $icon }}"></i>
     @endif
 
     @if(isset($lang))

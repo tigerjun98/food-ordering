@@ -21,6 +21,8 @@ class QueueUpdatedEvent implements ShouldBroadcast {
     public string $type;
 
     public function __construct(String $type, String $message, Queue $queue) {
+
+
         $this->type = $type;
         $this->message = $message;
         $this->queue = $queue;

@@ -11,6 +11,7 @@
     $attributes['name'] = $name;
     $attributes['type'] = isset($type) && !$isDate ? $type : 'text';
     $attributes['id'] = isset($id) ? $id : $name;
+    $attributes['autocomplete'] = 'off';
 
     $label = isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) );
     $label = str_replace('[]', '', $label);
@@ -28,6 +29,10 @@
 
     if(isset($value)){
          $attributes['value'] = $value;
+    }
+
+    if(isset($disabled) && !$disabled){
+        unset($attributes['disabled']);
     }
 
     unset($attributes['icon-end']);

@@ -48,7 +48,6 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('get-opt');
         Route::get('/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('get-medicine-opt');
         Route::get('/get-patient-history/{patientId}', [ConsultationController::class, 'getPatientHistory'])->name('get-patient-history');
-        Route::get('/get-patient-card/{patientId}', [ConsultationController::class, 'getPatientCard'])->name('get-patient-card');
     });
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
@@ -57,6 +56,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
         // Route::get('/listing/{roleId}', [QueueController::class, 'listing'])->name('listing');
         Route::get('/get-specific-box/{queueId}', [QueueController::class, 'getSpecificBox'])->name('get-specific-box');
+    });
+
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::get('/search-patient', [UserController::class, 'searchPatient'])->name('search');
     });
 
     Route::name('user.')->group(function () {

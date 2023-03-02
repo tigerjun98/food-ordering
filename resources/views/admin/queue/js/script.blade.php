@@ -15,7 +15,7 @@
 
     Echo.channel('channel-name').listen('.QueueUpdatedEvent',(e) => {
 
-        let roleId = $('#setMultiroleVal').val();
+        let roleId = $('#setRoleVal').val();
 
         switch (roleId){
             case '{{ Queue::RECEPTIONIST }}':

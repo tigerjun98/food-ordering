@@ -51,25 +51,25 @@ class QueueTest extends TestCase
 //        $response->assertStatus(200);
 //    }
 
-//    public function test_add_new_patient_event()
-//    {
-//        $queue = Queue::factory()->create();
-//        $waitingCount = (new QueueService())->countWaitingPatient();
-//        QueueUpdatedEvent::dispatch( Queue::NEW_QUEUE, $waitingCount.' patient are waiting!', $queue);
-//    }
-
-    public function test_patient_consulted_event()
+    public function test_add_new_patient_event()
     {
-        $queue = Queue::whereNotNull('consultation_id')->first();
-
-        if(!$queue){
-            $consultationId = Consultation::all()->random()->id;
-            $queue = Queue::Today()->first();
-            $queue->consultation_id = $consultationId;
-            $queue->save();
-        }
-
-        QueueUpdatedEvent::dispatch( Queue::CONSULTED, 'New patient pls', $queue);
-
+        $queue = Queue::factory()->create();
+        $waitingCount = (new QueueService())->countWaitingPatient();
+        QueueUpdatedEvent::dispatch( Queue::NEW_QUEUE, $waitingCount.' patient are waiting!', $queue);
     }
+
+//    public function test_patient_consulted_event()
+//    {
+//        $queue = Queue::whereNotNull('consultation_id')->first();
+//
+//        if(!$queue){
+//            $consultationId = Consultation::all()->random()->id;
+//            $queue = Queue::Today()->first();
+//            $queue->consultation_id = $consultationId;
+//            $queue->save();
+//        }
+//
+//        QueueUpdatedEvent::dispatch( Queue::CONSULTED, 'New patient pls', $queue);
+//
+//    }
 }

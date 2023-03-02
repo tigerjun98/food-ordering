@@ -63,9 +63,8 @@ class QueueController extends Controller {
 
     public function create()
     {
-        $patient = User::findOrFail(request()->user_id);
         return html('admin.queue.form.create',[
-            'patient' => $patient,
+            'patient' => User::find(request()->user_id),
             'data' => []
         ]);
     }
