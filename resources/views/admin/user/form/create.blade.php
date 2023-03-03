@@ -79,10 +79,14 @@
         </div>
 
             <div class="row">
+                @if(request()->nric)
+                    <input type="hidden" name="nric" value="{{ request()->nric }}">
+                @endif
                 <x-admin.form.text
                     :value="$data ? $data->nric : (request()->nric ?? null)"
                     :col="'md-6'"
                     :name="'nric'"
+                    :disabled="request()->nric ?? false"
                     :label="trans('label.nric_or_passport')"
                 />
                 <x-admin.form.text
@@ -141,9 +145,8 @@
 
     @endslot
 
-    @if(isset(request()->jsAction))
-        @slot('js')
-            {{ request()->jsAction }}
-        @endslot
-    @endif
+    @slot('script')
+        {{ request()->jsAction ?? '' }}
+    @endslot
+
 </x-admin.component.modal>

@@ -30,6 +30,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded= []; // remove this replaces with $fillable to strict input col
     protected $primaryKey = 'id';
+    protected $appends = ['full_name'];
     /**
      * The attributes that are mass assignable.
      *

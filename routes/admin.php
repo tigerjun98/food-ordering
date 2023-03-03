@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('get-opt');
         Route::get('/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('get-medicine-opt');
         Route::get('/get-patient-history/{patientId}', [ConsultationController::class, 'getPatientHistory'])->name('get-patient-history');
+        Route::get('/get-patient-card/{patientId}', [ConsultationController::class, 'getPatientCard'])->name('get-patient-card');
     });
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {

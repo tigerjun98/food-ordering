@@ -15,13 +15,16 @@
 
 <script type="text/javascript">
 
-    function openQueueModal(url){
-        console.log('123');
+    function openQueueModal(res){
+        let url = '{{ route('admin.queue.create', 'user_id=:userId') }}'.replace( ':userId', res.data.id )
+        console.log(url)
+        $(this).openModal({ url })
     }
 
     function createNewPatient(){
-        let url = '{{ route('admin.user.create', 'nric=:nric&jsAction=:script') }}'.replace(':nric', $('#queryNric').val())
-        url = url.replace(':script', openQueueModal());
+        let url = '{{ route('admin.user.create', 'jsAction=:script&nric=:nric') }}'.replace( 'amp;', '' )
+        url = url.replace( ':nric', $('#queryNric').val() );
+        url = url.replace( ':script', 'openQueueModal(res)' );
         $(this).openModal({url, refresh: true})
     }
 
@@ -32,6 +35,7 @@
     function handlePatientExists(patient) {
         $('#user_id').val(patient.id)
         $('#nric').val(patient.nric)
+        $('#full_name').val(patient.full_name)
         handleQueueInfo()
     }
 

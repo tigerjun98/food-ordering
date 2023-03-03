@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as SpatieRole;
 use function PHPUnit\Framework\throwException;
@@ -31,38 +32,26 @@ class RoleService
     public function store(array $request): Collection
     {
         $spatieRole = $this->role->findOrCreate($request['name'], self::GUARD);
-        self::resetRolePermission($spatieRole);
 
-        if(isset($request['role'])){
-            // sync permission
-            foreach ($request['role'] as $name => $role) {
-                if($role == 1){
-                    $spatieRole->givePermissionTo(Permission::findOrCreate($name.'.*', self::GUARD));
+        $permissions = [];
+        foreach(Lang::get('permission') as $role => $permission){
+
+            if( isset( $request['role'][$role] ) && $request['role'][$role] == 1 ){ // IF Full Permission
+                $permission = Permission::findOrCreate($role.'.*', self::GUARD);
+                $permissions[] = $permission->name;
+
+            } elseif( isset( $request['permission'][$role] ) ) {
+
+                foreach ( $request['permission'][$role] as $name => $value ) {
+                    if( $value == 1 ){
+                        $permission = Permission::findOrCreate($role.'.'.$name, self::GUARD);
+                        $permissions[] = $permission->name;
+                    }
                 }
             }
         }
-
-
-
-        foreach ($request['permission'] as $role => $permission) {
-            foreach ($permission as $name => $value) {
-                $allChecked = $request['role'][$role] ?? 0;
-                if($value && $allChecked != 1){
-                    $name = $role . '.' . $name;
-                    $spatieRole->givePermissionTo(Permission::findOrCreate($name, self::GUARD));
-                }
-            }
-        }
-
+        $spatieRole->syncPermissions($permissions);
         return $spatieRole->getAllPermissions();
-    }
-
-    public function resetRolePermission(SpatieRole $spatieRole)
-    {
-        // reset all permission for the role
-        foreach ($spatieRole->getAllPermissions() as $permission) {
-            $permission->delete();
-        }
     }
 
     public function delete(Role $role)

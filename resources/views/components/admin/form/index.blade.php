@@ -87,7 +87,6 @@
         if(res.html){
             $('#modalWrapper').openModal({ html: res.html, refresh: true, header: res.title??null});
         }
-
         {{ $script ?? '' }}
 
     });

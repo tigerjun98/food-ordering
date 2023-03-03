@@ -48,7 +48,7 @@ class UserStoreRequest extends FormRequest
             'name_en'                           => ['required', 'string'],
             'name_cn'                           => ['nullable', 'string'],
             'nric'                              => ['required', 'string'],
-            'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
+            'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('users')->ignore(request()->id, 'id')],
             'email'                             => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
             'occupation'                        => ['nullable', 'string'],
             'dob'                               => ['nullable', 'date_format:Y-m-d', 'before:'.Carbon::now()],

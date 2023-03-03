@@ -51,8 +51,8 @@ class UserController extends Controller {
 
     public function store(UserStoreRequest $request)
     {
-        (new UserService())->store($request->validated());
-        return makeResponse(200);
+        $user = (new UserService())->store($request->validated());
+        return makeResponse(200, null, $user);
     }
 
     public function delete($userId)

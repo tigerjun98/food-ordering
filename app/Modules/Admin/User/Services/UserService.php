@@ -8,22 +8,16 @@ use function PHPUnit\Framework\throwException;
 
 class UserService
 {
-    private User $user;
+    private User $model;
 
     public function __construct()
     {
-        $this->user = new User();
+        $this->model = new User();
     }
 
     public function store(array $request): User
     {
-        $user = $this->user->find($request['id']);
-
-        $user
-            ? $user->update($request)
-            : User::create($request);
-
-        return $this->user->find($request['id']);
+        return $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
     }
 
     public function delete(User $user)

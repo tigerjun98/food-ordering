@@ -50,6 +50,8 @@ class AdminAccountService
 
     public function assignRoles(Admin $admin, array $roleIds = []): Collection
     {
+        $admin->roles()->detach();
+
         foreach ($roleIds as $roleId){
             $role = Role::findById($roleId);
             $admin->assignRole($role);

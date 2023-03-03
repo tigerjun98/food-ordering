@@ -116,7 +116,7 @@ class Admin extends Authenticatable
 
     public static function Filter(){
         return [
-            'name'      => ['type' => 'text', 'label'=> 'username'],
+            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'email'     => ['type' => 'text', 'label'=> 'email' ],
             'phone'     => ['type' => 'text', 'label'=> 'phone' ],
         ];
@@ -124,6 +124,13 @@ class Admin extends Authenticatable
 
     public function scopeFilter($query)
     {
+        if(request()->filled('full_name')){
+            $query->where(function ($q) {
+                $q->where('name_en', 'like', '%'.request()->full_name.'%')
+                    ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
         if(request()->filled('search_all'))
             $query = $this->searchAll($query, ['nric', 'name_en', 'name_cn', 'phone', 'email']);
 

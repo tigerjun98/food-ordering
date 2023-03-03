@@ -31,8 +31,7 @@ class RolesDataTable extends DataTable
                 return dateFormat($row->created_at, 'r');
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
-            ->orderColumn('created_at', 'desc');
+            })->rawColumns(['image', 'action']);
     }
 
     public function getColumns(): array
@@ -87,7 +86,7 @@ class RolesDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
+                    ->orderBy(2)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),

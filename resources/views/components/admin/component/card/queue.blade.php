@@ -66,7 +66,7 @@
 
                     @if($queue->status == Queue::HOLDING)
                         <x-admin.component.button
-                            :redirect="route('admin.consultation.edit', $queue->consultation_id)"
+                            :redirect="route('admin.consultation.edit', $queue->consultation_id ?? $queue->user_id)"
                             :lang="'continue'"
                             :class="'btn-primary show-when-first '"
                         />

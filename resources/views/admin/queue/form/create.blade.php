@@ -38,7 +38,7 @@
             $patient = $data ? $data->patient : ($patient ?? null)
         @endphp
 
-        <input type="hidden" name="user_id" id="user_id" value="{{ $patient->id ?? null }}" />
+        <input type="hidden" name="user_id" id="user_id" value="{{ request()->user_id ?? ($patient ? $patient->id : null) }}" />
 
         <div class="hide-box" id="patientSearch">
             <x-admin.component.module.queue.user-search />
@@ -56,6 +56,14 @@
                 :value="$patient->nric ?? null"
                 :disabled="true"
             />
+
+            <x-admin.form.text
+                :label="trans('label.full_name')"
+                :name="'full_name'"
+                :value="$patient->full_name ?? null"
+                :disabled="true"
+            />
+
 
             <div class="row">
                 <x-admin.form.select

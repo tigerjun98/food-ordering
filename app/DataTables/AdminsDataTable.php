@@ -24,7 +24,9 @@ class AdminsDataTable extends DataTable
         $query = Admin::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->addColumn('full_name', function($row){
+            ->editColumn('updated_at', function($row){
+                return dateFormat($row->updated_at, 'r');
+            })->addColumn('full_name', function($row){
                 return $row->fullName;
             })->addColumn('action', function($row){
                 return $this->action($row);
@@ -32,8 +34,7 @@ class AdminsDataTable extends DataTable
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
-            ->orderColumn('created_at', 'desc');
+            })->rawColumns(['image', 'action']);
     }
 
     public function getColumns(): array
@@ -41,7 +42,9 @@ class AdminsDataTable extends DataTable
         return [
             Column::make('full_name'),
             Column::make('phone'),
+            Column::make('email'),
             Column::make('gender'),
+            Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -88,7 +91,7 @@ class AdminsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0)
+                    ->orderBy(4)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),

@@ -31,7 +31,7 @@ class Role extends Model
 
     public static function Filter(){
         return [
-            'name_cn'     => ['type' => 'text', 'label' => 'Full name' ],
+            'name'     => ['type' => 'text', 'label' => 'name' ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }

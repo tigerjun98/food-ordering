@@ -61,5 +61,5 @@ return [
     'nric_or_passport' => 'NRIC / Passport',
     'nationality' => 'Nationality',
     'dose' => 'Dose',
-    'advise' => 'Doctor advise'
+    'advise' => 'Doctor advise',
 ];
