@@ -10,6 +10,7 @@
             </button>
         </div>
     </div>
+    <small>Eg. xxxxxxxxxxxx (No dash *-* required)</small>
     <span>{{ trans('label.nric_or_passport') }}</span>
 </label>
 
@@ -17,7 +18,6 @@
 
     function openQueueModal(res){
         let url = '{{ route('admin.queue.create', 'user_id=:userId') }}'.replace( ':userId', res.data.id )
-        console.log(url)
         $(this).openModal({ url })
     }
 

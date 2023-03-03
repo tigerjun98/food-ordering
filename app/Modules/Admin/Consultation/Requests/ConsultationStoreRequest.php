@@ -2,11 +2,10 @@
 
 namespace App\Modules\Admin\Consultation\Requests;
 
-use App\Models\Order;
 use App\Models\Prescription;
 use App\Models\User;
-use App\Modules\Users\Account\Rules\MatchOldPassword;
-use App\Rules\RequiredMedicine;
+use App\Modules\Admin\Consultation\Rules\QuantityChecker;
+use App\Modules\Admin\Consultation\Rules\RequiredMedicine;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -44,7 +43,7 @@ class ConsultationStoreRequest extends FormRequest
             'quantity.*.*'                      => ['nullable', 'integer'],
             'time_per_day.*'                    => ['nullable', 'integer'],
             'dose_per_time.*'                   => ['nullable', 'integer'],
-            'combination_amount.*'              => ['nullable', 'integer'],
+            'combination_amount.*'              => ['nullable', 'integer', new QuantityChecker()],
             'dose_daily.*'                      => ['nullable', 'integer'],
             'metric.*'                          => ['nullable', 'in:'.arrayToString(Prescription::getMetricList())],
             'diagnoses.*'                       => ['nullable', 'regex:/^[a-z0-9 ]*$/i'],
@@ -56,6 +55,13 @@ class ConsultationStoreRequest extends FormRequest
             'symptom'                           => ['required', 'string'],
             'internal_remark'                   => ['nullable', 'string'],
             'on_hold'                           => ['nullable', 'boolean'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'combination_amount.*.min' => 'Total quantity cannot be 0',
         ];
     }
 }

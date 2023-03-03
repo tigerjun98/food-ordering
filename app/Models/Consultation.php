@@ -113,7 +113,7 @@ class Consultation extends Model
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'nric'      => ['type' => 'text', 'label'=> 'nric', 'default' => false],
+//            'nric'      => ['type' => 'text', 'label'=> 'nric', 'default' => false],
             'ref_id'    => ['type' => 'text', 'label'=> 'ref_id'],
             'created_at'    => ['type' => 'date', 'label'=> 'created_at' ],
 //            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
@@ -136,13 +136,13 @@ class Consultation extends Model
             });
         }
 
-        if(request()->filled('nric')){
-            $query->whereHas('patient', function ($q) {
-                $q->where(function ($q) {
-                    $q->where('nric', request()->nric);
-                });
-            });
-        }
+//        if(request()->filled('nric')){
+//            $query->whereHas('patient', function ($q) {
+//                $q->where(function ($q) {
+//                    $q->where('nric', request()->nric);
+//                });
+//            });
+//        }
 
 
         return $this->searchAll(

@@ -78,7 +78,7 @@ class Option extends Model
         }
 
         return $this->searchAll(
-            $this->parentFilterTrait($query), ['name_en', 'name_cn']
+            $this->parentFilterTrait($query), []
         );
     }
 }

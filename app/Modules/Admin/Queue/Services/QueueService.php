@@ -95,7 +95,7 @@ class QueueService
         $queue->save();
 
         if($queue->type == Queue::CONSULTATION){
-             $this->event->serve($queue);
+             $this->event->serve($queue, $this->countWaitingPatient());
         }
         return $this->model->find($queue->id);
     }
@@ -223,11 +223,56 @@ class QueueService
         return $higherQueuePriority - $priorityInBetween;
     }
 
+    public function notifyReceptionist(Queue $queue)
+    {
+        $msg = '';
+        if( $this->countServingPatient() == 0 ){
+            $msg = 'Next patient pls!'; // Notified receptionist Doctor room are empty
+        }
+
+        $this->event->consulted($queue, $msg);
+    }
+
+    public function notifyDoctor(Queue $queue)
+    {
+        $count = $this->countWaitingPatient();
+        $msg = '';
+        if( $count > 0 ){
+            $msg = $count.' patient are waiting!'; // Notified receptionist Doctor room are empty
+        }
+
+        $this->event->newQueue($queue, $msg);
+    }
+
+    public function handleSortingEvent(Queue $oldQueue, Queue $queue)
+    {
+        if($oldQueue->status == Queue::PENDING && $queue->status == Queue::WAITING){
+            $this->notifyDoctor($queue);
+        }
+
+        if($oldQueue->status == Queue::WAITING && $queue->status == Queue::PENDING){
+            $this->notifyDoctor($queue);
+        }
+
+        if($oldQueue->status == Queue::HOLDING && $queue->status == Queue::SERVING){
+            $this->notifyReceptionist($queue);
+        }
+
+        if($queue->status == Queue::HOLDING){
+            $this->notifyReceptionist($queue);
+        }
+    }
+
     public function setSorting(Queue $queue, array $request): ?Queue
     {
+        $oldQueue = Queue::find($queue->id);
+
         $queue->status = $request['status'];
         $queue->priority = $this->getBetweenQueuePriority($request);
         $queue->save();
+
+        $this->handleSortingEvent($oldQueue, $queue);
+
         return $queue;
     }
 

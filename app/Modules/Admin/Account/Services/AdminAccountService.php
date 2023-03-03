@@ -33,7 +33,12 @@ class AdminAccountService
 
     public function store(array $request): Admin
     {
+        if( !isset($request['roles']) || count($request['roles']) < 1){
+            throwErr('Roles is required!');
+        }
+
         $data = array_except( $request, ['roles', 'password'] );
+        $data['clinic_id'] = auth()->user()->clinic_id;
         $admin = $this->model->updateOrCreate([ 'id' => $request['id'] ], $data);
         $this->updatePassword($admin, $request);
         $this->assignRoles($admin, $request['roles']);

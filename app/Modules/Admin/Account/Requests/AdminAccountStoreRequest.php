@@ -45,7 +45,6 @@ class AdminAccountStoreRequest extends FormRequest
 
     public function rules()
     {
-
         return [
             'id'        => ['integer'],
             'name_en'   => ['required', 'string'],

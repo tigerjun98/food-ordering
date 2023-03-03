@@ -32,11 +32,13 @@
                 }
                 if(e.type == '{{ Queue::SERVED }}'){
                     addNewQueue(e.queue)
+                    newPatientWaiting(e.message)
                 }
                 break;
             case '{{ Queue::PHARMACY }}':
                 if(e.type == '{{ Queue::CONSULTED }}'){
                     addNewQueue(e.queue)
+                    // patientConsulted(e.message, e.queue.doctor_id)
                 }
                 break;
         }
@@ -55,15 +57,22 @@
 
     const newPatientWaiting = (message) => {
         let id = {{ Queue::DOCTOR }};
-        if( !! document.getElementById(`statusBar-${id}`) ){
-            $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
-        }
+        appendMsg(id, message)
     }
 
     const patientConsulted = (message, doctorId) => {
         let id = {{ Queue::RECEPTIONIST }};
+        appendMsg(id, message)
+    }
+
+    const appendMsg = (id, message) => {
+
         if( !! document.getElementById(`statusBar-${id}`) ){
-            $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
+            if(message.length > 0){
+                $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
+            } else{
+                $(`#statusBar-${id}`).hide();
+            }
         }
     }
 

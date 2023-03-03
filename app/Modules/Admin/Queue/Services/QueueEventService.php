@@ -24,19 +24,19 @@ class QueueEventService
         // $this->service = new QueueService();
     }
 
-    public function serve(Queue $queue)
+    public function serve(Queue $queue, $waitingPatient)
     {
-        QueueUpdatedEvent::dispatch(Queue::SERVED, '', $queue );
+        QueueUpdatedEvent::dispatch(Queue::SERVED, $waitingPatient.' patient are waiting!', $queue );
     }
 
-    public function newQueue(Queue $queue, $waitingPatient)
+    public function newQueue(Queue $queue, $msg = '')
     {
-        QueueUpdatedEvent::dispatch(Queue::NEW_QUEUE, $waitingPatient.' patient are waiting!', $queue);
+        QueueUpdatedEvent::dispatch(Queue::NEW_QUEUE, $msg, $queue);
     }
 
-    public function consulted(Queue $queue)
+    public function consulted(Queue $queue, $msg = '')
     {
-        QueueUpdatedEvent::dispatch(Queue::CONSULTED, 'Next patient pls!', $queue);
+        QueueUpdatedEvent::dispatch(Queue::CONSULTED, $msg, $queue);
     }
 
 

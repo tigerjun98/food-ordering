@@ -10,8 +10,8 @@
 
                         <p class="white mb-0 text-semi-muted">
                             Admin login only.
-                            <br>If you are not a member, please
-                            <a href="{{ route('login') }}" class="white">login here</a>.
+                            <br>If you are not a member, please contact admin.
+{{--                            <a href="{{ route('login') }}" class="white">login here</a>.--}}
                         </p>
                     </div>
                     <div class="form-side alert-box">

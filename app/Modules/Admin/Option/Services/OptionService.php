@@ -24,10 +24,11 @@ class OptionService
     public function createIfNotExists(array $items, $type)
     {
         $arr = [];
+
         foreach ($items as $item){
             if(!$this->model->find($item)){
                 $item = $this->store([
-                    'type' =>  $type,
+                    'type' => substr($type, 0, -1), // remove last 's' as type no 's' allow
                     'name_'.app()->getLocale() => $item
                 ]);
                 $item = $item->id;

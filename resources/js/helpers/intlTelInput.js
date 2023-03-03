@@ -11,12 +11,12 @@ $.fn.intlTelInputForm = function(options) {
         initialCountry: "auto",
         autoPlaceholder: "polite",
         hiddenInput: options.name,
-        // geoIpLookup: function (callback) {
-        //     $.get('https://ipinfo.io', function () {
-        //     }, "jsonp").always(function (resp) {
-        //         var countryCode = (resp && resp.country) ? resp.country : "my";
-        //         callback(countryCode);
-        //     });
-        // },
+        geoIpLookup: function (callback) {
+            $.get('https://ipinfo.io', function () {
+            }, "jsonp").always(function (resp) {
+                var countryCode = (resp && resp.country) ? resp.country : "my";
+                callback(countryCode);
+            });
+        },
     });
 }

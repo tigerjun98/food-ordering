@@ -38,8 +38,7 @@ class OptionsDataTable extends DataTable
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action', 'description'])
-            ->orderColumn('created_at', 'desc');
+            })->rawColumns(['image', 'action', 'description']);
     }
 
     public function getColumns(): array

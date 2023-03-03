@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace App\Modules\Admin\Consultation\Rules;
 
 use App\Models\Medicine;
 use Illuminate\Contracts\Validation\Rule;
