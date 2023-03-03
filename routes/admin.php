@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-        Route::get('/search-patient', [UserController::class, 'searchPatient'])->name('search');
+        Route::get('/search-patient', [UserController::class, 'searchPatient'])->name('search-patient');
     });
 
     Route::name('user.')->group(function () {

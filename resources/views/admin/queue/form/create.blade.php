@@ -40,18 +40,23 @@
 
         <input type="hidden" name="user_id" id="user_id" value="{{ $patient->id ?? null }}" />
 
-        @if(!$patient)
-            <x-admin.component.module.queue.user-registration />
-        @else
+        <div class="hide-box" id="patientSearch">
+            <x-admin.component.module.queue.user-search />
+            <x-admin.component.button
+                :text="trans('button.create')"
+                :class="'patient-not-exists hide btn-primary'"
+                :onclick="'createNewPatient()'"
+            />
+        </div>
+
+        <div class="hide-box" id="patientQueueInfo">
             <x-admin.form.text
                 :label="trans('label.nric_or_passport')"
                 :name="'nric'"
                 :value="$patient->nric ?? null"
-                :disabled="$patient ?? false"
+                :disabled="true"
             />
-        @endif
 
-        <div class="" id="patientQueueInfo">
             <div class="row">
                 <x-admin.form.select
                     :multiple="true"
@@ -86,24 +91,28 @@
             </div>
         </div>
 
-        <script>
-
-            const handleQueueInfo  = () => {
-
-                if( patientExists() ){
-                    $('#patientQueueInfo').show().slideDown();
-                } else{
-                    $('#patientQueueInfo').hide();
-                }
-            }
-
-            const patientExists = () => {
-
+        <script type="text/javascript">
+            function patientExists() {
                 if( $('#user_id').val() ){
                     return true;
                 }
-
                 return false;
+            }
+
+            function hideRelatedBox(){
+                const refs = document.getElementsByClassName(`hide-box`);
+                Array.prototype.forEach.call(refs, function (el) { // loop classes
+                    $(el).hide();
+                });
+            }
+
+            function handleQueueInfo() {
+                hideRelatedBox()
+                if( patientExists() ){
+                    $('#patientQueueInfo').show().slideDown();
+                } else{
+                    $('#patientSearch').show().slideDown();
+                }
             }
 
             handleQueueInfo()

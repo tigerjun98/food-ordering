@@ -80,7 +80,7 @@
 
             <div class="row">
                 <x-admin.form.text
-                    :data="$data"
+                    :value="$data ? $data->nric : (request()->nric ?? null)"
                     :col="'md-6'"
                     :name="'nric'"
                     :label="trans('label.nric_or_passport')"
@@ -140,4 +140,10 @@
             />
 
     @endslot
+
+    @if(isset(request()->jsAction))
+        @slot('js')
+            {{ request()->jsAction }}
+        @endslot
+    @endif
 </x-admin.component.modal>

@@ -26,7 +26,11 @@ class UserController extends Controller {
     public function searchPatient()
     {
         $user = User::where('nric', request()->nric)->first();
-        return makeResponse(200, 'Patient exists!', $user);
+        if($user){
+            return makeResponse(200, 'Patient exists!', $user);
+        } else{
+            return makeResponse(502, 'Patient not exists!');
+        }
     }
 
     public function index(UsersDataTable $dataTable)
