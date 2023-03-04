@@ -6,11 +6,10 @@
             <div class="col-12 col-md-10 mx-auto my-auto">
                 <div class="card auth-card">
                     <div class="position-relative image-side ">
-                        <p class="text-white h4">WELCOME TO THE <br>HEALTHIEST COMMUNITY</p>
+                        <p class="text-white h4">YILIN WORKSPACE</p>
 
                         <p class="white mb-0 text-semi-muted">
-                            Admin login only.
-                            <br>If you are not a member, please contact admin.
+                            I am so happy to see. You can continue to login for manage your work.
 {{--                            <a href="{{ route('login') }}" class="white">login here</a>.--}}
                         </p>
                     </div>

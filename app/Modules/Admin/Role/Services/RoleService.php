@@ -31,7 +31,11 @@ class RoleService
 
     public function store(array $request): Collection
     {
-        $spatieRole = $this->role->findOrCreate($request['name'], self::GUARD);
+        $spatieRole = $this->role->findOrCreate(($request['name']) ?? slugify($request['name_en']), self::GUARD);
+
+        $spatieRole->name_en = $request['name_en'];
+        $spatieRole->name_cn = $request['name_cn'];
+        $spatieRole->save();
 
         $permissions = [];
         foreach(Lang::get('permission') as $role => $permission){

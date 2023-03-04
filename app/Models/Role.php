@@ -29,6 +29,13 @@ class Role extends Model
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
 
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+        );
+    }
+
     public static function Filter(){
         return [
             'name'     => ['type' => 'text', 'label' => 'name' ],

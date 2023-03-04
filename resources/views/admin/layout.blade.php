@@ -96,7 +96,11 @@
         </main>
     </div>
     @include('app')
-@stack('js')
+
+<script type="text/javascript">
+    @stack('js')
+</script>
+
 </body>
 
 </html>

@@ -46,6 +46,7 @@ $.fn.sendRequest = function(options) {
         method: 'POST',
         showLoading: true,
         closeModal: [], // hide multiple modal
+        alert: true,
         modalSuccess: false, // hide modal when success
         alertSuccess: true, // show alert when success
         alertRedirect: true, // allow redirect when response have redirect
@@ -89,7 +90,7 @@ $.fn.sendRequest = function(options) {
         },
         error: function(xhr) {
             if(settings.showLoading) $(this).hideLoader()
-            handleAjaxErr(xhr)
+            if(settings.alert) handleAjaxErr(xhr)
         }
     });
 };
@@ -97,7 +98,7 @@ $.fn.sendRequest = function(options) {
 const handleAjaxErr = (xhr) => {
     switch(xhr.status) {
         case 401: // no login
-            window.location.replace("admin/login");
+            window.location.replace("/admin/login");
             break;
         case 422: // laravel validation errors
             $('#app-alert').showAlert({message: xhr.responseJSON.message, status: 'danger'});

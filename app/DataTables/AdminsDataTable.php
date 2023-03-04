@@ -24,7 +24,13 @@ class AdminsDataTable extends DataTable
         $query = Admin::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->editColumn('updated_at', function($row){
+            ->addColumn('roles', function($row){
+                $arr = '';
+                foreach ($row->getRoleNames() as $role){
+                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$role.'</span>';
+                }
+                return $arr;
+            })->editColumn('updated_at', function($row){
                 return dateFormat($row->updated_at, 'r');
             })->addColumn('full_name', function($row){
                 return $row->fullName;
@@ -34,7 +40,7 @@ class AdminsDataTable extends DataTable
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action']);
+            })->rawColumns(['image', 'action', 'roles']);
     }
 
     public function getColumns(): array
@@ -43,7 +49,7 @@ class AdminsDataTable extends DataTable
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('email'),
-            Column::make('gender'),
+            Column::make('roles')->orderable(false),
             Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)

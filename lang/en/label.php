@@ -62,4 +62,5 @@ return [
     'nationality' => 'Nationality',
     'dose' => 'Dose',
     'advise' => 'Doctor advise',
+    'permissions' => 'Permissions',
 ];

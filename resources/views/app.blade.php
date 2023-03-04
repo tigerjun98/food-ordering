@@ -58,7 +58,7 @@
                 status : 'success',
                 response: null,
                 message: null,
-                delay: 6000
+                delay: 2000
             }, options );
 
             let id = Date.now(), errorsHtml = '';
@@ -71,7 +71,7 @@
                 if(settings.response && settings.response.redirect){
                     setTimeout(function() {
                         window.location.href = settings.response.redirect;
-                    }, 1500);
+                    }, 2000);
                 }
                 errorsHtml += '<li>' + settings.message ?? 'Success'+ '</li>';
 
@@ -160,8 +160,6 @@
                             fullScreen: settings.loading.fullScreen,
                             focus: settings.loading.focus,
                         });
-
-
                     }
 
                     if(response.redirect && settings.alertRedirect){

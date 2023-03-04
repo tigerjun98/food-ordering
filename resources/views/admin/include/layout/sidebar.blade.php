@@ -7,8 +7,8 @@
             'diagnoses'     => ['route'=> route('admin.option.show', 'diagnose'), 'icon'=>'iconsminds-pulse', 'permission' => 'setting-consultation.diagnose'],
         ],
         'admin' => [
-            'account'       => ['route'=> route('admin.account.index'), 'icon'=>'iconsminds-medicine-3', 'permission' => 'setting-admin.account'],
-            'roles'         => ['route'=> route('admin.role.index'), 'icon'=>'iconsminds-medicine-3', 'permission' => 'setting-admin.role'],
+            'account'       => ['route'=> route('admin.account.index'), 'icon'=>'iconsminds-engineering', 'permission' => 'setting-admin.account'],
+            'roles'         => ['route'=> route('admin.role.index'), 'icon'=>'iconsminds-network', 'permission' => 'setting-admin.role'],
         ]
     ];
 
@@ -25,7 +25,7 @@
     ];
 
     $navs = [
-//        'dashboard'         => ['route'=> route('admin.home'), 'icon'=>'iconsminds-monitor-analytics'],
+        'dashboard'         => ['route'=> route('admin.home'), 'icon'=>'iconsminds-monitor-analytics'],
         'patients'          => ['route'=> route('admin.user.index'), 'icon'=>'iconsminds-conference', 'permission' => 'patient.index'],
         'consultations'     => ['route'=> route('admin.consultation.index'), 'icon'=>'iconsminds-stethoscope', 'permission' => 'consultation.index'],
 //        'queues'            => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-loading-2', 'permission' => 'queue.show'],

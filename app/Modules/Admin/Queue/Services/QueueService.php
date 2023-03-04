@@ -26,21 +26,25 @@ class QueueService
         $this->event = new QueueEventService();
     }
 
+    public function getPatientWaitingMsg(): string
+    {
+        $count = $this->countWaitingPatient();
+        return trans_choice('messages.patient_waiting', $count, ['count' => $count]);
+    }
+
     public function getDashboardMessage($roleId): ?string
     {
-        if(!$this->hasPermission($roleId)) return 'Permission denied!';
+        if(!$this->hasPermission($roleId)) return trans('messages.permission_denied');
 
         switch ($roleId){
             case Queue::RECEPTIONIST:
+            case Queue::PHARMACY:
                 if($this->countServingPatient() == 0){
-                    return 'Doctor room are empty!';
+                    return trans('messages.doctor_room_empty');
                 }
                 break;
             case Queue::DOCTOR:
-                $count = $this->countWaitingPatient();
-                return $count > 0
-                    ? $count.' patient are waiting!'
-                    : 'No more patient waiting!';
+                return $this->getPatientWaitingMsg();
                 break;
         }
         return null;
@@ -82,13 +86,18 @@ class QueueService
         return $this->model->where('status', Queue::SERVING)->Today()->count();
     }
 
+    public function countPendingPatient($type = Queue::CONSULTATION): int
+    {
+        return $this->model->where('status', Queue::PENDING)->where('type', $type)->Today()->count();
+    }
+
     public function serve(Queue $queue): Queue
     {
 
         if($queue->type == Queue::MEDICINE){
             $nextStatus = Queue::COMPLETED;
         } else{
-            $this->countServingPatient() > 0 ? throwErr('Doctor on serving!') : null;
+            $this->countServingPatient() > 0 ? throwErr(trans('common.doctor_on_serve')) : null;
         }
 
         $queue->status = $nextStatus ?? Queue::SERVING;
@@ -156,9 +165,13 @@ class QueueService
             ->first();
     }
 
-    public function countWaitingPatient(): int
+    public function countWaitingPatient($type = Queue::CONSULTATION): int
     {
-        return $this->model->where('status', Queue::WAITING)->where('type', Queue::CONSULTATION)->Today()->count();
+        return $this->model
+            ->where('status', Queue::WAITING)
+            ->where('type', $type)
+            ->Today()
+            ->count();
     }
 
     public function queueExist($queueId)
@@ -171,7 +184,7 @@ class QueueService
         $newQueue = false;
 
         if( ! $this->queueExist( $request['id'] ) ){
-            $this->patientOnQueue($request['user_id']) ? throwErr('Patient on queue!') : null;
+            $this->patientOnQueue($request['user_id']) ? throwErr(trans('messages.patient_on_queue')) : null;
             $newQueue = true;
         }
 
@@ -188,7 +201,7 @@ class QueueService
         $request['appointment_date'] = Carbon::now();
 
         $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
-        if($newQueue) $this->event->newQueue($queue, $this->countWaitingPatient());
+        if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
 
         return $queue;
     }
@@ -227,7 +240,7 @@ class QueueService
     {
         $msg = '';
         if( $this->countServingPatient() == 0 ){
-            $msg = 'Next patient pls!'; // Notified receptionist Doctor room are empty
+            $msg = trans('messages.doctor_room_empty'); // Notified receptionist Doctor room are empty
         }
 
         $this->event->consulted($queue, $msg);
@@ -235,12 +248,7 @@ class QueueService
 
     public function notifyDoctor(Queue $queue)
     {
-        $count = $this->countWaitingPatient();
-        $msg = '';
-        if( $count > 0 ){
-            $msg = $count.' patient are waiting!'; // Notified receptionist Doctor room are empty
-        }
-
+        $msg = $this->getPatientWaitingMsg();
         $this->event->newQueue($queue, $msg);
     }
 

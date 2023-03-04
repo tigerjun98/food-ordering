@@ -9,8 +9,9 @@
                 :multiple="'multiple'"
                 :col="'md-12'"
                 :name="'roles[]'"
+                :label="trans('label.roles')"
                 :id="'rolesIds'"
-                :options="\Spatie\Permission\Models\Role::all()->pluck('name','id')"
+                :options="\Spatie\Permission\Models\Role::all()->pluck('name_en','id')"
                 :required="false"
             >
                 @if(isset($data->roles))

@@ -24,6 +24,7 @@ return [
     'queue'  => [
         'tab'               => 'Show queue tab',
         'index'             => 'History',
+        'create'            => 'Create queue',
         Queue::RECEPTIONIST => Queue::getRoleList()[Queue::RECEPTIONIST],
         Queue::DOCTOR       => Queue::getRoleList()[Queue::DOCTOR],
         Queue::PHARMACY     => Queue::getRoleList()[Queue::PHARMACY],

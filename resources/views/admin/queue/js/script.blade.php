@@ -3,6 +3,21 @@
 
 <script type="module">
 
+    // $(window).keydown(function(event){
+    //     let input = !! document.getElementById("queryNric");
+    //     if(input){
+    //         input = document.getElementById("queryNric");
+    //         input.addEventListener("keyup", function(event) {
+    //             console.log( '123' )
+    //             if (event.keyCode === 13) {
+    //                 event.preventDefault();
+    //                 searchPatient();
+    //             }
+    //         });
+    //     }
+    // });
+
+
     @php
     use App\Models\Queue;
     @endphp
@@ -38,7 +53,7 @@
             case '{{ Queue::PHARMACY }}':
                 if(e.type == '{{ Queue::CONSULTED }}'){
                     addNewQueue(e.queue)
-                    // patientConsulted(e.message, e.queue.doctor_id)
+                    patientConsulted(e.message, e.queue.doctor_id)
                 }
                 break;
         }
@@ -61,9 +76,10 @@
     }
 
     const patientConsulted = (message, doctorId) => {
-        let id = {{ Queue::RECEPTIONIST }};
-        appendMsg(id, message)
+        appendMsg({{ Queue::RECEPTIONIST }}, message)
+        appendMsg({{ Queue::PHARMACY }}, message)
     }
+
 
     const appendMsg = (id, message) => {
 

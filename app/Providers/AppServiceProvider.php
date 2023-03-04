@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
 //            return static::length($str) == $length;
 //        });
 
-        Vite::useBuildDirectory('/backendAssets')->macro('images', fn ($asset) => $this->asset("resources/img/{$asset}"));
+        Vite::useBuildDirectory('/backendAssets')->macro('image', fn ($asset) => $this->asset("resources/img/{$asset}"));
 //        Vite::useBuildDirectory('/backendAssets')->macro('backendJs', fn ($asset) => $this->asset("resources/js/backend/pages/{$asset}"));
         Route::mixin(new RouteMixin);
     }

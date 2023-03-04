@@ -78,6 +78,7 @@
         let res = await $(this).sendRequest({
             data: new FormData(this),
             url: "{{$route ?? request()->fullUrl()}}",
+            {{ $formOption ?? '' }}
         });
 
         @if(isset($reset) && $reset)

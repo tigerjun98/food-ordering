@@ -40,14 +40,16 @@
 
         <input type="hidden" name="user_id" id="user_id" value="{{ request()->user_id ?? ($patient ? $patient->id : null) }}" />
 
-        <div class="hide-box" id="patientSearch">
-            <x-admin.component.module.queue.user-search />
-            <x-admin.component.button
-                :text="trans('button.create')"
-                :class="'patient-not-exists hide btn-primary'"
-                :onclick="'createNewPatient()'"
-            />
-        </div>
+        @if(!$patient)
+            <div class="hide-box" id="patientSearch">
+                <x-admin.component.module.queue.user-search />
+                <x-admin.component.button
+                    :text="trans('button.create')"
+                    :class="'patient-not-exists hide btn-primary'"
+                    :onclick="'createNewPatient()'"
+                />
+            </div>
+        @endif
 
         <div class="hide-box" id="patientQueueInfo">
             <x-admin.form.text
@@ -94,12 +96,13 @@
                            value="1"
                            name="prioritise"
                            id="customCheckThis">
-                    <label class="custom-control-label" for="customCheckThis">Check this to prioritise the patient</label>
+                    <label class="custom-control-label" for="customCheckThis">{{ trans('messages.checked_to_prioritise_the_patient') }}</label>
                 </div>
             </div>
         </div>
 
         <script type="text/javascript">
+
             function patientExists() {
                 if( $('#user_id').val() ){
                     return true;
@@ -118,8 +121,10 @@
                 hideRelatedBox()
                 if( patientExists() ){
                     $('#patientQueueInfo').show().slideDown();
+                    document.querySelector('button[type="submit"]').style.display="block";
                 } else{
                     $('#patientSearch').show().slideDown();
+                    document.querySelector('button[type="submit"]').style.display="none";
                 }
             }
 

@@ -4,17 +4,17 @@ const setAlertPosition = () => {
 
     let openingModalIds = $(this).getModalId();
     if(openingModalIds.length > 0){
-
         let elemId =  $(this).getModalId( {latest: true} )
         let elem = $(`#modal-content-${elemId.replace('modalId', '')}`);
 
 
+        if( !! document.getElementById(`modal-content-${elemId.replace('modalId', '')}`) ){
 
-        if(!!document.getElementById(`modal-content-${elemId.replace('modalId', '')}`)){
             $('#app-alert').css({
                 'width' : parseInt(elem.css('width')),
                 'left' : parseInt(elem.offset().left),
-                'top' : parseInt(elem.offset().top)
+                'top' : parseInt(elem.offset().top),
+                'transform' : 'inherit'
             });
         }
 
@@ -27,11 +27,28 @@ const setAlertPosition = () => {
         $('#app-alert').css({
             'width' : width,
             'left' : elem.offset().left,
+            'top' : elem.offset().top - 45,
+            'transform' : 'inherit'
         });
+
+    } else{
+
+        let elem = $(`.navbar`);
+
+        // $('#app-alert').css({
+        //     'width' : parseInt(elem.css('width')),
+        //     'left' : parseInt(elem.offset().left),
+        //     'top' : parseInt(elem.offset().top)
+        // });
     }
 }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
+
+$.fn.hideAlert = function(options) {
+    console.log('1230000PP');
+    $("#app-alert").empty()
+}
 
 $.fn.showAlert = async function(options) {
     // default options.
@@ -39,7 +56,7 @@ $.fn.showAlert = async function(options) {
         status: 'success',
         response: null,
         message: null,
-        delay: 6000,
+        delay: 2000,
         wait: 0, // execute the function after * Wait the modal close so that the set position will won't affect by the closing modal
     }, options);
 

@@ -145,6 +145,14 @@
 
     @endslot
 
+    {{-- Temporary fixed alert popup between two modal is opening; Just hide it 1st --}}
+    @if(request()->nric)
+        @slot('formOption')
+            alertSuccess: false,
+        @endslot
+    @endif
+
+
     @slot('script')
         {{ request()->jsAction ?? '' }}
     @endslot

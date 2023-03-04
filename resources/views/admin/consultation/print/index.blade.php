@@ -9,7 +9,7 @@
         @page { margin: 0; }
         @media print {
             @page { margin: 0; }
-            body { margin: 1.6cm; }
+            body { margin: 1.6cm; max-width: 1048px; }
         }
         :root {
             --edge-border-radius: 4px;
@@ -46,7 +46,11 @@
 
 <body style="margin:0; padding:0;">
 <!--Mailing Start-->
-<div leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="background-color:#ffffff; height:29.7cm; max-width:22cm; font-family: Helvetica,Arial,sans-serif !important; margin-bottom: 40px; position: relative;">
+<div leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0"
+     style="background-color:#ffffff;
+     max-width:22cm; font-family:
+     Helvetica,Arial,sans-serif !important;
+     position: relative;">
 
     <x-admin.component.prints.layouts.section
         :class="'pt-15 pb-15'"
@@ -69,14 +73,14 @@
 
     <x-admin.component.prints.modules.separator />
     <x-admin.component.prints.modules.footer
-        :text="'Invoice was created on a computer and is valid without the signature and seal.'"
+        :text="'Yuan TCM Healthcare Center Sdn. Bhd. 202201046385(1492082-D)'"
     />
 </div>
 <!--Mailing End-->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        window.print()
-        setTimeout(function(){ window.close(); }, 1250);
+        // window.print()
+        // setTimeout(function(){ window.close(); }, 1250);
     }, false);
 </script>
 </body>

@@ -19,6 +19,12 @@ return [
     'confirm_alert' => 'Are you sure you want to proceed?',
     'confirm_alert_desc' => 'If you proceed this you can\'t recover it.',
     'incorrect_old_password' => 'Incorrect old password',
-    'patient_not_found' => 'Patient not found!'
-
+    'patient_not_found' => 'Patient not found!',
+    'doctor_room_empty' => 'Doctor available for consultation!',
+    'no_patient_waiting' => 'No patient is waiting.',
+    'patient_waiting' => '{0} No one is waiting.|{1} :count patient is waiting.|[2,*] :count patients are waiting.',
+    'permission_denied' => ':count patient(s) are waiting!',
+    'patient_on_queue' => 'Patient on queue!',
+    'doctor_on_serve' => 'Doctor on serving!',
+    'checked_to_prioritise_the_patient' => 'Check this to prioritise the patient'
 ];

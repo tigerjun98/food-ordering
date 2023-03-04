@@ -13,11 +13,13 @@
                         :icon="'iconsminds-left-1'"
                         :text="trans('button.back')"
                     />
-                    <x-admin.component.button
-                        :onclick="'$(this).openModal({url: `'.route('admin.queue.create').'`})'"
-                        :class="'btn-primary btn-lg top-right-button'"
-                        :text="trans('button.create')"
-                    />
+                    @if(auth()->user()->hasPermissionTo( 'queue.create' ))
+                        <x-admin.component.button
+                            :onclick="'$(this).openModal({url: `'.route('admin.queue.create').'`})'"
+                            :class="'btn-primary btn-lg top-right-button'"
+                            :text="trans('button.create')"
+                        />
+                    @endif
                 </div>
             </div>
 

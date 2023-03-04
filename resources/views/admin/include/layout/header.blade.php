@@ -24,7 +24,7 @@
 
 
     <a class="navbar-logo" href="{{route('admin.home')}}">
-        <span class="logo"></span>
+        <img style="height: 43px;" src="{{ Vite::image('icons/logo.webp') }}" />
 {{--        <span class="logo-mobile d-block d-xs-none"></span>--}}
     </a>
 

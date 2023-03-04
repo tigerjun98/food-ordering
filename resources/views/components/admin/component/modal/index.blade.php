@@ -14,6 +14,7 @@
     @if(isset($submit))
         <x-admin.form
             :route="$submit"
+            :formOption="$formOption??''"
         >
             @slot('body')
                 @if(isset($nav) && $nav)

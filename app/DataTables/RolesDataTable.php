@@ -24,11 +24,13 @@ class RolesDataTable extends DataTable
     {
         $query = Role::query();
         return (new EloquentDataTable($query))
-            // ->addIndexColumn()
+            ->addIndexColumn()
             ->addColumn('action', function($row){
                 return $this->action($row);
             })->editColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');
+            })->editColumn('name', function($row){
+                return $row->full_name;
             })->filter(function ($model) {
                 return $model->filter();
             })->rawColumns(['image', 'action']);

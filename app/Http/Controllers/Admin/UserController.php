@@ -25,7 +25,8 @@ class UserController extends Controller {
 
     public function searchPatient()
     {
-        $user = User::where('nric', request()->nric)->first();
+        $nric = str_replace('-', '', request()->nric);
+        $user = User::where('nric', $nric)->first();
         if($user){
             return makeResponse(200, 'Patient exists!', $user);
         } else{

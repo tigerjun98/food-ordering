@@ -79,7 +79,7 @@ return [
     'reset' => 'reset',
     'unknown_status' => 'unknown status',
     'receipt' => 'receipt',
-    'permissions' => 'permissions',
+    'permissions' => 'Permissions',
     'admins' => 'admins',
     'dashboard' => 'dashboard',
     'users' => 'users',
@@ -150,4 +150,5 @@ return [
     'other' => 'Other',
     'roles' => 'Roles',
     'prescriptions' => 'Prescriptions',
+    'waiting_patient' => 'Waiting patient',
 ];

@@ -2,11 +2,8 @@
 
 namespace App\Modules\Admin\Consultation\Services;
 
-use App\Models\Admin;
 use App\Models\Consultation;
-use App\Models\Medicine;
-use App\Models\Option;
-use App\Models\Prescription;
+use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Attachment\Services\AttachmentService;
 use App\Modules\Admin\Option\Services\OptionService;
@@ -41,13 +38,16 @@ class ConsultationService
             'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
         ]);
 
-        return \DB::transaction(function () use($request, $consultation) {
+        $model = \DB::transaction(function () use($request, $consultation) {
             $model = $this->model->updateOrCreate(['id' => $request['id'] ], $consultation);
             (new ConsultationPrescriptionService($model))->store($request);
             (new QueueService())->consulted($model);
             return $model;
-
         });
+
+        $queue = Queue::where('consultation_id', $model->id)->first();
+        (new QueueService())->notifyReceptionist($queue);
+        return $model;
     }
 
     public function optionExistsOrCreate(array $request): array
