@@ -14,46 +14,15 @@ use function PHPUnit\Framework\throwException;
 
 class PermissionService
 {
-    private Option $model;
-
-    public function __construct()
+    public function getDoctorAccounts()
     {
-        $this->model = new Option();
+        $permissionName = ['consultation.*', 'consultation.create'];
+
+        $query = Admin::query();
+        return $query->whereHas('permissions', function ($query) use ($permissionName) {
+            $query->whereIn('name', $permissionName);
+        })->orWhereHas('roles.permissions', function ($query) use ($permissionName) {
+            $query->whereIn('name', $permissionName);
+        });
     }
-
-    public function createIfNotExists(array $items, $type)
-    {
-        $arr = [];
-        foreach ($items as $item){
-            if(!$this->model->find($item)){
-                $item = $this->store([
-                    'type' =>  $type,
-                    'name_'.app()->getLocale() => $item
-                ]);
-                $item = $item->id;
-            }
-            $arr[] = $item;
-        }
-        return $arr;
-    }
-
-    public function store(array $request): Option
-    {
-        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
-    }
-
-    public function occupied(Option $option): bool
-    {
-        return Consultation::where('specialists', 'like', '%'.$option->id.'%')
-            ->orWhere('syndromes', 'like', '%'.$option->id.'%')
-            ->orWhere('diagnoses', 'like', '%'.$option->id.'%')
-            ->count() > 0;
-    }
-
-    public function delete(Option $option)
-    {
-        !self::occupied($option) ? $option->delete() : throwErr(trans('common.permission_denied'));
-    }
-
-
 }

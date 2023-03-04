@@ -18,7 +18,8 @@ return [
         'index' => 'Patient management',
     ],
     'consultation'  => [
-        'index' => 'Consultation management',
+        'index'     => 'Consultation management',
+        'create'    => 'Create consultation',
     ],
 
     'queue'  => [
