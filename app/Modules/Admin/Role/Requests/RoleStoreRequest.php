@@ -35,6 +35,7 @@ class RoleStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'name'              => ['nullable'],
             'name_en'           => ['required', 'string', 'max:25'],
             'name_cn'           => ['nullable', 'string', 'max:25'],
             'role.*'            => ['nullable'],
