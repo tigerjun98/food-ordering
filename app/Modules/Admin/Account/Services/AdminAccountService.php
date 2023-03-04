@@ -57,11 +57,13 @@ class AdminAccountService
     {
         $admin->roles()->detach();
 
+        $roles = [];
         foreach ($roleIds as $roleId){
             $role = Role::findById($roleId);
-            $admin->assignRole($role);
-            // $this->assignPermission($admin, $role);
+            $roles[] = $role->name;
         }
+
+        $admin->assignRole($roles);
 
         return $admin->getRoleNames();
     }

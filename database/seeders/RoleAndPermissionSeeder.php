@@ -10,6 +10,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -17,6 +18,8 @@ use App\Modules\Admin\Permissions\Permission as PermissionAlias;
 
 class RoleAndPermissionSeeder extends Seeder
 {
+    public const GUARD = 'admin';
+    public const ROLE_NAME = 'super-admin';
     /**
      * Run the database seeds.
      *
@@ -24,51 +27,40 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        $guard = 'admin';
-
-        $roles = [
-            'super-admin' => [
-                'patient.*',
-                'consultation.*',
-                'queue.*',
-                'setting-consultation.*',
-                'setting-admin.*',
-            ],
-        ];
-
-        collect($roles)->each(function ($permissions, $role) use($guard) {
-            $role = Role::findOrCreate($role, $guard);
-            collect($permissions)->each(function ($permission) use ($role, $guard) {
-                $role->permissions()->save(Permission::findOrCreate($permission, $guard));
-            });
-        });
-
-        $this->createAndAssignSuperAdmin();
+        $this->createRoleAndPermissions();
+        $this->createSuperAdminAccount();
     }
 
-    public function createAndAssignSuperAdmin()
+    public function createRoleAndPermissions()
     {
-        $userFactory = (new UserFactory());
-        $dobAndNric = $userFactory->getRandDobAndNric();
-        $gender = $userFactory->getRandGender();
+        $spatieRole = Role::findOrCreate( self::ROLE_NAME, self::GUARD);
+        $spatieRole->name_en = 'Super admin';
+        $spatieRole->name_cn = '超级管理员';
+        $spatieRole->save();
 
-        $faker = \Faker\Factory::create();
-        $fakerCN = \Faker\Factory::create('zh_CN');
+        $permissions = [];
 
+        foreach(Lang::get('permission') as $role => $permission){
+            $permission = Permission::findOrCreate($role.'.*', self::GUARD);
+            $permissions[] = $permission->name;
+        }
+
+        $spatieRole->syncPermissions($permissions);
+    }
+
+    public function createSuperAdminAccount()
+    {
         $admin = Admin::create([
-            'name' => $faker->userName(),
-            'name_en' => $faker->name($gender[1]),
-            'name_cn' =>  $fakerCN->name($gender[1]),
-            'gender' => $gender[0],
-            'nric' => $dobAndNric[1],
-            'phone' => '601'.$faker->randomNumber(8),
-            'email' => 'admin@admin.com',
+            'name' => self::ROLE_NAME,
+            'name_en' => 'Super admin',
+            'name_cn' =>  '超级管理员',
+            'email' => 'admin@yilin.com.my',
             'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
             'remember_token' => Str::random(10),
             'clinic_id' => Clinic::all()->random()->id
         ]);
 
-        $admin->assignRole('super-admin');
+        $admin->assignRole(self::ROLE_NAME);
     }
 
 }
