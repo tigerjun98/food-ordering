@@ -77,12 +77,23 @@
 @if(isset($col))</div>@endif
 
 <script type="module">
-    document.getElementById('{{ $attributes['id'] }}').addEventListener('input', function (evt) {
-        let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
-        $(parent).find('div.error-msg').each(function(i, obj) {
-            $(obj).remove()
+
+    "focusin input".split(" ").forEach(function(e){
+        document.getElementById('{{ $attributes['id'] }}').addEventListener(e, function (evt) {
+            let parent = $('#{{ $attributes['id'] }}').closest('.form-group');
+            $(parent).find('div.error-msg').each(function(i, obj) {
+                $(obj).remove()
+            });
         });
     });
+
+
+    {{--document.getElementById('{{ $attributes['id'] }}').addEventListener('click', function (evt) {--}}
+    {{--    let parent = $('#{{ $attributes['id'] }}').closest('.form-group');--}}
+    {{--    $(parent).find('div.error-msg').each(function(i, obj) {--}}
+    {{--        $(obj).remove()--}}
+    {{--    });--}}
+    {{--});--}}
 
     @if($isPhone)
         const iti{{$attributes['id']}} = $('#{{$attributes['id']}}').intlTelInputForm({

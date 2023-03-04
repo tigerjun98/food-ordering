@@ -30,7 +30,7 @@ class UsersDataTable extends DataTable
             })->editColumn('nationality', function($row){
                 return $row->nationality_explain;
             })->editColumn('dob', function($row){
-                return $row->dob .' ('.trans('common.age').' '.get_age($row->dob).')';
+                return $row->dob ? $row->dob.' ('.trans('common.age').' '.get_age($row->dob).')' : '';
             })->editColumn('phone', function($row){
                 return $row->phone_format;
             })->editColumn('nric', function($row){
