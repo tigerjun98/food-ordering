@@ -24,6 +24,9 @@ class ConsultationService
     {
         $consultation = $this->model->find($id) ?? [];
         $patient = $consultation ? $consultation->patient : User::find($id);
+        if(!$patient){
+            abort(404);
+        }
         $onHold = (new QueueService())->canOnHold($patient, $consultation);
 
         session(['redirect' => url()->previous()]);
