@@ -6,6 +6,7 @@ use App\DataTables\UsersDataTable;
 use App\Entity\Enums\Country;
 use App\Entity\Enums\GenderEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Consultation;
 use App\Models\User;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Modules\Admin\User\Services\UserService;
@@ -22,6 +23,13 @@ use App\Entity\Enums\CountryEnum;
 class UserController extends Controller {
 
     use ApiResponser;
+
+    private UserService $service;
+
+    public function __construct()
+    {
+        $this->service = new UserService();
+    }
 
     public function searchPatient()
     {
@@ -58,8 +66,10 @@ class UserController extends Controller {
 
     public function delete($userId)
     {
+        $user = User::findOrFail($userId);
         return html('admin.user.form.delete',[
-            'data' => User::findOrFail($userId)
+            'canDelete' => $this->service->canDelete($user),
+            'data' => $user
         ]);
     }
 

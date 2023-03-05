@@ -33,10 +33,8 @@ class ConsultationsDataTable extends DataTable
 //            })
             ->addColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');
-            })->addColumn('nric', function($row){
-                return nricFormat($row->patient->nric);
             })->addColumn('full_name', function($row){
-                return $row->patient->full_name;
+                return $row->patient ? $row->patient->full_name : '-';
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {

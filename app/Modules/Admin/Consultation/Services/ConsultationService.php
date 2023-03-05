@@ -49,7 +49,10 @@ class ConsultationService
         });
 
         $queue = Queue::where('consultation_id', $model->id)->first();
-        (new QueueService())->notifyReceptionist($queue);
+        if($queue){
+            (new QueueService())->notifyReceptionist($queue);
+        }
+
         return $model;
     }
 
