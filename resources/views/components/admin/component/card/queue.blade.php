@@ -16,7 +16,7 @@
                     <a href="#">
                         <p class="font-weight-medium mb-1">
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
-                            {{ $queue->patient->full_name }}
+                            {{ $queue->patient->full_name ?? '-' }}
                         </p>
                         <p class="text-muted mb-0 text-small">
                             {{ get_time_ago( strtotime($queue->created_at) ) }}

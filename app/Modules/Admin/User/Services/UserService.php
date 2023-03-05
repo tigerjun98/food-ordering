@@ -23,7 +23,15 @@ class UserService
 
     public function canDelete(User $user): bool
     {
-        return ! Consultation::where('user_id', $user->id)->exists();
+        $exists = false;
+
+        $relations = ['consultations', 'queues'];
+        foreach ($relations as $relation){
+            $exists = $user->{$relation}()->first();
+            if($exists) break;
+        }
+
+        return ! $exists;
     }
 
     public function delete(User $user)

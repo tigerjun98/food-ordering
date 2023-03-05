@@ -51,6 +51,18 @@ class User extends Authenticatable
         'deleted_at' => 'datetime',
     ];
 
+    public function consultations()
+    {
+        return $this->hasMany(Consultation::class, 'user_id', 'id')
+            ->orderBy('created_at', 'desc');
+    }
+
+    public function queues()
+    {
+        return $this->hasMany(Queue::class, 'user_id', 'id')
+            ->orderBy('created_at', 'desc');
+    }
+
     protected function dobWithAge(): Attribute
     {
         $age = get_age($this->dob);
