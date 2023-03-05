@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-6">
         <x-admin.layout.info
-            :value="$patient->dob. ' ('.get_age($patient->dob).' Age)'"
+            :value="$patient->dob_with_age"
             :label="trans('dob')"
         />
     </div>

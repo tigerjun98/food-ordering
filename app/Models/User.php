@@ -51,6 +51,14 @@ class User extends Authenticatable
         'deleted_at' => 'datetime',
     ];
 
+    protected function dobWithAge(): Attribute
+    {
+        $age = get_age($this->dob);
+        return Attribute::make(
+            get: fn () => $age > 0 ? dateFormat($this->dob, 'd M, Y').' ('.get_age($this->dob).' '.trans('common.age').')' : '-'
+        );
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(

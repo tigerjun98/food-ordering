@@ -40,7 +40,10 @@ class AdminsDataTable extends DataTable
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action', 'roles']);
+            })->rawColumns(['image', 'action', 'roles'])
+            ->orderColumn('full_name', function ($query, $order) {
+                $query->orderByRaw("ISNULL(name_en), name_en $order");
+            });
     }
 
     public function getColumns(): array
