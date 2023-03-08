@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Entity\Enums\StatusEnum;
 use App\Models\Admin;
 use App\Models\Medicine;
 use App\Models\User;
@@ -29,22 +30,26 @@ class MedicinesDataTable extends DataTable
                 return dateFormat($row->updated_at, 'r');
             })->editColumn('type', function($row){
                 return $row->type_explain;
+            })->editColumn('status', function($row){
+                return $row->status
+                    ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
+                    : '-';
             })->addColumn('full_name', function($row){
                 return $row->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
-            ->orderColumn('created_at', 'desc');
+            })->rawColumns(['image', 'action', 'status']);
     }
 
     public function getColumns(): array
     {
         return [
+            Column::make('full_name')->title('Name'),
+            Column::make('status'),
             Column::make('sku'),
             Column::make('type'),
-            Column::make('full_name')->title('Name'),
             Column::make('description_cn')->title('Description'),
             Column::make('updated_at'),
             Column::computed('action')
@@ -92,7 +97,7 @@ class MedicinesDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(4)
+                    ->orderBy(6)
                     //->dom('Bfrtip')
 //                    ->orderBy(0)
                     ->selectStyleSingle()

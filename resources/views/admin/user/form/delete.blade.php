@@ -9,7 +9,10 @@
                 This process cannot be undo.</h6>
         @else
             <h6>
-                The attempted operation is <span class="font-italic text-danger">prohibited</span> because <span class="font-weight-bold font-italic">{{ $data->full_name }}</span> in used.
+                The attempted operation is
+                <span class="font-italic text-danger">prohibited</span> because
+                <span class="font-weight-bold font-italic">{{ $data->full_name }}</span>
+                in used.
             </h6>
         @endif
     @endslot

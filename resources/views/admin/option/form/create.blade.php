@@ -61,15 +61,14 @@
             />
         </div>
 
-
-{{--        <div class="row">--}}
-{{--            <x-admin.form.select--}}
-{{--                :data="$data"--}}
-{{--                :col="'md-6'"--}}
-{{--                :name="'gender'"--}}
-{{--                :options="\App\Models\Admin::getGenderList()"--}}
-{{--            />--}}
-{{--        </div>--}}
+        <div class="row">
+            <x-admin.form.select
+                :data="$data"
+                :options="\App\Models\Option::getStatusList()"
+                :col="'md-12'"
+                :name="'status'"
+            />
+        </div>
 
     @endslot
 </x-admin.component.modal>

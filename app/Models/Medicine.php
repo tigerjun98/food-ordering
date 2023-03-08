@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants;
+use App\Entity\Enums\StatusEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
@@ -111,18 +112,28 @@ class Medicine extends Model
         ];
     }
 
-    public static function getStatusList()
+    public static function getStatusList(): array
     {
-        return [
-            1 => trans('common.bottle'),
-            5 => trans('common.unit'),
-        ];
+        return StatusEnum::getListing();
+    }
+
+    protected function statusExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(self::getStatusList()[$this->status] ?? '')
+        );
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', StatusEnum::ACTIVE);
     }
 
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'type'      => ['type' => 'select', 'label'=> 'type', 'option' => static::getTypeList()],
+            'status'    => ['type' => 'select', 'label'=> 'type', 'option' => static::getStatusList()],
         ];
     }
 

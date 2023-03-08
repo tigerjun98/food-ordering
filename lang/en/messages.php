@@ -23,8 +23,10 @@ return [
     'doctor_room_empty' => 'Doctor available for consultation!',
     'no_patient_waiting' => 'No patient is waiting.',
     'patient_waiting' => '{0} No one is waiting.|{1} :count patient is waiting.|[2,*] :count patients are waiting.',
-    'permission_denied' => ':count patient(s) are waiting!',
+    'permission_denied' => 'Permission denied!',
+    'permission_required' => 'You need \':name\' permission to access the page!',
     'patient_on_queue' => 'Patient on queue!',
     'doctor_on_serve' => 'Doctor on serving!',
+    'remove_in_used' => 'The attempted operation is prohibited because :name in used.',
     'checked_to_prioritise_the_patient' => 'Check this to prioritise the patient'
 ];

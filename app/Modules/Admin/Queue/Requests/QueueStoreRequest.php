@@ -43,6 +43,7 @@ class QueueStoreRequest extends FormRequest
             'remark'        => ['nullable', 'string'],
             'type'          => ['nullable', 'in:'.arrayToString(Queue::getTypeList())],
             'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
+            'role'          => ['nullable', 'in:'.arrayToString(Queue::getRoleList())],
         ];
     }
 }

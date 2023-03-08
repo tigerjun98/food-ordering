@@ -70,9 +70,10 @@ class QueueService
         foreach ($handleStatus[$roleId] as $key => $status){
 
             $query = $this->model->Today();
+            request()->role = $roleId;
             $queues[$status] = $query
                 ->where('status', $status)
-                ->Filter($roleId)
+                ->Filter()
                 ->Priority()
                 ->get();
         }
@@ -96,8 +97,10 @@ class QueueService
 
         if($queue->type == Queue::MEDICINE){
             $nextStatus = Queue::COMPLETED;
+
         } else{
-            $this->countServingPatient() > 0 ? throwErr(trans('common.doctor_on_serve')) : null;
+            $queue->role = Queue::DOCTOR;
+            $this->countServingPatient() > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
         }
 
         $queue->status = $nextStatus ?? Queue::SERVING;
@@ -134,6 +137,7 @@ class QueueService
             if(intval(request()->on_hold) == 1){
                 $queue->status = Queue::HOLDING;
             } else{
+                $queue->role = Queue::PHARMACY;
                 $queue->status = Queue::WAITING;
                 $queue->type = Queue::MEDICINE;
             }
@@ -179,6 +183,33 @@ class QueueService
         return $this->model->find($queueId);
     }
 
+    public function getRoleId($type, $status): ?int
+    {
+        switch ($type){
+            case Queue::CONSULTATION:
+                return $status == Queue::PENDING || $status == Queue::WAITING
+                    ? Queue::RECEPTIONIST
+                    : (
+                        $status == Queue::HOLDING || $status == Queue::SERVING
+                        ? Queue::DOCTOR
+                        : null
+                    );
+
+            case Queue::MEDICINE:
+                return $status == Queue::PENDING || $status == Queue::WAITING
+                    ? Queue::RECEPTIONIST
+                    : null;
+
+            case Queue::PAYMENT:
+                return $status == Queue::PENDING || $status == Queue::WAITING
+                    ? Queue::CASHIER
+                    : null;
+
+            default:
+                return null;
+        }
+    }
+
     public function store($request): Queue
     {
         $newQueue = false;
@@ -199,6 +230,7 @@ class QueueService
         $request['status'] = $request['status'] ?? Queue::WAITING;
         $request['admin_id'] = Auth::user()->id;
         $request['appointment_date'] = Carbon::now();
+        $request['role'] = request()->role ?? Queue::RECEPTIONIST;
 
         $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
         if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());

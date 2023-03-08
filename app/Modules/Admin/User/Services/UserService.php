@@ -36,6 +36,9 @@ class UserService
 
     public function delete(User $user)
     {
-        $user->delete();
+        if(!$this->canDelete($user)){
+            throwErr( trans('messages.remove_in_used', ['name' => $user->full_name]) );
+        }
+        $user->forceDelete();
     }
 }

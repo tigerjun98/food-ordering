@@ -34,13 +34,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
+        $this->loadMigrationsFrom(base_path() .'/database/migrations/**/*');
 //        Str::macro('isLength', function ($str, $length) {
 //            return static::length($str) == $length;
 //        });
-
         Vite::useBuildDirectory('/backendAssets')->macro('image', fn ($asset) => $this->asset("resources/img/{$asset}"));
-//        Vite::useBuildDirectory('/backendAssets')->macro('backendJs', fn ($asset) => $this->asset("resources/js/backend/pages/{$asset}"));
         Route::mixin(new RouteMixin);
+
     }
 
     protected function configureRateLimiting(): void
@@ -50,6 +50,5 @@ class AppServiceProvider extends ServiceProvider
                 return $this->error('Beep! Beep! Too many attempts', 401);
             });
         });
-
     }
 }

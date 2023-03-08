@@ -136,13 +136,13 @@ class Consultation extends Model
             });
         }
 
-//        if(request()->filled('nric')){
-//            $query->whereHas('patient', function ($q) {
-//                $q->where(function ($q) {
-//                    $q->where('nric', request()->nric);
-//                });
-//            });
-//        }
+        if(request()->filled('nric')){
+            $query->whereHas('patient', function ($q) {
+                $q->where(function ($q) {
+                    $q->where('nric', request()->nric);
+                });
+            });
+        }
 
 
         return $this->searchAll(

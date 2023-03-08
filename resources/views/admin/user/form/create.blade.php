@@ -62,6 +62,7 @@
     @endslot
 
     @slot('details')
+
         <input type="hidden" name="id" value="{{ $data ? $data->id : new_id() }}" />
 
         <div class="row">
@@ -82,6 +83,7 @@
                 @if(request()->nric)
                     <input type="hidden" name="nric" value="{{ request()->nric }}">
                 @endif
+
                 <x-admin.form.text
                     :value="$data ? $data->nric : (request()->nric ?? null)"
                     :col="'md-6'"
@@ -94,6 +96,7 @@
                     :type="'phone'"
                     :col="'md-6'"
                     :name="'phone'"
+                    :required="false"
                 />
             </div>
 

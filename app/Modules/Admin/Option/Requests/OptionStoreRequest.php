@@ -37,6 +37,7 @@ class OptionStoreRequest extends FormRequest
         return [
             'id'        => ['integer'],
             'type'      => ['required', 'in:'.arrayToString(Option::getTypeList())],
+            'status'    => ['required', 'in:'.arrayToString(Option::getStatusList())],
             'name_en'   => ['nullable', 'string', 'regex:/^[\w\-\s]+$/'],
             'name_cn'   => ['required', 'string'],
             'desc_en'   => ['nullable', 'string'],

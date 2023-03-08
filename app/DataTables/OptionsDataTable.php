@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Entity\Enums\StatusEnum;
 use App\Models\Admin;
 use App\Models\Medicine;
 use App\Models\Option;
@@ -28,6 +29,10 @@ class OptionsDataTable extends DataTable
             // ->addIndexColumn()
             ->editColumn('updated_at', function($row){
                 return dateFormat($row->updated_at, 'r');
+            })->editColumn('status', function($row){
+                return $row->status
+                    ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
+                    : '-';
             })->editColumn('type', function($row){
                 return $row->type_explain;
             })->addColumn('full_name', function($row){
@@ -38,15 +43,15 @@ class OptionsDataTable extends DataTable
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action', 'description']);
+            })->rawColumns(['image', 'action', 'description', 'status']);
     }
 
     public function getColumns(): array
     {
         return [
-            Column::make('slug'),
-            Column::make('type'),
             Column::make('full_name')->title('Name'),
+            Column::make('type'),
+            Column::make('status'),
             Column::make('description')->width(450),
             Column::make('updated_at')->width(450),
             Column::computed('action')

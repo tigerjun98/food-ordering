@@ -3,21 +3,6 @@
 
 <script type="module">
 
-    // $(window).keydown(function(event){
-    //     let input = !! document.getElementById("queryNric");
-    //     if(input){
-    //         input = document.getElementById("queryNric");
-    //         input.addEventListener("keyup", function(event) {
-    //             console.log( '123' )
-    //             if (event.keyCode === 13) {
-    //                 event.preventDefault();
-    //                 searchPatient();
-    //             }
-    //         });
-    //     }
-    // });
-
-
     @php
     use App\Models\Queue;
     @endphp
@@ -27,6 +12,8 @@
     if(roleIds.includes(requestRole)){
         setQueueRoleValue(requestRole)
     }
+
+    $(this).broadcasting();
 
     Echo.channel('channel-name').listen('.QueueUpdatedEvent',(e) => {
 

@@ -1,3 +1,7 @@
+@php
+    use App\Models\Queue;
+@endphp
+
 <x-admin.component.modal
     :title="'Queue details'"
     :nav="['details', 'settings']"
@@ -5,29 +9,44 @@
 >
     @slot('settings')
 
-        @if($data)
+        <input type="hidden"
+               id="type"
+               name="type"
+               value="{{ $data->type ?? Queue::CONSULTATION }}"
+        >
+
+        @if( !auth()->user()->hasPermissionTo( 'queue.index' ) )
+        <x-admin.component.status-bar
+            :type="'warning'"
+            :message="trans('messages.permission_required', ['name' => trans('permission.queue.index')])"/>
+        @endif
+
+        <div class="@if( !auth()->user()->hasPermissionTo( 'queue.index' ) ) hide1 @endif">
             <div class="row">
                 <x-admin.form.select
+                    :options="App\Models\Queue::getRoleList()"
                     :col="'md-12'"
-                    :name="'status'"
-                    :data="$data"
-                    :options="\App\Models\Queue::getStatusList()"
+                    :name="'role'"
+                    :value="$data->role ?? \App\Models\Queue::RECEPTIONIST"
                 />
             </div>
 
-            @slot('script')
-                $('#queueBox-{{ $data->id }}').setHtml({ url: '{{ route('admin.queue.edit-box', $data->id) }}' })
-            @endslot
-        @endif
+            @if($data)
+                <div class="row">
+                    <x-admin.form.select
+                        :col="'md-12'"
+                        :name="'status'"
+                    />
+                </div>
 
-        <div class="row">
-            <x-admin.form.select
-                :options="\App\Models\Queue::getTypeList()"
-                :col="'md-12'"
-                :name="'type'"
-                :value="$data->type ?? \App\Models\Queue::CONSULTATION"
-            />
+                {{-- when form submit success, refresh the box info--}}
+                @slot('script')
+                    $('#queueBox-{{ $data->id }}').setHtml({ url: '{{ route('admin.queue.edit-box', $data->id) }}' })
+                @endslot
+            @endif
         </div>
+
+
 
     @endslot
 
@@ -101,34 +120,6 @@
             </div>
         </div>
 
-        <script type="text/javascript">
-
-            function patientExists() {
-                if( $('#user_id').val() ){
-                    return true;
-                }
-                return false;
-            }
-
-            function hideRelatedBox(){
-                const refs = document.getElementsByClassName(`hide-box`);
-                Array.prototype.forEach.call(refs, function (el) { // loop classes
-                    $(el).hide();
-                });
-            }
-
-            function handleQueueInfo() {
-                hideRelatedBox()
-                if( patientExists() ){
-                    $('#patientQueueInfo').show().slideDown();
-                    document.querySelector('button[type="submit"]').style.display="block";
-                } else{
-                    $('#patientSearch').show().slideDown();
-                    document.querySelector('button[type="submit"]').style.display="none";
-                }
-            }
-
-            handleQueueInfo()
-        </script>
+        @include('admin.queue.js.create')
     @endslot
 </x-admin.component.modal>

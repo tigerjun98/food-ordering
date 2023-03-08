@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\QueueController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\AttachmentController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +43,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('home');
     Route::get('/get-doctor-opt', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
+
+    Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
 
     Route::group(['prefix' => 'consultation', 'as' => 'consultation.'], function () {
         Route::get('/print/{consultId}', [ConsultationController::class, 'print'])->name('print');

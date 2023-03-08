@@ -21,9 +21,9 @@ enum GenderEnum: string
     public function getName(): string
     {
         return match ($this) {
-            self::Male => 'Male',
-            self::Female => 'Female',
-            self::Other => 'Other',
+            self::Male => trans('common.male'),
+            self::Female => trans('common.female'),
+            self::Other => trans('common.other_gender'),
         };
     }
 }

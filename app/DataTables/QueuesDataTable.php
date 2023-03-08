@@ -24,7 +24,9 @@ class QueuesDataTable extends DataTable
         $query = Queue::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->editColumn('created_at', function($row){
+            ->editColumn('role', function($row){
+                return $row->role_explain;
+            })->editColumn('created_at', function($row){
                 return dateFormat($row->created_at, 'r');
             })->addColumn('doctor', function($row){
                 return $row->doctor ? $row->doctor->full_name : '';
@@ -48,7 +50,8 @@ class QueuesDataTable extends DataTable
     {
         return [
             Column::make('full_name'),
-            Column::make('type'),
+            // Column::make('type'),
+            Column::make('role'),
             Column::make('status'),
             Column::make('doctor'),
             Column::make('remark'),

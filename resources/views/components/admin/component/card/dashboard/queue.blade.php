@@ -11,7 +11,7 @@
         <button
             onclick="location.href='{{ route('admin.queue.show', $roleId) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.receptionist') }}
-            <span class="badge badge-light ml-1">{{ $count }}</span>
+            <span class="badge badge-light ml-1" id="queueCount-reception">{{ $count }}</span>
         </button>
     @endif
 
@@ -23,7 +23,7 @@
         <button
             onclick="location.href='{{ route('admin.queue.show', $roleId) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.consultation') }}
-            <span class="badge badge-light ml-1">{{ $count }}</span>
+            <span class="badge badge-light ml-1" id="queueCount-doctor">{{ $count }}</span>
         </button>
     @endif
 
@@ -35,10 +35,37 @@
         <button
             onclick="location.href='{{ route('admin.queue.show', $roleId) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.pharmacy') }}
-            <span class="badge badge-light ml-1">{{ $count }}</span>
+            <span class="badge badge-light ml-1" id="queueCount-pharmacy">{{ $count }}</span>
         </button>
     @endif
-
-
-
 </p>
+<script type="module">
+    @php
+    use App\Models\Queue;
+    @endphp
+
+    $(this).broadcasting();
+
+    const updateQueueCount = async () =>{
+        let res = await $(this).sendRequest({
+            url: '{{ route('admin.get-queue-count') }}',
+            alert: false,
+        })
+
+        if(!! document.getElementById('queueCount-reception')){
+            $('#queueCount-reception').html(res.data.reception)
+        }
+
+        if(!! document.getElementById('queueCount-doctor')){
+            $('#queueCount-doctor').html(res.data.doctor)
+        }
+
+        if(!! document.getElementById('queueCount-pharmacy')){
+            $('#queueCount-pharmacy').html(res.data.pharmacy)
+        }
+    }
+
+    Echo.channel('channel-name').listen('.QueueUpdatedEvent',(e) => {
+        updateQueueCount();
+    })
+</script>

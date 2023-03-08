@@ -71,7 +71,7 @@ $.fn.sendRequest = function(options) {
             switch(data.status) {
                 case 200: // success message
                     if(data.message){
-                        if(!settings.alertSuccess) return true;
+                        if(!settings.alertSuccess || !settings.alert) return true;
                         $('#app-alert').showAlert({message: data.message, wait: 100});
                     }
                     break;

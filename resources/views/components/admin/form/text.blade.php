@@ -23,7 +23,7 @@
         }
 
         if($isPhone){
-            $value = '+'.$value;
+            $value = $value ? '+'.$value : '';
         }
     }
 

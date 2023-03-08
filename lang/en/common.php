@@ -151,4 +151,9 @@ return [
     'roles' => 'Roles',
     'prescriptions' => 'Prescriptions',
     'waiting_patient' => 'Waiting patient',
+    'male' => 'Male',
+    'female' => 'Female',
+    'other_gender' => 'Other',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
 ];

@@ -36,6 +36,7 @@ class MedicineStoreRequest extends FormRequest
         return [
             'id'                                => ['integer'],
             'type'                              => ['required', 'in:'.arrayToString(Medicine::getTypeList())],
+            'status'                            => ['required', 'in:'.arrayToString(Medicine::getStatusList())],
             'name_en'                           => ['nullable', 'string', 'regex:/^[\w\-\s]+$/'],
             'name_cn'                           => ['required', 'string'],
             'description_en'                    => ['nullable', 'string'],

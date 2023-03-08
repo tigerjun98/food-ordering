@@ -51,14 +51,17 @@ class ConsultationController extends Controller {
     public function getMedicineOpt()
     {
         return response()->json(
-            Medicine::whereIn('category', [0, request()->category])->FilterOption()->paginate(10)
+            Medicine::whereIn('category', [0, request()->category])
+                ->Active()
+                ->FilterOption()
+                ->paginate(10)
         );
     }
 
     public function getSelectOpt($type)
     {
         return response()->json(
-            Option::where('type', $type)->FilterOption()->paginate(10)
+            Option::where('type', $type)->Active()->FilterOption()->paginate(10)
         );
     }
 

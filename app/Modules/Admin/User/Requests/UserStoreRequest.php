@@ -43,12 +43,11 @@ class UserStoreRequest extends FormRequest
 
     public function rules()
     {
-        return [
+        $validation = [
             'id'                                => ['integer'],
             'name_en'                           => ['required', 'string'],
             'name_cn'                           => ['nullable', 'string'],
             'nric'                              => ['required', 'string', Rule::unique('users')->ignore(request()->id, 'id')],
-            'phone'                             => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('users')->ignore(request()->id, 'id')],
             'email'                             => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
             'occupation'                        => ['nullable', 'string'],
             'dob'                               => ['nullable', 'date_format:Y-m-d', 'before:'.Carbon::now()],
@@ -58,12 +57,18 @@ class UserStoreRequest extends FormRequest
             'emergency_contact_name'            => ['nullable', 'string'],
             'emergency_contact_no'              => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'emergency_contact_relationship'    => ['nullable', 'string'],
-            'state'                             => ['string', 'in:'.arrayToString(User::getStatesList())],
+            'state'                             => ['nullable', 'string', 'in:'.arrayToString(User::getStatesList())],
             'area'                              => ['nullable', 'string'],
             'postcode'                          => ['nullable', 'digits:5'],
             'address'                           => ['nullable', 'string'],
             'nationality'                       => ['required', 'in:'.arrayToString(CountryEnum::getCountryList(false))],
         ];
+
+        $validation['phone'] = request()->phone
+            ? ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('users')->ignore(request()->id, 'id')]
+            : ['nullable'];
+
+        return $validation;
     }
 
     protected function passedValidation()

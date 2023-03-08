@@ -96,6 +96,13 @@ class Queue extends Model
         ];
     }
 
+    protected function roleExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => static::getRoleList()[$this->role] ?? __('common.unknown_status'),
+        );
+    }
+
     public static function getStatusList()
     {
         return [
@@ -153,7 +160,7 @@ class Queue extends Model
         ];
     }
 
-    public function scopeFilter($query, $roleId = null)
+    public function scopeFilter($query)
     {
         if(request()->filled('doctor_id')){
             $query->whereHas('doctor', function ($q) {
@@ -171,23 +178,8 @@ class Queue extends Model
         }
 
         if(request()->filled('role')){
-            $roleId = request()->role;
+            $query->where('role', request()->role);
         }
-
-        if($roleId){
-            switch ($roleId){
-                case self::CASHIER:
-                    $query->where('type', self::PAYMENT);
-                    break;
-                case self::PHARMACY:
-                    $query->where('type', self::MEDICINE);
-                    break;
-                default:
-                    $query->where('type', self::CONSULTATION);
-                    break;
-            }
-        }
-
 
         return $this->searchAll(
             $this->parentFilterTrait($query), ['name_en', 'name_cn']
