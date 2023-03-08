@@ -21,7 +21,7 @@
             :message="trans('messages.permission_required', ['name' => trans('permission.queue.index')])"/>
         @endif
 
-        <div class="@if( !auth()->user()->hasPermissionTo( 'queue.index' ) ) hide1 @endif">
+        <div class="@if( !auth()->user()->hasPermissionTo( 'queue.index' ) ) hide @endif">
             <div class="row">
                 <x-admin.form.select
                     :options="App\Models\Queue::getRoleList()"
