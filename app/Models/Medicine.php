@@ -133,7 +133,7 @@ class Medicine extends Model
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'type'      => ['type' => 'select', 'label'=> 'type', 'option' => static::getTypeList()],
-            'status'    => ['type' => 'select', 'label'=> 'type', 'option' => static::getStatusList()],
+            'status'    => ['type' => 'select', 'label'=> 'status', 'option' => static::getStatusList()],
         ];
     }
 
