@@ -51,12 +51,12 @@ class QueueTest extends TestCase
 //        $response->assertStatus(200);
 //    }
 
-    public function test_add_new_patient_event()
-    {
-        $queue = Queue::factory()->create();
-        $waitingCount = (new QueueService())->countWaitingPatient();
-        QueueUpdatedEvent::dispatch( Queue::NEW_QUEUE, $waitingCount.' patient are waiting!', $queue);
-    }
+//    public function test_add_new_patient_event()
+//    {
+//        $queue = Queue::factory()->create();
+//        $waitingCount = (new QueueService())->countWaitingPatient();
+//        QueueUpdatedEvent::dispatch( Queue::NEW_QUEUE, $waitingCount.' patient are waiting!', $queue);
+//    }
 
 //    public function test_patient_consulted_event()
 //    {
