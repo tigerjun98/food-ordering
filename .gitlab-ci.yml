@@ -12,8 +12,5 @@ pages:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo 'Welcome!!!' > welcome.txt"
-  artifacts:
-    paths:
-      - public
   only:
     - develop
