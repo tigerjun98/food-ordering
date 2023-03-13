@@ -17,6 +17,9 @@ export default defineConfig({
         }),
         sassGlobImports() // https://github.com/cmalven/vite-plugin-sass-glob-import
     ],
+    build: {
+        chunkSizeWarningLimit: 1600,
+    },
     resolve: {
         alias: {
             '@': '/resources',

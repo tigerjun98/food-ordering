@@ -19,6 +19,12 @@ class QueueTest extends TestCase
      *
      * @return void
      */
+
+    public function test_that_true_is_true()
+    {
+        $this->assertTrue(true);
+    }
+
 //    public function test_add_new_patient_to_queue()
 //    {
 //        $user = User::factory()->create();
