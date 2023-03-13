@@ -1,12 +1,11 @@
 variables:
   WORKING_BRANCH: staging
-  PATH: yilin-workspace-staging
   RUNNER: staging-runner
 
 building:
   stage: build
   script:
-    - cd /var/www/$PATH
+    - cd /var/www/yilin-workspace-staging
     - sudo git reset --hard
     - sudo git pull origin $WORKING_BRANCH
     - composer install
