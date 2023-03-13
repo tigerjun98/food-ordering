@@ -1,7 +1,9 @@
+before_script:
+  - cd /var/www/yilin-workspace-staging
+
 building:
   stage: build
   script:
-    - cd /var/www/yilin-workspace-staging
     - git reset --hard
     - git pull origin staging
     - composer install
