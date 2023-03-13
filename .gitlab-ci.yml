@@ -28,10 +28,20 @@ building:
     - sudo chmod -R 775 storage
     - sudo npm install
     - sudo npm run build:admin
+  only:
+    - $WORKING_BRANCH
+  tags:
+    - $RUNNER
+
 testing:
   stage: test
   script:
     - php ./vendor/bin/phpunit
+  only:
+    - $WORKING_BRANCH
+  tags:
+    - $RUNNER
+
 deploying:
   stage: deploy
   script:
