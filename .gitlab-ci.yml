@@ -4,7 +4,7 @@ before_script:
 building:
   stage: build
   script:
-    - sudo su - deployer
+    - whoami
     - git reset --hard
     - git pull origin develop
     - composer install
