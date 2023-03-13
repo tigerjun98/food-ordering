@@ -1,6 +1,3 @@
-stages:
-  - deploy
-
 Deploy:
   stage: deploy
   before_script:
@@ -9,7 +6,7 @@ Deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $EC2_IPADDRESS >> ~/.ssh/known_hosts
+    - ssh-keyscan 3.0.32.153 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - echo "Hello"
+    - ssh ubuntu@3.0.32.153 "hostname && echo 'Welcome!!!' > welcome.txt"
