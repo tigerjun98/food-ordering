@@ -1,5 +1,4 @@
 before_script:
-  - echo "Before script"
   - sudo su - deployer
   - cd /var/www/yilin-workspace-dev
 building:
@@ -16,11 +15,24 @@ building:
     - sudo chmod -R 775 storage
     - npm install
     - npm run build:admin
+  only:
+    - develop
+  tags:
+    - dev-runner
+
 testing:
   stage: test
   script:
     - php ./vendor/bin/phpunit
+  only:
+    - develop
+  tags:
+    - dev-runner
 deploying:
   stage: deploy
   script:
     - echo "Deployed"
+  only:
+    - develop
+  tags:
+    - dev-runner
