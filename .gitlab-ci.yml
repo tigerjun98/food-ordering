@@ -8,11 +8,9 @@ before_script:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-deploy_staging:
-  type: deploy
-  environment:
-    name: dev
-    url: dev.workspace.yilin.com.my
+deploy:
+  stage: deploy
+  environment: dev
   script:
     - ssh deployer@3.0.32.153 "cd var/www/yilin-workspace-dev && git reset --hard && git pull origin develop && exit"
   only:
