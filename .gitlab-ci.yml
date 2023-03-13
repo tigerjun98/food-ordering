@@ -1,17 +1,7 @@
-job:
-  script: echo "Hello, Rules!"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "staging"
-      variables:
-        WORKING_BRANCH: staging
-        PATH: yilin-workspace-staging
-        RUNNER: staging-runner
-
-    - if: $CI_COMMIT_BRANCH == "develop"
-      variables:
-        WORKING_BRANCH: develop
-        PATH: yilin-workspace-dev
-        RUNNER: dev-runner
+variables:
+  WORKING_BRANCH: staging
+  PATH: yilin-workspace-staging
+  RUNNER: staging-runner
 
 building:
   stage: build
