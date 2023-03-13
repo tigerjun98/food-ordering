@@ -1,10 +1,10 @@
 before_script:
   - echo "Before script"
+  - sudo su - deployer
   - cd /var/www/yilin-workspace-dev
 building:
   stage: build
   script:
-    - whoami
     - git reset --hard
     - git pull origin develop
     - composer install
