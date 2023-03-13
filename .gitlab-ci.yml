@@ -17,7 +17,7 @@ building:
     - find /var/www/yilin-workspace-dev -type d -exec chmod 775 {} \;
     - chgrp -R www-data storage bootstrap/cache
     - chmod -R ug+rwx storage bootstrap/cache
-    - npm install && npm build:admin
+    - sudo npm install && sudo npm build:admin
 testing:
   stage: test
   script:
