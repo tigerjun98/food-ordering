@@ -2,8 +2,8 @@ building:
   stage: build
   script:
     - cd /var/www/yilin-workspace-staging
-    - sudo git reset --hard
-    - sudo git pull origin staging
+    - git reset --hard
+    - git pull origin staging
     - composer install
     - php artisan key:generate
     - php artisan migrate
