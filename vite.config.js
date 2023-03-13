@@ -22,6 +22,9 @@ export default defineConfig({
             '@': '/resources',
         },
     },
+    build: {
+        chunkSizeWarningLimit: 1600,
+    },
     server: {
         host: '127.0.0.1',
         watch: {
