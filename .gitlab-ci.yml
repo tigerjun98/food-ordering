@@ -1,4 +1,6 @@
 before_script:
+  - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
   - apt-get update -qq
   - apt-get install -qq git
   # Setup SSH deploy keys
