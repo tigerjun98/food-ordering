@@ -19,7 +19,7 @@ building:
     - sudo npm install
     - sudo npm run build:admin
   only:
-    - $WORKING_BRANCH
+    - staging
   tags:
     - $RUNNER
 
