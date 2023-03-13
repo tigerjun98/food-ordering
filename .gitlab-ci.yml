@@ -1,19 +1,25 @@
 before_script:
-  - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
-  - chmod 644 ~/.ssh/known_hosts
-  - apt-get update -qq
-  - apt-get install -qq git
-  # Setup SSH deploy keys
-  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
-  - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-
-deploy:
-  stage: deploy
-  environment: dev
+  - echo "Before script"
+  - cd /var/www/yilin-workspace-dev
+building:
+  stage: build
   script:
-    - ssh deployer@3.0.32.153 "cd var/www/yilin-workspace-dev && git reset --hard && git pull origin develop && exit"
-  only:
-    - develop
+    - git reset --hard
+    - git pull origin develop
+    - composer install
+    - php artisan key:generate
+    - php artisan migrate
+    - php artisan cache:clear
+    - php artisan config:clear
+    - php artisan storage:link
+    - sudo chmod -R 775 storage
+    - npm install
+    - npm run build:admin
+testing:
+  stage: test
+  script:
+    - php ./vendor/bin/phpunit
+deploying:
+  stage: deploy
+  script:
+    - echo "Deployed"
