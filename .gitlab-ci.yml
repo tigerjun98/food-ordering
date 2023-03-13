@@ -1,4 +1,6 @@
-Deploy:
+image: alpine:latest
+
+pages:
   stage: deploy
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
@@ -6,7 +8,12 @@ Deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan 3.0.32.153 >> ~/.ssh/known_hosts
+    - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh ubuntu@3.0.32.153 "hostname && echo 'Welcome!!!' > welcome.txt"
+    - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo 'Welcome!!!' > welcome.txt"
+  artifacts:
+    paths:
+      - public
+  only:
+    - develop
