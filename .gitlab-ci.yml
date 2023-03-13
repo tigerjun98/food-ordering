@@ -1,11 +1,24 @@
-before_script:
-  - echo "Before script"
-  - cd /var/www/yilin-workspace-staging
+job:
+  script: echo "Hello, Rules!"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging"
+      variables:
+        WORKING_BRANCH: staging
+        PATH: yilin-workspace-staging
+        RUNNER: staging-runner
+
+    - if: $CI_COMMIT_BRANCH == "develop"
+      variables:
+        WORKING_BRANCH: develop
+        PATH: yilin-workspace-dev
+        RUNNER: dev-runner
+
 building:
   stage: build
   script:
+    - cd /var/www/$PATH
     - sudo git reset --hard
-    - sudo git pull origin staging
+    - sudo git pull origin $WORKING_BRANCH
     - composer install
     - php artisan key:generate
     - php artisan migrate
@@ -24,6 +37,6 @@ deploying:
   script:
     - echo "Deployed"
   only:
-    - staging
+    - $WORKING_BRANCH
   tags:
-    - staging-runner
+    - $RUNNER
