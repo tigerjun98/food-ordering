@@ -11,7 +11,8 @@ building:
     - php artisan migrate
     - sudo php artisan cache:clear
     - php artisan config:clear
-    - sudo npm install && sudo npm build:admin
+    - sudo npm install
+    - sudo npm run build:admin
 testing:
   stage: test
   script:
