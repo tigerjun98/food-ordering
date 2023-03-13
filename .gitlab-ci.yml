@@ -23,3 +23,7 @@ deploying:
   stage: deploy
   script:
     - echo "Deployed"
+  only:
+    - staging
+  tags:
+    - staging-runner
