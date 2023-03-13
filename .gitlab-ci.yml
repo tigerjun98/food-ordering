@@ -9,14 +9,8 @@ building:
     - composer install
     - php artisan key:generate
     - php artisan migrate
-    - php artisan cache:clear
+    - sudo php artisan cache:clear
     - php artisan config:clear
-    - php artisan storage:link
-    - sudo chown -R deployer:www-data /var/www/yilin-workspace-dev/
-    - find /var/www/yilin-workspace-dev -type f -exec chmod 664 {} \;
-    - find /var/www/yilin-workspace-dev -type d -exec chmod 775 {} \;
-    - chgrp -R www-data storage bootstrap/cache
-    - chmod -R ug+rwx storage bootstrap/cache
     - sudo npm install && sudo npm build:admin
 testing:
   stage: test
