@@ -23,7 +23,7 @@ building:
 testing:
   stage: test
   script:
-    - php ./vendor/bin/phpunit
+    - php artisan test
   only:
     - develop
   tags:
