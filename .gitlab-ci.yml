@@ -16,4 +16,4 @@ deploy_staging:
   script:
     - ssh deployer@3.0.32.153 "cd var/www/yilin-workspace-dev && git reset --hard && git pull origin develop && exit"
   only:
-    - master
+    - develop
