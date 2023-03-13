@@ -4,6 +4,7 @@ before_script:
 building:
   stage: build
   script:
+    - git config --global --add safe.directory /var/www/yilin-workspace-dev
     - git reset --hard
     - git pull origin develop
     - composer install
