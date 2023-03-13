@@ -5,7 +5,7 @@ building:
   stage: build
   script:
     - sudo git reset --hard
-    - git pull origin staging
+    - sudo git pull origin staging
     - composer install
     - php artisan key:generate
     - php artisan migrate
