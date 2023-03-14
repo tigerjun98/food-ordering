@@ -23,7 +23,7 @@ building:
 testing:
   stage: test
   script:
-    - php ./vendor/bin/phpunit
+    - sudo php ./vendor/bin/phpunit
   only:
     - staging
   tags:

@@ -7,15 +7,14 @@
 .env
 .env.*
 !.env.example
-.phpunit.result.cache
+
 docker-compose.override.ymgil
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
 
-.gitlab-ci.yml
-
+#.phpunit.result.cache
 .phpunit.*
 phpunit.xml.bak
 
