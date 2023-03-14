@@ -23,7 +23,7 @@ building:
 testing:
   stage: test
   script:
-    - php artisan test
+    - sudo php artisan test
   only:
     - develop
   tags:
