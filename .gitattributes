@@ -9,4 +9,4 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 
-config.php merge=ours
+.gitlab-ci.yml merge=ours
