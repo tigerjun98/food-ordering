@@ -70,12 +70,6 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);
     });
 
-
-
-    Route::get('/testing', function () {
-        dd(\Illuminate\Support\Facades\Hash::make('123123'));
-    });
-
 });
 
 //Route::get('/', function () {

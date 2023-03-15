@@ -19,7 +19,21 @@ $.fn.initialiseSortable = function(options) {
     return new Sortable(el, options);
 }
 
+$(document).on ('keyup', '.select2-selection--multiple .select2-search__field', function (event){
+    if(event.keyCode === 13){
+        var $this = $(this);
+        var optionText = $this. val();
+        if (optionText !== "" && $this.find("option[value='" + optionText + "']").length === 0){
+            var $select = $this.parents('.select2-container').prev("select");
+            var newOption = new Option(optionText, optionText, true, true);
+            $select.append(newOption).trigger('change');
+            $this.val('');
+        }
+    }
+});
+
 $.fn.initialiseDynamicSelect2 = function(options) {
+
     $($(this)).select2({
         // minimumInputLength: 1,
         theme: "bootstrap",
@@ -27,25 +41,36 @@ $.fn.initialiseDynamicSelect2 = function(options) {
         placeholder: "",
         maximumSelectionSize: 6,
         containerCssClass: ":all:",
-        tags: true,
         tokenSeparators: [','],
+        tags: true,
         allowClear: true,
         createTag: function (params) {
-            var term = $.trim(params.term);
-            if (term === '') {
+            if(/[,;，；]/.test(params.term)) {
+                var str = params.term.trim().replace(/[,;，；]*$/, '');
+                return {id: str, text: str}
+            } else {
                 return null;
             }
 
-            return {
-                id: term,
-                text: term,
-                newTag: true // add additional parameters
-            }
+
+            // var term = $.trim(params.term);
+            // if (term === '') {
+            //     return null;
+            // }
+            //
+            // return {
+            //     id: term,
+            //     text: term,
+            //     newTag: true // add additional parameters
+            // }
         },
         ajax: {
             url: options.url,
             dataType: 'json',
-            delay: 250,
+            // delay: 650,
+            // url: function (params) {
+            //     return `${options.url}?search=${params.term}&page=${params.page || 1}`;
+            // },
             data: function (params) {
                 var query = {
                     search: params.term,
