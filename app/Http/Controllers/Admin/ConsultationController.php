@@ -45,7 +45,7 @@ class ConsultationController extends Controller {
     public function print($consultId)
     {
         $consultation = $this->model->findOrFail($consultId);
-        return view('admin.consultation.print.index', compact('consultation'));
+        return view('admin.consultation.print.mini', compact('consultation'));
     }
 
     public function getMedicineOpt()
