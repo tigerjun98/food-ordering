@@ -156,4 +156,5 @@ return [
     'other_gender' => 'Other',
     'active' => 'Active',
     'inactive' => 'Inactive',
+    'new_template' => 'New template',
 ];

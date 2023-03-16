@@ -2,16 +2,16 @@
 <table class="prescription-table" style="width: 100%;">
     <thead>
         <tr>
-            @if( str_contains( request()->types, 'table-category,')  )
+            @if( str_contains( $template->value, 'table-category,')  )
                 <th style="text-align: left;">CATEGORY</th>
             @endif
-            @if( str_contains( request()->types, 'table-description,')  )
+            @if( str_contains( $template->value, 'table-description,')  )
                 <th style="text-align: left;">DESCRIPTION</th>
             @endif
-            @if( str_contains( request()->types, 'table-qty,')  )
+            @if( str_contains( $template->value, 'table-qty,')  )
                 <th style="text-align: center;">QTY</th>
             @endif
-            @if( str_contains( request()->types, 'table-total,')  )
+            @if( str_contains( $template->value, 'table-total,')  )
                 <th style="text-align: right;">TOTAL</th>
             @endif
         </tr>
@@ -24,9 +24,9 @@
         @foreach($prescriptions as $prescription)
 {{--            the category under medicine--}}
             @if( in_array($prescription->category, array_keys(\App\Models\Medicine::getCategoryList())) && $prescription->combinations )
-                @if( str_contains( request()->types, 'table-category,')  )
+                @if( str_contains( $template->value, 'table-category,')  )
                     @php
-                        if(str_contains( request()->types, 'table-instruction,')){
+                        if(str_contains( $template->value, 'table-instruction,')){
                             $count = 4;
                         } else{
                             $count = 1;
@@ -49,7 +49,7 @@
                     />
                 @endforeach
 
-                @if( str_contains( request()->types, 'table-instruction,')  )
+                @if( str_contains( $template->value, 'table-instruction,')  )
                     <x-admin.component.prints.separator
                         :light="true"
                         :colspan="3" />
@@ -60,7 +60,7 @@
 
             @else
                 <tr>
-                    @if( str_contains( request()->types, 'table-category,')  )
+                    @if( str_contains( $template->value, 'table-category,')  )
                         <td>
                             <div class="prescription-table-content header">
                                 <p>{{ $prescription->category_explain }}</p>
@@ -68,7 +68,7 @@
                         </td>
                     @endif
 
-                    @if( str_contains( request()->types, 'table-description,')  )
+                    @if( str_contains( $template->value, 'table-description,')  )
                         <td>
                             <div class="prescription-table-content">
                                 <p>{{ $prescription->remark }}</p>

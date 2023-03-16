@@ -38,7 +38,7 @@
      'Nunito',sans-serif !important;
      position: relative; padding: 0 30px 20px;">
 
-    @if( str_contains( request()->types, 'layout-header,')  )
+    @if( str_contains( $template->value, 'layout-header,')  )
         <x-admin.component.prints.consultations.header
             :consultation="$consultation"
         />
@@ -46,14 +46,17 @@
 
     <x-admin.component.prints.consultations.info
         :consultation="$consultation"
+        :template="$template"
     />
 
     <x-admin.component.prints.consultations.prescription
         :prescriptions="$consultation->prescriptions"
+        :template="$template"
     />
 
     <x-admin.component.prints.consultations.description
         :consultation="$consultation"
+        :template="$template"
     />
 </div>
 <!--Mailing End-->

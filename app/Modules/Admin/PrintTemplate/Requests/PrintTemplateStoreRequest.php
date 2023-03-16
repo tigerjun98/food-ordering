@@ -48,9 +48,11 @@ class PrintTemplateStoreRequest extends FormRequest
         return [
             'id'        => ['integer'],
             'name'      => ['required', 'string'],
+            'type'      => ['required', 'string'],
             'name_en'   => ['required', 'string'],
             'name_cn'   => ['nullable', 'string'],
             'value.*'   => ['required'],
+            'remark'    => ['nullable', 'string'],
         ];
     }
 }

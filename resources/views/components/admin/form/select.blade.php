@@ -1,6 +1,6 @@
 @php
     $defaultClass= ' form-control ';
-    $defaultClass .= !isset($selectJs) || $selectJs === false ? ' select2-single ' : '';
+    $defaultClass .= isset($selectJs) && !$selectJs ? '' : ' select2-single ';
     $attributes['class'] = isset($class) ? $class.$defaultClass : $defaultClass;
     $attributes['name'] = $name;
     $attributes['id'] = isset($id) ? $id : $name;

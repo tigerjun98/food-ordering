@@ -1,8 +1,8 @@
 <div class="info-wrapper">
     <div class="info-wrapper-left">
-        @if( str_contains( request()->types, 'info-patient,')  )
+        @if( str_contains( $template->value, 'info-patient,')  )
             <div class="info-wrapper-title">
-                Lilian chung wing lian
+                {{ $consultation->patient->full_name }}
             </div>
             <div class="info-wrapper-content">
                 <span>Contact:</span> {{ $consultation->patient->phone ?? $consultation->patient->emergency_contact_no }}
@@ -17,13 +17,13 @@
     </div>
 
 
-    @if( str_contains( request()->types, 'info-detail,')  )
+    @if( str_contains( $template->value, 'info-detail,')  )
         <div class="info-wrapper-right">
             <div class="info-wrapper-title">
-                {{ request()->title ?? 'Consultation' }}
+                {{ $template->name_en }}
             </div>
             <div class="info-wrapper-desc">
-                <span>RefId #:</span> PCN230314KOF001
+                <span>RefId #:</span> {{ $consultation->ref_id }}
             </div>
             <div class="info-wrapper-desc">
                 {{ dateFormat($consultation->created_at, 'r') }}

@@ -38,10 +38,9 @@ class PrintTemplateController extends Controller {
         return $dataTable->render('admin.account.datatable', compact('filter'));
     }
 
-    public function show(AdminsDataTable $dataTable)
+    public function show($id)
     {
-        $filter = $this->model->Filter();
-        return $dataTable->render('admin.account.datatable', compact('filter'));
+
     }
 
     public function create()
@@ -51,16 +50,16 @@ class PrintTemplateController extends Controller {
         ]);
     }
 
-    public function edit(int $adminId)
+    public function edit(int $printTemplateId)
     {
-        $data = $this->model->findOrFail($adminId);
-        return html('admin.account.form.create', compact('data'));
+        $data = $this->model->findOrFail($printTemplateId);
+        return html('admin.print-template.form.edit', compact('data'));
     }
 
     public function store(PrintTemplateStoreRequest $request)
     {
-        $this->service->store($request->validated());
-        return makeResponse(200);
+        $model = $this->service->store($request->validated());
+        return makeResponse(200, null, $model);
     }
 
     public function delete($adminId)

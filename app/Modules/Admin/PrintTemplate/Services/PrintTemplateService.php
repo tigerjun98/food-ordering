@@ -33,24 +33,16 @@ class PrintTemplateService
         return $str;
     }
 
-    public function store(array $request)
+    public function store(array $request): PrintTemplate
     {
-        $data = array_except( $request, ['roles', 'password'] );
         $request['value'] = $this->itemsToString( $request['value'] );
         $request['name'] = $request['name'] == 'new'
-            ? slugify($request['name'])
-            : $request['name'];
+            ? slugify($request['name_en'])
+            : $this->model->findOrFail($request['name'])->name;
 
-        dd($request);
+        $template = $this->model->updateOrCreate([ 'name' => $request['name'] ], $request);
 
-
-
-        $data['clinic_id'] = auth()->user()->clinic_id;
-        $admin = $this->model->updateOrCreate([ 'name' => $request['name'] ], $data);
-        $this->updatePassword($admin, $request);
-        $this->assignRoles($admin, $request['roles']);
-
-        return $admin;
+        return $template;
     }
 
 }

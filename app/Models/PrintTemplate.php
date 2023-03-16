@@ -21,7 +21,7 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class PrintTemplate extends Model
 {
-    use ModelTrait, HasFactory, HasSlug, SelectOption;
+    use ModelTrait, HasFactory, SelectOption;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -30,6 +30,14 @@ class PrintTemplate extends Model
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
     public $incrementing = false;
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function($data) {
+            if(!$data->id) $data->id = abs( crc32( uniqid() ) );
+        });
+    }
 
     protected function fullName(): Attribute
     {

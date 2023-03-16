@@ -46,7 +46,8 @@ class ConsultationController extends Controller {
     public function print($consultId)
     {
         $consultation = $this->model->findOrFail($consultId);
-        return view('admin.consultation.print.mini', compact('consultation'));
+        $template = PrintTemplate::findOrFail(request()->print_template_id);
+        return view('admin.consultation.print.mini', compact('consultation', 'template'));
     }
 
     public function printSubmit($consultId)
@@ -89,7 +90,7 @@ class ConsultationController extends Controller {
     public function show($consultationId)
     {
         $consultation = Consultation::findOrFail($consultationId);
-        $tabs = isset(request()->tabs) ? explode(',', request()->tabs) : ['details', 'medicine', 'patient'];
+        $tabs = isset(request()->tabs) ? explode(',', request()->tabs) : ['details', 'medicine', 'patient', 'attachment'];
 
 
         return html('admin.consultation.modal.view',

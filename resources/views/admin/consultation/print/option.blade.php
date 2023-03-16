@@ -3,83 +3,64 @@
 @endphp
 <x-admin.component.modal
     :title="'Print details'"
-    :nav="['details']"
+    :nav="['print', 'details']"
     :submit="route('admin.print-template.store')"
 >
 
-    @slot('script')
-        let printUrl = `{{ route('admin.consultation.print.index', $consultation->id) }}?types=${res.data.types}&title=${res.data.title}`;
-        $(this).printConsultation({url: printUrl})
+    @slot('print')
+        @foreach($templates as $template)
+            <div class="d-flex flex-row mb-3 pb-3 border-bottom justify-content-between align-items-center">
+                <div>
+                    <h5 class="text-capitalize mb-1">{{ $template->full_name }}</h5>
+                    <p class="text-muted mb-0 text-small">{{ $template->remark }}</p>
+                </div>
+                <div>
+                    <a class="btn btn-outline-primary btn-xs" href="javascript:print({{ $template->id }})">PRINT</a>
+                </div>
+            </div>
+        @endforeach
+
+
+        <script>
+            function print(id){
+                let printUrl = `{{ route('admin.consultation.print.index', $consultation->id) }}?print_template_id=${id}`;
+                $(this).printConsultation({url: printUrl})
+                $(this).closeModal({closeLatestModal: true})
+            }
+        </script>
     @endslot
 
     @slot('details')
-
-        <div class="row mb-4">
+        <input type="hidden" value="consultation" name="type">
+        <div class="row mb-2">
             <x-admin.form.select
                 :col="'md-12'"
                 :name="'name'"
-                :selectjs="false"
+                :selectJs="true"
+                :label="trans('template')"
             >
                 @slot('customOption')
                     @foreach($templates as $template)
-                        <option value="{{ $template->id }}">{{ $template->full_name }}</option>
-                        <option value="new">{{ trans('common.new_template') }}</option>
+                        <option class="text-capitalize" value="{{ $template->id }}">{{ ucfirst($template->full_name) }}</option>
                     @endforeach
+                    <option value="new">{{ trans('common.new_template') }}</option>
                 @endslot
             </x-admin.form.select>
 
             <script type="text/javascript">
-                $(document).on('change', '#print_template', function (event){
+                $(document).on('change', '#name', async function (event){
                     var $this = $(this);
-                    var optionText = $this. val();
-                    console.log(optionText)
+                    if( $this.val() === 'new' ) return true;
+                    let url = `{{ route('admin.print-template.edit', ':id') }}`.replace(':id', $this.val())
+                    $('#optionSection').setHtml({url});
                 });
             </script>
         </div>
 
-        <div class="row mb-4">
-            <x-admin.form.text
-                :col="'md-6'"
-                :name="'name_en'"
-            />
-            <x-admin.form.text
-                :col="'md-6'"
-                :name="'name_cn'"
-            />
+        <div id="optionSection">
+            @include('admin.print-template.form.edit')
         </div>
 
-
-            <div class="row mb-4">
-            @foreach(Lang::get('prints') as $role => $permission)
-                <div class="col-md-4 mb-4">
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input type="checkbox"
-                               name="category[{{$role}}]"
-                               class="custom-control-input"
-                               id="check-{{ $role }}"
-                               value="1"
-                               onchange="checkAll('{{ $role }}')"
-                            {{ isset($permissions) && in_array($role.'.*', $permissions) ? 'checked' : '' }}
-                        >
-                        <label class="custom-control-label font-weight-bold" for="check-{{ $role }}">{{ $role }}</label>
-                    </div>
-                    @foreach($permission as $name => $lang)
-                        <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox"
-                                   name="value[{{$role}}][{{$name}}]"
-                                   class="custom-control-input role-{{ $role }}"
-                                   value="1"
-                                   id="check-{{ $role }}-{{ $name }}"
-                                   onchange="uncheckRole('{{ $role }}')"
-                                {{ isset($permissions) && in_array($role.'.'.$name, $permissions) ? 'checked' : '' }}
-                                {{ isset($permissions) && in_array($role.'.*', $permissions) ? 'checked' : '' }}
-                            >
-                            <label class="custom-control-label" for="check-{{ $role }}-{{ $name }}">{{ $lang }}</label>
-                        </div>
-                    @endforeach
-                </div>
-            @endforeach
-        </div>
 
         <script>
             const monitorChildCheckbox = (role) => {

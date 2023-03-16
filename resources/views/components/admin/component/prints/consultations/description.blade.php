@@ -2,21 +2,21 @@
 
 
     <div class="description-wrapper-left">
-        @if( str_contains( request()->types, 'bottom-symptom,') )
+        @if( str_contains( $template->value, 'bottom-symptom,') )
             <div class="content">
                 <div class="label">{{ trans('label.symptom') }}</div>
                 <div class="desc">{{ $consultation->symptom }}</div>
             </div>
         @endif
 
-        @if( str_contains( request()->types, 'bottom-advice,') )
+        @if( str_contains( $template->value, 'bottom-advice,') )
             <div class="content">
                 <div class="label">{{ trans('label.advise') }}</div>
                 <div class="desc">{{ $consultation->advise }}</div>
             </div>
         @endif
 
-        @if( str_contains( request()->types, 'bottom-internal_remark,') )
+        @if( str_contains( $template->value, 'bottom-internal_remark,') )
             <div class="content">
                 <div class="label">{{ trans('label.internal_remark') }}</div>
                 <div class="desc">{{ $consultation->internal_remark }}</div>
@@ -25,7 +25,7 @@
 
     </div>
 
-    @if( str_contains( request()->types, 'bottom-amount,')  )
+    @if( str_contains( $template->value, 'bottom-amount,')  )
         <div class="description-wrapper-right">
             <div class="content">
                 <div class="label">Total</div>
