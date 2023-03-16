@@ -23,6 +23,7 @@ building:
 testing:
   stage: test
   script:
+    - sudo vendor/bin/phpunit --migrate-configuration
     - sudo php artisan test
   only:
     - develop
