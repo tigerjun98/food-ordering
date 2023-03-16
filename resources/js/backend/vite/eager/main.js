@@ -46,7 +46,7 @@ $.fn.initialiseDynamicSelect2 = function(options) {
         tokenSeparators: [','],
         allowClear: true,
         createTag: function (params) {
-            if(/[,;，；]/.test(params.term)) {
+            if(/[,;，； ]/.test(params.term)) { // support comma, semicolon & spacing
                 var str = params.term.trim().replace(/[,;，；]*$/, '');
                 return { id: str, text: str, newTag: true }
             } else {
