@@ -16,7 +16,6 @@
 
 <script type="text/javascript">
 
-
     function appendErrMsg(name, msg) {
         let form = $('#submitForm{{isset($id) ? $id : $code}}').find("[name='"+name+"']");
         let attrId = form.attr('id')

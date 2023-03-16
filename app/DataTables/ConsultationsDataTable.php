@@ -68,9 +68,13 @@ class ConsultationsDataTable extends DataTable
                 'icon'      => 'simple-icon-eye',
                 'modal'     => route('admin.consultation.show', $row->id)
             ],
+            'option' => [
+                'icon'      => 'simple-icon-printer',
+                'modal'     => route('admin.consultation.print.option', $row->id)
+            ],
             'print' => [
                 'icon'      => 'simple-icon-printer',
-                'onclick'   => '$(this).printConsultation({url: "'.route('admin.consultation.print', $row->id).'"})'
+                'onclick'   => '$(this).printConsultation({url: "'.route('admin.consultation.print.index', $row->id).'"})'
             ],
             'edit' => [
                 'icon'      => 'simple-icon-pencil',

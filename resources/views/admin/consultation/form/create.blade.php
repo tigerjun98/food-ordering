@@ -34,6 +34,7 @@
                                     <h3 class="mb-5">{{ trans('common.consultation') }}</h3>
                                     <div class="row">
                                         <x-admin.form.select
+                                            :selectJs="false"
                                             :ajax="route('admin.consultation.get-opt', 'specialist')"
                                             :multiple="'multiple'"
                                             :col="'md-12'"
@@ -54,6 +55,7 @@
 
                                     <div class="row">
                                         <x-admin.form.select
+                                            :selectJs="false"
                                             :ajax="route('admin.consultation.get-opt', 'syndrome')"
                                             :multiple="'multiple'"
                                             :data="$consultation"
@@ -74,6 +76,7 @@
 
                                     <div class="row">
                                         <x-admin.form.select
+                                            :selectJs="false"
                                             :ajax="route('admin.consultation.get-opt', 'diagnose')"
                                             :multiple="'multiple'"
                                             :data="$consultation"

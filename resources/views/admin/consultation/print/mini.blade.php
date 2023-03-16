@@ -36,11 +36,13 @@
      style="background-color:#ffffff;
      max-width:22cm; font-family:
      'Nunito',sans-serif !important;
-     position: relative; padding: 20px 30px;">
+     position: relative; padding: 0 30px 20px;">
 
-    <x-admin.component.prints.consultations.header
-        :consultation="$consultation"
-    />
+    @if( str_contains( request()->types, 'layout-header,')  )
+        <x-admin.component.prints.consultations.header
+            :consultation="$consultation"
+        />
+    @endif
 
     <x-admin.component.prints.consultations.info
         :consultation="$consultation"

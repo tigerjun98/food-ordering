@@ -11,6 +11,7 @@
                     :name="'doctor_id'"
                     :ajax="route('admin.get-doctor-opt')"
                     :required="false"
+                    :selectJs="false"
                 ></x-admin.form.select>
             </div>
         @endslot

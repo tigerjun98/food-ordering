@@ -36,7 +36,7 @@
         margin: 0 auto;
         width: fit-content;
         display: flex;
-        font-size: 14px;
+        font-size: 11px;
         margin-top: 10px;
     }
     .header-contact-left{
@@ -47,7 +47,7 @@
         font-weight: 700;
     }
     .header-detail .desc{
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 700;
     }
     .header-wrapper-left{

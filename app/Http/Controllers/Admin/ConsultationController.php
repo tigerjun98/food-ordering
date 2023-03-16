@@ -10,10 +10,11 @@ use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
+use App\Models\PrintTemplate;
 use App\Models\Queue;
 use App\Models\User;
-use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
+use App\Modules\Admin\Consultation\Services\ConsultationPrintService;
 use App\Modules\Admin\Consultation\Services\ConsultationService;
 use App\Modules\Admin\Queue\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
@@ -46,6 +47,19 @@ class ConsultationController extends Controller {
     {
         $consultation = $this->model->findOrFail($consultId);
         return view('admin.consultation.print.mini', compact('consultation'));
+    }
+
+    public function printSubmit($consultId)
+    {
+        $res = (new ConsultationPrintService())->print($consultId);
+        return makeResponse(200, '', $res);
+    }
+
+    public function printOption($consultId)
+    {
+        $templates = PrintTemplate::where('type', 'consultation')->get();
+        $consultation = $this->model->findOrFail($consultId);
+        return html('admin.consultation.print.option', compact('consultation', 'templates'));
     }
 
     public function getMedicineOpt()

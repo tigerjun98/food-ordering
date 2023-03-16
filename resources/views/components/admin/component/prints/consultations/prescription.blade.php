@@ -2,25 +2,45 @@
 <table class="prescription-table" style="width: 100%;">
     <thead>
         <tr>
-            <th style="text-align: left;">CATEGORY</th>
-            <th style="text-align: left;">DESCRIPTION</th>
-            <th>QTY</th>
-            <th style="text-align: right;">TOTAL</th>
+            @if( str_contains( request()->types, 'table-category,')  )
+                <th style="text-align: left;">CATEGORY</th>
+            @endif
+            @if( str_contains( request()->types, 'table-description,')  )
+                <th style="text-align: left;">DESCRIPTION</th>
+            @endif
+            @if( str_contains( request()->types, 'table-qty,')  )
+                <th style="text-align: center;">QTY</th>
+            @endif
+            @if( str_contains( request()->types, 'table-total,')  )
+                <th style="text-align: right;">TOTAL</th>
+            @endif
         </tr>
+
         <x-admin.component.prints.separator
             :colspan="4" />
     </thead>
 
     <tbody>
         @foreach($prescriptions as $prescription)
+{{--            the category under medicine--}}
             @if( in_array($prescription->category, array_keys(\App\Models\Medicine::getCategoryList())) && $prescription->combinations )
-                <tr>
-                    <td rowspan="{{ count($prescription->combinations) + 4 }}">
-                        <div class="prescription-table-content header">
-                            <p>{{ $prescription->category_explain }}</p>
-                        </div>
-                    </td>
-                </tr>
+                @if( str_contains( request()->types, 'table-category,')  )
+                    @php
+                        if(str_contains( request()->types, 'table-instruction,')){
+                            $count = 4;
+                        } else{
+                            $count = 1;
+                        }
+                    @endphp
+
+                    <tr>
+                        <td rowspan="{{ count($prescription->combinations) + $count }}">
+                            <div class="prescription-table-content header">
+                                <p>{{ $prescription->category_explain }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                @endif
 
                 @foreach($prescription->combinations as $key => $combination)
                     <x-admin.component.prints.consultations.prescriptions.medicine
@@ -29,28 +49,38 @@
                     />
                 @endforeach
 
-                <x-admin.component.prints.separator
-                    :light="true"
-                    :colspan="3" />
+                @if( str_contains( request()->types, 'table-instruction,')  )
+                    <x-admin.component.prints.separator
+                        :light="true"
+                        :colspan="3" />
+                    <x-admin.component.prints.consultations.prescriptions.instruction
+                        :prescription="$prescription"
+                    />
+                @endif
 
-                <x-admin.component.prints.consultations.prescriptions.instruction
-                    :prescription="$prescription"
-                />
             @else
                 <tr>
-                    <td>
-                        <div class="prescription-table-content header">
-                            <p>{{ $prescription->category_explain }}</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="prescription-table-content">
-                            <p>{{ $prescription->remark }}</p>
-                        </div>
-                    </td>
+                    @if( str_contains( request()->types, 'table-category,')  )
+                        <td>
+                            <div class="prescription-table-content header">
+                                <p>{{ $prescription->category_explain }}</p>
+                            </div>
+                        </td>
+                    @endif
+
+                    @if( str_contains( request()->types, 'table-description,')  )
+                        <td>
+                            <div class="prescription-table-content">
+                                <p>{{ $prescription->remark }}</p>
+                            </div>
+                        </td>
+                    @endif
                 </tr>
+
             @endif
-            <x-admin.component.prints.separator :colspan="5" />
+
+        <x-admin.component.prints.separator :colspan="4" />
+
         @endforeach
     </tbody>
 </table>
