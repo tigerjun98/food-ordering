@@ -58,9 +58,9 @@ class ConsultationController extends Controller {
 
     public function printOption($consultId)
     {
-        $templates = PrintTemplate::where('type', 'consultation')->get();
+        $templates = PrintTemplate::where('type', PrintTemplate::CONSULTATION)->get();
         $consultation = $this->model->findOrFail($consultId);
-        return html('admin.consultation.print.option', compact('consultation', 'templates'));
+        return html('admin.consultation.modal.print', compact('consultation', 'templates'));
     }
 
     public function getMedicineOpt()

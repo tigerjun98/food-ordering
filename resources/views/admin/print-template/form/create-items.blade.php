@@ -34,7 +34,7 @@
                        class="custom-control-input"
                        id="check-{{ $section }}"
                        value="1"
-                       onchange="checkAll('{{ $section }}')"
+                       onchange="checkedAll('{{ $section }}')"
                 >
                 <label class="text-capitalize custom-control-label font-weight-bold" for="check-{{ $section }}">{{ $section }}</label>
             </div>
@@ -60,4 +60,42 @@
         </div>
     @endforeach
 </div>
+
+<script type="text/javascript">
+    function monitorChildCheckbox(section){
+        let allChecked = true;
+        const refs = document.getElementsByClassName(`role-${section}`);
+        Array.prototype.forEach.call(refs, function (el) { // loop classes
+            if(!$(el).prop('checked')) allChecked = false
+        });
+
+        return allChecked;
+    }
+
+    function uncheckRole(section){
+        $(`#check-${section}`).prop('checked',
+            monitorChildCheckbox(section) ? 'checked' : false
+        )
+    }
+
+    function checkedAll(section){
+        const refs = document.getElementsByClassName(`role-${section}`);
+        if (document.getElementById(`check-${section}`).checked) {
+            Array.prototype.forEach.call(refs, function (el) { // loop classes
+                $(el).prop('checked', 'checked')
+            });
+        } else{
+            Array.prototype.forEach.call(refs, function (el) { // loop classes
+                $(el).prop('checked', false)
+            });
+        }
+    }
+
+    function uncheckAll(){
+        const refs = document.getElementsByClassName(`custom-control-input`);
+        Array.prototype.forEach.call(refs, function (el) { // loop classes
+            $(el).prop('checked', false)
+        });
+    }
+</script>
 

@@ -118,7 +118,7 @@
         text-align: center;
     }
     .prescription-table-content p{
-
+        overflow-wrap: anywhere;
     }
     .prescription-table-separator{
         background: #d5d5d5;

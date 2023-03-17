@@ -1,9 +1,15 @@
 @php
     $data = $data ?? null;
+    $nav = ['print'];
+
+    if( auth()->user()->hasPermissionTo( 'setting-other.print' ) ){
+        $nav[] = 'details';
+    }
+
 @endphp
 <x-admin.component.modal
     :title="'Print details'"
-    :nav="['print', 'details']"
+    :nav="$nav"
     :submit="route('admin.print-template.store')"
 >
 
@@ -31,7 +37,7 @@
     @endslot
 
     @slot('details')
-        <input type="hidden" value="consultation" name="type">
+        <input type="hidden" value="{{ \App\Models\PrintTemplate::CONSULTATION }}" name="type">
         <div class="row mb-2">
             <x-admin.form.select
                 :col="'md-12'"
@@ -54,7 +60,7 @@
                         resetForm()
                         return true;
                     }
-                    let url = `{{ route('admin.print-template.edit', ':id') }}`.replace(':id', $this.val())
+                    let url = `{{ route('admin.print-template.get-checked-item', ':id') }}`.replace(':id', $this.val())
                     $('#optionSection').setHtml({url});
                 });
 
@@ -69,48 +75,7 @@
         </div>
 
         <div id="optionSection">
-            @include('admin.print-template.form.edit')
+            @include('admin.print-template.form.create-items')
         </div>
-
-
-        <script>
-            const monitorChildCheckbox = (role) => {
-                let allChecked = true;
-                const refs = document.getElementsByClassName(`role-${role}`);
-                Array.prototype.forEach.call(refs, function (el) { // loop classes
-                    if(!$(el).prop('checked')) allChecked = false
-                });
-
-                return allChecked;
-            }
-
-            const uncheckRole = (role) => {
-                $(`#check-${role}`).prop('checked',
-                    monitorChildCheckbox(role) ? 'checked' : false
-                )
-            }
-
-            const checkAll = (role) => {
-                const refs = document.getElementsByClassName(`role-${role}`);
-                if (document.getElementById(`check-${role}`).checked) {
-                    Array.prototype.forEach.call(refs, function (el) { // loop classes
-                        $(el).prop('checked', 'checked')
-                    });
-                } else{
-                    Array.prototype.forEach.call(refs, function (el) { // loop classes
-                        $(el).prop('checked', false)
-                    });
-                }
-            }
-
-            function uncheckAll(){
-                const refs = document.getElementsByClassName(`custom-control-input`);
-                Array.prototype.forEach.call(refs, function (el) { // loop classes
-                    $(el).prop('checked', false)
-                });
-            }
-
-
-        </script>
     @endslot
 </x-admin.component.modal>

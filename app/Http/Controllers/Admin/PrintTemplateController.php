@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\AdminsDataTable;
+use App\DataTables\PrintTemplateDataTable;
 use App\Entity\Enums\Country;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
@@ -32,20 +33,21 @@ class PrintTemplateController extends Controller {
         $this->service = new PrintTemplateService();
     }
 
-    public function index(AdminsDataTable $dataTable)
+    public function index(PrintTemplateDataTable $dataTable)
     {
         $filter = $this->model->Filter();
-        return $dataTable->render('admin.account.datatable', compact('filter'));
+        return $dataTable->render('admin.print-template.datatable', compact('filter'));
     }
 
     public function show($id)
     {
-
+        $data = PrintTemplate::findOrFail($id);
+        return html('admin.print-template.form.create', compact('data'));
     }
 
     public function create()
     {
-        return html('admin.account.form.create',[
+        return html('admin.print-template.form.create',[
             'data' => null
         ]);
     }
@@ -56,22 +58,29 @@ class PrintTemplateController extends Controller {
         return html('admin.print-template.form.edit', compact('data'));
     }
 
+    public function getCheckedItem(int $modelId)
+    {
+        $data = $this->model->findOrFail($modelId);
+        return html('admin.print-template.form.create-items', compact('data'));
+    }
+
     public function store(PrintTemplateStoreRequest $request)
     {
         $model = $this->service->store($request->validated());
         return makeResponse(200, null, $model);
     }
 
-    public function delete($adminId)
+    public function delete($modelId)
     {
-        return html('admin.account.form.delete',[
-            'data' => $this->model->findOrFail($adminId)
+        return html('admin.print-template.form.delete',[
+            'canDelete' => true,
+            'data' => $this->model->findOrFail($modelId)
         ]);
     }
 
-    public function destroy($adminId)
+    public function destroy($modelId)
     {
-        $this->service->delete($this->model->findOrFail($adminId));
+        $this->service->delete($this->model->findOrFail($modelId));
         return makeResponse(200);
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Modules\Admin\PrintTemplate\Requests;
 
 use App\Entity\Enums\GenderEnum;
-use App\Models\Order;
+use App\Models\Prescription;
+use App\Models\PrintTemplate;
 use App\Models\User;
-use App\Modules\Users\Account\Rules\MatchOldPassword;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -48,7 +48,7 @@ class PrintTemplateStoreRequest extends FormRequest
         return [
             'id'        => ['integer'],
             'name'      => ['required', 'string'],
-            'type'      => ['required', 'string'],
+            'type'      => ['required', 'in:'.arrayToString(PrintTemplate::getTypeList())],
             'name_en'   => ['required', 'string'],
             'name_cn'   => ['nullable', 'string'],
             'value.*'   => ['required'],

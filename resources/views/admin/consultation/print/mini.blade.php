@@ -61,10 +61,13 @@
 </div>
 <!--Mailing End-->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // window.print()
-        // setTimeout(function(){ window.close(); }, 1250);
-    }, false);
+    @if(!request()->read_only == true)
+        document.addEventListener("DOMContentLoaded", function () {
+            window.print()
+            setTimeout(function(){ window.close(); }, 1250);
+        }, false);
+    @endif
+
 </script>
 </body>
 </html>

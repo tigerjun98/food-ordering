@@ -45,4 +45,9 @@ class PrintTemplateService
         return $template;
     }
 
+    public function delete(PrintTemplate $model)
+    {
+        $model->delete();
+    }
+
 }

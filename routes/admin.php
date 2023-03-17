@@ -48,6 +48,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
 
+    Route::group(['prefix' => 'print-template', 'as' => 'print-template.'], function () {
+        Route::get('/get-checked-item/{id}', [PrintTemplateController::class, 'getCheckedItem'])->name('get-checked-item');
+    });
+
     Route::group(['prefix' => 'consultation', 'as' => 'consultation.'], function () {
 //        Route::get('/print/{consultId}', [ConsultationController::class, 'print'])->name('print');
 

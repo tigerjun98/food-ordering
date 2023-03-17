@@ -2,7 +2,7 @@
     @forelse($attachments as $attachment)
         <div class="col-6 col-lg-2 col-md-4">
             <a href="{{ $attachment->url }}" target="_blank">
-                <img class="img-fluid border-radius" src="{{ $attachment->url }}" />
+                <img class="img-fluid" src="{{ $attachment->url }}" />
             </a>
         </div>
     @empty

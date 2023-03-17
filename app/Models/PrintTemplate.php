@@ -31,6 +31,8 @@ class PrintTemplate extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
 
+    public const CONSULTATION = 101;
+
     protected static function boot()
     {
         parent::boot();
@@ -46,10 +48,26 @@ class PrintTemplate extends Model
         );
     }
 
+    public static function getTypeList(): array
+    {
+        return [
+            self::CONSULTATION => trans('common.consultation'),
+        ];
+    }
+
+    protected function typeExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => isset(self::getTypeList()[$this->type])
+                ? self::getTypeList()[$this->type]
+                : ''
+        );
+    }
+
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'status'    => ['type' => 'select', 'label'=> 'status', 'option' => static::getStatusList()],
+            'type'      => ['type' => 'select', 'label'=> 'type', 'option' => static::getTypeList()],
 //            'type'      => [
 //                'type' => 'select', 'label'=> 'type', 'option' => static::getTypeList(),
 //                'multiple' => false
