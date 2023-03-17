@@ -50,10 +50,21 @@
             <script type="text/javascript">
                 $(document).on('change', '#name', async function (event){
                     var $this = $(this);
-                    if( $this.val() === 'new' ) return true;
+                    if( $this.val() === 'new' || $this.val().length === 1 ) {
+                        resetForm()
+                        return true;
+                    }
                     let url = `{{ route('admin.print-template.edit', ':id') }}`.replace(':id', $this.val())
                     $('#optionSection').setHtml({url});
                 });
+
+                function resetForm(){
+                    uncheckAll();
+                    const refs = document.getElementsByClassName(`reset-print-option`);
+                    Array.prototype.forEach.call(refs, function (el) { // loop classes
+                        $(el).val('')
+                    });
+                }
             </script>
         </div>
 
@@ -90,6 +101,13 @@
                         $(el).prop('checked', false)
                     });
                 }
+            }
+
+            function uncheckAll(){
+                const refs = document.getElementsByClassName(`custom-control-input`);
+                Array.prototype.forEach.call(refs, function (el) { // loop classes
+                    $(el).prop('checked', false)
+                });
             }
 
 

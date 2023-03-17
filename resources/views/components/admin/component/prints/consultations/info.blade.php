@@ -23,7 +23,7 @@
                 {{ $template->name_en }}
             </div>
             <div class="info-wrapper-desc">
-                <span>RefId #:</span> {{ $consultation->ref_id }}
+                <span>Ref No.:</span> {{ $consultation->ref_id }}
             </div>
             <div class="info-wrapper-desc">
                 {{ dateFormat($consultation->created_at, 'r') }}

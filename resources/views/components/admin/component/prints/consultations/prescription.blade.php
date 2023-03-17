@@ -89,7 +89,7 @@
 
 <style>
     .prescription-table tr:first-child td {
-        padding-right: 20px;
+        /*padding-right: 20px;*/
     }
     .prescription-table tfoot{
         background: #e8f3ff;

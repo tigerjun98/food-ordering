@@ -4,6 +4,7 @@
         :name="'name_en'"
         :data="$data"
         :label="'Title (EN)'"
+        :class="'reset-print-option'"
     />
     <x-admin.form.text
         :col="'md-6'"
@@ -11,6 +12,7 @@
         :data="$data"
         :required="false"
         :label="'Title (CN)'"
+        :class="'reset-print-option'"
     />
 </div>
 
@@ -18,6 +20,7 @@
     :data="$data"
     :name="'remark'"
     :required="false"
+    :class="'reset-print-option'"
 />
 
 <h6 class="mt-4">Print items</h6>
