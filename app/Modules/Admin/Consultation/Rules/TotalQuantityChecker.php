@@ -6,7 +6,7 @@ use App\Models\Medicine;
 use App\Models\Prescription;
 use Illuminate\Contracts\Validation\Rule;
 
-class QuantityChecker implements Rule
+class TotalQuantityChecker implements Rule
 {
 
     protected $categoryName;

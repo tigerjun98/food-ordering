@@ -158,4 +158,5 @@ return [
     'inactive' => 'Inactive',
     'new_template' => 'New template',
     'print' => 'Print',
+    'internal_remark' => 'Internal remark',
 ];

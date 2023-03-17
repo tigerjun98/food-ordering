@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class Constants
 {
-    public const MALE = 1;
-    public const FEMALE = 2;
-
     public const ACTIVE = 100;
     public const INACTIVE = 101;
 
@@ -34,13 +31,10 @@ class Constants
     public const TERENGGANU = 816;
 
     public static $typeRange = [
-        'gender'        => [1,2],
         'state'         => [801, 816],
     ];
 
     public static $statusTexts = [
-        self::MALE          => 'male',
-        self::FEMALE        => 'Female',
         self::ACTIVE        => 'Active',
         self::INACTIVE      => 'Inactive',
         self::BANNED        => 'Banned',
