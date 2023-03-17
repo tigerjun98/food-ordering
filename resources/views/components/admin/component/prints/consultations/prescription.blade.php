@@ -46,6 +46,7 @@
                     <x-admin.component.prints.consultations.prescriptions.medicine
                         :loop="$loop"
                         :combination="$combination"
+                        :template="$template"
                     />
                 @endforeach
 
@@ -54,6 +55,7 @@
                         :light="true"
                         :colspan="3" />
                     <x-admin.component.prints.consultations.prescriptions.instruction
+                        :template="$template"
                         :prescription="$prescription"
                     />
                 @endif
@@ -70,7 +72,7 @@
 
                     @if( str_contains( $template->value, 'table-description,')  )
                         <td>
-                            <div class="prescription-table-content">
+                            <div class="prescription-table-content" style="max-width: 350px;">
                                 <p>{{ $prescription->remark }}</p>
                             </div>
                         </td>
@@ -101,7 +103,7 @@
 
     .prescription-table-content {
         font-size: 11px;
-        display: grid;
+        /*display: grid;*/
         font-weight: 500;
     }
 
@@ -151,5 +153,6 @@
     }
     .prescription-table tbody tr td{
         font-size: 11px;
+        max-width: 350px;
     }
 </style>

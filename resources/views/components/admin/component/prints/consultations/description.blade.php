@@ -19,7 +19,7 @@
         @if( str_contains( $template->value, 'bottom-internal_remark,') )
             <div class="content">
                 <div class="label">{{ trans('label.internal_remark') }}</div>
-                <div class="desc">{{ $consultation->internal_remark }}</div>
+                <div class="desc" style="color: red;">{{ $consultation->internal_remark }}</div>
             </div>
         @endif
 

@@ -3,12 +3,14 @@
         :col="'md-6'"
         :name="'name_en'"
         :data="$data"
+        :label="'Title (EN)'"
     />
     <x-admin.form.text
         :col="'md-6'"
         :name="'name_cn'"
         :data="$data"
         :required="false"
+        :label="'Title (CN)'"
     />
 </div>
 
