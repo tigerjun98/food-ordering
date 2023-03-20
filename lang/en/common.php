@@ -156,4 +156,7 @@ return [
     'other_gender' => 'Other',
     'active' => 'Active',
     'inactive' => 'Inactive',
+    'new_template' => 'New template',
+    'print' => 'Print',
+    'internal_remark' => 'Internal remark',
 ];

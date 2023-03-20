@@ -9,7 +9,13 @@
         'admin' => [
             'account'       => ['route'=> route('admin.account.index'), 'icon'=>'iconsminds-engineering', 'permission' => 'setting-admin.account'],
             'roles'         => ['route'=> route('admin.role.index'), 'icon'=>'iconsminds-network', 'permission' => 'setting-admin.role'],
+        ],
+        'other' => [
+            'print'         => ['route'=> route('admin.print-template.index'), 'icon'=>'iconsminds-printer', 'permission' => 'setting-other.print'],
+
         ]
+
+
     ];
 
       $queueChildren = [

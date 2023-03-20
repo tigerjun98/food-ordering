@@ -63,16 +63,16 @@
     }
 
     const patientConsulted = (message, doctorId) => {
-        appendMsg({{ Queue::RECEPTIONIST }}, message)
-        appendMsg({{ Queue::PHARMACY }}, message)
+        appendMsg({{ Queue::RECEPTIONIST }}, message, 'warning')
+        appendMsg({{ Queue::PHARMACY }}, message, 'warning')
     }
 
 
-    const appendMsg = (id, message) => {
+    const appendMsg = (id, message, type) => {
 
         if( !! document.getElementById(`statusBar-${id}`) ){
             if(message.length > 0){
-                $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
+                $(`#statusBar-${id}`).hide().html(`<div class="alert alert-${type ?? 'info'} mb-0" role="alert">${message}</div>`).fadeIn()
             } else{
                 $(`#statusBar-${id}`).hide();
             }

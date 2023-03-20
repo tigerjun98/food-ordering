@@ -36,7 +36,6 @@
     $('#role').change(function (){
         let role = $(this).val();
         getRelatedStatus(role)
-        console.log( getTypeVal(role) )
         $('#type').val( getTypeVal(role) )
         $('#status').val({{ $data->status ?? Queue::PENDING }}).trigger('change')
     });

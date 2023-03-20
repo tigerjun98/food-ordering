@@ -56,6 +56,7 @@
             <div class="mt-2">
                 <x-admin.form.select
                     :name="'doctor_id'"
+                    :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
                     :required="false"
 {{--                    :onchange="'refreshDataTable()'"--}}

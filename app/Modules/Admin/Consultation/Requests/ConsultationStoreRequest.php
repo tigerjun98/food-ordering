@@ -4,7 +4,8 @@ namespace App\Modules\Admin\Consultation\Requests;
 
 use App\Models\Prescription;
 use App\Models\User;
-use App\Modules\Admin\Consultation\Rules\QuantityChecker;
+use App\Modules\Admin\Consultation\Rules\TotalDailyDoseQuantityChecker;
+use App\Modules\Admin\Consultation\Rules\TotalQuantityChecker;
 use App\Modules\Admin\Consultation\Rules\RequiredMedicine;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Lockout;
@@ -47,8 +48,8 @@ class ConsultationStoreRequest extends FormRequest
             'quantity.*.*'                      => ['nullable', 'integer'],
             'time_per_day.*'                    => ['nullable', 'integer'],
             'dose_per_time.*'                   => ['nullable', 'integer'],
-            'combination_amount.*'              => ['nullable', 'integer', new QuantityChecker()],
-            'dose_daily.*'                      => ['nullable', 'integer'],
+            'combination_amount.*'              => ['nullable', 'integer', new TotalQuantityChecker()],
+            'dose_daily.*'                      => ['nullable', 'integer', new TotalDailyDoseQuantityChecker()],
             'metric.*'                          => ['nullable', 'in:'.arrayToString(Prescription::getMetricList())],
             'diagnoses.*'                       => ['nullable'],
             'specialists.*'                     => ['nullable'],
@@ -59,6 +60,7 @@ class ConsultationStoreRequest extends FormRequest
             'symptom'                           => ['required', 'string'],
             'internal_remark'                   => ['nullable', 'string'],
             'on_hold'                           => ['nullable', 'boolean'],
+            'consulted_at'                      => ['nullable', 'date_format:Y-m-d', 'before_or_equal:'.Carbon::now()],
         ];
     }
 

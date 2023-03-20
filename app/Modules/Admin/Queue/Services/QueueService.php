@@ -8,6 +8,7 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Queue;
 use App\Models\User;
+use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
 use App\Modules\Admin\User\Services\UserService;
 use Carbon\Carbon;
@@ -32,6 +33,31 @@ class QueueService
         return trans_choice('messages.patient_waiting', $count, ['count' => $count]);
     }
 
+    public function pluckDoctorNameOnly($doctor): string
+    {
+        $doctors = '';
+        foreach ( $this->getDoctorsNotServing() as $doctor){
+            $doctors .= $doctor->full_name .',';
+        }
+        return substr($doctors, 0, -1); // remove last comma
+    }
+
+    public function getDoctorsNotServing()
+    {
+        $doctorsOnServing = $this->model->where('role', Queue::DOCTOR)
+            ->pluck('doctor_id')
+            ->toArray();
+
+        $doctors = (new PermissionService())
+            ->getDoctorAccounts()
+            ->pluck('id')
+            ->toArray();
+
+        $doctorIds = array_diff( $doctors, $doctorsOnServing );
+        return Admin::whereIn('id', $doctorIds)->get();
+
+    }
+
     public function getDashboardMessage($roleId): ?string
     {
         if(!$this->hasPermission($roleId)) return trans('messages.permission_denied');
@@ -40,7 +66,9 @@ class QueueService
             case Queue::RECEPTIONIST:
             case Queue::PHARMACY:
                 if($this->countServingPatient() == 0){
-                    return trans('messages.doctor_room_empty');
+                    return trans('messages.doctor_room_empty', [
+                        "doctor" => $this->pluckDoctorNameOnly($this->getDoctorsNotServing())
+                    ]);
                 }
                 break;
             case Queue::DOCTOR:
@@ -77,7 +105,6 @@ class QueueService
                 ->Priority()
                 ->get();
         }
-
         return $queues;
     }
 
@@ -272,7 +299,9 @@ class QueueService
     {
         $msg = '';
         if( $this->countServingPatient() == 0 ){
-            $msg = trans('messages.doctor_room_empty'); // Notified receptionist Doctor room are empty
+            $msg = trans('messages.doctor_room_empty', [
+                'doctor' => $this->pluckDoctorNameOnly($this->getDoctorsNotServing())
+            ]); // Notified receptionist Doctor room are empty
         }
 
         $this->event->consulted($queue, $msg);

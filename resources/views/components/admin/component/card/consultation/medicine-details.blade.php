@@ -76,7 +76,7 @@
                                 <p class="font-weight-medium mb-0">{{ trans('label.dose_per_time') }}</p>
                                 <div class="comment-likes">
                               <span class="post-icon">
-                                 {{ $prescription->dose_per_time }} {{ trans('label.dose') }}
+                                 {{ $prescription->dose_per_time }} {{ $prescription->metric_explain }}
                               </span>
                                 </div>
                             </a>

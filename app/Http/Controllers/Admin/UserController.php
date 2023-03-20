@@ -36,9 +36,9 @@ class UserController extends Controller {
         $nric = str_replace('-', '', request()->nric);
         $user = User::where('nric', $nric)->first();
         if($user){
-            return makeResponse(200, 'Patient exists!', $user);
+            return makeResponse(200, trans('messages.patient_exists'), $user);
         } else{
-            return makeResponse(502, 'Patient not exists!');
+            return makeResponse(502, trans('messages.patient_not_exists'));
         }
     }
 

@@ -10,10 +10,11 @@ use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
+use App\Models\PrintTemplate;
 use App\Models\Queue;
 use App\Models\User;
-use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
+use App\Modules\Admin\Consultation\Services\ConsultationPrintService;
 use App\Modules\Admin\Consultation\Services\ConsultationService;
 use App\Modules\Admin\Queue\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
@@ -45,7 +46,21 @@ class ConsultationController extends Controller {
     public function print($consultId)
     {
         $consultation = $this->model->findOrFail($consultId);
-        return view('admin.consultation.print.index', compact('consultation'));
+        $template = PrintTemplate::findOrFail(request()->print_template_id);
+        return view('admin.consultation.print.mini', compact('consultation', 'template'));
+    }
+
+    public function printSubmit($consultId)
+    {
+        $res = (new ConsultationPrintService())->print($consultId);
+        return makeResponse(200, '', $res);
+    }
+
+    public function printOption($consultId)
+    {
+        $templates = PrintTemplate::where('type', PrintTemplate::CONSULTATION)->get();
+        $consultation = $this->model->findOrFail($consultId);
+        return html('admin.consultation.modal.print', compact('consultation', 'templates'));
     }
 
     public function getMedicineOpt()
@@ -75,7 +90,7 @@ class ConsultationController extends Controller {
     public function show($consultationId)
     {
         $consultation = Consultation::findOrFail($consultationId);
-        $tabs = isset(request()->tabs) ? explode(',', request()->tabs) : ['details', 'medicine', 'patient'];
+        $tabs = isset(request()->tabs) ? explode(',', request()->tabs) : ['details', 'medicine', 'patient', 'attachment'];
 
 
         return html('admin.consultation.modal.view',

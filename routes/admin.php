@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\AttachmentController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PrintTemplateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,14 +30,15 @@ Route::group(['middleware' => ['auth:admin']], function () {
     // Route::customResource('user', UserController::class);
 
     Route::customResources([
-        'role'          => RoleController::class,
-        'user'          => UserController::class,
-        'queue'         => QueueController::class,
-        'account'       => AccountController::class,
-        'medicine'      => MedicineController::class,
-        'option'        => OptionController::class,
-        'consultation'  => ConsultationController::class,
-        'attachment'    => AttachmentController::class,
+        'role'              => RoleController::class,
+        'user'              => UserController::class,
+        'queue'             => QueueController::class,
+        'account'           => AccountController::class,
+        'medicine'          => MedicineController::class,
+        'option'            => OptionController::class,
+        'consultation'      => ConsultationController::class,
+        'attachment'        => AttachmentController::class,
+        'print-template'    => PrintTemplateController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
@@ -46,8 +48,19 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
 
+    Route::group(['prefix' => 'print-template', 'as' => 'print-template.'], function () {
+        Route::get('/get-checked-item/{id}', [PrintTemplateController::class, 'getCheckedItem'])->name('get-checked-item');
+    });
+
     Route::group(['prefix' => 'consultation', 'as' => 'consultation.'], function () {
-        Route::get('/print/{consultId}', [ConsultationController::class, 'print'])->name('print');
+//        Route::get('/print/{consultId}', [ConsultationController::class, 'print'])->name('print');
+
+        Route::group(['prefix' => 'print', 'as' => 'print.'], function () {
+            Route::get('/{consultId}', [ConsultationController::class, 'print'])->name('index');
+            Route::post('/{consultId}', [ConsultationController::class, 'printSubmit'])->name('submit');
+            Route::get('/option/{consultId}', [ConsultationController::class, 'printOption'])->name('option');
+        });
+
         Route::get('/get-option/{type}', [ConsultationController::class, 'getSelectOpt'])->name('get-opt');
         Route::get('/get-medicine-opt', [ConsultationController::class, 'getMedicineOpt'])->name('get-medicine-opt');
         Route::get('/get-patient-history/{patientId}', [ConsultationController::class, 'getPatientHistory'])->name('get-patient-history');
