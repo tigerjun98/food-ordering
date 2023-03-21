@@ -310,9 +310,10 @@ class QueueService
     public function notifyReceptionist(Queue $queue)
     {
         $msg = '';
-        if( $this->countServingPatient() > 0 ){
+        $doctorNotServing = $this->getDoctorsNotServing();
+        if( count($doctorNotServing) > 0 ){
             $msg = trans('messages.doctor_room_empty', [
-                'doctor' => $this->pluckDoctorNameOnly($this->getDoctorsNotServing())
+                'doctor' => $this->pluckDoctorNameOnly($doctorNotServing)
             ]); // Notified receptionist Doctor room are empty
         }
 
