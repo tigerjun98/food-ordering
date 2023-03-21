@@ -74,12 +74,8 @@ class QueueService
 
         switch ($roleId){
             case Queue::RECEPTIONIST:
-                return $this->getDoctorsAvailableMsg();
-                break;
             case Queue::PHARMACY:
-                if($this->countServingPatient() == 0){
-                    return $this->getDoctorsAvailableMsg();
-                }
+                return $this->getDoctorsAvailableMsg();
                 break;
             case Queue::DOCTOR:
                 return $this->getPatientWaitingMsg();
