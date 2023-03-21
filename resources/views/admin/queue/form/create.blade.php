@@ -62,6 +62,17 @@
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
                 <x-admin.component.module.queue.user-search />
+                <div class="row">
+                    <x-admin.form.select
+                        :multiple="true"
+                        :col="'md-12'"
+                        :name="'name'"
+                        :selectJs="false"
+                        :ajax="route('admin.get-user-opt')"
+                        :required="false"
+                    >
+                    </x-admin.form.select>
+                </div>
                 <x-admin.component.button
                     :text="trans('button.create')"
                     :class="'patient-not-exists hide btn-primary'"
