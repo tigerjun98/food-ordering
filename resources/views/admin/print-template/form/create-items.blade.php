@@ -25,10 +25,11 @@
 
 <div class="row mb-2">
     <x-admin.form.select
-        :data="$data"
         :col="'md-12'"
         :name="'type'"
         :options="\App\Models\PrintTemplate::getTypeList()"
+        :value="$data->type ?? \App\Models\PrintTemplate::CONSULTATION"
+        :required="false"
     />
 </div>
 
