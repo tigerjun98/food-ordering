@@ -37,14 +37,16 @@ class QueueService
     {
         $doctors = '';
         foreach ( $this->getDoctorsNotServing() as $doctor){
-            $doctors .= $doctor->full_name .',';
+            $doctors .= $doctor->full_name .', ';
         }
         return substr($doctors, 0, -1); // remove last comma
     }
 
     public function getDoctorsNotServing()
     {
-        $doctorsOnServing = $this->model->where('role', Queue::DOCTOR)
+        $doctorsOnServing = $this->model
+            ->where('role', Queue::DOCTOR)
+            ->Today()
             ->pluck('doctor_id')
             ->toArray();
 
@@ -115,9 +117,13 @@ class QueueService
     }
 
 
-    public function countServingPatient(): int
+    public function countServingPatient($doctorId = null): int
     {
-        return $this->model->where('status', Queue::SERVING)->Today()->count();
+        $model = $this->model->where('status', Queue::SERVING)->Today();
+        if($doctorId){
+            return $model->where('doctor_id', $doctorId)->count();
+        }
+        return $model->count();
     }
 
     public function countPendingPatient($type = Queue::CONSULTATION): int
@@ -133,7 +139,7 @@ class QueueService
 
         } else{
             $queue->role = Queue::DOCTOR;
-            $this->countServingPatient() > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
+            $this->countServingPatient($queue->doctor_id) > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
         }
 
         $queue->status = $nextStatus ?? Queue::SERVING;
@@ -175,7 +181,6 @@ class QueueService
                 $queue->type = Queue::MEDICINE;
             }
             $queue->save();
-            $this->event->consulted($queue);
 
             return $queue;
         }

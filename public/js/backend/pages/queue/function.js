@@ -40,15 +40,7 @@ function refreshDataTable() {
     })
 }
 
-const setQueueRoleValue = (roleId) => {
-    const refs = document.getElementsByClassName(`role-link`);
-    Array.prototype.forEach.call(refs, function (el) { // loop classes
-        $(el).removeClass('active')
-    });
-    $(`#tab-${roleId}`).addClass('active')
-    $('#setRoleVal').val(roleId)
-    refreshDataTable();
-}
+
 
 
 
