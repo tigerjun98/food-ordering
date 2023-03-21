@@ -58,17 +58,27 @@ class QueueService
 
     }
 
+    public function getDoctorsAvailableMsg()
+    {
+        $doctor_available = $this->getDoctorsNotServing();
+        if (count($doctor_available) > 0) {
+            return trans('messages.doctor_room_empty', [
+                "doctor" => $this->pluckDoctorNameOnly($doctor_available)
+            ]);
+        }
+    }
+
     public function getDashboardMessage($roleId): ?string
     {
         if(!$this->hasPermission($roleId)) return trans('messages.permission_denied');
 
         switch ($roleId){
             case Queue::RECEPTIONIST:
+                return $this->getDoctorsAvailableMsg();
+                break;
             case Queue::PHARMACY:
                 if($this->countServingPatient() == 0){
-                    return trans('messages.doctor_room_empty', [
-                        "doctor" => $this->pluckDoctorNameOnly($this->getDoctorsNotServing())
-                    ]);
+                    return $this->getDoctorsAvailableMsg();
                 }
                 break;
             case Queue::DOCTOR:
