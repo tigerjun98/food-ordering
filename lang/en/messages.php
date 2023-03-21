@@ -28,4 +28,5 @@ return [
     'checked_to_prioritise_the_patient' => 'Check this to prioritise the patient',
     'patient_exists' => 'Patient exists!',
     'patient_not_exists' => 'Patient not exists!',
+    'attachment_expired' => 'Attachment expired!',
 ];

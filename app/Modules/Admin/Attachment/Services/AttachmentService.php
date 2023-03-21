@@ -19,6 +19,19 @@ class AttachmentService
         $this->model = new Attachment();
     }
 
+    public function show(Attachment $model)
+    {
+        $file = Storage::disk('s3')->get($model->path);
+        $type = Storage::disk('s3')->mimeType($model->path);
+
+        if(!$file) abort(405, trans('messages.attachment_expired'));
+
+        $response = \Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    }
+
     public function store(array $request): Attachment
     {
         $request['extension'] = $request['file']->extension();

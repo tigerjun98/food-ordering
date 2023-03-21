@@ -26,37 +26,16 @@ class AttachmentController extends Controller {
         $this->service = new AttachmentService();
     }
 
-    public function index(AdminsDataTable $dataTable)
+    public function show($modelId)
     {
-        $filter = $this->model->Filter();
-        return $dataTable->render('admin.account.datatable', compact('filter'));
-    }
-
-    public function create()
-    {
-        return html('admin.account.form.create',[
-            'data' => null
-        ]);
-    }
-
-    public function edit($userId)
-    {
-        return html('admin.account.form.create',[
-            'data' => $this->model->findOrFail($userId)
-        ]);
+        $model = $this->model->findOrFail($modelId);
+        return $this->service->show($model);
     }
 
     public function store(AttachmentStoreRequest $request)
     {
         $model = $this->service->store($request->validated());
         return makeResponse(200, null, $model);
-    }
-
-    public function delete($adminId)
-    {
-        return html('admin.account.form.delete',[
-            'data' => $this->model->findOrFail($adminId)
-        ]);
     }
 
     public function destroy($attachId)

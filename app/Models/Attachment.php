@@ -29,9 +29,8 @@ class Attachment extends Model
 
     protected function url(): Attribute
     {
-        $exists = $this->path && \Storage::disk('s3')->exists($this->path);
         return Attribute::make(
-            get: fn ($value) => $exists ? \Storage::disk('s3')->url($this->path) : self::getImgNotFoundSrc(),
+            get: fn ($value) => route('admin.attachment.show', $this->id),
         );
     }
 }
