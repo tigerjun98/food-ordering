@@ -1,9 +1,12 @@
 <tr>
-    <td>
-        <div class="prescription-table-content" style="font-weight: 500;">
-            <p>{{ trans('label.time_per_day') }}</p>
-        </div>
-    </td>
+    @if( str_contains( $template->value, 'table-description,')  )
+        <td>
+            <div class="prescription-table-content" style="font-weight: 500;">
+                <p>{{ trans('label.time_per_day') }}</p>
+            </div>
+        </td>
+    @endif
+
     @if( str_contains( $template->value, 'table-qty,')  )
         <td>
             <div class="prescription-table-content" style="text-align: center; font-weight: 500;">
@@ -19,15 +22,18 @@
     </td>
 </tr>
 <tr>
-    <td>
-        <div class="prescription-table-content" style="font-weight: 500;">
-            <p>{{ trans('label.dose_per_time') }}</p>
-        </div>
-    </td>
+    @if( str_contains( $template->value, 'table-description,')  )
+        <td>
+            <div class="prescription-table-content" style="font-weight: 500;">
+                <p>{{ trans('label.dose_per_time') }}</p>
+            </div>
+        </td>
+    @endif
+
     @if( str_contains( $template->value, 'table-qty,')  )
         <td>
             <div class="prescription-table-content" style="white-space: nowrap; text-align: center; font-weight: 500;">
-                <p>{{ $prescription->dose_per_time }} {{ trans('label.dose') }}</p>
+                <p>{{ $prescription->dose_per_time }} {{ $prescription->metric_explain }}</p>
             </div>
         </td>
     @endif
