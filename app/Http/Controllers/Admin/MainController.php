@@ -24,6 +24,12 @@ class MainController extends Controller {
         return response()->json($admin);
     }
 
+    public function getUserOpt()
+    {
 
+        $query = (new PermissionService())->getDoctorAccounts();
+        $admin = $query->FilterOption()->paginate(10);
+        return response()->json($admin);
+    }
 }
 
