@@ -58,10 +58,9 @@ class PrintTemplate extends Model
     protected function typeExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => isset(self::getTypeList()[$this->type])
-                ? self::getTypeList()[$this->type]
-                : ''
+            get: fn () => static::getTypeList()[$this->type] ?? trans('common.unknown_type'),
         );
+
     }
 
     public static function Filter(){

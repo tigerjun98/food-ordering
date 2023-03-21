@@ -35,6 +35,7 @@ $(document).on('keyup', '.select2-selection--multiple .select2-search__field', f
 });
 
 $.fn.initialiseDynamicSelect2 = function(options) {
+
     $($(this)).select2({
         // minimumInputLength: 1,
         theme: "bootstrap",
@@ -42,8 +43,8 @@ $.fn.initialiseDynamicSelect2 = function(options) {
         placeholder: "",
         maximumSelectionSize: 6,
         containerCssClass: ":all:",
-        tags: true,
         tokenSeparators: [','],
+        tags: true,
         allowClear: true,
         createTag: function (params) {
             if(/[,;，； ]/.test(params.term)) { // support comma, semicolon & spacing
@@ -56,7 +57,10 @@ $.fn.initialiseDynamicSelect2 = function(options) {
         ajax: {
             url: options.url,
             dataType: 'json',
-            delay: 250,
+            // delay: 650,
+            // url: function (params) {
+            //     return `${options.url}?search=${params.term}&page=${params.page || 1}`;
+            // },
             data: function (params) {
                 var query = {
                     search: params.term,
