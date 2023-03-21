@@ -26,7 +26,7 @@
                 <span>Ref No.:</span> {{ $consultation->ref_id }}
             </div>
             <div class="info-wrapper-desc">
-                {{ dateFormat($consultation->created_at, 'r') }}
+                {{ dateFormat($consultation->consulted_at, 'd M, Y') }}
             </div>
         </div>
     @endif
