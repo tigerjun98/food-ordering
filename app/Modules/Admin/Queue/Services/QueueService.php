@@ -46,6 +46,7 @@ class QueueService
     {
         $doctorsOnServing = $this->model
             ->where('role', Queue::DOCTOR)
+            ->where('status', Queue::SERVING)
             ->Today()
             ->pluck('doctor_id')
             ->toArray();
@@ -309,7 +310,7 @@ class QueueService
     public function notifyReceptionist(Queue $queue)
     {
         $msg = '';
-        if( $this->countServingPatient() == 0 ){
+        if( $this->countServingPatient() > 0 ){
             $msg = trans('messages.doctor_room_empty', [
                 'doctor' => $this->pluckDoctorNameOnly($this->getDoctorsNotServing())
             ]); // Notified receptionist Doctor room are empty
