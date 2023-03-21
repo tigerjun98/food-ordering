@@ -5,7 +5,7 @@
                 {{ $consultation->patient->full_name }}
             </div>
             <div class="info-wrapper-content">
-                <span>Contact:</span> {{ $consultation->patient->phone ?? $consultation->patient->emergency_contact_no }}
+                <span>Contact:</span> {{ strlen($consultation->patient->phone) > 0 ? $consultation->patient->phone : $consultation->patient->emergency_contact_no }}
             </div>
             <div class="info-wrapper-content">
                 <span>Gender:</span> {{ $consultation->patient->gender_explain }}
@@ -26,7 +26,7 @@
                 <span>Ref No.:</span> {{ $consultation->ref_id }}
             </div>
             <div class="info-wrapper-desc">
-                {{ dateFormat($consultation->created_at, 'r') }}
+                {{ dateFormat($consultation->consulted_at, 'd M, Y') }}
             </div>
         </div>
     @endif

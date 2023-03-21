@@ -63,10 +63,10 @@ class PrintTemplateDataTable extends DataTable
                 'icon'      => 'simple-icon-eye',
                 'onclick' => '$(this).printConsultation({url: "'.$printUrl.'&read_only=true"})'
             ],
-            'print' => [
-                'icon' => 'iconsminds-printer',
-                'onclick' => '$(this).printConsultation({url: "'.$printUrl.'"})'
-            ],
+//            'print' => [
+//                'icon' => 'iconsminds-printer',
+//                'onclick' => '$(this).printConsultation({url: "'.$printUrl.'"})'
+//            ],
             'edit' => [
                 'icon' => 'iconsminds-pen-2',
                 'modal' => route('admin.print-template.show', $row->id)

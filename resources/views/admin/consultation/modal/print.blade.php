@@ -11,8 +11,8 @@
     :title="'Print details'"
     :nav="$nav"
     :submit="route('admin.print-template.store')"
+    :submitBtn="false"
 >
-
     @slot('print')
         @foreach($templates as $template)
             <div class="d-flex flex-row mb-3 pb-3 border-bottom justify-content-between align-items-center">
@@ -76,6 +76,14 @@
 
         <div id="optionSection">
             @include('admin.print-template.form.create-items')
+        </div>
+
+        <div class="border-top pt-3">
+            <x-admin.component.button
+                :class="'btn-primary'"
+                :lang="'submit'"
+                :type="'submit'"
+            />
         </div>
     @endslot
 </x-admin.component.modal>
