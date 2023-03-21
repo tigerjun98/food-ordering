@@ -23,6 +23,15 @@
     :class="'reset-print-option'"
 />
 
+<div class="row mb-2">
+    <x-admin.form.select
+        :data="$data"
+        :col="'md-12'"
+        :name="'type'"
+        :options="\App\Models\PrintTemplate::getTypeList()"
+    />
+</div>
+
 <h6 class="mt-4">Print items</h6>
 <div class="separator mb-3"></div>
 <div class="row">
