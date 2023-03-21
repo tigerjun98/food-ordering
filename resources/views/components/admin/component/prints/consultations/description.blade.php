@@ -29,11 +29,11 @@
         <div class="description-wrapper-right">
             <div class="content">
                 <div class="label">Total</div>
-                <div class="desc">RM 250.00</div>
+                <div class="desc">RM 0.00</div>
             </div>
             <div class="content">
                 <div class="label">Paid</div>
-                <div class="desc">RM 1250.00</div>
+                <div class="desc">RM 0.00</div>
             </div>
             <div style="
                 border: 1px solid #f1f1f1;
@@ -43,7 +43,7 @@
                 "></div>
             <div class="content bold">
                 <div class="label">Amount due</div>
-                <div class="desc">RM 1250.00</div>
+                <div class="desc">RM 0.00</div>
             </div>
         </div>
     @endif

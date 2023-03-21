@@ -2,7 +2,9 @@
     @if( str_contains( $template->value, 'table-description,')  )
         <td>
             <div class="prescription-table-content" style="font-weight: 500;">
-                <p>{{ trans('label.time_per_day') }}</p>
+                <p>{{ trans('label.time_per_day') }}
+                    <b>({{ $prescription->direction_explain }})</b>
+                </p>
             </div>
         </td>
     @endif
