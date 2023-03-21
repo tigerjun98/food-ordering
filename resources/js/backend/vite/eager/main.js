@@ -19,11 +19,13 @@ $.fn.initialiseSortable = function(options) {
     return new Sortable(el, options);
 }
 
-$(document).on ('keyup', '.select2-selection--multiple .select2-search__field', function (event){
+// Fixed chinese input bug for select2-js
+// https://blog.csdn.net/jx520/article/details/82219398
+$(document).on('keyup', '.select2-selection--multiple .select2-search__field', function (event){
     if(event.keyCode === 13){
         var $this = $(this);
         var optionText = $this. val();
-        if (optionText !== "" && $this.find("option[value='" + optionText + "']").length === 0){
+        if (optionText !== "" && $this.find(`option[value='${optionText}']`).length === 0){
             var $select = $this.parents('.select2-container').prev("select");
             var newOption = new Option(optionText, optionText, true, true);
             $select.append(newOption).trigger('change');
@@ -45,24 +47,12 @@ $.fn.initialiseDynamicSelect2 = function(options) {
         tags: true,
         allowClear: true,
         createTag: function (params) {
-            if(/[,;，；]/.test(params.term)) {
+            if(/[,;，； ]/.test(params.term)) { // support comma, semicolon & spacing
                 var str = params.term.trim().replace(/[,;，；]*$/, '');
-                return {id: str, text: str}
+                return { id: str, text: str, newTag: true }
             } else {
                 return null;
             }
-
-
-            // var term = $.trim(params.term);
-            // if (term === '') {
-            //     return null;
-            // }
-            //
-            // return {
-            //     id: term,
-            //     text: term,
-            //     newTag: true // add additional parameters
-            // }
         },
         ajax: {
             url: options.url,

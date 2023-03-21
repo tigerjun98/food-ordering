@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants;
 use App\Entity\Enums\CountryEnum;
 use App\Entity\Enums\GenderEnum;
+use App\Entity\Enums\StateEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\TimestampFormat;
@@ -122,7 +123,7 @@ class User extends Authenticatable
 
     public static function getStatesList(): array
     {
-        return Constants::getLists('state');
+        return StateEnum::getListing();
     }
 
     public static function Filter(){
@@ -135,7 +136,7 @@ class User extends Authenticatable
 
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'nric'      => ['type' => 'text'],
+            'nric'      => ['type' => 'text', 'label'=> 'nric_or_passport'],
             'phone'     => ['type' => 'text' ],
             'email'     => ['type' => 'text' ],
             'nationality'     => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],

@@ -63,4 +63,8 @@ return [
     'dose' => 'Dose',
     'advise' => 'Doctor advise',
     'permissions' => 'Permissions',
+    'print' => 'Print',
+    'attachment' => 'Attachment',
+    'visited_at' => 'Visited at',
+    'consulted_at' => 'Consulted at',
 ];

@@ -3,6 +3,12 @@
     :nav="$tabs"
     :modalBodyClass="'fixed-height'"
 >
+    @slot('attachment')
+        <x-admin.component.card.consultation.gallery
+            :attachments="$consultation->attachments"
+        />
+    @endslot
+
     @slot('medicine')
         <x-admin.component.card.consultation.medicine-details
             :prescriptions="$consultation->prescriptions"
@@ -16,16 +22,25 @@
     @endslot
 
     @slot('patient')
-        <x-admin.component.card.patient-details
-            :patient="$consultation->patient"
-        />
+        @if($consultation->patient)
+            <x-admin.component.card.patient-details
+                :patient="$consultation->patient"
+            />
+        @else
+            <x-admin.component.status-bar
+                :class="'col-12 pl-4'"
+                :type="'info'"
+                :message="'Patient not found!'"
+            />
+        @endif
+
     @endslot
 
     @slot('footer')
         <x-admin.component.button
             :class="'btn-primary'"
             :lang="'print'"
-            :onclick="'$(this).printConsultation({url: `'.route('admin.consultation.print', $consultation->id).'`})'"
+            :onclick="'$(this).openModal({url: `'.route('admin.consultation.print.option', $consultation->id).'`})'"
         />
         <x-admin.component.button
             :class="'btn-outline-primary'"

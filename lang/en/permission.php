@@ -47,4 +47,8 @@ return [
         'account'       => 'Admin account management',
         'role'          => 'Role management',
     ],
+
+    'setting-other'  => [
+        'print'         => 'Print template management',
+    ],
 ];

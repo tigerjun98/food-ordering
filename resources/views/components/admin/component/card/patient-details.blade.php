@@ -15,7 +15,7 @@
 <div class="row mb-2">
     <div class="col-md-6">
         <x-admin.layout.info
-            :value="$patient->genderExplain"
+            :value="$patient->gender_explain"
             :name="'gender'"
         />
     </div>

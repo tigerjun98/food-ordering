@@ -38,7 +38,7 @@
 
                         @php
                             use App\Models\Queue;
-                            $queuePermission = [ 'queue.'.Queue::RECEPTIONIST, 'queue.'.Queue::MEDICINE, 'queue.'.Queue::PHARMACY ]
+                            $queuePermission = [ 'queue.'.Queue::RECEPTIONIST, 'queue.'.Queue::DOCTOR, 'queue.'.Queue::PHARMACY ]
                         @endphp
                         @if( auth()->user()->hasAnyPermission($queuePermission) )
                             <x-admin.component.card.dashboard.queue />
