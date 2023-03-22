@@ -29,117 +29,9 @@
 
                     <div class="row mb-4">
                         <div class="col-lg-6 mb-3">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h3 class="mb-5">{{ trans('common.consultation') }}</h3>
-                                    <div class="row">
-                                        <x-admin.form.select
-                                            :ajax="route('admin.consultation.get-opt', 'specialist')"
-                                            :multiple="'multiple'"
-                                            :col="'md-12'"
-                                            :name="'specialists[]'"
-                                            :lang="'specialists'"
-                                            :required="false"
-                                        >
-                                            @slot('customOption')
-                                                @if($consultation)
-                                                    @foreach($consultation->specialists_explain as $key => $item)
-                                                        <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
-                                                    @endforeach
-                                                @endif
-                                            @endslot
-
-                                        </x-admin.form.select>
-                                    </div>
-
-                                    <div class="row">
-                                        <x-admin.form.select
-                                            :ajax="route('admin.consultation.get-opt', 'syndrome')"
-                                            :multiple="'multiple'"
-                                            :data="$consultation"
-                                            :col="'md-12'"
-                                            :name="'syndromes[]'"
-                                            :lang="'syndromes'"
-                                            :required="false"
-                                        >
-                                            @if($consultation)
-                                                @slot('customOption')
-                                                    @foreach($consultation->syndromes_explain as $key => $item)
-                                                        <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
-                                                    @endforeach
-                                                @endslot
-                                            @endif
-                                        </x-admin.form.select>
-                                    </div>
-
-                                    <div class="row">
-                                        <x-admin.form.select
-                                            :ajax="route('admin.consultation.get-opt', 'diagnose')"
-                                            :multiple="'multiple'"
-                                            :data="$consultation"
-                                            :col="'md-12'"
-                                            :name="'diagnoses[]'"
-                                            :lang="'diagnoses'"
-                                            :required="false"
-                                        >
-                                            @if($consultation)
-                                                @slot('customOption')
-                                                    @foreach($consultation->diagnoses_explain as $key => $item)
-                                                        <option value="{{ $key }}" selected="selected"> {{ $item }}</option>
-                                                    @endforeach
-                                                @endslot
-                                            @endif
-                                        </x-admin.form.select>
-                                    </div>
-
-                                    <x-admin.form.textarea
-                                        :data="$consultation"
-                                        :name="'symptom'"
-                                        :rows="10"
-                                    />
-
-                                    <div class="separator"></div>
-
-                                    <x-admin.form.textarea
-                                        :data="$consultation"
-                                        :name="'advise'"
-                                        :rows="5"
-                                        :lang="'doctor_advise'"
-                                        :required="false"
-                                    />
-                                    <x-admin.form.textarea
-                                        :data="$consultation"
-                                        :name="'internal_remark'"
-                                        :rows="5"
-                                        :required="false"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h3 class="mb-3">{{ trans('common.attachments') }}</h3>
-                                    <input type="hidden" class="dropzone-sending-data" name="type" value="{{ $patient->id }}">
-                                    <x-admin.form.dropzone
-                                        :id="$consultation ? $consultation->id : null"
-                                        :submitUrl="route('admin.attachment.store')"
-                                        :deleteUrl="route('admin.attachment.destroy', ':id')"
-                                        :sendingData="['type' => 'consultations']"
-                                    >
-                                        @if($consultation)
-                                            @slot('data')
-                                                @foreach($consultation->attachments as $key => $attachment)
-                                                    <x-admin.form.dropzone-preview
-                                                        :id="$consultation->id"
-                                                        :refId="$attachment->id"
-                                                        :src="$attachment->url"
-                                                    />
-                                                @endforeach
-                                            @endslot
-                                        @endif
-                                    </x-admin.form.dropzone>
-                                </div>
-                            </div>
+                            @include('admin.consultation.form.include.details')
+                            @include('admin.consultation.form.include.internal')
+                            @include('admin.consultation.form.include.attachment')
                         </div>
 
                         <div class="col-lg-6 mb-3">
@@ -220,7 +112,6 @@
                 addPrescriptions();
             @else
                 @foreach($consultation->prescriptions as $key => $prescription)
-                console.log({{ $prescription->id }})
                     initializeMedicineSelect2({{ $prescription->id }})
                 @endforeach
             @endif

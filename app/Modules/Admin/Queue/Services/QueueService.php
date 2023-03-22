@@ -8,6 +8,7 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Queue;
 use App\Models\User;
+use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
 use App\Modules\Admin\User\Services\UserService;
 use Carbon\Carbon;
@@ -32,6 +33,44 @@ class QueueService
         return trans_choice('messages.patient_waiting', $count, ['count' => $count]);
     }
 
+    public function pluckDoctorNameOnly($doctor): string
+    {
+        $doctors = '';
+        foreach ( $this->getDoctorsNotServing() as $doctor){
+            $doctors .= $doctor->full_name .', ';
+        }
+        return substr($doctors, 0, -1); // remove last comma
+    }
+
+    public function getDoctorsNotServing()
+    {
+        $doctorsOnServing = $this->model
+            ->where('role', Queue::DOCTOR)
+            ->where('status', Queue::SERVING)
+            ->Today()
+            ->pluck('doctor_id')
+            ->toArray();
+
+        $doctors = (new PermissionService())
+            ->getDoctorAccounts()
+            ->pluck('id')
+            ->toArray();
+
+        $doctorIds = array_diff( $doctors, $doctorsOnServing );
+        return Admin::whereIn('id', $doctorIds)->get();
+
+    }
+
+    public function getDoctorsAvailableMsg()
+    {
+        $doctor_available = $this->getDoctorsNotServing();
+        if (count($doctor_available) > 0) {
+            return trans('messages.doctor_room_empty', [
+                "doctor" => $this->pluckDoctorNameOnly($doctor_available)
+            ]);
+        }
+    }
+
     public function getDashboardMessage($roleId): ?string
     {
         if(!$this->hasPermission($roleId)) return trans('messages.permission_denied');
@@ -39,9 +78,7 @@ class QueueService
         switch ($roleId){
             case Queue::RECEPTIONIST:
             case Queue::PHARMACY:
-                if($this->countServingPatient() == 0){
-                    return trans('messages.doctor_room_empty');
-                }
+                return $this->getDoctorsAvailableMsg();
                 break;
             case Queue::DOCTOR:
                 return $this->getPatientWaitingMsg();
@@ -77,14 +114,17 @@ class QueueService
                 ->Priority()
                 ->get();
         }
-
         return $queues;
     }
 
 
-    public function countServingPatient(): int
+    public function countServingPatient($doctorId = null): int
     {
-        return $this->model->where('status', Queue::SERVING)->Today()->count();
+        $model = $this->model->where('status', Queue::SERVING)->Today();
+        if($doctorId){
+            return $model->where('doctor_id', $doctorId)->count();
+        }
+        return $model->count();
     }
 
     public function countPendingPatient($type = Queue::CONSULTATION): int
@@ -100,7 +140,7 @@ class QueueService
 
         } else{
             $queue->role = Queue::DOCTOR;
-            $this->countServingPatient() > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
+            $this->countServingPatient($queue->doctor_id) > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
         }
 
         $queue->status = $nextStatus ?? Queue::SERVING;
@@ -142,7 +182,6 @@ class QueueService
                 $queue->type = Queue::MEDICINE;
             }
             $queue->save();
-            $this->event->consulted($queue);
 
             return $queue;
         }
@@ -271,8 +310,11 @@ class QueueService
     public function notifyReceptionist(Queue $queue)
     {
         $msg = '';
-        if( $this->countServingPatient() == 0 ){
-            $msg = trans('messages.doctor_room_empty'); // Notified receptionist Doctor room are empty
+        $doctorNotServing = $this->getDoctorsNotServing();
+        if( count($doctorNotServing) > 0 ){
+            $msg = trans('messages.doctor_room_empty', [
+                'doctor' => $this->pluckDoctorNameOnly($doctorNotServing)
+            ]); // Notified receptionist Doctor room are empty
         }
 
         $this->event->consulted($queue, $msg);

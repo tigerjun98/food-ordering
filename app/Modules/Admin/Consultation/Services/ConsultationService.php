@@ -38,7 +38,7 @@ class ConsultationService
     {
         $request = $this->optionExistsOrCreate($request);
         $consultation = array_only($request, [
-            'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses'
+            'user_id', 'advise', 'symptom', 'internal_remark', 'specialists', 'syndromes', 'diagnoses', 'consulted_at'
         ]);
 
         $model = \DB::transaction(function () use($request, $consultation) {
@@ -48,7 +48,10 @@ class ConsultationService
             return $model;
         });
 
-        $queue = Queue::where('consultation_id', $model->id)->first();
+        $queue = Queue::where('consultation_id', $model->id)
+            ->Today()
+            ->first();
+        
         if($queue){
             (new QueueService())->notifyReceptionist($queue);
         }

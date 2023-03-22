@@ -45,7 +45,7 @@
                         :type="'submit'"
                         :disabled="!$delete"
                     />
-                @else
+                @elseif(!isset($submitBtn) || ( isset($submitBtn) && $submitBtn === true ))
                     <x-admin.component.button
                         :class="'btn-primary'"
                         :lang="'submit'"

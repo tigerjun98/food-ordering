@@ -78,6 +78,9 @@ $.fn.sendRequest = function(options) {
                 case 201: // redirect require
                     if(data.data && data.data.redirect) window.location.href = data.data.redirect
                     break;
+                case 202: // open popup
+                    if(data.data && data.data.redirect) window.location.href = data.data.redirect
+                    break;
                 default:
                 // code block
             }

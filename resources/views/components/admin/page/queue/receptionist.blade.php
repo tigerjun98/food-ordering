@@ -1,4 +1,4 @@
-<div class="status" id="statusBar-{{request()->role}}">
+<div class="status" id="statusBar-{{ request()->role }}">
     @if($message)
         <x-admin.component.status-bar
             :type="'info'"
@@ -18,8 +18,7 @@
             </ul>
         </div>
         <script type="module">
-            $('#queueListing-{{ $key }}').initialiseSortable(sortableOptions('{{ $key }}'))
-            {{--$('#queueListing-{{ $key }}').initialiseScrollbar()--}}
+            $('#queueListing-{{ $key }}').initialiseSortable( sortableOptions('{{ $key }}') )
         </script>
     @endforeach
 </div>

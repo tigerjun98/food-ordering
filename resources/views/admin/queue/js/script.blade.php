@@ -9,10 +9,6 @@
     let roleIds = '{{ implode( ',', array_keys( Queue::getRoleList() ) ) }}'.split(',')
     let requestRole = '{{ $roleId }}'
 
-    if(roleIds.includes(requestRole)){
-        setQueueRoleValue(requestRole)
-    }
-
     $(this).broadcasting();
 
     Echo.channel('channel-name').listen('.QueueUpdatedEvent',(e) => {
@@ -33,7 +29,9 @@
                     newPatientWaiting(e.message)
                 }
                 if(e.type == '{{ Queue::SERVED }}'){
-                    addNewQueue(e.queue)
+                    if(e.queue.doctor_id === {{ Auth::id() }}){
+                        addNewQueue(e.queue)
+                    }
                     newPatientWaiting(e.message)
                 }
                 break;
@@ -63,20 +61,43 @@
     }
 
     const patientConsulted = (message, doctorId) => {
-        appendMsg({{ Queue::RECEPTIONIST }}, message)
-        appendMsg({{ Queue::PHARMACY }}, message)
+        appendMsg({{ Queue::RECEPTIONIST }}, message, 'warning')
+        appendMsg({{ Queue::PHARMACY }}, message, 'warning')
     }
 
-
-    const appendMsg = (id, message) => {
+    const appendMsg = (id, message, type) => {
 
         if( !! document.getElementById(`statusBar-${id}`) ){
             if(message.length > 0){
-                $(`#statusBar-${id}`).hide().html(`<div class="alert alert-info mb-0" role="alert">${message}</div>`).fadeIn()
+                $(`#statusBar-${id}`).hide().html(`<div class="alert alert-${type ?? 'info'} mb-0" role="alert">${message}</div>`).fadeIn()
             } else{
                 $(`#statusBar-${id}`).hide();
             }
         }
     }
 
+    if(roleIds.includes(requestRole)){
+        setQueueRoleValue(requestRole)
+    }
+
 </script>
+
+<script type="text/javascript">
+
+    function setQueueRoleValue(roleId){
+        const refs = document.getElementsByClassName(`role-link`);
+        Array.prototype.forEach.call(refs, function (el) { // loop classes
+            $(el).removeClass('active')
+        });
+        $(`#tab-${roleId}`).addClass('active')
+        $('#setRoleVal').val(roleId)
+        if(roleId.toString() === '{{ Queue::DOCTOR }}'){
+            $('#doctor_id').val('{{ Auth::id() }}').trigger('change')
+        } else{
+            $('#doctor_id').val('').trigger('change')
+        }
+
+        refreshDataTable();
+    }
+</script>
+

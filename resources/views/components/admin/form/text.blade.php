@@ -3,8 +3,12 @@
     $isDate = isset($type) && $type == 'date';
     $isPhone = isset($type) && $type == 'phone';
 
+    if($isDate){
+       $iconEnd = '<i class="simple-icon-calendar"></i>';
+       $attributes['placeholder'] = 'YYYY-MM-DD';
+    }
+
     $defaultClass= ' form-control ';
-    $defaultClass.= $isDate ? ' datepicker ' : '';
     $defaultClass.= $isPhone ? ' intl-tel-input ' : '';
 
     $attributes['class'] = isset($class) ? $class.$defaultClass : $defaultClass;
@@ -28,6 +32,9 @@
     }
 
     if(isset($value)){
+        if($isDate){
+            $value = date('Y-m-d', strtotime($value));
+        }
          $attributes['value'] = $value;
     }
 
@@ -57,7 +64,7 @@
                 {{ isset($required) && $required ? 'required' : ''  }}
             />
 
-    @if(isset($iconEnd))
+        @if(isset($iconEnd))
             <span class="input-group-text input-group-append input-group-addon" id="icon-end-{{ $attributes['id'] }}">
                 {!! $iconEnd !!}
             </span>
@@ -102,11 +109,14 @@
     @endif
 
     @if($isDate)
+        // https://bootstrap-datepicker.readthedocs.io/en/stable/
         $(document).ready(function(){
             $("#{{ $attributes['id'] }}").datepicker({
                 autoclose: true,
+                todayHighlight: true,
                 format: "yyyy-mm-dd",
                 rtl: false,
+                {{ $jsOptions ?? '' }}
                 orientation: "bottom auto",
                 templates: {
                     leftArrow: '<i class="simple-icon-arrow-left"></i>',

@@ -56,10 +56,17 @@
             <div class="mt-2">
                 <x-admin.form.select
                     :name="'doctor_id'"
-                    :ajax="route('admin.get-doctor-opt')"
                     :required="false"
-{{--                    :onchange="'refreshDataTable()'"--}}
-                ></x-admin.form.select>
+                    :onchange="'refreshDataTable()'"
+                >
+                    @slot('customOption')
+                        @foreach($doctors as $doctor)
+                            <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
+                        @endforeach
+                    @endslot
+
+
+                </x-admin.form.select>
             </div>
         @endslot
     </x-admin.layout.search-menu>

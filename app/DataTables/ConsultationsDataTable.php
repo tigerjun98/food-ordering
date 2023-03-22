@@ -31,17 +31,19 @@ class ConsultationsDataTable extends DataTable
 //                }
 //                return $arr;
 //            })
-            ->addColumn('created_at', function($row){
-                return dateFormat($row->created_at, 'r');
+            ->editColumn('symptom', function($row){
+                return '<p class="max-line-2 text-xs">'.$row->symptom.'</p>';
+            })->addColumn('consulted_at', function($row){
+                return dateFormat($row->consulted_at, 'd M, Y');
             })->addColumn('full_name', function($row){
                 return $row->patient ? $row->patient->full_name : '-';
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action', 'specialists'])
-            ->orderColumn('created_at', function ($query, $order) {
-                $query->orderByRaw("ISNULL(created_at), created_at $order");
+            })->rawColumns(['image', 'action', 'symptom'])
+            ->orderColumn('consulted_at', function ($query, $order) {
+                $query->orderByRaw("ISNULL(consulted_at), consulted_at $order");
             });
 //            ->orderColumn('created_at', function ($query, $order) {
 //                $query->orderBy('created_at', 'desc');
@@ -52,7 +54,7 @@ class ConsultationsDataTable extends DataTable
     {
         return [
             Column::make('ref_id'),
-            Column::make('created_at'),
+            Column::make('consulted_at'),
             Column::make('full_name'),
             Column::make('symptom'),
             Column::computed('action')
@@ -70,8 +72,12 @@ class ConsultationsDataTable extends DataTable
             ],
             'print' => [
                 'icon'      => 'simple-icon-printer',
-                'onclick'   => '$(this).printConsultation({url: "'.route('admin.consultation.print', $row->id).'"})'
+                'modal'     => route('admin.consultation.print.option', $row->id)
             ],
+//            'print' => [
+//                'icon'      => 'simple-icon-printer',
+//                'onclick'   => '$(this).printConsultation({url: "'.route('admin.consultation.print.index', $row->id).'"})'
+//            ],
             'edit' => [
                 'icon'      => 'simple-icon-pencil',
                 'redirect'  => route('admin.consultation.edit', $row->id)

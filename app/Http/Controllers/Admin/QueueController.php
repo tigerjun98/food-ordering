@@ -6,6 +6,7 @@ use App\DataTables\QueuesDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Queue;
 use App\Models\User;
+use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
 use App\Modules\Admin\Queue\Requests\QueueUpdateSortingRequest;
 use App\Modules\Admin\Queue\Services\QueueService;
@@ -52,7 +53,11 @@ class QueueController extends Controller {
             abort(404);
         }
 
-        return view('admin.queue.index', compact('roleId'));
+        $doctors = (new PermissionService())
+            ->getDoctorAccounts()
+            ->get();
+
+        return view('admin.queue.index', compact('roleId', 'doctors'));
     }
 
     public function serve($queueId)

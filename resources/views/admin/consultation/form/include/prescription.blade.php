@@ -107,8 +107,8 @@
                         <input type="number" name="time_per_day[{{$id}}]"
                                class="form-control"
                                id="timePerDay{{$id}}"
-                               value="{{ $data->time_per_day ?? 0 }}"
-                               onkeydown="countDailyDose('{{$id}}')"
+                               value="{{ $data->time_per_day ?? '' }}"
+                               onkeyup="countDailyDose('{{$id}}')"
                                onchange="countDailyDose('{{$id}}')"
                         >
                         <span>{{ trans('label.time_per_day') }}<span class="text-danger">*</span></span>
@@ -118,11 +118,11 @@
                     <label class="form-group has-float-label tooltip-center-bottom mb-3">
                         <div class="input-group">
                             <input type="number"
-                                   value="{{ $data->dose_per_time ?? 0 }}"
+                                   value="{{ $data->dose_per_time ?? '' }}"
                                    name="dose_per_time[{{$id}}]"
                                    class="form-control"
                                    id="timePerDose{{$id}}"
-                                   onkeydown="countDailyDose('{{$id}}')"
+                                   onkeyup="countDailyDose('{{$id}}')"
                                    onchange="countDailyDose('{{$id}}')"
                             >
                             <span

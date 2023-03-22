@@ -9,13 +9,19 @@
         'admin' => [
             'account'       => ['route'=> route('admin.account.index'), 'icon'=>'iconsminds-engineering', 'permission' => 'setting-admin.account'],
             'roles'         => ['route'=> route('admin.role.index'), 'icon'=>'iconsminds-network', 'permission' => 'setting-admin.role'],
+        ],
+        'other' => [
+            'print'         => ['route'=> route('admin.print-template.index'), 'icon'=>'iconsminds-printer', 'permission' => 'setting-other.print'],
+
         ]
+
+
     ];
 
       $queueChildren = [
         'roles' => [
             'receptionist'  => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-business-woman', 'permission' => 'queue.'.\App\Models\Queue::RECEPTIONIST],
-            'doctor'        => ['route'=> route('admin.queue.show', \App\Models\Queue::DOCTOR), 'icon'=>'iconsminds-stethoscope', 'permission' => 'queue.'.\App\Models\Queue::DOCTOR],
+            'doctor'        => ['route'=> route('admin.queue.show', \App\Models\Queue::DOCTOR).'?doctor_id='.Auth::id(), 'icon'=>'iconsminds-stethoscope', 'permission' => 'queue.'.\App\Models\Queue::DOCTOR],
             'pharmacy'      => ['route'=> route('admin.queue.show', \App\Models\Queue::PHARMACY), 'icon'=>'iconsminds-chemical', 'permission' => 'queue.'.\App\Models\Queue::PHARMACY],
             'cashier'       => ['route'=> route('admin.queue.show', \App\Models\Queue::CASHIER), 'icon'=>'iconsminds-cash-register-2', 'permission' => 'queue.'.\App\Models\Queue::CASHIER],
         ],
