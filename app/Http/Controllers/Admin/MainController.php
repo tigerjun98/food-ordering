@@ -6,6 +6,7 @@ use App\DataTables\AdminsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Queue;
+use App\Models\User;
 use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Account\Services\AttachmentService;
 use App\Modules\Admin\Permissions\Services\PermissionService;
@@ -26,10 +27,8 @@ class MainController extends Controller {
 
     public function getUserOpt()
     {
-
-        $query = (new PermissionService())->getDoctorAccounts();
-        $admin = $query->FilterOption()->paginate(10);
-        return response()->json($admin);
+        $user = User::FilterOptionNameIc()->paginate(10);
+        return response()->json($user);
     }
 }
 
