@@ -4,11 +4,13 @@
 <li class="mb-2 queue-list" data-id="{{ $queue->id }}" id="queueBox-{{ $queue->id }}">
     <div class="card">
         <div class="position-absolute card-top-buttons">
-            <button
-                onclick="deleteQueue({{ $queue->id }})"
-                class="btn btn-header-light icon-button text-danger">
-                <i class="simple-icon-trash"></i>
-            </button>
+            @if($queue->role != Queue::PHARMACY)
+                <button
+                    onclick="deleteQueue({{ $queue->id }})"
+                    class="btn btn-header-light icon-button text-danger">
+                    <i class="simple-icon-trash"></i>
+                </button>
+            @endif
         </div>
         <div class="card-body">
             <div class="justify-content-between">

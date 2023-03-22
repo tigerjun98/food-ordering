@@ -11,7 +11,7 @@
     <style type="text/css">
         @media print {
             @page {
-                margin: 30px 0;
+                margin: 30px 20px;
             }
             body {
                 margin: 1.6cm; max-width: 1048px;

@@ -48,7 +48,10 @@ class ConsultationService
             return $model;
         });
 
-        $queue = Queue::where('consultation_id', $model->id)->first();
+        $queue = Queue::where('consultation_id', $model->id)
+            ->Today()
+            ->first();
+        
         if($queue){
             (new QueueService())->notifyReceptionist($queue);
         }

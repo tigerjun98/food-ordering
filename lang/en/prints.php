@@ -31,7 +31,6 @@ return [
         'total'         => 'Total',
         'price'         => 'Price',
         'instruction'   => 'Instruction',
-        'direction'     => 'Direction',
     ],
 
     'bottom'  => [
