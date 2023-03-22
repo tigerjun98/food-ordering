@@ -64,11 +64,10 @@
                 <x-admin.component.module.queue.user-search />
                 <div class="row">
                     <x-admin.form.select
-                        :multiple="true"
-                        :col="'md-12'"
-                        :name="'name'"
                         :selectJs="false"
                         :ajax="route('admin.get-user-opt')"
+                        :col="'md-12'"
+                        :name="'name_or_nric_or_passport'"
                         :required="false"
                     >
                     </x-admin.form.select>
