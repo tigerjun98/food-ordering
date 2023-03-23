@@ -34,7 +34,7 @@ class ConsultationsDataTable extends DataTable
             ->editColumn('symptom', function($row){
                 return '<p class="max-line-2 text-xs">'.$row->symptom.'</p>';
             })->addColumn('consulted_at', function($row){
-                return dateFormat($row->consulted_at, 'd M, Y');
+                return $row->consulted_at ? dateFormat($row->consulted_at, 'd M, Y') : '-';
             })->addColumn('full_name', function($row){
                 return $row->patient ? $row->patient->full_name : '-';
             })->addColumn('action', function($row){

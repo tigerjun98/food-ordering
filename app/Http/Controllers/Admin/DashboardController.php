@@ -19,7 +19,7 @@ class DashboardController extends Controller
     {
         $queueService = (new QueueService());
         $data['reception'] = $queueService->countWaitingPatient();
-        $data['doctor'] = $queueService->countServingPatient();
+        $data['doctor'] = $queueService->countServingPatient( Auth::id() );
         $data['pharmacy'] = $queueService->countWaitingPatient(Queue::MEDICINE);
         return makeResponse(200, null, $data);
     }

@@ -16,7 +16,6 @@ return [
     */
     'layout'  => [
         'header' => 'Header',
-        'footer' => 'Footer',
     ],
 
     'info'  => [
@@ -29,12 +28,11 @@ return [
         'description'   => 'Description',
         'qty'           => 'Quantity',
         'total'         => 'Total',
-        'price'         => 'Price',
         'instruction'   => 'Instruction',
     ],
 
     'bottom'  => [
-        'amount'        => 'Amount',
+//        'amount'        => 'Amount',
         'symptom'       => 'Symptom',
         'advice'        => 'Doctor advise',
         'internal_remark'        => 'Internal remark',
