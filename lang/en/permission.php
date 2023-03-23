@@ -50,5 +50,6 @@ return [
 
     'setting-other'  => [
         'print'         => 'Print template management',
+        'group'         => 'Group management',
     ],
 ];
