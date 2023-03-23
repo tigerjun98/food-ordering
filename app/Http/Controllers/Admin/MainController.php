@@ -27,8 +27,10 @@ class MainController extends Controller {
 
     public function getUserOpt()
     {
-        $user = User::FilterOptionNameIc()->paginate(10);
-        return response()->json($user);
+        $patient = User::FilterOptionNameNric()->paginate()->toArray();
+        $new_patient = ['id' => 'new-patient', 'name' => 'New Patient'];
+        array_unshift($patient['data'], $new_patient);
+        return response()->json($patient);
     }
 }
 
