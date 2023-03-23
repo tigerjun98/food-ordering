@@ -62,6 +62,7 @@ class UserStoreRequest extends FormRequest
             'postcode'                          => ['nullable', 'digits:5'],
             'address'                           => ['nullable', 'string'],
             'nationality'                       => ['required', 'in:'.arrayToString(CountryEnum::getCountryList(false))],
+            'group'                             => ['required', 'string'],
         ];
 
         $validation['phone'] = request()->phone

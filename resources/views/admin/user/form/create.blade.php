@@ -83,6 +83,15 @@
             />
         </div>
 
+        <div class="row">
+            <x-admin.form.text
+                :data="$data"
+                :col="'md-12'"
+                :name="'group'"
+                :required="false"
+            />
+        </div>
+
         <x-admin.form.textarea
             :data="$data"
             :name="'remark_allergic'"
