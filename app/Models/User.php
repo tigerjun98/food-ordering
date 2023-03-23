@@ -64,6 +64,17 @@ class User extends Authenticatable
             ->orderBy('created_at', 'desc');
     }
 
+    /**
+     * Get the group that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'id')
+            ->orderBy('created_at', 'desc');
+    }
+
     protected function dobWithAge(): Attribute
     {
         $age = get_age($this->dob);
