@@ -57,6 +57,7 @@ class UsersDataTable extends DataTable
             Column::make('gender'),
             Column::make('nationality'),
             Column::make('dob')->title('DOB (Age)'),
+            Column::make('group'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
