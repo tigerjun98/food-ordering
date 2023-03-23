@@ -3,7 +3,7 @@
     $nav = ['print'];
 
     if( auth()->user()->hasPermissionTo( 'setting-other.print' ) ){
-        $nav[] = 'details';
+        $nav[] = 'template';
     }
 
 @endphp
@@ -36,7 +36,7 @@
         </script>
     @endslot
 
-    @slot('details')
+    @slot('template')
         <input type="hidden" value="{{ \App\Models\PrintTemplate::CONSULTATION }}" name="type">
         <div class="row mb-2">
             <x-admin.form.select
