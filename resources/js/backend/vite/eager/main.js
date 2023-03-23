@@ -72,7 +72,7 @@ $.fn.initialiseDynamicSelect2 = function(options) {
                 return {
                     results: $.map(data.data, function (item) {
                         return {
-                            text: item.name + (item.nric ? (' - ' + item.nric) : ''),
+                            text: item.name,
                             id: item.id
                         }
                     }),
