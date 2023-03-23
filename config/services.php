@@ -34,7 +34,7 @@ return [
     'touch_pos' => [
         'url' => env('TOUCH_POS_URL'),
         'port' => 8199,
-        'token' => 'qHkQpjEyhBZBd7FXJFsVlx3WnH70qjR',
+        'token' => 'OvRw03r6wPvQ2cvLw24Sy0skkGSWIrit',
         'dynamod' => [
             'port' => 8300,
             'token' => 'L9CA1qMf7v7gOa0Ka2yILhDrVWzUTFpn',
