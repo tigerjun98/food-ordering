@@ -114,6 +114,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'touch-pos' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/touch-pos.log'),
+            'level' => 'error',
+        ],
+
     ],
 
 ];
