@@ -62,14 +62,7 @@
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
                 <div class="row">
-                    <x-admin.form.select
-                        :selectJs="false"
-                        :ajax="route('admin.get-user-opt')"
-                        :col="'md-12'"
-                        :name="'name_or_nric_or_passport'"
-                        :required="false"
-                    >
-                    </x-admin.form.select>
+                    <x-admin.page.queue.patient-search />
                 </div>
             </div>
         @endif
@@ -124,58 +117,6 @@
                 </div>
             </div>
         </div>
-
-        <script type="text/javascript">
-            $(document).on('change', '#name_or_nric_or_passport', async function (event) {
-                let $this = $(this)
-                if ($this.val()) {
-                    if($this.val() === 'new-patient' || $this.val().length === 1) {
-                        createNewPatient()
-                    } else {
-                        let data = $this.text().trim()
-                        let nric = data.substring(data.indexOf('-') + 1).trim()
-                        searchPatient(nric)
-                    }
-                }
-            });
-
-            function createNewPatient(){
-                $(this).hideAlert()
-                let url = '{{ route('admin.user.create', 'jsAction=:script') }}'
-                url = url.replace(':script', 'openQueueModal();');
-                $(this).openModal({url, refresh: true})
-            }
-
-            function openQueueModal(){
-                $(this).openModal()
-            }
-
-            async function searchPatient(param){
-                try {
-                    let res = await $(this).sendRequest({
-                        method: 'GET',
-                        alert: false,
-                        url: '{{route('admin.user.search-patient', 'nric=:nric')}}'.replace(':nric', param),
-                    })
-                    if(res.status === 200){
-                        handlePatientExists(res.data)
-                    }
-                } catch (e) {
-                    if(e.status === 502){
-                        $('#app-alert').showAlert({
-                            message: 'Error while getting patient details. Please refresh the page.', status: 'danger', delay: 1000
-                        });
-                    }
-                }
-            }
-
-            function handlePatientExists(patient) {
-                $('#user_id').val(patient.id)
-                $('#nric').val(patient.nric)
-                $('#full_name').val(patient.full_name)
-                handleQueueInfo()
-            }
-        </script>
 
         @include('admin.queue.js.create')
     @endslot
