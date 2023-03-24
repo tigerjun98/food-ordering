@@ -17,7 +17,7 @@
 
     @if(auth()->user()->hasPermissionTo( 'queue.'. \App\Models\Queue::DOCTOR ))
         @php
-            $count = (new \App\Modules\Admin\Queue\Services\QueueService())->countServingPatient( Auth::id() );
+            $count = (new \App\Modules\Admin\Queue\Services\QueueService())->countServingPatient();
             $roleId = \App\Models\Queue::DOCTOR;
         @endphp
         <button

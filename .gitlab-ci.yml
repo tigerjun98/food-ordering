@@ -1,11 +1,11 @@
 before_script:
-  - cd /var/www/yilin-workspace-staging
-
+  - sudo su - deployer
+  - cd /var/www/yilin-workspace-dev
 building:
   stage: build
   script:
     - git reset --hard
-    - git pull origin staging
+    - git pull origin develop
     - composer install
     - php artisan key:generate
     - php artisan migrate
@@ -13,28 +13,27 @@ building:
     - php artisan config:clear
     - php artisan storage:link
     - sudo chmod -R 775 storage
-    - sudo npm install
+    - npm install
     - sudo npm run build:admin
   only:
-    - staging
+    - develop
   tags:
-    - staging-runner
+    - dev-runner
 
 testing:
   stage: test
   script:
     - sudo vendor/bin/phpunit --migrate-configuration
-    - sudo php ./vendor/bin/phpunit
+    - sudo php artisan test
   only:
-    - staging
+    - develop
   tags:
-    - staging-runner
-
+    - dev-runner
 deploying:
   stage: deploy
   script:
     - echo "Deployed"
   only:
-    - staging
+    - develop
   tags:
-    - staging-runner
+    - dev-runner
