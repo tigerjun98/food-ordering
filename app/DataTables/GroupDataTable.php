@@ -37,25 +37,19 @@ class GroupDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->editColumn('full_name', function($row) {
                 return $row->full_name;
-            })
-            ->editColumn('type', function ($row) {
+            })->editColumn('type', function ($row) {
                 return $row->type_explain;
-            })
-            ->editColumn('status', function($row) {
+            })->editColumn('status', function($row) {
                 return $row->status
                     ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
                     : '-';
-            })
-            ->editColumn('updated_at', function($row) {
+            })->editColumn('updated_at', function($row) {
                 return dateFormat($row->updated_at, 'r');
-            })
-            ->addColumn('action', function($row) {
+            })->addColumn('action', function($row) {
                 return $this->action($row);
-            })
-            ->filter(function ($model) {
+            })->filter(function ($model) {
                 return $model->filter();
-            })
-            ->rawColumns(['action', 'status']);
+            })->rawColumns(['action', 'status']);
     }
 
     public function getColumns(): array
@@ -73,10 +67,6 @@ class GroupDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
-            'view' => [
-                'icon'      => 'simple-icon-eye',
-                // 'modal'     => route('admin.group.show', $row->id)
-            ],
             'edit' => [
                 'icon' => 'simple-icon-pencil',
                 // 'modal' => route('admin.group.edit', $row->id)
