@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Entity\Enums\ConsultationEnum;
+use App\Entity\Enums\StatusEnum;
 use App\Models\Admin;
 use App\Models\Fee;
 use App\Models\Medicine;
@@ -27,10 +28,20 @@ class FeeSeeder extends Seeder
     public function run()
     {
         foreach ($this->getListing() as $var){
+
+            $exists = Fee::where('category', $var['category'])
+                ->where('type', $var['type'])
+                ->first();
+
+            if($exists){
+                continue;
+            }
+
             $model = new Fee();
             foreach ($var as $col => $val){
                 $model->{$col} = $val;
             }
+            $model->status = StatusEnum::ACTIVE;
             $model->save();
         }
     }

@@ -104,7 +104,7 @@ class FeesDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(4)
+                    ->orderBy(5)
 //                    ->autoWidth(false)
                     //->dom('Bfrtip')
 //                    ->orderBy(0)
