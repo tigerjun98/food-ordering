@@ -26,8 +26,8 @@ class Group extends Model
         'updated_at' => 'datetime',
     ];
 
-    public const USERS = 001;
-    public const ADMINS = 002;
+    public const USER = 101;
+    public const ADMIN = 102;
 
     /**
      * Get all of the users for the Group
@@ -40,18 +40,25 @@ class Group extends Model
             ->orderBy('created_at', 'desc');
     }
 
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+        );
+    }
+
     public static function getTypeList(): array
     {
         return [
-            self::USERS => trans('common.users'),
-            self::ADMINS => trans('common.admins'),
+            self::USER => trans('common.users'),
+            self::ADMIN => trans('common.admins'),
         ];
     }
 
     protected function typeExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => static::getTypeList()[$this->type] ?? trans('common.unknown_type'),
+            get: fn () => ucfirst(static::getTypeList()[$this->type] ?? '')
         );
 
     }
@@ -64,7 +71,34 @@ class Group extends Model
     protected function statusExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => ucfirst(self::getStatusList()[$this->status] ?? '')
+            get: fn () => ucfirst(StatusEnum::getListing()[$this->status] ?? '')
+        );
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', StatusEnum::ACTIVE);
+    }
+
+    public static function Filter()
+    {
+        return [
+            'full_name' => ['type' => 'text', 'label' => 'full_name', 'default' => false],
+            'status'    => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList()],
+        ];
+    }
+
+    public function scopeFilter($query)
+    {
+        if(request()->filled('full_name')){
+            $query->where(function ($q) {
+                $q->where('name_en', 'like', '%'.request()->full_name.'%')
+                    ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
+        return $this->searchAll(
+            $this->parentFilterTrait($query), []
         );
     }
 }
