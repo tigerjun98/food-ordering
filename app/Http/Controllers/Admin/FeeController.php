@@ -2,22 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\DataTables\AdminsDataTable;
-use App\DataTables\MedicinesDataTable;
+use App\DataTables\FeesDataTable;
 use App\DataTables\OptionsDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Consultation;
-use App\Models\Medicine;
-use App\Models\Option;
-use App\Models\Queue;
-use App\Models\User;
-use App\Modules\Admin\Account\Requests\RoleStoreRequest;
-use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
-use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
-use App\Modules\Admin\Medicine\Services\MedicineService;
-use App\Modules\Admin\Option\Requests\FeeStoreRequest;
-use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
+use App\Models\Fee;
+use App\Modules\Admin\Fee\Requests\FeeStoreRequest;
+use App\Modules\Admin\Fee\Services\FeeService;
 use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\Queue\Services\QueueService;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
@@ -30,23 +20,23 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use DB;
 
-class OptionController extends Controller {
+class FeeController extends Controller {
 
     use ApiResponser;
 
-    private Option $model;
-    private OptionService $service;
+    private Fee $model;
+    private FeeService $service;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->model = new Option();
-        $this->service = new OptionService();
+        $this->model = new Fee();
+        $this->service = new FeeService();
     }
 
-    public function index(OptionsDataTable $dataTable)
+    public function index(FeesDataTable $dataTable)
     {
-        return $dataTable->render('admin.option.datatable', [
+        return $dataTable->render('admin.fee.datatable', [
             'filter' => $this->model->Filter()
         ]);
     }
@@ -54,7 +44,7 @@ class OptionController extends Controller {
     public function show(OptionsDataTable $dataTable, $type)
     {
         request()->type = $type;
-        return $dataTable->render('admin.option.datatable', [
+        return $dataTable->render('admin.fee.datatable', [
             'filter' => $this->model->Filter(),
             'type' => $type
         ]);
@@ -62,16 +52,15 @@ class OptionController extends Controller {
 
     public function create()
     {
-        return html('admin.option.form.create',[
+        return html('admin.fee.form.create',[
             'data' => null,
-            'type' => request()->type
         ]);
     }
 
-    public function edit($optionId)
+    public function edit($modelId)
     {
-        return html('admin.option.form.create',[
-            'data' => $this->model->findOrFail($optionId),
+        return html('admin.fee.form.create',[
+            'data' => $this->model->findOrFail($modelId),
         ]);
     }
 
@@ -84,8 +73,8 @@ class OptionController extends Controller {
     public function delete($optionId)
     {
         $model = $this->model->findOrFail($optionId);
-        return html('admin.option.form.delete',[
-            'canDelete' => !$this->service->occupied($model),
+        return html('admin.fee.form.delete',[
+            'canDelete' => false,
             'data' => $model
         ]);
     }

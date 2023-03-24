@@ -67,4 +67,5 @@ return [
     'attachment' => 'Attachment',
     'visited_at' => 'Visited at',
     'consulted_at' => 'Consulted at',
+    'price' => 'Price',
 ];

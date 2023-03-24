@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('remark')->nullable();
             $table->string('category')->nullable();
             $table->integer('type')->nullable();
+            $table->integer('status')->nullable();
             $table->float('price')->nullable();
             $table->timestamps();
             $table->softDeletes();

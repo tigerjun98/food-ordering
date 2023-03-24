@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants;
 use App\Entity\Enums\ConsultationEnum;
+use App\Entity\Enums\StatusEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
@@ -48,6 +49,18 @@ class Fee extends Model
     {
         return Attribute::make(
             get: fn () => self::getCategoryList()[$this->category] ?? '',
+        );
+    }
+
+    public static function getStatusList(): array
+    {
+        return StatusEnum::getListing();
+    }
+
+    protected function statusExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getStatusList()[$this->status] ?? '',
         );
     }
 
