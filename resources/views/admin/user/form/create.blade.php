@@ -85,7 +85,7 @@
                 :data="$data"
                 :col="'md-6'"
                 :name="'group_id'"
-                :options="\App\Models\Group::all()->where('type', \App\Models\Group::USER)->pluck('name_en','id')"
+                :options="\App\Models\Group::where('type', \App\Models\Group::USER)->Active()->pluck('name_en','id')"
             />
         </div>
 
