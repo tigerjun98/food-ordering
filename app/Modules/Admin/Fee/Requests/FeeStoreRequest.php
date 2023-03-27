@@ -37,13 +37,13 @@ class FeeStoreRequest extends FormRequest
     {
         return [
             'id'        => ['integer'],
-            'category'  => ['required', 'in:'.arrayToString(Fee::getCategoryList())],
+//            'category'  => ['required', 'in:'.arrayToString(Fee::getCategoryList())],
             'status'    => ['required', 'in:'.arrayToString(Fee::getStatusList())],
             'name_en'   => ['required', 'string'],
             'name_cn'   => ['nullable', 'string'],
             'remark'    => ['nullable', 'string'],
             'price'     => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'type'      => ['required', 'integer'],
+//            'type'      => ['required', 'integer'],
         ];
     }
 }

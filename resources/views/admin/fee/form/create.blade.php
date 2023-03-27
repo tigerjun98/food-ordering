@@ -25,20 +25,22 @@
             <x-admin.form.select
                 :data="$data"
                 :options="\App\Models\Fee::getCategoryList()"
-                :col="'md-12'"
+                :col="'md-6'"
                 :name="'category'"
+                :disabled="true"
+            />
+            <x-admin.form.text
+                :value="$data->type_explain"
+                :col="'md-6'"
+                :name="'type'"
+                :disabled="true"
             />
         </div>
 
         <div class="row">
             <x-admin.form.text
                 :data="$data"
-                :col="'md-6'"
-                :name="'type'"
-            />
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
+                :col="'md-12'"
                 :name="'price'"
             />
         </div>

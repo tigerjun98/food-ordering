@@ -52,6 +52,17 @@ class Fee extends Model
         );
     }
 
+    protected function typeExplain(): Attribute
+    {
+        if (array_key_exists($this->category, ConsultationEnum::getMedicineListing())) { // array key contain
+            $attr = $this->type.Prescription::getMetricList()[$this->category];
+        }
+
+        return Attribute::make(
+            get: fn () => $attr ?? $this->type,
+        );
+    }
+
     public static function getStatusList(): array
     {
         return StatusEnum::getListing();
@@ -66,13 +77,20 @@ class Fee extends Model
 
     public static function Filter(){
         return [
-            'name_cn'     => ['type' => 'text', 'label' => 'Full name' ],
-//            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
+            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }
 
     public function scopeFilter($query)
     {
+        if(request()->filled('full_name')){
+            $query->where(function ($q) {
+                $q->where('name_en', 'like', '%'.request()->full_name.'%')
+                    ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
         return $this->searchAll(
             $this->parentFilterTrait($query), ['name_en', 'name_cn']
         );
