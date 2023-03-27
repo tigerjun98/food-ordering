@@ -40,8 +40,8 @@ class Group extends Model
     public static function getTypeList(): array
     {
         return [
-            self::USER => trans('common.users'),
-            self::ADMIN => trans('common.admins'),
+            self::USER => ucfirst(trans('common.users')),
+            self::ADMIN => ucfirst(trans('common.admins')),
         ];
     }
 
@@ -75,6 +75,7 @@ class Group extends Model
         return [
             'full_name' => ['type' => 'text', 'label' => 'full_name', 'default' => false],
             'status'    => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList()],
+            'type'      => ['type' => 'select', 'label' => 'type', 'option' => static::getTypeList()],
         ];
     }
 
