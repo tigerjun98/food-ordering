@@ -81,7 +81,7 @@
                 <x-admin.form.select
                     :data="$data"
                     :col="'md-6'"
-                    :name="'group'"
+                    :name="'group_id'"
                     :options="\App\Models\Group::all()->where('type', \App\Models\Group::ADMIN)->pluck('name_en','id')"
                 />
             </div>

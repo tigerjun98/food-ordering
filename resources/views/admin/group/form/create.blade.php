@@ -16,6 +16,7 @@
                 :data="$data"
                 :col="'md-6'"
                 :name="'name_cn'"
+                :required="false"
             />
         </div>
 
