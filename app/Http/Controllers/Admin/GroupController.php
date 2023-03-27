@@ -53,9 +53,10 @@ class GroupController extends Controller
 
     public function delete($groupId)
     {
+        $model = $this->model->findOrFail($groupId);
         return html('admin.group.form.delete',[
-            'canDelete' => true,
-            'data' => $this->model->findOrFail($groupId)
+            'canDelete' => !$this->service->occupied($model),
+            'data' => $model
         ]);
     }
 
