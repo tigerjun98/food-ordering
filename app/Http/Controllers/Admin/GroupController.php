@@ -44,6 +44,13 @@ class GroupController extends Controller
         return makeResponse(200);
     }
 
+    public function edit($groupId)
+    {
+        return html('admin.group.form.create',[
+            'data' => $this->model->findOrFail($groupId)
+        ]);
+    }
+
     public function delete($groupId)
     {
         return html('admin.group.form.delete',[
