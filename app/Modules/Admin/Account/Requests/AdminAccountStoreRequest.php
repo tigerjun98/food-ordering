@@ -54,6 +54,7 @@ class AdminAccountStoreRequest extends FormRequest
             'gender'    => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
             'password'  => ['nullable', 'confirmed', Password::min(6)], // Password::min(6)->uncompromised()
             'roles.*'   => ['required', 'exists:roles,id'],
+            'group_id'  => ['required', 'exists:groups,id'],
         ];
     }
 }
