@@ -42,6 +42,8 @@ class UsersDataTable extends DataTable
             })->rawColumns(['image', 'action'])
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
+            })->editColumn('group', function($row){
+                return $row->groups->get(0)->name_en;
             });
 //            ->order(function ($query) {
 //                $query->orderBy('updated_at', 'desc');
