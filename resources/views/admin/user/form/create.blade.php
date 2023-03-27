@@ -78,8 +78,14 @@
         <div class="row">
             <x-admin.form.select-nationality
                 :data="$data"
-                :col="'md-12'"
+                :col="'md-6'"
                 :name="'nationality'"
+            />
+            <x-admin.form.select
+                :data="$data"
+                :col="'md-6'"
+                :name="'group_id'"
+                :options="\App\Models\Group::where('type', \App\Models\Group::USER)->Active()->pluck('name_en','id')"
             />
         </div>
 

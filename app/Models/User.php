@@ -12,13 +12,14 @@ use App\Traits\Models\SelectOption;
 use App\Traits\Models\TimestampFormat;
 use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 
 class User extends Authenticatable
@@ -63,6 +64,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Queue::class, 'user_id', 'id')
             ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get the group that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function group(): HasOne
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
     }
 
     protected function dobWithAge(): Attribute

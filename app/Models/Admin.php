@@ -10,6 +10,7 @@ use App\Traits\Models\SelectOption;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -67,6 +68,16 @@ class Admin extends Authenticatable
     public function clinic()
     {
         return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
+    }
+
+    /**
+     * Get the group that owns the Admin
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function group(): HasOne
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
     }
 
     protected function fullName(): Attribute

@@ -42,6 +42,8 @@ class UsersDataTable extends DataTable
             })->rawColumns(['image', 'action'])
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
+            })->editColumn('group_id', function($row){
+                return $row->group->full_name ?? '-';
             });
 //            ->order(function ($query) {
 //                $query->orderBy('updated_at', 'desc');
@@ -52,6 +54,7 @@ class UsersDataTable extends DataTable
     {
         return [
             Column::make('nric')->title('NRIC/Passport'),
+            Column::make('group_id')->title('Group'),
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),

@@ -78,6 +78,12 @@
                     :name="'gender'"
                     :options="\App\Entity\Enums\GenderEnum::getListing()"
                 />
+                <x-admin.form.select
+                    :data="$data"
+                    :col="'md-6'"
+                    :name="'group_id'"
+                    :options="\App\Models\Group::where('type', \App\Models\Group::ADMIN)->active()->pluck('name_en','id')"
+                />
             </div>
 
     @endslot
