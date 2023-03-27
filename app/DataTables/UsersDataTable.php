@@ -43,7 +43,7 @@ class UsersDataTable extends DataTable
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
             })->editColumn('group_id', function($row){
-                return $row->group->name_en;
+                return $row->group->name_en ?? '-';
             });
 //            ->order(function ($query) {
 //                $query->orderBy('updated_at', 'desc');
@@ -54,12 +54,12 @@ class UsersDataTable extends DataTable
     {
         return [
             Column::make('nric')->title('NRIC/Passport'),
+            Column::make('group_id')->title('Group'),
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),
             Column::make('nationality'),
             Column::make('dob')->title('DOB (Age)'),
-            Column::make('group_id')->title('Group'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
