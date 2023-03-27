@@ -35,8 +35,8 @@ class GroupStoreRequest extends FormRequest
             'id'        => ['integer'],
             'type'      => ['required', 'in:'.arrayToString(Group::getTypeList())],
             'status'    => ['required', 'in:'.arrayToString(Group::getStatusList())],
-            'name_en'   => ['required', 'string', 'max:20'],
-            'name_cn'   => ['required', 'string'],
+            'name_en'   => ['required', 'string', 'max:25'],
+            'name_cn'   => ['nullable', 'string'],
             'remark'    => ['nullable', 'string'],
         ];
     }
