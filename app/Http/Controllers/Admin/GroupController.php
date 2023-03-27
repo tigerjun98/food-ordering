@@ -40,7 +40,7 @@ class GroupController extends Controller
 
     public function store(GroupStoreRequest $request)
     {
-        $request->validated();
+        $this->service->store($request->validated());
         return makeResponse(200);
     }
 }

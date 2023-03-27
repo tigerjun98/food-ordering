@@ -18,6 +18,6 @@ class GroupService
 
     public function store(array $request): Group
     {
-        //
+        return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
     }
 }
