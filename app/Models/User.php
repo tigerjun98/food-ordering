@@ -11,13 +11,14 @@ use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\TimestampFormat;
 use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 
 class User extends Authenticatable
@@ -67,11 +68,11 @@ class User extends Authenticatable
     /**
      * Get the group that owns the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function group(): BelongsTo
+    public function groups(): HasMany
     {
-        return $this->belongsTo(Group::class, 'id')
+        return $this->hasMany(Group::class, 'id', 'group')
             ->orderBy('created_at', 'desc');
     }
 
