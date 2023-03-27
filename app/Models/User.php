@@ -70,9 +70,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function grouping(): HasOne
+    public function group(): HasOne
     {
-        return $this->hasOne(Group::class, 'id', 'group');
+        return $this->hasOne(Group::class, 'id', 'group_id');
     }
 
     protected function dobWithAge(): Attribute
