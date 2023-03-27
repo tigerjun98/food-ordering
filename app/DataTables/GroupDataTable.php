@@ -69,13 +69,13 @@ class GroupDataTable extends DataTable
         $actions = [
             'edit' => [
                 'icon' => 'simple-icon-pencil',
-                // 'modal' => route('admin.group.edit', $row->id)
+                'modal' => route('admin.group.edit', $row->id)
             ],
             'delete' => [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                // 'modal'     => route('admin.group.destroy', $row->id)
+                'modal'     => route('admin.group.destroy', $row->id)
             ]
         ];
 
