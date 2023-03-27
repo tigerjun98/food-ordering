@@ -13,7 +13,7 @@ use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
@@ -68,12 +68,11 @@ class User extends Authenticatable
     /**
      * Get the group that owns the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function groups(): HasMany
+    public function grouping(): HasOne
     {
-        return $this->hasMany(Group::class, 'id', 'group')
-            ->orderBy('created_at', 'desc');
+        return $this->hasOne(Group::class, 'id', 'group');
     }
 
     protected function dobWithAge(): Attribute
