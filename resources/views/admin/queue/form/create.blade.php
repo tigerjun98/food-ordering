@@ -61,12 +61,9 @@
 
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
-                <x-admin.component.module.queue.user-search />
-                <x-admin.component.button
-                    :text="trans('button.create')"
-                    :class="'patient-not-exists hide btn-primary'"
-                    :onclick="'createNewPatient()'"
-                />
+                <div class="row">
+                    <x-admin.page.queue.patient-search />
+                </div>
             </div>
         @endif
 

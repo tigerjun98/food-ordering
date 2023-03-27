@@ -36,8 +36,7 @@ $(document).on('keyup', '.select2-selection--multiple .select2-search__field', f
 
 $.fn.initialiseDynamicSelect2 = function(options) {
 
-    $($(this)).select2({
-        // minimumInputLength: 1,
+    let opt = {
         theme: "bootstrap",
         dir: "ltr",
         placeholder: "",
@@ -84,5 +83,11 @@ $.fn.initialiseDynamicSelect2 = function(options) {
             },
             cache: true
         }
-    });
+    }
+
+    if( $(this).getModalId({latest: true}) !== 'modalIdundefined' ){
+        opt.dropdownParent = $('#'+$(this).getModalId({latest: true}))
+    }
+
+    $($(this)).select2(opt);
 }

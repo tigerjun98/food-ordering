@@ -6,6 +6,8 @@ use App\DataTables\AdminsDataTable;
 use App\DataTables\RolesDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Consultation;
+use App\Models\Option;
 use App\Models\Role;
 use App\Modules\Admin\Role\Requests\RoleStoreRequest;
 use App\Modules\Admin\Role\Services\RoleService;
@@ -58,8 +60,10 @@ class RoleController extends Controller {
 
     public function delete($roleId)
     {
+        $model = $this->role->findOrFail($roleId);
         return html('admin.role.form.delete',[
-            'data' => $this->role->findOrFail($roleId)
+            'canDelete' => !$this->service->occupied($model),
+            'data' => $model
         ]);
     }
 

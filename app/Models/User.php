@@ -8,6 +8,7 @@ use App\Entity\Enums\GenderEnum;
 use App\Entity\Enums\StateEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
+use App\Traits\Models\SelectOption;
 use App\Traits\Models\TimestampFormat;
 use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -23,7 +24,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SoftDeletes, TimestampFormat;
+    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SoftDeletes, TimestampFormat, SelectOption;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }

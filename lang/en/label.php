@@ -67,5 +67,7 @@ return [
     'attachment' => 'Attachment',
     'visited_at' => 'Visited at',
     'consulted_at' => 'Consulted at',
-    'group_id' => 'Group'
+    'group_id' => 'Group',
+    'name_or_nric_or_passport' => 'Name / NRIC / Passport',
+    'template' => 'Template'
 ];
