@@ -43,4 +43,18 @@ class GroupController extends Controller
         $this->service->store($request->validated());
         return makeResponse(200);
     }
+
+    public function delete($groupId)
+    {
+        return html('admin.group.form.delete',[
+            'canDelete' => true,
+            'data' => $this->model->findOrFail($groupId)
+        ]);
+    }
+
+    public function destroy($groupId)
+    {
+        $this->service->delete($this->model->findOrFail($groupId));
+        return makeResponse(200);
+    }
 }
