@@ -20,4 +20,9 @@ class GroupService
     {
         return $this->model->updateOrCreate(['id' => $request['id'] ], $request);
     }
+
+    public function delete(Group $model)
+    {
+        $model->delete();
+    }
 }
