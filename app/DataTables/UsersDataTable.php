@@ -67,29 +67,48 @@ class UsersDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
-            'queue' => [
+            'view' => [
+                'icon'      => 'simple-icon-eye',
+                'modal'     => route('admin.user.show', $row->id)
+            ],
+        ];
+
+        if(auth()->user()->hasPermissionTo( 'queue.create' ) ){
+            $actions['queue'] = [
                 'icon'      => 'simple-icon-ghost',
                 'modal'     => route('admin.queue.create', 'user_id='.$row->id)
-            ],
-            'history' => [
+            ];
+        }
+
+        if(auth()->user()->hasPermissionTo( 'consultation.index' ) ){
+            $actions['history'] = [
                 'icon'      => 'simple-icon-event',
                 'redirect'     => route('admin.consultation.index', 'nric='.$row->nric)
-            ],
-            'consultation' => [
+            ];
+        }
+
+        if(auth()->user()->hasPermissionTo( 'consultation.create' ) ){
+            $actions['consultation'] = [
                 'icon'      => 'simple-icon-calendar',
                 'redirect'  => route('admin.consultation.edit', $row->id)
-            ],
-            'edit' => [
+            ];
+        }
+
+        if(auth()->user()->hasPermissionTo( 'patient.edit' ) ){
+            $actions['edit'] = [
                 'icon'      => 'simple-icon-pencil',
                 'modal'     => route('admin.user.edit', $row->id)
-            ],
-            'delete' => [
+            ];
+        }
+        if(auth()->user()->hasPermissionTo( 'patient.delete' ) ){
+            $actions['delete'] = [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
                 'modal'     => route('admin.user.destroy', $row->id)
-            ]
-        ];
+            ];
+        }
+
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }

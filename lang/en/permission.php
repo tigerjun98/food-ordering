@@ -15,7 +15,10 @@ return [
     |
     */
     'patient'  => [
-        'index' => 'Patient management',
+        'index'     => 'Patient management',
+        'create'    => 'Create',
+        'edit'      => 'Edit',
+        'delete'    => 'Delete',
     ],
     'consultation'  => [
         'index'     => 'Consultation management',
