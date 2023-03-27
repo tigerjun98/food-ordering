@@ -42,7 +42,7 @@ class UsersDataTable extends DataTable
             })->rawColumns(['image', 'action'])
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
-            })->editColumn('group', function($row){
+            })->editColumn('group_id', function($row){
                 return $row->group->name_en;
             });
 //            ->order(function ($query) {
@@ -59,7 +59,7 @@ class UsersDataTable extends DataTable
             Column::make('gender'),
             Column::make('nationality'),
             Column::make('dob')->title('DOB (Age)'),
-            Column::make('group'),
+            Column::make('group_id')->title('Group'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)

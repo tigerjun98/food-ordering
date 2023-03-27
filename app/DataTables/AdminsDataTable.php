@@ -43,6 +43,8 @@ class AdminsDataTable extends DataTable
             })->rawColumns(['image', 'action', 'roles'])
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
+            })->editColumn('group_id', function($row) {
+                return $row->group->name_en;
             });
     }
 
@@ -52,6 +54,7 @@ class AdminsDataTable extends DataTable
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('email'),
+            Column::make('group_id')->title('Group'),
             Column::make('roles')->orderable(false),
             Column::make('updated_at'),
             Column::computed('action')
