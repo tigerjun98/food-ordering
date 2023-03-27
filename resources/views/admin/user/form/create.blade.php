@@ -78,17 +78,14 @@
         <div class="row">
             <x-admin.form.select-nationality
                 :data="$data"
-                :col="'md-12'"
+                :col="'md-6'"
                 :name="'nationality'"
             />
-        </div>
-
-        <div class="row">
-            <x-admin.form.text
+            <x-admin.form.select
                 :data="$data"
-                :col="'md-12'"
+                :col="'md-6'"
                 :name="'group'"
-                :required="false"
+                :options="\App\Models\Group::all()->pluck('name_en','id')"
             />
         </div>
 
