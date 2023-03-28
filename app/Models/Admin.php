@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants;
 use App\Entity\Enums\GenderEnum;
+use App\Entity\Enums\StatusEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
