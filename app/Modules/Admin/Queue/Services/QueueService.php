@@ -57,7 +57,7 @@ class QueueService
             ->toArray();
 
         $doctorIds = array_diff( $doctors, $doctorsOnServing );
-        return Admin::whereIn('id', $doctorIds)->get();
+        return Admin::whereIn('id', $doctorIds)->Active()->get();
 
     }
 
