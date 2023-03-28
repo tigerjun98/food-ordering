@@ -78,6 +78,12 @@
                     :name="'gender'"
                     :options="\App\Entity\Enums\GenderEnum::getListing()"
                 />
+                <x-admin.form.select
+                    :data="$data"
+                    :col="'md-6'"
+                    :name="'status'"
+                    :options="\App\Entity\Enums\StatusEnum::getListing()"
+                />
             </div>
 
     @endslot
