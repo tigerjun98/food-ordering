@@ -3,6 +3,8 @@
 namespace App\Modules\Admin\Role\Services;
 
 use App\Models\Admin;
+use App\Models\Consultation;
+use App\Models\Option;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -58,8 +60,18 @@ class RoleService
         return $spatieRole->getAllPermissions();
     }
 
+    public function occupied(SpatieRole $role): bool
+    {
+        return Admin::with("roles")
+                ->whereHas("roles", function($q) use($role) {
+                    $q->where("id", $role->id);
+                })->count() > 0;
+    }
+
     public function delete(Role $role)
     {
         $role->delete();
     }
+
+
 }

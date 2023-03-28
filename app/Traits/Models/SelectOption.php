@@ -18,6 +18,18 @@ trait SelectOption {
         return $query;
     }
 
+    public function scopeFilterOptionNameNric($query)
+    {
+        $query->select("id", \DB::raw("( CASE WHEN name_cn != '' THEN CONCAT(name_cn,' ',name_en) ELSE name_en END) as name"), "nric")
+            ->where(function ($q) {
+                $q->where('name_en', 'LIKE', '%'. request()->get('search'). '%')
+                    ->orWhere('name_cn', 'LIKE', '%'. request()->get('search'). '%')
+                        ->orWhere('nric', 'LIKE', '%'. str_replace('-', '', request()->get('search')). '%');
+            });
+
+        return $query;
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', StatusEnum::ACTIVE);
