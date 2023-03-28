@@ -114,6 +114,13 @@ class Admin extends Authenticatable
         ];
     }
 
+    protected function statusExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(StatusEnum::getListing()[$this->status] ?? '')
+        );
+    }
+
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
