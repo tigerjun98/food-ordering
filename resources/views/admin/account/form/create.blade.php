@@ -83,6 +83,7 @@
                     :col="'md-6'"
                     :name="'status'"
                     :options="\App\Entity\Enums\StatusEnum::getListing()"
+                    :required="false"
                 />
             </div>
 
