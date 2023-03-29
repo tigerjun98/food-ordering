@@ -1,8 +1,8 @@
 <div class="row mb-2">
     <div class="col-md-6">
         <x-admin.layout.info
-            :data="$patient"
             :name="'full_name'"
+            :value="$patient->full_name_with_group"
         />
     </div>
     <div class="col-md-6">

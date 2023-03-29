@@ -78,7 +78,7 @@
             <x-admin.form.text
                 :label="trans('label.full_name')"
                 :name="'full_name'"
-                :value="$patient->full_name ?? null"
+                :value="$patient->full_name_with_group ?? null"
                 :disabled="true"
             />
 

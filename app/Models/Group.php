@@ -33,7 +33,7 @@ class Group extends Model
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+            get: fn () => $this->name_en . ( $this->name_cn ? ' ('.$this->name_cn.')' : '' )
         );
     }
 

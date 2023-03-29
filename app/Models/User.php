@@ -91,6 +91,13 @@ class User extends Authenticatable
         );
     }
 
+    protected function fullNameWithGroup(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' ) .' '.( $this->group ? '('.$this->group->full_name.')' : '' )
+        );
+    }
+
     protected function phoneFormat(): Attribute
     {
         return Attribute::make(
