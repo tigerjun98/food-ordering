@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="theme-color" content="#ffffff">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-{{--    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">--}}
-{{--    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">--}}
-
-    <!-- CSRF Token -->
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-{{--    <title>{{ config('app.name', 'Yilin') }}</title>--}}
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
+    <title>{{ config('app.name', 'Yilin Workspace') }}</title>
 
     {{ Vite::useBuildDirectory('/backendAssets') }}
     @vite(['resources/css/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
