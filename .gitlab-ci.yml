@@ -1,5 +1,5 @@
 before_script:
-  - cd /var/www/yilin-workspace-dev
+  - cd /var/www/yilin-workspace-staging
 
 building:
   stage: build
@@ -16,9 +16,9 @@ building:
     - sudo npm install
     - sudo npm run build:admin
   only:
-    - develop
+    - staging
   tags:
-    - dev-runner
+    - staging-runner
 
 testing:
   stage: test
@@ -26,9 +26,9 @@ testing:
     - sudo vendor/bin/phpunit --migrate-configuration
     - sudo php ./vendor/bin/phpunit
   only:
-    - develop
+    - staging
   tags:
-    - dev-runner
+    - staging-runner
 
 deploying:
   stage: deploy
@@ -37,4 +37,4 @@ deploying:
   only:
     - staging
   tags:
-    - dev-runner
+    - staging-runner
