@@ -11,7 +11,7 @@
                 :name="'roles[]'"
                 :label="trans('label.roles')"
                 :id="'rolesIds'"
-                :options="\Spatie\Permission\Models\Role::all()->pluck('name_en','id')"
+                :options="\App\Models\Admin::getRolesList()"
                 :required="false"
             >
                 @if(isset($data->roles))

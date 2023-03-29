@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Validation\Rule;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
@@ -118,12 +119,7 @@ class Admin extends Authenticatable
 
     public static function getStatusList()
     {
-        return [
-            0 => 'active',
-            1 => 'inactive',
-            2 => 'block',
-            3 => 'banned',
-        ];
+        return StatusEnum::getListing();
     }
 
     protected function statusExplain(): Attribute
@@ -133,11 +129,18 @@ class Admin extends Authenticatable
         );
     }
 
+    public static function getRolesList(): array
+    {
+        return \Spatie\Permission\Models\Role::all()->pluck('name_en','id')->toArray();
+    }
+
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'email'     => ['type' => 'text', 'label'=> 'email' ],
             'phone'     => ['type' => 'text', 'label'=> 'phone' ],
+            'roles'     => ['label'=> 'role', 'type' => 'select', 'option' => static::getRolesList(), 'default' => false],
+            'status'    => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }
 
@@ -147,6 +150,12 @@ class Admin extends Authenticatable
             $query->where(function ($q) {
                 $q->where('name_en', 'like', '%'.request()->full_name.'%')
                     ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
+        if(request()->filled('roles')){
+            $query->whereHas('roles', function($q){
+                $q->whereIn('id', explode(",",request()->roles));
             });
         }
 
