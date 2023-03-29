@@ -58,10 +58,10 @@ class AdminsDataTable extends DataTable
         return [
             Column::make('full_name'),
             Column::make('status'),
+            Column::make('roles')->orderable(false),
             Column::make('group_id')->title('Group'),
             Column::make('phone'),
             Column::make('email'),
-            Column::make('roles')->orderable(false),
             Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)

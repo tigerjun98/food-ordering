@@ -56,7 +56,7 @@ class AdminAccountStoreRequest extends FormRequest
             'status'    => ['nullable', 'in:'.arrayToString(StatusEnum::getListing())],
             'password'  => ['nullable', 'confirmed', Password::min(6)], // Password::min(6)->uncompromised()
             'roles.*'   => ['required', 'exists:roles,id'],
-            'group_id'  => ['required', 'exists:groups,id'],
+            'group_id'  => ['nullable', 'exists:groups,id'],
         ];
     }
 }

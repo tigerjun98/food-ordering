@@ -82,6 +82,7 @@
                     :data="$data"
                     :col="'md-6'"
                     :name="'group_id'"
+                    :required="false"
                     :options="\App\Models\Group::where('type', \App\Models\Group::ADMIN)->active()->pluck('name_en','id')"
                 />
             </div>
