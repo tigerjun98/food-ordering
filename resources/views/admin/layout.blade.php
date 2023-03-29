@@ -30,21 +30,6 @@
 
         {{--.iti__flag {background-image: url("{{ Vite::asset('resources/img/vendor/intltel.flags.png') }}");}--}}
 
-        .logo {
-            /*background: url('/images/logo/logo.svg') no-repeat;*/
-            background-size: contain;
-            /*width: 77px;*/
-            height: 59px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-        @media (max-width: 767px){
-            .logo {
-                width: 110px;
-            }
-        }
 
         main{
             position: relative;

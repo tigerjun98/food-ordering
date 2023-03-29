@@ -1,10 +1,48 @@
-.menu .sub-menu ul li a {
-    font-size: 13px;
-    display: block;
-    padding: 8px 0;
-    margin-bottom: 10px;
+.navbar-logo img {
+    background-size: contain;
+    height: 59px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 
-    span{
-        font-size: 13px;
+    @include mobile() {
+        height: 52px;
+    }
+}
+
+.menu {
+
+    @include mobile() {
+        .main-menu{
+            width: 102px;
+
+            ul li {
+                a{
+                    font-size: 12px;
+                }
+                span{
+                    width: 83%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+
+    .sub-menu ul li{
+        a {
+            font-size: 13px;
+            display: block;
+            padding: 8px 0;
+            margin-bottom: 10px;
+
+            span {
+                font-size: 13px;
+                width: 83%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
     }
 }
