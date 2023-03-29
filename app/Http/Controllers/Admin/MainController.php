@@ -21,7 +21,7 @@ class MainController extends Controller {
     public function getDoctorOpt()
     {
         $query = (new PermissionService())->getDoctorAccounts();
-        $admin = $query->FilterOption()->Active()->paginate(10);
+        $admin = $query->FilterOption()->FilterOptionActive()->paginate(10);
         return response()->json($admin);
     }
 
