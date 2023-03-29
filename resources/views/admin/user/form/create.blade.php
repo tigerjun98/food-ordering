@@ -138,6 +138,7 @@
                 :data="$data"
                 :col="'md-6'"
                 :name="'emergency_contact_name'"
+                :label="trans('label.contact_name')"
                 :required="false"
             />
             <x-admin.form.text
@@ -145,6 +146,7 @@
                 :col="'md-6'"
                 :type="'phone'"
                 :name="'emergency_contact_no'"
+                :label="trans('label.contact_no')"
                 :required="false"
             />
         </div>
@@ -153,6 +155,7 @@
                 :data="$data"
                 :col="'md-6'"
                 :name="'emergency_contact_relationship'"
+                :label="trans('label.relationship')"
                 :required="false"
             />
         </div>
