@@ -85,6 +85,15 @@
                     :options="\App\Models\Group::where('type', \App\Models\Group::ADMIN)->active()->pluck('name_en','id')"
                 />
             </div>
+            <div class="row">
+                <x-admin.form.select
+                    :data="$data"
+                    :col="'md-12'"
+                    :name="'status'"
+                    :options="\App\Entity\Enums\StatusEnum::getListing()"
+                    :required="false"
+                />
+            </div>
 
     @endslot
 </x-admin.component.modal>

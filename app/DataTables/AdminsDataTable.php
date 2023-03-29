@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Entity\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -40,11 +41,13 @@ class AdminsDataTable extends DataTable
                 return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action', 'roles'])
+            })->rawColumns(['image', 'action', 'roles', 'status'])
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
-            })->editColumn('group_id', function($row) {
-                return $row->group->full_name ?? '-';
+            })->editColumn('status', function($row){
+                return $row->status
+                    ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
+                    : '-';
             });
     }
 
@@ -52,7 +55,6 @@ class AdminsDataTable extends DataTable
     {
         return [
             Column::make('full_name'),
-            Column::make('group_id')->title('Group'),
             Column::make('phone'),
             Column::make('email'),
             Column::make('roles')->orderable(false),

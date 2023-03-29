@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Constants;
 use App\Entity\Enums\GenderEnum;
+use App\Entity\Enums\StatusEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
@@ -123,6 +124,13 @@ class Admin extends Authenticatable
             2 => 'block',
             3 => 'banned',
         ];
+    }
+
+    protected function statusExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(StatusEnum::getListing()[$this->status] ?? '')
+        );
     }
 
     public static function Filter(){
