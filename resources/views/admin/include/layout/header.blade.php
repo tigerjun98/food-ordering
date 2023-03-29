@@ -23,8 +23,17 @@
     </div>
 
 
+    <style>
+        .navbar-logo img{
+            height: 65px;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+        }
+    </style>
     <a class="navbar-logo" href="{{route('admin.home')}}">
-        <img style="height: 43px;" src="{{ Vite::image('icons/logo.webp') }}" />
+        <img src="{{ Vite::image('icons/logo.webp') }}" />
 {{--        <span class="logo-mobile d-block d-xs-none"></span>--}}
     </a>
 
