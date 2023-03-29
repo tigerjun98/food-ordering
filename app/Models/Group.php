@@ -40,7 +40,7 @@ class Group extends Model
     public static function getTypeList(): array
     {
         return [
-            self::USER => ucfirst(trans('common.users')),
+            self::USER => ucfirst(trans('common.patients')),
             self::ADMIN => ucfirst(trans('common.admins')),
         ];
     }
