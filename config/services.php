@@ -33,11 +33,11 @@ return [
 
     'touch_pos' => [
         'url' => env('TOUCH_POS_URL'),
-        'port' => 8199,
-        'token' => 'OvRw03r6wPvQ2cvLw24Sy0skkGSWIrit',
+        'port' => env('TOUCH_POS_PORT'),
+        'token' => env('TOUCH_POS_TOKEN'),
         'dynamod' => [
-            'port' => 8300,
-            'token' => 'L9CA1qMf7v7gOa0Ka2yILhDrVWzUTFpn',
+            'port' => env('TOUCH_POS_DYNAMOD_PORT'),
+            'token' => env('TOUCH_POS_DYNAMOD_TOKEN'),
         ],
     ],
 

@@ -20,26 +20,26 @@ class DynamodCustomerTest extends TestCase
 
 //    public function test_create_customer()
 //    {
-//        $user = User::all()->random();
+//        $user = User::find('669251744');
 //        (new DynamodCustomerService())->createCustomer($user);
 //        $this->assertTrue(true);
 //    }
 
-//    public function test_get_customers()
-//    {
-//        (new DynamodCustomerService())->getCustomers(1);
-//        $this->assertTrue(true);
-//    }
+    public function test_get_customers()
+    {
+        (new DynamodCustomerService())->getCustomers(1);
+        $this->assertTrue(true);
+    }
 //
 //    public function test_sync_customers()
 //    {
 //        (new DynamodCustomerService())->syncCustomers(1);
 //    }
 //
-    public function test_find_customers_by_id()
-    {
-        (new DynamodCustomerService())->findCustomersById('1611819829');
-        $this->assertTrue(true);
-    }
+//    public function test_find_customers_by_id()
+//    {
+//        (new DynamodCustomerService())->findCustomersById('1611819829');
+//        $this->assertTrue(true);
+//    }
 
 }
