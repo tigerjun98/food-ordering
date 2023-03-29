@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Console\Commands\DataTables\Users;
+namespace App\Console\Commands\DataTables\Admins;
 
 use App\Entity\Enums\StatusEnum;
 use App\Jobs\Order\CancelExpiredOrder;
 use App\Models\Admin;
 use App\Models\Medicine;
-use App\Models\Order;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Overtrue\LaravelPinyin\Facades\Pinyin;
@@ -22,7 +21,7 @@ class SyncAdminsStatus extends Command
      */
     protected $description = 'Set status to Active if null';
     private $bar;
-    private User $model;
+    private Admin $model;
 
     /**
      * Create a new command instance.
