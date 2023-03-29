@@ -61,12 +61,13 @@
     function createNewPatient(){
         $(this).hideAlert()
         let url = '{{ route('admin.user.create', 'jsAction=:script') }}'
-        url = url.replace(':script', 'openQueueModal();');
+        url = url.replace(':script', 'openQueueModal(res);');
         $(this).openModal({url, refresh: true})
     }
 
-    function openQueueModal(){
-        $(this).openModal()
+    function openQueueModal(res){
+        let url = '{{ route('admin.queue.create', 'user_id=:userId') }}'.replace( ':userId', res.data.id )
+        $(this).openModal({ url })
     }
 
     async function searchPatient(param){
