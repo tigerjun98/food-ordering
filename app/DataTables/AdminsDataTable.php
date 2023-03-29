@@ -48,6 +48,8 @@ class AdminsDataTable extends DataTable
                 return $row->status
                     ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
                     : '-';
+            })->editColumn('group_id', function($row) {
+                return $row->group->full_name ?? '-';
             });
     }
 
@@ -55,6 +57,8 @@ class AdminsDataTable extends DataTable
     {
         return [
             Column::make('full_name'),
+            Column::make('status'),
+            Column::make('group_id')->title('Group'),
             Column::make('phone'),
             Column::make('email'),
             Column::make('roles')->orderable(false),
