@@ -23,7 +23,9 @@ class UsersDataTable extends DataTable
         $query = User::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->addColumn('full_name', function($row){
+            ->editColumn('updated_at', function($row){
+                return $row->updated_at;
+            })->addColumn('full_name', function($row){
                 return $row->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
@@ -45,9 +47,6 @@ class UsersDataTable extends DataTable
             })->editColumn('group_id', function($row){
                 return $row->group->full_name ?? '-';
             });
-//            ->order(function ($query) {
-//                $query->orderBy('updated_at', 'desc');
-//            });
     }
 
     public function getColumns(): array
@@ -60,7 +59,7 @@ class UsersDataTable extends DataTable
             Column::make('gender'),
             Column::make('nationality'),
             Column::make('dob')->title('DOB (Age)'),
-            Column::make('created_at'),
+            Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -137,7 +136,7 @@ class UsersDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(5)
+                    ->orderBy(7)
                     //->dom('Bfrtip')
                     ->selectStyleSingle()
 //                    ->parameters([
