@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="theme-color" content="#08091e">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ asset('/images/favicon/favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('/images/favicon/android-chrome-192x192.png') }}" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
     <title>{{ config('app.name', 'Yilin Workspace') }}</title>
     {{ Vite::useBuildDirectory('/backendAssets') }}
