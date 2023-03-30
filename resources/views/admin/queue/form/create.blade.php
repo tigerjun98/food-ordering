@@ -84,12 +84,10 @@
 
             <div class="row">
                 <x-admin.form.select
-                    :multiple="true"
                     :col="'md-12'"
                     :name="'doctor_id'"
                     :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
-                    :required="false"
                 >
                     @if($data && $data->doctor)
                         @slot('customOption')
