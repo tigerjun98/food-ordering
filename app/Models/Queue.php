@@ -30,6 +30,7 @@ class Queue extends Model
     public const EXPIRED    = 104;
     public const COMPLETED  = 105;
     public const HOLDING    = 106;
+    public const DELETED    = 107;
 
     public const CONSULTATION = 201;
     public const MEDICINE = 202;
