@@ -25,14 +25,26 @@ class GroupService
 
     public function occupied(Group $group): bool
     {
-        return (Admin::where('group_id', $group->id)->count() > 0 ||
-                User::where('group_id', $group->id)->count() > 0)
-                ? true
-                : false;
+        return Admin::where('group_id', $group->id)->count() > 0 ||
+                User::where('group_id', $group->id)->count() > 0;
     }
 
     public function delete(Group $group)
     {
         !self::occupied($group) ? $group->delete() : throwErr(trans('messages.permission_denied'));
+    }
+
+    public function getSelectOption($type)
+    {
+        $options = $this->model
+            ->where('type', $type)
+            ->active()
+            ->get();
+
+        $arr = [];
+        foreach ($options as $option){
+            $arr[$option->id] = $option->full_name;
+        }
+        return $arr;
     }
 }

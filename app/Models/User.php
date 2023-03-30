@@ -6,6 +6,7 @@ use App\Constants;
 use App\Entity\Enums\CountryEnum;
 use App\Entity\Enums\GenderEnum;
 use App\Entity\Enums\StateEnum;
+use App\Modules\Admin\Group\Services\GroupService;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
@@ -154,12 +155,12 @@ class User extends Authenticatable
          */
 
         return [
-            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'nric'      => ['type' => 'text', 'label'=> 'nric_or_passport'],
-            'phone'     => ['type' => 'text' ],
-            'email'     => ['type' => 'text' ],
-            'nationality'     => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],
-
+            'full_name'     => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'nric'          => ['type' => 'text', 'label'=> 'nric_or_passport'],
+            'phone'         => ['type' => 'text' ],
+            'email'         => ['type' => 'text' ],
+            'nationality'   => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],
+            'groups'        => ['type' => 'select', 'option' => (new GroupService())->getSelectOption(Group::USER), 'default' => false],
             // 'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
         ];
     }
@@ -172,6 +173,12 @@ class User extends Authenticatable
             $query->where(function ($q) {
                 $q->where('name_en', 'like', '%'.request()->full_name.'%')
                     ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
+        if(request()->filled('groups')){
+            $query->whereHas('group', function($q){
+                $q->whereIn('id', explode(",",request()->groups));
             });
         }
 

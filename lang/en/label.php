@@ -72,5 +72,6 @@ return [
     'template' => 'Template',
     'contact_name' => 'Contact name',
     'contact_no' => 'Contact No.',
-    'relationship' => 'Relationship'
+    'relationship' => 'Relationship',
+    'groups' => 'Groups'
 ];

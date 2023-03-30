@@ -70,6 +70,16 @@ class Group extends Model
         return $query->where('status', StatusEnum::ACTIVE);
     }
 
+    public function scopeUser($query)
+    {
+        return $query->where('type', Group::USER);
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('type', Group::ADMIN);
+    }
+
     public static function Filter()
     {
         return [

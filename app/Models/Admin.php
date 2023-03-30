@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Constants;
 use App\Entity\Enums\GenderEnum;
 use App\Entity\Enums\StatusEnum;
+use App\Modules\Admin\Group\Services\GroupService;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
@@ -141,6 +142,7 @@ class Admin extends Authenticatable
             'phone'     => ['type' => 'text', 'label'=> 'phone' ],
             'roles'     => ['label'=> 'role', 'type' => 'select', 'option' => static::getRolesList(), 'default' => false],
             'status'    => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
+            'groups'    => ['type' => 'select', 'option' => (new GroupService())->getSelectOption(Group::ADMIN), 'default' => false],
         ];
     }
 
@@ -156,6 +158,12 @@ class Admin extends Authenticatable
         if(request()->filled('roles')){
             $query->whereHas('roles', function($q){
                 $q->whereIn('id', explode(",",request()->roles));
+            });
+        }
+
+        if(request()->filled('groups')){
+            $query->whereHas('group', function($q){
+                $q->whereIn('id', explode(",",request()->groups));
             });
         }
 
