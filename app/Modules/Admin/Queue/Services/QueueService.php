@@ -137,7 +137,7 @@ class QueueService
 
         if($queue->type == Queue::MEDICINE){
             $nextStatus = Queue::COMPLETED;
-
+            $this->event->completed($queue, 'completed');
         } else{
             $queue->role = Queue::DOCTOR;
             $this->countServingPatient($queue->doctor_id) > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
@@ -360,8 +360,24 @@ class QueueService
 
     public function delete(Queue $queue): bool
     {
+        $this->event->deleted($queue, 'deleted');
         return $queue->delete();
     }
 
-
+    public function getTotalQueue($doctorId): array
+    {
+        return [
+            Queue::RECEPTIONIST => $this->model->where('role', Queue::RECEPTIONIST)
+                                    ->Waiting()->Today()->count(),
+            Queue::DOCTOR       => $this->model->where('role', Queue::DOCTOR)
+                                    ->where('status', Queue::SERVING)
+                                    ->where('doctor_id', $doctorId)
+                                    ->Today()
+                                    ->count(),
+            Queue::PHARMACY     => $this->model->where('role', Queue::PHARMACY)
+                                    ->Waiting()->Today()->count(),
+            Queue::CASHIER      => $this->model->where('role', Queue::CASHIER)
+                                    ->waiting()->Today()->count()
+        ];
+    }
 }
