@@ -82,7 +82,6 @@
                 :disabled="true"
             />
 
-
             <div class="row">
                 <x-admin.form.select
                     :multiple="true"
@@ -94,7 +93,7 @@
                 >
                     @if($data && $data->doctor)
                         @slot('customOption')
-                            <option value="{{ $data->doctor_id }}" selected="selected"> {{ $data->doctor->full_name }}</option>
+                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
                         @endslot
                     @endif
                 </x-admin.form.select>

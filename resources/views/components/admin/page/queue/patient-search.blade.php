@@ -92,7 +92,7 @@
     function handlePatientExists(patient) {
         $('#user_id').val(patient.id)
         $('#nric').val(patient.nric)
-        $('#full_name').val(patient.full_name)
+        $('#full_name').val(patient.full_name_with_group)
         handleQueueInfo()
     }
 </script>
