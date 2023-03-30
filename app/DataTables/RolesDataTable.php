@@ -39,7 +39,10 @@ class RolesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')
+                ->orderable(false)
+                ->searchable('false')
+                ->title('No'),
             Column::make('name'),
             Column::make('created_at'),
             Column::computed('action')
@@ -84,11 +87,12 @@ class RolesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
+                    ->addIndex()
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(2)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
