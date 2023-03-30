@@ -54,6 +54,10 @@ class RolesDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
+            'accounts' => [
+                'icon' => 'iconsminds-user',
+                'redirect' => route('admin.account.index', 'roles='.$row->id)
+            ],
             'edit' => [
                 'icon' => 'iconsminds-pen-2',
                 'modal' => route('admin.role.edit', $row->id)
