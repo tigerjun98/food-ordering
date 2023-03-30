@@ -162,7 +162,7 @@
     @endslot
 
     {{-- Temporary fixed alert popup between two modal is opening; Just hide it 1st --}}
-    @if(request()->nric)
+    @if(request()->nric || request()->user_id)
         @slot('formOption')
             alertSuccess: false,
         @endslot
