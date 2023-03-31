@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AttachmentController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PrintTemplateController;
+use App\Http\Controllers\Admin\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'consultation'      => ConsultationController::class,
         'attachment'        => AttachmentController::class,
         'print-template'    => PrintTemplateController::class,
+        'profile'           => ProfileController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
@@ -82,8 +84,6 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::name('user.')->group(function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);
     });
-
-    Route::get('/profile/{adminId}', [AccountController::class, 'profile'])->name('profile');
 });
 
 //Route::get('/', function () {
