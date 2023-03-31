@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Account\Requests;
 
 use App\Entity\Enums\GenderEnum;
+use App\Entity\Enums\StatusEnum;
 use App\Models\Order;
 use App\Models\User;
 use App\Modules\Users\Account\Rules\MatchOldPassword;
@@ -52,8 +53,10 @@ class AdminAccountStoreRequest extends FormRequest
             'phone'     => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('admins')->ignore(request()->id, 'id')],
             'email'     => ['required', 'email', Rule::unique('admins')->ignore(request()->id, 'id')],
             'gender'    => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
+            'status'    => ['nullable', 'in:'.arrayToString(StatusEnum::getListing())],
             'password'  => ['nullable', 'confirmed', Password::min(6)], // Password::min(6)->uncompromised()
             'roles.*'   => ['required', 'exists:roles,id'],
+            'group_id'  => ['nullable', 'exists:groups,id'],
         ];
     }
 }

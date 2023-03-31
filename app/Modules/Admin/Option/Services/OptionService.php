@@ -53,7 +53,7 @@ class OptionService
 
     public function delete(Option $option)
     {
-        !self::occupied($option) ? $option->delete() : throwErr(trans('common.permission_denied'));
+        !self::occupied($option) ? $option->delete() : throwErr(trans('messages.permission_denied'));
     }
 
 

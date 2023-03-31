@@ -11,7 +11,7 @@
                 :name="'roles[]'"
                 :label="trans('label.roles')"
                 :id="'rolesIds'"
-                :options="\Spatie\Permission\Models\Role::all()->pluck('name_en','id')"
+                :options="\App\Models\Admin::getRolesList()"
                 :required="false"
             >
                 @if(isset($data->roles))
@@ -77,6 +77,22 @@
                     :col="'md-6'"
                     :name="'gender'"
                     :options="\App\Entity\Enums\GenderEnum::getListing()"
+                />
+                <x-admin.form.select
+                    :data="$data"
+                    :col="'md-6'"
+                    :name="'group_id'"
+                    :required="false"
+                    :options="\App\Models\Group::where('type', \App\Models\Group::ADMIN)->active()->pluck('name_en','id')"
+                />
+            </div>
+            <div class="row">
+                <x-admin.form.select
+                    :data="$data"
+                    :col="'md-12'"
+                    :name="'status'"
+                    :options="\App\Entity\Enums\StatusEnum::getListing()"
+                    :required="false"
                 />
             </div>
 

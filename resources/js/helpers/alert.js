@@ -17,8 +17,6 @@ const setAlertPosition = () => {
                 'transform' : 'inherit'
             });
         }
-
-
     } else if(!!document.getElementById('main_row')){
 
         let elem = $(`#main_row`);
@@ -46,7 +44,6 @@ const setAlertPosition = () => {
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 $.fn.hideAlert = function(options) {
-    console.log('1230000PP');
     $("#app-alert").empty()
 }
 

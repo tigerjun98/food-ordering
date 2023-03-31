@@ -7,18 +7,17 @@
     >
 
         @slot('action')
-{{--            <button class="dropdown-item" onclick="refreshModal('{{route('admin.transaction.deposit.create')}}','first')">--}}
-{{--                <i class="iconsminds-folder-add-- mr-1"></i>--}}
-{{--                {{ __('common.create') }}--}}
-{{--            </button>--}}
 
-            <x-admin.component.button
-                :openModal="'{ header: `CREATE`, url: `'.route('admin.user.create').'` }'"
-                :class="'btn-primary btn-lg top-right-button mr-1'"
-                :lang="'create'"
-                :icon="'iconsminds-folder-add-- mr-1'"
-                :tooltip="'create'"
-            />
+            @if(auth()->user()->hasPermissionTo( 'patient.create' ) )
+                <x-admin.component.button
+                    :openModal="'{ header: `CREATE`, url: `'.route('admin.user.create').'` }'"
+                    :class="'btn-primary btn-lg top-right-button mr-1'"
+                    :lang="'create'"
+                    :icon="'iconsminds-folder-add-- mr-1'"
+                    :tooltip="'create'"
+                />
+            @endif
+
         @endslot
 
 {{--        @slot('moreAction')--}}

@@ -36,7 +36,7 @@ class ConsultationsDataTable extends DataTable
             })->addColumn('consulted_at', function($row){
                 return $row->consulted_at ? dateFormat($row->consulted_at, 'd M, Y') : '-';
             })->addColumn('full_name', function($row){
-                return $row->patient ? $row->patient->full_name : '-';
+                return $row->patient ? $row->patient->full_name_with_group : '-';
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {

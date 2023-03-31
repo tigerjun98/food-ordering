@@ -37,7 +37,7 @@
                     </div>
 
                     <p class="mt-3 mb-0 text-small text-semi-muted">
-                        {{ $queue->consultation ? $queue->consultation->symptom : $queue->remark }}
+                        {{ $queue->remark }}
                     </p>
                 </div>
             </div>

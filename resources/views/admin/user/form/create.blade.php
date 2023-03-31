@@ -78,8 +78,15 @@
         <div class="row">
             <x-admin.form.select-nationality
                 :data="$data"
-                :col="'md-12'"
+                :col="'md-6'"
                 :name="'nationality'"
+            />
+            <x-admin.form.select
+                :data="$data"
+                :col="'md-6'"
+                :name="'group_id'"
+                :required="false"
+                :options="\App\Models\Group::where('type', \App\Models\Group::USER)->Active()->pluck('name_en','id')"
             />
         </div>
 
@@ -131,6 +138,7 @@
                 :data="$data"
                 :col="'md-6'"
                 :name="'emergency_contact_name'"
+                :label="trans('label.contact_name')"
                 :required="false"
             />
             <x-admin.form.text
@@ -138,6 +146,7 @@
                 :col="'md-6'"
                 :type="'phone'"
                 :name="'emergency_contact_no'"
+                :label="trans('label.contact_no')"
                 :required="false"
             />
         </div>
@@ -146,13 +155,14 @@
                 :data="$data"
                 :col="'md-6'"
                 :name="'emergency_contact_relationship'"
+                :label="trans('label.relationship')"
                 :required="false"
             />
         </div>
     @endslot
 
     {{-- Temporary fixed alert popup between two modal is opening; Just hide it 1st --}}
-    @if(request()->nric)
+    @if(request()->nric || request()->jsAction)
         @slot('formOption')
             alertSuccess: false,
         @endslot
