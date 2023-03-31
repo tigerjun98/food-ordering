@@ -70,7 +70,7 @@
 {{--                        <i class="iconsminds-monitoring mr-1"></i>{{ __('common.logs') }}--}}
 {{--                    </a>--}}
 {{--                @endif--}}
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="{{ route('admin.profile', Auth::user()->id) }}">
                     <i class="iconsminds-profile mr-1"></i>
                     {{ __('common.profile') }}
                 </a>

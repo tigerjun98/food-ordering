@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);
     });
 
+    Route::get('/profile/{adminId}', [AccountController::class, 'profile'])->name('profile');
 });
 
 //Route::get('/', function () {
