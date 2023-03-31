@@ -70,6 +70,10 @@
 {{--                        <i class="iconsminds-monitoring mr-1"></i>{{ __('common.logs') }}--}}
 {{--                    </a>--}}
 {{--                @endif--}}
+                <a class="dropdown-item" href="">
+                    <i class="iconsminds-profile mr-1"></i>
+                    {{ __('common.profile') }}
+                </a>
                 <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="iconsminds-anchor mr-1"></i>
                     {{ __('common.logout') }}
