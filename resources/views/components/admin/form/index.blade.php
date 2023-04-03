@@ -7,7 +7,7 @@
 
     @if(isset($footer))
         <div class="form-footer">
-            @if (! isset($type))
+            @if (!isset($isModal) || $isModal)
                 <div class="modal-footer d-flex align-items-center mt-4">
                     {{$footer ?? ''}}
                 </div>
@@ -94,6 +94,10 @@
             {{ $formOption ?? '' }}
         });
 
+        @if(isset($reloadAfterSubmit) && $reloadAfterSubmit)
+            window.location.reload();
+        @endif
+
         @if(isset($reset) && $reset)
         document.getElementById("submitForm{{isset($id) ? $id : $code}}").reset();
         @endif
@@ -102,6 +106,5 @@
             $('#modalWrapper').openModal({ html: res.html, refresh: true, header: res.title??null});
         }
         {{ $script ?? '' }}
-
     });
 </script>
