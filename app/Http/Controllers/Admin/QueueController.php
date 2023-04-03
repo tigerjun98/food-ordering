@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
+use App\Modules\Admin\Queue\Requests\QueuePosSystemRequest;
 use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
 use App\Modules\Admin\Queue\Requests\QueueUpdateSortingRequest;
 use App\Modules\Admin\Queue\Services\QueueService;
@@ -26,6 +27,12 @@ class QueueController extends Controller {
         parent::__construct($request);
         $this->model = new Queue();
         $this->service = new QueueService();
+    }
+
+    public function sendToPosSystem(QueuePosSystemRequest $request)
+    {
+        $this->service->touchPosSystem($request);
+        return makeResponse(200);
     }
 
     public function getSpecificBox($queueId)

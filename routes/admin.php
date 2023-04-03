@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     });
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
+        Route::post('/send-to-pos-system', [QueueController::class, 'sendToPosSystem']);
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
         Route::post('/update-sorting/{queueId}', [QueueController::class, 'updateSorting'])->name('update-sorting');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');

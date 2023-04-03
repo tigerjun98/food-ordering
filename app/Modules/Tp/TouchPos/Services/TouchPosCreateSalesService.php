@@ -25,9 +25,11 @@ class TouchPosCreateSalesService
     private TouchPosService $service;
     private Consultation $consultation;
     private string $stock_barcode;
+    private string $doc_no;
 
-    public function __construct(Consultation $consultation)
+    public function __construct(Consultation $consultation, string $docNo = "")
     {
+        $this->doc_no = $docNo;
         $this->stock_barcode = "OTHER";
         $this->consultation = $consultation;
         $this->service = new TouchPosService(101);
@@ -64,14 +66,15 @@ class TouchPosCreateSalesService
         return [$note, $fee->price ?? 0];
     }
 
-    public function createSales(): bool
+    public function createSales(): string
     {
-        [$desc, $price] = $this->getConsultationFee();
         if(!$this->consultation->touch_pos_requested_at){
             $this->consultation->touch_pos_requested_at = Carbon::now();
             $this->consultation->save();
         }
-        $docNo = $this->submitSales($desc, $price);
+
+        [$desc, $price] = $this->getConsultationFee();
+        $docNo = $this->submitSales($desc, $price, $this->doc_no);
 
         if($this->consultation->prescriptions){
             foreach ($this->consultation->prescriptions as $prescription){
@@ -79,7 +82,7 @@ class TouchPosCreateSalesService
                 $this->submitSales($desc, $price, $docNo);
             }
         }
-        return true;
+        return $docNo;
     }
 
     public function submitSales($stock_desc, $stock_price, $docNo = ""): string

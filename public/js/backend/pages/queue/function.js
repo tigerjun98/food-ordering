@@ -40,6 +40,40 @@ function refreshDataTable() {
     })
 }
 
+function dbClickQueueBox(e){
+    if(!$('#tab-304').hasClass('active'))
+        return false;
+
+    if(!$(e).hasClass('grouped')){
+        $(e).addClass('grouped')
+    } else{
+        $(e).removeClass('grouped')
+    }
+}
+
+async function sendToPosSystem(){
+    const queueIds = [];
+    const data = new FormData();
+    let refs = document.getElementsByClassName(`grouped`);
+    Array.prototype.forEach.call(refs, function (el) { // loop classes
+        data.append("queue_ids[]", $(el).data('id'));
+    });
+
+    let result = await $(this).sendRequest({
+        url: '/admin/queue/send-to-pos-system',
+        data
+    });
+
+    removeClassesName()
+}
+
+const removeClassesName = () => {
+    const refs = document.getElementsByClassName('queue-list');
+    Array.prototype.forEach.call(refs, function (el) { // loop classes
+        $(el).removeClass('grouped')
+    });
+}
+
 
 
 

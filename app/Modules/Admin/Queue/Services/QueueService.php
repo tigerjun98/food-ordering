@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
 use App\Modules\Admin\User\Services\UserService;
+use App\Modules\Tp\TouchPos\Services\TouchPosCreateSalesService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\AssignOp\Plus;
@@ -353,6 +354,23 @@ class QueueService
     {
         return $queue->delete();
     }
+
+    public function touchPosSystem($request)
+    {
+        $docNo = "";
+        $queueIds = [];
+        foreach ($request['queue_ids'] as $queueId){
+            $queueIds[] = $queueId;
+        }
+
+        $consultIds = $this->model->whereIn('id', $queueIds)->pluck('consultation_id');
+        foreach ($consultIds as $consultId){
+            $consultation = Consultation::find($consultId);
+            $docNo = (new TouchPosCreateSalesService($consultation, $docNo))->createSales();
+        }
+
+    }
+
 
 
 }

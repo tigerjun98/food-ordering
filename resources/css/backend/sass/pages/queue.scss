@@ -4,6 +4,11 @@ ul li.queue-list:last-of-type{
 
 .queue-list{
 
+    &.grouped{
+        .card{
+            border: 2px solid $theme-color-1;
+        }
+    }
     .footer{
         gap: 6px;
         display: flex;
