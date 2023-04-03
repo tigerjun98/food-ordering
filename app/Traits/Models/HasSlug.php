@@ -7,17 +7,17 @@ use Overtrue\LaravelPinyin\Facades\Pinyin;
 
 trait HasSlug {
 
-    public static function getPinyin($str): string
+    private static function getPinyin($str): string
     {
         return implode(' ', Pinyin::convert($str));
     }
 
-    public static function getSlugFromChineseWord($str): string
+    private static function getSlugFromChineseWord($str): string
     {
         return slugify(self::getPinyin($str));
     }
 
-    public static function getSlug($data): string
+    private static function getSlug($data): string
     {
         if($data->name_en){
             return slugify($data->name_en);
