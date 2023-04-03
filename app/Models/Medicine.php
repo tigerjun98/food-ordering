@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants;
+use App\Entity\Enums\ConsultationEnum;
 use App\Entity\Enums\StatusEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\HasSlug;
@@ -39,11 +40,6 @@ class Medicine extends Model
     public const POWDER = 104;
     public const LIQUID = 105;
 
-    public const TABLET_OR_CAPSULE = 201;
-    public const GRANULE_OR_POWDER = 202;
-    public const FLUID = 203;
-    // 204, 205, 206 Reserve by Prescription
-
     public function prescriptionCombinations()
     {
         return $this->hasMany(PrescriptionCombination::class, 'medicine_id', 'id');
@@ -67,14 +63,7 @@ class Medicine extends Model
 
     public static function getCategoryList(): array
     {
-        return [
-            self::TABLET_OR_CAPSULE => trans('common.tablet_or_capsule'),
-            self::GRANULE_OR_POWDER => trans('common.granule_or_powder'),
-            self::FLUID => trans('common.liquid'),
-//            self::EXTERNAL => trans('common.external_use'), // 外用药
-//            self::ACUPUNCTURE => trans('common.acupuncture'), // 针灸
-//            self::MASSAGE => trans('common.massage'), // 推拿
-        ];
+        return ConsultationEnum::getMedicineListing();
     }
 
     protected function categoryExplain(): Attribute

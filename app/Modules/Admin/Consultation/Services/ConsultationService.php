@@ -2,6 +2,7 @@
 
 namespace App\Modules\Admin\Consultation\Services;
 
+use App\Jobs\Consultation\ProcessConsultedEvent;
 use App\Models\Consultation;
 use App\Models\Queue;
 use App\Models\User;
@@ -48,12 +49,14 @@ class ConsultationService
             return $model;
         });
 
-        $queue = Queue::where('consultation_id', $model->id)
-            ->Today()
-            ->first();
-        
-        if($queue){
-            (new QueueService())->notifyReceptionist($queue);
+        if(
+            $model->queue
+                ->Today()
+                ->where('role', Queue::PHARMACY)
+                ->where('status', Queue::WAITING)
+                ->first()
+        ){
+            ProcessConsultedEvent::dispatch($model);
         }
 
         return $model;

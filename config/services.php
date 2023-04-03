@@ -33,6 +33,12 @@ return [
 
     'touch_pos' => [
         'url' => env('TOUCH_POS_URL'),
+        'port' => env('TOUCH_POS_PORT'),
+        'token' => env('TOUCH_POS_TOKEN'),
+        'dynamod' => [
+            'port' => env('TOUCH_POS_DYNAMOD_PORT'),
+            'token' => env('TOUCH_POS_DYNAMOD_TOKEN'),
+        ],
     ],
 
 ];

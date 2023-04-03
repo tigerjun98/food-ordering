@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PrintTemplateController;
 use App\Http\Controllers\Admin\GroupController;
+use App\Http\Controllers\Admin\FeeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'attachment'        => AttachmentController::class,
         'print-template'    => PrintTemplateController::class,
         'group'             => GroupController::class,
+        'fee'               => FeeController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');

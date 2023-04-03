@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Constants;
+use App\Entity\Enums\ConsultationEnum;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\HasSlug;
 use App\Traits\Models\ObserverTrait;
@@ -26,12 +27,6 @@ class Prescription extends Model
     protected $table = 'prescriptions';
     protected $guarded= []; // remove this replaces with {$fillable} to strict input col
     protected $primaryKey = 'id';
-
-    // continue Medicine 201, 202, 203
-    public const EXTERNAL = 204;
-    public const ACUPUNCTURE = 205;
-    public const MASSAGE = 206;
-    public const OTHER = 207;
 
     public function consultation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -71,13 +66,11 @@ class Prescription extends Model
     public static function getMetricList(): array
     {
         return [
-            Medicine::TABLET_OR_CAPSULE => trans('common.pill'),
-            Medicine::GRANULE_OR_POWDER => trans('common.gram'),
-            Medicine::FLUID => trans('common.ml'),
+            ConsultationEnum::TABLET_OR_CAPSULE => trans('common.pill'),
+            ConsultationEnum::GRANULE_OR_POWDER => trans('common.gram'),
+            ConsultationEnum::FLUID => trans('common.ml'),
         ];
     }
-
-
 
     protected function categoryExplain(): Attribute
     {
@@ -88,13 +81,7 @@ class Prescription extends Model
 
     public static function getCategoryList(): array
     {
-        $arr = [
-            self::EXTERNAL => trans('common.external_use'), // 外用药
-            self::ACUPUNCTURE => trans('common.acupuncture'), // 针灸
-            self::MASSAGE => trans('common.massage'), // 推拿
-            self::OTHER => trans('common.other'), // 推拿
-        ];
-        return Medicine::getCategoryList() + $arr;
+        return ConsultationEnum::getMedicineListing() + ConsultationEnum::getPrescriptionListing();
     }
 
     public static function Filter(){
