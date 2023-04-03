@@ -35,4 +35,10 @@ class ProfileController extends Controller
             'data' => $this->model->findOrFail($adminId)
         ]);
     }
+
+    public function store(AdminAccountStoreRequest $request)
+    {
+        $this->service->store($request->validated());
+        return makeResponse(200);
+    }
 }
