@@ -67,6 +67,10 @@ class TouchPosCreateSalesService
     public function createSales(): bool
     {
         [$desc, $price] = $this->getConsultationFee();
+        if(!$this->consultation->touch_pos_requested_at){
+            $this->consultation->touch_pos_requested_at = Carbon::now();
+            $this->consultation->save();
+        }
         $docNo = $this->submitSales($desc, $price);
 
         if($this->consultation->prescriptions){
@@ -87,11 +91,14 @@ class TouchPosCreateSalesService
             $stock_desc,
             $stock_price
         );
+
         $res = $this->service->post('TouchSeries/Order', $create_sales->get_data());
 
         if(isset($res->IsSuccess) && $res->IsSuccess){
             $this->consultation->touch_pos_doc_no = $res->DocumentNo;
             $this->consultation->touch_pos_request_status = true;
+            $this->consultation->touch_pos_response = json_encode($res, true);
+            $this->consultation->touch_pos_responded_at = Carbon::now();
             $this->consultation->save();
             return $res->DocumentNo;
         }
