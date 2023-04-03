@@ -7,9 +7,15 @@
 
     @if(isset($footer))
         <div class="form-footer">
-            <div class="modal-footer d-flex align-items-center mt-4">
-                {{$footer ?? ''}}
-            </div>
+            @if (! isset($type))
+                <div class="modal-footer d-flex align-items-center mt-4">
+                    {{$footer ?? ''}}
+                </div>
+            @else
+                <div class="d-flex flex-row-reverse align-items-center mt-4">
+                    {{ $footer ?? ''}}
+                </div>
+            @endif
         </div>
     @endif
 </form>
