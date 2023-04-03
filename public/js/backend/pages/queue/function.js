@@ -51,13 +51,16 @@ function dbClickQueueBox(e){
     }
 }
 
-async function sendToPosSystem(){
-    const queueIds = [];
+async function sendToPosSystem(queueId){
     const data = new FormData();
-    let refs = document.getElementsByClassName(`grouped`);
-    Array.prototype.forEach.call(refs, function (el) { // loop classes
-        data.append("queue_ids[]", $(el).data('id'));
-    });
+    if($('.grouped').length > 0){
+        let refs = document.getElementsByClassName(`grouped`);
+        Array.prototype.forEach.call(refs, function (el) { // loop classes
+            data.append("queue_ids[]", $(el).data('id'));
+        });
+    } else{
+        data.append("queue_ids[]", queueId);
+    }
 
     let result = await $(this).sendRequest({
         url: '/admin/queue/send-to-pos-system',

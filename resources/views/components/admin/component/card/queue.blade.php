@@ -85,7 +85,7 @@
                         :class="'btn-outline-primary show-when-first '"
                     />
                     <x-admin.component.button
-                        :onclick="'sendToPosSystem()'"
+                        :onclick="'sendToPosSystem('.$queue->id.')'"
                         :text="trans('button.send')"
                         :class="'btn-primary show-when-first '"
                     />

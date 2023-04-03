@@ -63,7 +63,7 @@ class QueueRoleService
 
     public function serveCompleted()
     {
-        $this->model->status = Queue::COMPLETED;
+        $this->model->status    = Queue::COMPLETED;
         $this->model->save();
     }
 
@@ -71,7 +71,6 @@ class QueueRoleService
     {
         $this->model->role      = Queue::PHARMACY;
         $this->model->status    = Queue::WAITING;
-        $this->model->type      = Queue::MEDICINE;
         $this->model->save();
     }
 
@@ -86,7 +85,6 @@ class QueueRoleService
     {
         $this->model->role      = Queue::CASHIER;
         $this->model->status    = Queue::WAITING;
-        $this->model->type      = Queue::PAYMENT;
         $this->model->save();
     }
 
