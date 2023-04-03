@@ -18,8 +18,9 @@
                 <x-admin.form
                     :route="$submit"
                     :formOption="$formOption??''"
-                    :type="'profile'"
+                    :isModal="false"
                     :class="'form-content'"
+                    :reloadAfterSubmit="true"
                 >
                     @slot('body')
                         @if(isset($nav) && $nav)
