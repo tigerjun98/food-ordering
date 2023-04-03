@@ -44,10 +44,8 @@ class QueueService
 
     public function getDoctorsNotServing()
     {
-        $doctorsOnServing = $this->model
+        $doctorsOnServing = $this->model->Serving()->Today()
             ->where('role', Queue::DOCTOR)
-            ->where('status', Queue::SERVING)
-            ->Today()
             ->pluck('doctor_id')
             ->toArray();
 
@@ -134,21 +132,18 @@ class QueueService
 
     public function serve(Queue $queue): Queue
     {
-
-        if($queue->type == Queue::MEDICINE){
-            $nextStatus = Queue::COMPLETED;
-
-        } else{
-            $queue->role = Queue::DOCTOR;
-            $this->countServingPatient($queue->doctor_id) > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
+        if($queue->role == Queue::DOCTOR){
+            $this->countServingPatient($queue->doctor_id) > 0
+                ? throwErr(trans('messages.doctor_on_serve'))
+                : null;
         }
 
-        $queue->status = $nextStatus ?? Queue::SERVING;
-        $queue->save();
+        (new QueueRoleService($queue))->updateToNextStatus();
 
         if($queue->type == Queue::CONSULTATION){
              $this->event->serve($queue, $this->countWaitingPatient());
         }
+
         return $this->model->find($queue->id);
     }
 
@@ -163,24 +158,20 @@ class QueueService
 
     public function consulted(Consultation $consultation)
     {
-        $queue = $this->model
-            ->where('user_id', $consultation->user_id)
+        $queue = $this->model->Today()
             ->where('type', Queue::CONSULTATION)
+            ->where('user_id', $consultation->user_id)
             ->whereIn('status', [Queue::SERVING, Queue::HOLDING])
-            ->Today()
             ->first();
 
         if($queue){
 
             $queue->consultation_id = $consultation->id;
 
-            if(intval(request()->on_hold) == 1){
-                $queue->status = Queue::HOLDING;
-            } else{
-                $queue->role = Queue::PHARMACY;
-                $queue->status = Queue::WAITING;
-                $queue->type = Queue::MEDICINE;
-            }
+            intval(request()->on_hold) == 1
+                ? $queue->status = Queue::HOLDING
+                : (new QueueRoleService($queue))->serveToPharmacy();
+
             $queue->save();
 
             return $queue;

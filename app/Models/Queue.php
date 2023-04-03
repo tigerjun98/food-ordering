@@ -122,6 +122,16 @@ class Queue extends Model
         );
     }
 
+    public function scopeConsultation($query)
+    {
+        return $query->where('type', self::CONSULTATION);
+    }
+
+    public function scopeServing($query)
+    {
+        return $query->where('status', self::SERVING);
+    }
+
     public function scopeWaiting($query)
     {
         return $query->where('status', self::WAITING);
