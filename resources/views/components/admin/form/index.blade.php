@@ -65,6 +65,14 @@
             containerCssClass: ":all:",
             dropdownParent: $('#'+$(this).getModalId({latest: true}))
         });
+
+        $(".form-content .select2-single, .form-content .select2-multiple").select2({
+            theme: "bootstrap",
+            placeholder: "",
+            maximumSelectionSize: 6,
+            containerCssClass: ":all:",
+            dropdownParent: $('#submitForm{{isset($id) ? $id : $code}}')
+        });
     }
 
     const checkErrExists = () => {
