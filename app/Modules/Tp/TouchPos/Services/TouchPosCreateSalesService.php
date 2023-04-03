@@ -4,6 +4,7 @@ namespace App\Modules\Tp\TouchPos\Services;
 
 use App\Entity\Enums\ConsultationEnum;
 use App\Entity\Enums\StateEnum;
+use App\Libraries\TouchPos\TouchPosCreateSales;
 use App\Models\Admin;
 use App\Models\Consultation;
 use App\Models\Fee;
@@ -27,20 +28,19 @@ class TouchPosCreateSalesService
 
     public function __construct(Consultation $consultation)
     {
-        $this->stock_barcode = "91042";
+        $this->stock_barcode = "OTHER";
         $this->consultation = $consultation;
         $this->service = new TouchPosService(101);
     }
 
-    public function getConsultionOrderDetails(): array
+    public function getConsultationFee(): array
     {
         $doctorGroup = $this->consultation->doctor->group;
-        $fee = Fee::where('category', ConsultationEnum::CONSULTATION)
-            ->where('type', $doctorGroup)
-            ->first();
+        if($doctorGroup)
+            $fee = Fee::Consultation()->where('type', $doctorGroup->id)->first();
 
         $note = $fee->full_name ?? 'Consultation fee';
-        return $this->getOrderDetails($note, $fee->price ?? 0);
+        return [$note, $fee->price ?? 0];
     }
 
     public function getPrescriptionOrderDetails(Prescription $prescription): array
@@ -61,73 +61,33 @@ class TouchPosCreateSalesService
             }
         }
 
-        return $this->getOrderDetails($note, $fee->price ?? 0);
-    }
-
-    public function getOrderDetails($desc, $price): array
-    {
-        return [
-            "Barcode" => $this->stock_barcode,
-            "Description" => $desc,
-            "Price" => $price,
-            "Quantity" => 1,
-            "TotalDiscountBeforeTax" => 0,
-            "FNBServiceType" => "None",
-            "ItemModifier" => []
-        ];
+        return [$note, $fee->price ?? 0];
     }
 
     public function createSales(): bool
     {
-        $docNo = $this->submitSales($this->getConsultionOrderDetails());
+        [$desc, $price] = $this->getConsultationFee();
+        $docNo = $this->submitSales($desc, $price);
 
         if($this->consultation->prescriptions){
             foreach ($this->consultation->prescriptions as $prescription){
-                $details = $this->getPrescriptionOrderDetails($prescription);
-                $this->submitSales($details, $docNo);
+                [$desc, $price] = $this->getPrescriptionOrderDetails($prescription);
+                $this->submitSales($desc, $price, $docNo);
             }
         }
         return true;
     }
 
-    public function submitSales(array $orderDetails, $docNo = ""): string
+    public function submitSales($stock_desc, $stock_price, $docNo = ""): string
     {
-        $data = [
-            "OrderMaster" => [
-                "DocumentNo" => $docNo,
-                "VendorOrderNo" => "",
-                "TerminalNo" => "",
-                "OrderDateTime" => dateFormat(Carbon::now()),
-                "MemberCardNo" => "",
-                "CustomerFirstName" => "",
-                "CustomerLastName" => "",
-                "Cashier" => "",
-                "Remark" => "",
-                "VendorChannel" => "",
-                "Pax" => 1,
-                "TableNo" => "",
-                "IsPaid" => false,
-                "RoundCent" => 0,
-                "ServiceChargeAmount" => 0,
-                "DoNotPrint" => false
-            ],
-            "OrderPayment" => [
-                [
-                    "PaymentCode" => "",
-                    "PaymentAmount" => 0
-                ]
-            ],
-            "DeliveryOrderInfo" => [
-                "RecipientName" => "",
-                "RecipientTelNo" => "",
-                "RecipientAddress" => "",
-                "DeliveryTrackingNo" => "",
-                "DeliveryTrackingLink" => ""
-            ]
-        ];
-        $data['OrderDetail'] = $orderDetails;
-
-        $res = $this->service->post('TouchSeries/Order', $data);
+        $create_sales = new TouchPosCreateSales();
+        $create_sales->prepare_data(
+            $docNo,
+            $this->stock_barcode,
+            $stock_desc,
+            $stock_price
+        );
+        $res = $this->service->post('TouchSeries/Order', $create_sales->get_data());
 
         if(isset($res->IsSuccess) && $res->IsSuccess){
             $this->consultation->touch_pos_doc_no = $res->DocumentNo;

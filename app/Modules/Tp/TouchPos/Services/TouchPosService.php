@@ -85,12 +85,5 @@ class TouchPosService
             \Log::channel('touch-pos')->error($msg, $ref ? json_encode($e) : []);
             return false;
         }
-
-
-    }
-
-    public function delete(Admin $admin)
-    {
-        $admin->delete();
     }
 }

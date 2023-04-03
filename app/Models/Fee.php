@@ -12,6 +12,7 @@ use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -75,9 +76,14 @@ class Fee extends Model
         );
     }
 
+    public function scopeConsultation($query)
+    {
+        return $query->where('category', ConsultationEnum::CONSULTATION);
+    }
+
     public static function Filter(){
         return [
-            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'full_name'     => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
         ];
     }
