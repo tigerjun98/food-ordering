@@ -23,10 +23,10 @@ class ProfileController extends Controller
         $this->service = new ProfileService();
     }
 
-    public function show($adminId)
+    public function index()
     {
         return html('admin.profile.index', [
-            'data' => $this->model->findOrFail($adminId)
+            'data' => $this->model->findOrFail(auth()->user()->id)
         ]);
     }
 
