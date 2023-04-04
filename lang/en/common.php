@@ -160,4 +160,5 @@ return [
     'print' => 'Print',
     'internal_remark' => 'Internal remark',
     'group' => 'Group',
+    'profile_details' => 'Profile details'
 ];

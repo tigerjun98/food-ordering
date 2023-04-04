@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Modules\Admin\Profile\Requests\ProfileStorePasswordRequest;
 use App\Modules\Admin\Profile\Requests\ProfileStoreRequest;
 use App\Modules\Admin\Profile\Services\ProfileService;
 use App\Traits\ApiResponser;
@@ -33,6 +34,12 @@ class ProfileController extends Controller
     public function store(ProfileStoreRequest $request)
     {
         $this->service->store($request->validated());
+        return makeResponse(200);
+    }
+
+    public function storePassword(ProfileStorePasswordRequest $request)
+    {
+        $this->service->updatePassword($request->validated());
         return makeResponse(200);
     }
 }

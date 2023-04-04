@@ -87,6 +87,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::name('user.')->group(function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);
     });
+
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+        Route::post('/store-password', [ProfileController::class, 'storePassword'])->name('store-password');
+    });
 });
 
 //Route::get('/', function () {
