@@ -69,7 +69,7 @@
 {{--                        <i class="iconsminds-monitoring mr-1"></i>{{ __('common.logs') }}--}}
 {{--                    </a>--}}
 {{--                @endif--}}
-                <a class="dropdown-item" href="{{ route('admin.profile.show', Auth::user()->id) }}">
+                <a class="dropdown-item" href="{{ route('admin.profile.index') }}">
                     <i class="iconsminds-profile mr-1"></i>
                     {{ __('common.profile') }}
                 </a>
