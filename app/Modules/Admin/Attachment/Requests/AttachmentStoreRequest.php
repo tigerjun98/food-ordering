@@ -40,7 +40,14 @@ class AttachmentStoreRequest extends FormRequest
             'table'         => ['nullable', 'string'],
             'path'          => ['nullable', 'string'],
             'type'          => ['required', 'string'],
-            'file'          => ['file', 'mimes:jpeg,png,jpg', 'max:10240'],
+            'file'          => ['file', 'mimes:jpeg,png,jpg', 'max:5000'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'file.max' => 'File is too big. Maximum allowed size is :max kb', //:max
         ];
     }
 }

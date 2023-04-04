@@ -20,7 +20,9 @@
                                onchange="checkAll('{{ $role }}')"
                             {{ isset($permissions) && in_array($role.'.*', $permissions) ? 'checked' : '' }}
                         >
-                        <label class="custom-control-label font-weight-bold" for="check-{{ $role }}">{{ $role }}</label>
+                        <label class="custom-control-label font-weight-bold text-capitalize" for="check-{{ $role }}">
+                            {{ str_replace('-', ' ', $role) }}
+                        </label>
                     </div>
                     @foreach($permission as $name => $lang)
                         <div class="custom-control custom-checkbox mb-1">

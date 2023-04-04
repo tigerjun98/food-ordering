@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AttachmentController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PrintTemplateController;
+use App\Http\Controllers\Admin\GroupController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,12 +40,14 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'consultation'      => ConsultationController::class,
         'attachment'        => AttachmentController::class,
         'print-template'    => PrintTemplateController::class,
+        'group'             => GroupController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('home');
     Route::get('/get-doctor-opt', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
+    Route::get('/get-user-opt', [MainController::class, 'getUserOpt'])->name('get-user-opt');
 
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
 

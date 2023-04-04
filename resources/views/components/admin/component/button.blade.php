@@ -1,6 +1,5 @@
 @php
     $attrString = '';
-
     $defaultClass = ' btn text-capitalize ';
     if(isset($openModal)){
         $attributes['onclick'] = '$(this).openModal('.$openModal.')';
@@ -17,6 +16,18 @@
         $attributes['onclick'] = "location.href='$redirect'";
         unset($attributes['redirect']);
     }
+
+     if(isset($action) && $action){
+
+         if($action == 'back'){
+             $attributes['onclick'] = "location.href='".url()->previous()."'";
+             $icon = 'iconsminds-left-1 mr-1';
+             $text = trans('common.back');
+         }
+
+         unset($attributes['text']);
+         unset($attributes['action']);
+     }
 
     unset($attributes['lang']);
     unset($attributes['icon']);

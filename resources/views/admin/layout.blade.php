@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    <meta name="theme-color" content="#ffffff">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-{{--    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/favicon/favicon-16x16.png') }}">--}}
-{{--    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">--}}
-
-    <!-- CSRF Token -->
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
-{{--    <title>{{ config('app.name', 'Yilin') }}</title>--}}
-
+    <title>{{ config('app.name', 'Yilin Workspace') }}</title>
+    <title>{{ config('app.name', 'Yilin Workspace') }}</title>
+    <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Yilin Workspace') }}">
+    <meta name="application-name" content="{{ config('app.name', 'Yilin Workspace') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('/images/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('/images/favicon/safari-pinned-tab.svg') }}" color="#164923">
+    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
+    <meta name="msapplication-TileColor" content="#164823">
+    <meta name="msapplication-config" content="{{ asset('/images/favicon/browserconfig.xml') }}">
+    <meta name="theme-color" content="#ffffff">
     {{ Vite::useBuildDirectory('/backendAssets') }}
     @vite(['resources/css/backend/app.scss', 'resources/css/backend/app.css', 'resources/js/backend/app.js'])
     <!-- Favicon -->
@@ -33,21 +38,6 @@
 
         {{--.iti__flag {background-image: url("{{ Vite::asset('resources/img/vendor/intltel.flags.png') }}");}--}}
 
-        .logo {
-            /*background: url('/images/logo/logo.svg') no-repeat;*/
-            background-size: contain;
-            /*width: 77px;*/
-            height: 59px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-        @media (max-width: 767px){
-            .logo {
-                width: 110px;
-            }
-        }
 
         main{
             position: relative;

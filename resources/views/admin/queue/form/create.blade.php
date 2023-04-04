@@ -61,12 +61,9 @@
 
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
-                <x-admin.component.module.queue.user-search />
-                <x-admin.component.button
-                    :text="trans('button.create')"
-                    :class="'patient-not-exists hide btn-primary'"
-                    :onclick="'createNewPatient()'"
-                />
+                <div class="row">
+                    <x-admin.page.queue.patient-search />
+                </div>
             </div>
         @endif
 
@@ -81,23 +78,20 @@
             <x-admin.form.text
                 :label="trans('label.full_name')"
                 :name="'full_name'"
-                :value="$patient->full_name ?? null"
+                :value="$patient->full_name_with_group ?? null"
                 :disabled="true"
             />
 
-
             <div class="row">
                 <x-admin.form.select
-                    :multiple="true"
                     :col="'md-12'"
                     :name="'doctor_id'"
                     :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
-                    :required="false"
                 >
                     @if($data && $data->doctor)
                         @slot('customOption')
-                            <option value="{{ $data->doctor_id }}" selected="selected"> {{ $data->doctor->full_name }}</option>
+                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
                         @endslot
                     @endif
                 </x-admin.form.select>

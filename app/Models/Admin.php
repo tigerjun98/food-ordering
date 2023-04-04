@@ -4,17 +4,21 @@ namespace App\Models;
 
 use App\Constants;
 use App\Entity\Enums\GenderEnum;
+use App\Entity\Enums\StatusEnum;
+use App\Modules\Admin\Group\Services\GroupService;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Validation\Rule;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
@@ -69,6 +73,16 @@ class Admin extends Authenticatable
         return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
     }
 
+    /**
+     * Get the group that owns the Admin
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function group(): HasOne
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
@@ -106,12 +120,19 @@ class Admin extends Authenticatable
 
     public static function getStatusList()
     {
-        return [
-            0 => 'active',
-            1 => 'inactive',
-            2 => 'block',
-            3 => 'banned',
-        ];
+        return StatusEnum::getListing();
+    }
+
+    protected function statusExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(StatusEnum::getListing()[$this->status] ?? '')
+        );
+    }
+
+    public static function getRolesList(): array
+    {
+        return \Spatie\Permission\Models\Role::all()->pluck('name_en','id')->toArray();
     }
 
     public static function Filter(){
@@ -119,6 +140,9 @@ class Admin extends Authenticatable
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'email'     => ['type' => 'text', 'label'=> 'email' ],
             'phone'     => ['type' => 'text', 'label'=> 'phone' ],
+            'roles'     => ['label'=> 'role', 'type' => 'select', 'option' => static::getRolesList(), 'default' => false],
+            'status'    => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
+            'groups'    => ['type' => 'select', 'option' => (new GroupService())->getSelectOption(Group::ADMIN), 'default' => false],
         ];
     }
 
@@ -128,6 +152,18 @@ class Admin extends Authenticatable
             $query->where(function ($q) {
                 $q->where('name_en', 'like', '%'.request()->full_name.'%')
                     ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
+        if(request()->filled('roles')){
+            $query->whereHas('roles', function($q){
+                $q->whereIn('id', explode(",",request()->roles));
+            });
+        }
+
+        if(request()->filled('groups')){
+            $query->whereHas('group', function($q){
+                $q->whereIn('id', explode(",",request()->groups));
             });
         }
 
