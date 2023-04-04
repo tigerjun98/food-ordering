@@ -34,6 +34,7 @@
             integrity="sha512-osQTlub0mspbF8cmq5xylJ5kCJi42xglqltwx2pMI0/I78Y55dKpr3TtLB7nCTYka1AxpF1dOAeSFbgByDvS0Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <style>
 
         {{--.iti__flag {background-image: url("{{ Vite::asset('resources/img/vendor/intltel.flags.png') }}");}--}}
