@@ -3,7 +3,7 @@
 @endphp
 <x-admin.component.modal
     :title="'Role details'"
-    :nav="['details', 'permissions']"
+    :navs="['details', 'permissions']"
     :submit="route('admin.role.store')"
 >
 

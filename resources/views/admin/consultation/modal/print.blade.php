@@ -9,7 +9,7 @@
 @endphp
 <x-admin.component.modal
     :title="'Print details'"
-    :nav="$nav"
+    :navs="$nav"
     :submit="route('admin.print-template.store')"
     :submitBtn="false"
 >

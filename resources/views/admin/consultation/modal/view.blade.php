@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="'Consultation details'"
-    :nav="$tabs"
+    :navs="$tabs"
     :modalBodyClass="'fixed-height'"
 >
     @slot('attachment')

@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="'Medicine details'"
-    :nav="['details', 'description']"
+    :navs="['details', 'description']"
     :submit="route('admin.medicine.store')"
 >
 
