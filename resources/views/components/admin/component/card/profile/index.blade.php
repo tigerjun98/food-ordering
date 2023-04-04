@@ -20,7 +20,6 @@
                     :formOption="$formOption??''"
                     :isModal="false"
                     :class="'form-content'"
-                    :reloadAfterSubmit="true"
                 >
                     @slot('body')
                         @if(isset($nav) && $nav)
@@ -43,6 +42,10 @@
                             :lang="'submit'"
                             :type="'submit'"
                         />
+                    @endslot
+
+                    @slot('script')
+                        {{ $script ?? '' }}
                     @endslot
 
                 </x-admin.form>
