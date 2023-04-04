@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div id="main_row" class="row app-row">
+    <div id="main_row" class="row">
         <div class="col-12">
             <h1>Dashboard</h1>
             {{--                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">--}}

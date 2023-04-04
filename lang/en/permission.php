@@ -15,7 +15,10 @@ return [
     |
     */
     'patient'  => [
-        'index' => 'Patient management',
+        'index'     => 'Patient management',
+        'create'    => 'Create',
+        'edit'      => 'Edit',
+        'delete'    => 'Delete',
     ],
     'consultation'  => [
         'index'     => 'Consultation management',
@@ -50,6 +53,6 @@ return [
 
     'setting-other'  => [
         'print'         => 'Print template management',
-        'fee'           => 'Consultation fee management',
+        'group'         => 'Group management',
     ],
 ];

@@ -6,19 +6,21 @@ use App\Constants;
 use App\Entity\Enums\CountryEnum;
 use App\Entity\Enums\GenderEnum;
 use App\Entity\Enums\StateEnum;
+use App\Modules\Admin\Group\Services\GroupService;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\ObserverTrait;
 use App\Traits\Models\SelectOption;
 use App\Traits\Models\TimestampFormat;
 use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 
 class User extends Authenticatable
@@ -32,7 +34,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded= []; // remove this replaces with $fillable to strict input col
     protected $primaryKey = 'id';
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'full_name_with_group'];
     /**
      * The attributes that are mass assignable.
      *
@@ -65,6 +67,16 @@ class User extends Authenticatable
             ->orderBy('created_at', 'desc');
     }
 
+    /**
+     * Get the group that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function group(): HasOne
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+
     protected function dobWithAge(): Attribute
     {
         $age = get_age($this->dob);
@@ -77,6 +89,13 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+        );
+    }
+
+    protected function fullNameWithGroup(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' ) .' '.( $this->group ? '('.$this->group->full_name.')' : '' )
         );
     }
 
@@ -136,12 +155,12 @@ class User extends Authenticatable
          */
 
         return [
-            'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'nric'      => ['type' => 'text', 'label'=> 'nric_or_passport'],
-            'phone'     => ['type' => 'text' ],
-            'email'     => ['type' => 'text' ],
-            'nationality'     => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],
-
+            'full_name'     => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
+            'nric'          => ['type' => 'text', 'label'=> 'nric_or_passport'],
+            'phone'         => ['type' => 'text' ],
+            'email'         => ['type' => 'text' ],
+            'nationality'   => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],
+            'groups'        => ['type' => 'select', 'option' => (new GroupService())->getSelectOption(Group::USER), 'default' => false],
             // 'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
         ];
     }
@@ -154,6 +173,12 @@ class User extends Authenticatable
             $query->where(function ($q) {
                 $q->where('name_en', 'like', '%'.request()->full_name.'%')
                     ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+            });
+        }
+
+        if(request()->filled('groups')){
+            $query->whereHas('group', function($q){
+                $q->whereIn('id', explode(",",request()->groups));
             });
         }
 

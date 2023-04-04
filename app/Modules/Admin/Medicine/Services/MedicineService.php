@@ -50,6 +50,6 @@ class MedicineService
 
     public function delete(Medicine $medicine)
     {
-        !self::occupied($medicine) ? $medicine->delete() : throwErr(trans('common.permission_denied'));
+        !self::occupied($medicine) ? $medicine->delete() : throwErr(trans('messages.permission_denied'));
     }
 }

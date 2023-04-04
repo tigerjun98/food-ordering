@@ -12,7 +12,7 @@
         ],
         'other' => [
             'print'         => ['route'=> route('admin.print-template.index'), 'icon'=>'iconsminds-printer', 'permission' => 'setting-other.print'],
-            'fee'           => ['route'=> route('admin.fee.index'), 'icon'=>'simple-icon-diamond', 'permission' => 'setting-other.fee'],
+            'group'         => ['route'=> route('admin.group.index'), 'icon'=>'iconsminds-conference', 'permission' => 'setting-other.group'],
         ]
 
 

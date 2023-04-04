@@ -48,6 +48,12 @@ class UserController extends Controller {
         return $dataTable->render('admin.user.datatable', compact('filter'));
     }
 
+    public function show($modelId)
+    {
+        $patient = User::findOrFail($modelId);
+        return html('admin.user.modal.view', compact('patient'));
+    }
+
     public function create()
     {
         return html('admin.user.form.create',[ 'data' => null ]);

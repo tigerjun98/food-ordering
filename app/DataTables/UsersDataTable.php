@@ -23,7 +23,9 @@ class UsersDataTable extends DataTable
         $query = User::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->addColumn('full_name', function($row){
+            ->editColumn('updated_at', function($row){
+                return $row->updated_at;
+            })->addColumn('full_name', function($row){
                 return $row->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
@@ -42,22 +44,22 @@ class UsersDataTable extends DataTable
             })->rawColumns(['image', 'action'])
             ->orderColumn('full_name', function ($query, $order) {
                 $query->orderByRaw("ISNULL(name_en), name_en $order");
+            })->editColumn('group_id', function($row){
+                return $row->group->full_name ?? '-';
             });
-//            ->order(function ($query) {
-//                $query->orderBy('updated_at', 'desc');
-//            });
     }
 
     public function getColumns(): array
     {
         return [
             Column::make('nric')->title('NRIC/Passport'),
+            Column::make('group_id')->title('Group'),
             Column::make('full_name'),
             Column::make('phone'),
             Column::make('gender'),
             Column::make('nationality'),
             Column::make('dob')->title('DOB (Age)'),
-            Column::make('created_at'),
+            Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -67,29 +69,48 @@ class UsersDataTable extends DataTable
     public function action($row): string
     {
         $actions = [
-            'queue' => [
+            'view' => [
+                'icon'      => 'simple-icon-eye',
+                'modal'     => route('admin.user.show', $row->id)
+            ],
+        ];
+
+        if(auth()->user()->hasPermissionTo( 'queue.create' ) ){
+            $actions['queue'] = [
                 'icon'      => 'simple-icon-ghost',
                 'modal'     => route('admin.queue.create', 'user_id='.$row->id)
-            ],
-            'history' => [
+            ];
+        }
+
+        if(auth()->user()->hasPermissionTo( 'consultation.index' ) ){
+            $actions['history'] = [
                 'icon'      => 'simple-icon-event',
                 'redirect'     => route('admin.consultation.index', 'nric='.$row->nric)
-            ],
-            'consultation' => [
+            ];
+        }
+
+        if(auth()->user()->hasPermissionTo( 'consultation.create' ) ){
+            $actions['consultation'] = [
                 'icon'      => 'simple-icon-calendar',
                 'redirect'  => route('admin.consultation.edit', $row->id)
-            ],
-            'edit' => [
+            ];
+        }
+
+        if(auth()->user()->hasPermissionTo( 'patient.edit' ) ){
+            $actions['edit'] = [
                 'icon'      => 'simple-icon-pencil',
                 'modal'     => route('admin.user.edit', $row->id)
-            ],
-            'delete' => [
+            ];
+        }
+        if(auth()->user()->hasPermissionTo( 'patient.delete' ) ){
+            $actions['delete'] = [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
                 'modal'     => route('admin.user.destroy', $row->id)
-            ]
-        ];
+            ];
+        }
+
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
@@ -115,7 +136,7 @@ class UsersDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(5)
+                    ->orderBy(7)
                     //->dom('Bfrtip')
                     ->selectStyleSingle()
 //                    ->parameters([
