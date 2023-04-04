@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="$data->type ?? request()->type.' details'"
-    :nav="['details', 'description']"
+    :navs="['details', 'description']"
     :submit="route('admin.option.store')"
 >
 

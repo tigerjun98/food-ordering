@@ -3,7 +3,7 @@
 @endphp
 <x-admin.component.modal
     :title="'Print details'"
-    :nav="['details']"
+    :navs="['details']"
     :submit="route('admin.print-template.store')"
 >
     @slot('details')
