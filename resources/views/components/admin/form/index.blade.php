@@ -94,10 +94,6 @@
             {{ $formOption ?? '' }}
         });
 
-        @if(isset($reloadAfterSubmit) && $reloadAfterSubmit)
-            window.location.reload();
-        @endif
-
         @if(isset($reset) && $reset)
         document.getElementById("submitForm{{isset($id) ? $id : $code}}").reset();
         @endif
