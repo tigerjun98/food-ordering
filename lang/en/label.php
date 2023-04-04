@@ -57,7 +57,7 @@ return [
     'security' => 'Security',
     'name' => 'Name',
     'roles' => 'Roles',
-    'password_confirmation' => 'Password_confirmation',
+    'password_confirmation' => 'Password confirmation',
     'nric_or_passport' => 'NRIC / Passport',
     'nationality' => 'Nationality',
     'dose' => 'Dose',

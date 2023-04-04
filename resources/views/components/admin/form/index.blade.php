@@ -7,9 +7,15 @@
 
     @if(isset($footer))
         <div class="form-footer">
-            <div class="modal-footer d-flex align-items-center mt-4">
-                {{$footer ?? ''}}
-            </div>
+            @if (!isset($isModal) || $isModal)
+                <div class="modal-footer d-flex align-items-center mt-4">
+                    {{$footer ?? ''}}
+                </div>
+            @else
+                <div class="d-flex flex-row-reverse align-items-center mt-4">
+                    {{ $footer ?? ''}}
+                </div>
+            @endif
         </div>
     @endif
 </form>
@@ -59,6 +65,14 @@
             containerCssClass: ":all:",
             dropdownParent: $('#'+$(this).getModalId({latest: true}))
         });
+
+        $(".form-content .select2-single, .form-content .select2-multiple").select2({
+            theme: "bootstrap",
+            placeholder: "",
+            maximumSelectionSize: 6,
+            containerCssClass: ":all:",
+            dropdownParent: $('#submitForm{{isset($id) ? $id : $code}}')
+        });
     }
 
     const checkErrExists = () => {
@@ -88,6 +102,5 @@
             $('#modalWrapper').openModal({ html: res.html, refresh: true, header: res.title??null});
         }
         {{ $script ?? '' }}
-
     });
 </script>
