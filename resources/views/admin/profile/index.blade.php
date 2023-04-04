@@ -81,6 +81,11 @@
                     />
                 </div>
             @endslot
+
+            @slot('script')
+                $('input#password').val('')
+                $('input#password_confirmation').val('')
+            @endslot
         </x-admin.component.card.profile>
     </div>
 @endsection
