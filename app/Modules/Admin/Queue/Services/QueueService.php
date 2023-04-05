@@ -126,6 +126,11 @@ class QueueService
         return $model->count();
     }
 
+    public function isConsultationType(Queue $queue): bool
+    {
+        return $queue->role == Queue::RECEPTIONIST || $queue->role == Queue::DOCTOR;
+    }
+
     public function serve(Queue $queue): Queue
     {
         if($queue->role == Queue::DOCTOR) {
@@ -134,13 +139,9 @@ class QueueService
                 : null;
         }
 
-        if($queue->type == Queue::MEDICINE){
-            $this->event->completed($queue, 'completed');
-        }
-
         (new QueueRoleService($queue))->updateToNextStatus();
 
-        if($queue->type == Queue::CONSULTATION){
+        if(self::isConsultationType($queue)){
              $this->event->serve($queue, $this->countWaitingPatient());
         }
 

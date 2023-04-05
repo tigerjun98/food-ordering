@@ -19,10 +19,12 @@ use function PHPUnit\Framework\throwException;
 class QueueRoleService
 {
     private Queue $model;
+    private QueueEventService $event;
 
     public function __construct(Queue $model)
     {
         $this->model = $model;
+        $this->event = new QueueEventService();
     }
 
     public function isCashier():bool
@@ -54,6 +56,7 @@ class QueueRoleService
             $this->serveToPharmacy();
 
         } elseif($this->isPharmacy()){
+            $this->event->completed($this->model, 'completed');
             $this->serveToCashier();
 
         } else{
@@ -69,6 +72,7 @@ class QueueRoleService
 
     public function serveToPharmacy()
     {
+        $this->model->type      = Queue::MEDICINE;
         $this->model->role      = Queue::PHARMACY;
         $this->model->status    = Queue::WAITING;
         $this->model->save();
@@ -76,6 +80,7 @@ class QueueRoleService
 
     public function serveToDoctor()
     {
+        $this->model->type      = Queue::CONSULTATION;
         $this->model->role      = Queue::DOCTOR;
         $this->model->status    = Queue::SERVING;
         $this->model->save();
@@ -83,6 +88,7 @@ class QueueRoleService
 
     public function serveToCashier()
     {
+        $this->model->type      = Queue::PAYMENT;
         $this->model->role      = Queue::CASHIER;
         $this->model->status    = Queue::WAITING;
         $this->model->save();
