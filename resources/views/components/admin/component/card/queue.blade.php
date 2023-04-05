@@ -16,15 +16,16 @@
         <div class="card-body">
             <div class="justify-content-between">
                 <div class="">
-                    <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:void(0)'}}">
-                        <p class="font-weight-medium mb-1">
+                    <div>
+                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:void(0)'}}"
+                            class="font-weight-medium mb-1" >
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
                             {{ $queue->patient->full_name ?? '-' }}
-                        </p>
+                        </a>
                         <p class="text-muted mb-0 text-small">
                             {{ get_time_ago( strtotime($queue->created_at) ) }}
                         </p>
-                    </a>
+                    </div>
                     <div class="">
                         @if($queue->doctor)
                             <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
