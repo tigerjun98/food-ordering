@@ -24,11 +24,11 @@ class AppointmentStoreRequest extends FormRequest
     {
         return [
             'id'        => ['integer'],
-            'datetime'  => ['required', 'date'],
+            'datetime'  => ['required', 'date_format:Y-m-d g:i A'], // 2023(Y)-10(m)-27(d) 7(g - without leading zero):15(i) AM(A)
             'remark'    => ['nullable', 'string'],
-            'status'    => ['nullable', 'in:'.arrayToString(Appointment::getStatusList())],
+            'status'    => ['required', 'in:'.arrayToString(Appointment::getStatusList())],
             'user_id'   => ['required', 'exists:users,id'],
-            'queue_id'  => ['required', 'exists:queues,id'],
+            'queue_id'  => ['nullable'],
             'admin_id'  => ['required', 'exists:admins,id'],
         ];
     }
