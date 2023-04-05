@@ -73,5 +73,6 @@ return [
     'contact_name' => 'Contact name',
     'contact_no' => 'Contact No.',
     'relationship' => 'Relationship',
-    'groups' => 'Groups'
+    'groups' => 'Groups',
+    'appointment' => 'Appointment'
 ];
