@@ -23,13 +23,13 @@ class AppointmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'                    => ['integer'],
-            'appointment_datetime'  => ['required'],
-            'remark'                => ['nullable'],
-            'status'                => ['nullable'],
-            'user_id'               => ['required'],
-            'queue_id'              => ['required'],
-            'admin_id'              => ['required'],
+            'id'        => ['integer'],
+            'datetime'  => ['required', 'date'],
+            'remark'    => ['nullable', 'string'],
+            'status'    => ['nullable', 'in:'.arrayToString(Appointment::getStatusList())],
+            'user_id'   => ['required', 'exists:users,id'],
+            'queue_id'  => ['required', 'exists:queues,id'],
+            'admin_id'  => ['required', 'exists:admins,id'],
         ];
     }
 }
