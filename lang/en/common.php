@@ -161,4 +161,7 @@ return [
     'internal_remark' => 'Internal remark',
     'group' => 'Group',
     'appointments' => 'Appoinments',
+    'accepted' => 'Accepted',
+    'rejected' => 'Rejected',
+    'cancelled' => 'Cancelled'
 ];
