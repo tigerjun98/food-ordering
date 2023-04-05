@@ -74,5 +74,7 @@ return [
     'contact_no' => 'Contact No.',
     'relationship' => 'Relationship',
     'groups' => 'Groups',
-    'appointment' => 'Appointment'
+    'appointment' => 'Appointment',
+    'admin_id' => 'Doctor',
+    'datetime' => 'Date & Time',
 ];
