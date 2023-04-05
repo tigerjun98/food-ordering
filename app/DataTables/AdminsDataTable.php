@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Admin;
+use App\Models\Role;
 use App\Models\User;
 use App\Entity\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -27,8 +28,9 @@ class AdminsDataTable extends DataTable
             // ->addIndexColumn()
             ->addColumn('roles', function($row){
                 $arr = '';
-                foreach ($row->getRoleNames() as $role){
-                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$role.'</span>';
+                foreach ($row->getRoleNames() as $name){
+                    $role = Role::where('name', $name)->first();
+                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$role->full_name.'</span>';
                 }
                 return $arr;
             })->editColumn('updated_at', function($row){
