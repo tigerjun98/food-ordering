@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -68,6 +69,16 @@ class Queue extends Model
     public function patient()
     {
         return $this->belongsTo(User::class,'user_id', 'id');
+    }
+
+    /**
+     * Get the appointment associated with the Queue
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function appointment(): HasOne
+    {
+        return $this->hasOne(Appointment::class, 'queue_id', 'id');
     }
 
     public static function getTypeList()
