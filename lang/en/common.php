@@ -161,5 +161,7 @@ return [
     'internal_remark' => 'Internal remark',
     'fee' => 'Fee',
     'group' => 'Group',
-    'profile_details' => 'Profile details'
+    'profile_details' => 'Profile details',
+    'consulted_by' => 'Consulted by',
+    'patient_name' => 'Patient name',
 ];
