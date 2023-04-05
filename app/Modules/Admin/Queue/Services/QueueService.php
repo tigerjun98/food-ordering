@@ -133,10 +133,14 @@ class QueueService
 
     public function serve(Queue $queue): Queue
     {
-        if($queue->role == Queue::DOCTOR){
+        if($queue->role == Queue::DOCTOR) {
             $this->countServingPatient($queue->doctor_id) > 0
                 ? throwErr(trans('messages.doctor_on_serve'))
                 : null;
+        }
+
+        if($queue->type == Queue::MEDICINE){
+            $this->event->completed($queue, 'completed');
         }
 
         (new QueueRoleService($queue))->updateToNextStatus();
@@ -160,7 +164,7 @@ class QueueService
     public function consulted(Consultation $consultation)
     {
         $queue = $this->model->Today()
-            ->where('type', Queue::CONSULTATION)
+            ->where('role', Queue::DOCTOR)
             ->where('user_id', $consultation->user_id)
             ->whereIn('status', [Queue::SERVING, Queue::HOLDING])
             ->first();
@@ -352,6 +356,7 @@ class QueueService
 
     public function delete(Queue $queue): bool
     {
+        $this->event->deleted($queue, 'deleted');
         return $queue->delete();
     }
 
@@ -368,9 +373,22 @@ class QueueService
             $consultation = Consultation::find($consultId);
             $docNo = (new TouchPosCreateSalesService($consultation, $docNo))->createSales();
         }
-
     }
 
-
-
+    public function getTotalQueue($doctorId): array
+    {
+        return [
+            Queue::RECEPTIONIST => $this->model->where('role', Queue::RECEPTIONIST)
+                                    ->Waiting()->Today()->count(),
+            Queue::DOCTOR       => $this->model->where('role', Queue::DOCTOR)
+                                    ->where('status', Queue::SERVING)
+                                    ->where('doctor_id', $doctorId)
+                                    ->Today()
+                                    ->count(),
+            Queue::PHARMACY     => $this->model->where('role', Queue::PHARMACY)
+                                    ->Waiting()->Today()->count(),
+            Queue::CASHIER      => $this->model->where('role', Queue::CASHIER)
+                                    ->waiting()->Today()->count()
+        ];
+    }
 }

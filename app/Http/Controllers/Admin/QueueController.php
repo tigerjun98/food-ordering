@@ -116,5 +116,10 @@ class QueueController extends Controller {
         $this->service->delete(Queue::findOrFail($queueId));
         return makeResponse(200);
     }
+
+    public function getTotalQueue($doctorId)
+    {
+        return makeResponse(200, 'success', $this->service->getTotalQueue($doctorId));
+    }
 }
 
