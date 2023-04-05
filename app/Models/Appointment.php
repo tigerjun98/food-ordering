@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\ModelTrait;
 use App\Traits\Models\FilterTrait;
@@ -25,6 +26,36 @@ class Appointment extends Model
     protected $casts = [
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * Get the patient that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the doctor that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function doctor(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+    }
+
+    /**
+     * Get the queue that owns the Appointment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function queue(): BelongsTo
+    {
+        return $this->belongsTo(Queue::class, 'queue_id', 'id');
+    }
 
     public static function getStatusList(): array
     {
