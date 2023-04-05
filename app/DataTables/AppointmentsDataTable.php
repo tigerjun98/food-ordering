@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Entity\Enums\StatusEnum;
 use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -22,9 +23,19 @@ class AppointmentsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        $query = Appointment::query();
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'appointments.action')
-            ->setRowId('id');
+            ->editColumn('status', function($row) {
+                return $row->status
+                    ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
+                    : '-';
+            })->editColumn('updated_at', function($row) {
+                return dateFormat($row->updated_at, 'r');
+            })->addColumn('action', function($row) {
+                return $this->action($row);
+            })->filter(function ($model) {
+                return $model->filter();
+            })->rawColumns(['action', 'status']);
     }
 
     /**
@@ -46,7 +57,7 @@ class AppointmentsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('appointments-table')
+                    ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -57,8 +68,6 @@ class AppointmentsDataTable extends DataTable
                         Button::make('csv'),
                         Button::make('pdf'),
                         Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
                     ]);
     }
 
@@ -70,25 +79,49 @@ class AppointmentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
+            Column::make('full_name'),
+            Column::make('datetime'),
+            Column::make('remark')->width(300),
+            Column::make('status'),
+            Column::make('queue'),
+            Column::make('doctor'),
             Column::make('updated_at'),
+            Column::computed('action')->exportable(false)->printable(false)
         ];
     }
 
     /**
      * Get filename for export.
      *
-     * @return string
+     * @return view
      */
-    protected function filename(): string
+    public function action($row): string
     {
-        return 'Appointments_' . date('YmdHis');
+        $actions = [];
+
+        if (auth()->user()->hasPermissionTo('appointment-management.view')) {
+            $actions['view'] = [
+                'icon'      => 'simple-icon-eye',
+                'modal'     => route('admin.appointment.show', $row->id)
+            ];
+        }
+
+        if (auth()->user()->hasPermissionTo('appointment-management.edit')) {
+            $actions['edit'] = [
+                'icon'      => 'simple-icon-pencil',
+                'modal'     => route('admin.appointment.edit', $row->id)
+            ];
+        }
+
+        if (auth()->user()->hasPermissionTo('appointment-management.delete')) {
+            $actions['delete'] = [
+                'size'      => 'md', //[sm, md, lg]
+                'class'     => 'text-danger',
+                'icon'      => 'simple-icon-trash',
+                'modal'     => route('admin.appointment.destroy', $row->id)
+            ];
+        }
+
+        return view('components.admin.datatable.action', compact('actions'))->render();
     }
 }
