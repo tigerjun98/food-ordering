@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PrintTemplateController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\FeeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'print-template'    => PrintTemplateController::class,
         'group'             => GroupController::class,
         'profile'           => ProfileController::class,
+        'fee'               => FeeController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
@@ -73,6 +75,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     });
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
+        Route::post('/send-to-pos-system', [QueueController::class, 'sendToPosSystem']);
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
         Route::post('/update-sorting/{queueId}', [QueueController::class, 'updateSorting'])->name('update-sorting');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');

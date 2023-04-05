@@ -90,7 +90,8 @@ class DynamodCustomerService
 
     public function getCustomers(int $page)
     {
-        return $this->service->get('Customers/page/'.$page);
+        $res = $this->service->get('Customers/page/'.$page);
+        return $res;
     }
 
     public function findCustomersById($custId)

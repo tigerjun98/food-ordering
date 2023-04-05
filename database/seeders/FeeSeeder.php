@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Entity\Enums\ConsultationEnum;
+use App\Entity\Enums\StatusEnum;
 use App\Models\Admin;
 use App\Models\Fee;
+use App\Models\Group;
 use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Prescription;
@@ -12,6 +14,7 @@ use App\Models\Setting;
 use App\Models\Specialist;
 use App\Models\Syndrome;
 use App\Models\User;
+use App\Modules\Admin\Group\Services\GroupService;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -19,18 +22,36 @@ use DB;
 
 class FeeSeeder extends Seeder
 {
+    private GroupService $service;
+
     /**
      * Run the database seeds.
      *
      * @return void
      */
+
+    public function __construct()
+    {
+        $this->service = (new GroupService());
+    }
+
     public function run()
     {
         foreach ($this->getListing() as $var){
+
+            $exists = Fee::where('category', $var['category'])
+                ->where('type', $var['type'])
+                ->first();
+
+            if($exists){
+                continue;
+            }
+
             $model = new Fee();
             foreach ($var as $col => $val){
                 $model->{$col} = $val;
             }
+            $model->status = StatusEnum::ACTIVE;
             $model->save();
         }
     }
@@ -39,21 +60,21 @@ class FeeSeeder extends Seeder
     {
         return array(
             array(
-                'name_en'   => 'Consultation (Normal)',
+                'name_en'   => 'Consultation (Degree)',
                 'category'  => ConsultationEnum::CONSULTATION,
-                'type'      => 100,
+                'type'      => $this->service->findSlug('degree')->id,
                 'price'     => 30,
             ),
             array(
                 'name_en'   => 'Consultation (Master)',
                 'category'  => ConsultationEnum::CONSULTATION,
-                'type'      => 101,
+                'type'      => $this->service->findSlug('master')->id,
                 'price'     => 40,
             ),
             array(
                 'name_en'   => 'Consultation (Ph.D)',
                 'category'  => ConsultationEnum::CONSULTATION,
-                'type'      => 102,
+                'type'      => $this->service->findSlug('phd')->id,
                 'price'     => 50,
             ),
             array(

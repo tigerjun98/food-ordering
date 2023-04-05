@@ -81,15 +81,9 @@ class TouchPosService
         } catch (ClientException $e) {
 
             $msg = sprintf('Error while request, response code: %s, message: %s', $e->getCode(), $e->getMessage());
-            \Log::channel('touch-pos')->error($msg, json_encode($e));
+            $ref = is_array(json_encode($e));
+            \Log::channel('touch-pos')->error($msg, $ref ? json_encode($e) : []);
             return false;
         }
-
-
-    }
-
-    public function delete(Admin $admin)
-    {
-        $admin->delete();
     }
 }

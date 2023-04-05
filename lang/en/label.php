@@ -67,11 +67,16 @@ return [
     'attachment' => 'Attachment',
     'visited_at' => 'Visited at',
     'consulted_at' => 'Consulted at',
+<<<<<<<<< Temporary merge branch 1
+    'price' => 'Price',
+=========
     'group_id' => 'Group',
     'name_or_nric_or_passport' => 'Name / NRIC / Passport',
     'template' => 'Template',
     'contact_name' => 'Contact name',
     'contact_no' => 'Contact No.',
     'relationship' => 'Relationship',
-    'groups' => 'Groups'
+    'groups' => 'Groups',
+    'price' => 'Price',
+    'category' => 'Category',
 ];

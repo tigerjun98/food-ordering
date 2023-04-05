@@ -159,6 +159,7 @@ return [
     'new_template' => 'New template',
     'print' => 'Print',
     'internal_remark' => 'Internal remark',
+    'fee' => 'Fee',
     'group' => 'Group',
     'profile_details' => 'Profile details'
 ];

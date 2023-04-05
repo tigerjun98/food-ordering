@@ -24,7 +24,7 @@ class DynamodStockTest extends TestCase
 
     public function test_get_stocks()
     {
-        (new DynamodStockService())->syncStock(1);
+        (new DynamodStockService())->syncStock(10);
         $this->assertTrue(true);
     }
 

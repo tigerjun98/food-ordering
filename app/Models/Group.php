@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use App\Entity\Enums\StatusEnum;
 
 class Group extends Model
 {
-    use HasFactory, SoftDeletes, ModelTrait;
+    use HasFactory, SoftDeletes, ModelTrait, HasSlug;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
