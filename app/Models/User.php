@@ -15,6 +15,7 @@ use App\Traits\ModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -75,6 +76,17 @@ class User extends Authenticatable
     public function group(): HasOne
     {
         return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+
+    /**
+     * Get all of the appointments for the Patient
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'user_id', 'id')
+                ->orderBy('created_at', 'desc');
     }
 
     protected function dobWithAge(): Attribute
