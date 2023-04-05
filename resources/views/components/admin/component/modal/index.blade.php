@@ -63,10 +63,16 @@
             @endslot
         </x-admin.form>
     @else
-        @if(isset($nav) && $nav)
+        @if(isset($navs) && count($navs) > 0)
             <x-admin.layout.tabs.body
-                :navs="$nav"
-            />
+                :navs="$navs"
+            >
+                @foreach($navs as $nav)
+                    @slot($nav)
+                        {{ ${$nav} ?? '' }}
+                    @endslot
+                @endforeach
+            </x-admin.layout.tabs.body>
         @else
             {{ $body ?? '' }}
         @endif

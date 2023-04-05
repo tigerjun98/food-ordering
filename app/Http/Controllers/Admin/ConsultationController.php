@@ -92,7 +92,6 @@ class ConsultationController extends Controller {
         $consultation = Consultation::findOrFail($consultationId);
         $tabs = isset(request()->tabs) ? explode(',', request()->tabs) : ['details', 'medicine', 'patient', 'attachment'];
 
-
         return html('admin.consultation.modal.view',
             compact('consultation', 'tabs')
         );
