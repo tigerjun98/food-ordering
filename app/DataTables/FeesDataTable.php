@@ -28,7 +28,9 @@ class FeesDataTable extends DataTable
         $query = Fee::query();
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
-            ->editColumn('updated_at', function($row){
+            ->editColumn('type', function($row){
+                return $row->type_explain;
+            })->editColumn('updated_at', function($row){
                 return dateFormat($row->updated_at, 'r');
             })->editColumn('status', function($row){
                 return $row->status
@@ -54,6 +56,7 @@ class FeesDataTable extends DataTable
         return [
             Column::make('full_name')->title('Name'),
             Column::make('category'),
+            Column::make('type'),
             Column::make('price')->title('Price(RM)'),
             Column::make('status'),
             Column::make('remark')->width(450),
