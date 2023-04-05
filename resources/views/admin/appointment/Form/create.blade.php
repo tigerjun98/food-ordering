@@ -1,0 +1,63 @@
+<x-admin.component.modal
+    :title="'Appointment details'"
+    :nav="['details']"
+    :submit="route('admin.appointment.store')"
+>
+    @slot('details')
+        <input type="hidden" name="id" value="{{ $data ? $data->id : new_id() }}" />
+
+        @php
+            $patient = $data ? $data->patient : ($patient ?? null)
+        @endphp
+
+        <input type="hidden" name="user_id" id="user_id" value="{{ request()->user_id ?? ($patient ? $patient->id : null) }}" />
+
+        @if(!$patient)
+            <div class="hide-box" id="patientSearch">
+                <div class="row">
+                    <x-admin.page.queue.patient-search />
+                </div>
+            </div>
+        @endif
+
+        <div class="hide-box" id="patientQueueInfo">
+            <x-admin.form.text
+                :label="trans('label.nric_or_passport')"
+                :name="'nric'"
+                :value="$patient->nric ?? null"
+                :disabled="true"
+            />
+
+            <x-admin.form.text
+                :label="trans('label.full_name')"
+                :name="'full_name'"
+                :value="$patient->full_name_with_group ?? null"
+                :disabled="true"
+            />
+
+            <div class="row">
+                <x-admin.form.select
+                    :col="'md-12'"
+                    :name="'doctor_id'"
+                    :selectJs="false"
+                    :ajax="route('admin.get-doctor-opt')"
+                >
+                    @if($data && $data->doctor)
+                        @slot('customOption')
+                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
+                        @endslot
+                    @endif
+                </x-admin.form.select>
+            </div>
+
+            <x-admin.form.textarea
+                :data="$data"
+                :rows="6"
+                :name="'remark'"
+                :required="false"
+            />
+        </div>
+
+        @include('admin.queue.js.create')
+    @endslot
+</x-admin.component.modal>
