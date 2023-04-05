@@ -27,12 +27,12 @@ class AppointmentsDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->editColumn('full_name', function($row) {
                 return $row->patient->full_name;
+            })->editColumn('datetime', function($row) {
+                return dateFormat($row->datetime, 'r');
             })->editColumn('status', function($row) {
                 return $row->status
                     ? '<span class="badge badge-pill badge-'.ProcessStatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
                     : '-';
-            })->editColumn('queue', function($row) {
-                return (! is_null($row->queue_id)) ? $row->queue->status : '' ;
             })->editColumn('doctor', function($row) {
                 return $row->doctor->full_name;
             })->editColumn('updated_at', function($row) {
@@ -89,7 +89,6 @@ class AppointmentsDataTable extends DataTable
             Column::make('datetime'),
             Column::make('remark')->width(300),
             Column::make('status'),
-            Column::make('queue'),
             Column::make('doctor'),
             Column::make('updated_at'),
             Column::computed('action')->exportable(false)->printable(false)
@@ -105,7 +104,7 @@ class AppointmentsDataTable extends DataTable
     {
         $actions = [];
 
-        if (auth()->user()->hasPermissionTo('appointment-management.view')) {
+        if (auth()->user()->hasPermissionTo('appointment-management.show')) {
             $actions['view'] = [
                 'icon'      => 'simple-icon-eye',
                 'modal'     => route('admin.appointment.show', $row->id)
