@@ -87,6 +87,7 @@ class Fee extends Model
         return [
             'full_name'     => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
             'status'        => ['label'=> 'status', 'type' => 'select', 'option' => static::getStatusList()],
+            'category'      => ['label'=> 'category', 'type' => 'select', 'option' => static::getCategoryList()],
         ];
     }
 
