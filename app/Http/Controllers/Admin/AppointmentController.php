@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\AppointmentDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
-// use App\Modules\Admin\Appointment\Requests\AppointmentStoreRequest;
+use App\Modules\Admin\Appointment\Requests\AppointmentStoreRequest;
 // use App\Modules\Admin\Appointment\Services\AppointmentService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
