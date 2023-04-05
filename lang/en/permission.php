@@ -55,4 +55,11 @@ return [
         'print'         => 'Print template management',
         'group'         => 'Group management',
     ],
+
+    'appointment-management' => [
+        'index'         => 'View appointment',
+        'create'        => 'Create appointment',
+        'edit'          => 'Edit appointment',
+        'delete'        => 'Delete appointment',
+    ],
 ];
