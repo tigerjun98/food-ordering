@@ -45,7 +45,7 @@ enum ProcessStatusEnum: string
     {
         return match ($this) {
             self::PENDING => 'warning',
-            self::ACCEPTED => 'primary',
+            self::ACCEPTED => 'info',
             self::REJECTED => 'danger',
             self::CANCELLED => 'light',
             self::COMPLETED => 'success',
