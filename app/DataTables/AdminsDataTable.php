@@ -111,7 +111,7 @@ class AdminsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(4)
+                    ->orderBy(6)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
