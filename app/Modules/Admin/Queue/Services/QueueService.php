@@ -126,11 +126,6 @@ class QueueService
         return $model->count();
     }
 
-    public function countPendingPatient($type = Queue::CONSULTATION): int
-    {
-        return $this->model->where('status', Queue::PENDING)->where('type', $type)->Today()->count();
-    }
-
     public function serve(Queue $queue): Queue
     {
         if($queue->role == Queue::DOCTOR) {
