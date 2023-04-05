@@ -25,10 +25,16 @@ class AppointmentsDataTable extends DataTable
     {
         $query = Appointment::query();
         return (new EloquentDataTable($query))
-            ->editColumn('status', function($row) {
+            ->editColumn('full_name', function($row) {
+                return $row->patient->full_name;
+            })->editColumn('status', function($row) {
                 return $row->status
                     ? '<span class="badge badge-pill badge-'.ProcessStatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
                     : '-';
+            })->editColumn('queue', function($row) {
+                return (! is_null($row->queue_id)) ? $row->queue->status : '' ;
+            })->editColumn('doctor', function($row) {
+                return $row->doctor->full_name;
             })->editColumn('updated_at', function($row) {
                 return dateFormat($row->updated_at, 'r');
             })->addColumn('action', function($row) {
