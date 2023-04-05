@@ -21,24 +21,39 @@
         @endif
 
         <div class="hide-box" id="patientQueueInfo">
-            <x-admin.form.text
-                :label="trans('label.nric_or_passport')"
-                :name="'nric'"
-                :value="$patient->nric ?? null"
-                :disabled="true"
-            />
 
-            <x-admin.form.text
-                :label="trans('label.full_name')"
-                :name="'full_name'"
-                :value="$patient->full_name_with_group ?? null"
-                :disabled="true"
-            />
+            <div class="row">
+                <x-admin.form.text
+                    :col="'md-6'"
+                    :label="trans('label.nric_or_passport')"
+                    :name="'nric'"
+                    :value="$patient->nric ?? null"
+                    :disabled="true"
+                />
+
+                <x-admin.form.text
+                    :col="'md-6'"
+                    :label="trans('label.full_name')"
+                    :name="'full_name'"
+                    :value="$patient->full_name_with_group ?? null"
+                    :disabled="true"
+                />
+            </div>
+
+            <div class="row">
+                <x-admin.form.datetime
+                    :col="'md-12'"
+                    :label="trans('label.datetime')"
+                    :name="'datetime'"
+                    :value="$data->datetime ?? ''"
+                />
+            </div>
+
 
             <div class="row">
                 <x-admin.form.select
-                    :col="'md-12'"
-                    :name="'doctor_id'"
+                    :col="'md-6'"
+                    :name="'admin_id'"
                     :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
                 >
@@ -48,6 +63,13 @@
                         @endslot
                     @endif
                 </x-admin.form.select>
+
+                <x-admin.form.select
+                    :col="'md-6'"
+                    :data="$data"
+                    :options="\App\Models\Appointment::getStatusList()"
+                    :name="'status'"
+                />
             </div>
 
             <x-admin.form.textarea
