@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="'Fee details'"
-    :nav="['details']"
+    :navs="['details']"
     :submit="route('admin.fee.store')"
 >
 

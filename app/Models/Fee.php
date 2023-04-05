@@ -57,6 +57,8 @@ class Fee extends Model
     {
         if (array_key_exists($this->category, ConsultationEnum::getMedicineListing())) { // array key contain
             $attr = $this->type.Prescription::getMetricList()[$this->category];
+        } elseif($this->category == ConsultationEnum::CONSULTATION){
+            $attr = Group::find($this->type)->full_name;
         }
 
         return Attribute::make(
