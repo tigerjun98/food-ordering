@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\ModelTrait;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\TimestampFormat;
-use App\Entity\Enums\StatusEnum;
+use App\Entity\Enums\ProcessStatusEnum;
 
 class Appointment extends Model
 {
@@ -25,6 +25,18 @@ class Appointment extends Model
     protected $casts = [
         'updated_at' => 'datetime',
     ];
+
+    public static function getStatusList(): array
+    {
+        return ProcessStatusEnum::getListing();
+    }
+
+    protected function statusExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(ProcessStatusEnum::getListing()[$this->status] ?? __('common.unknown_status'))
+        );
+    }
 
     public static function Filter()
     {

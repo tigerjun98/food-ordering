@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Entity\Enums\StatusEnum;
+use App\Entity\Enums\ProcessStatusEnum;
 use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -27,7 +27,7 @@ class AppointmentsDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->editColumn('status', function($row) {
                 return $row->status
-                    ? '<span class="badge badge-pill badge-'.StatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
+                    ? '<span class="badge badge-pill badge-'.ProcessStatusEnum::getClass($row->status).' mr-1">'.$row->status_explain.'</span>'
                     : '-';
             })->editColumn('updated_at', function($row) {
                 return dateFormat($row->updated_at, 'r');
