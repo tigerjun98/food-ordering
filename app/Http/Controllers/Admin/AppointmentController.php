@@ -40,6 +40,12 @@ class AppointmentController extends Controller
         ]);
     }
 
+    public function store(AppointmentStoreRequest $request)
+    {
+        $appointment = $this->service->store($request->validated());
+        return makeResponse(200, 'success', $appointment);
+    }
+
     public function delete($appointmentId)
     {
         return html('admin.appointment.form.delete',[

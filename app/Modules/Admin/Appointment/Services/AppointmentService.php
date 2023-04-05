@@ -12,4 +12,9 @@ class AppointmentService
     {
         $this->model = new Appointment();
     }
+
+    public function store(array $request): Appointment
+    {
+        return $this->model->updateOrCreate(['id' => $request['id']], $request);
+    }
 }
