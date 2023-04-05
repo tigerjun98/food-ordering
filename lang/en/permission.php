@@ -57,7 +57,8 @@ return [
     ],
 
     'appointment-management' => [
-        'index'         => 'View appointment',
+        'index'         => 'Appointment page',
+        'show'          => 'View appointment',
         'create'        => 'Create appointment',
         'edit'          => 'Edit appointment',
         'delete'        => 'Delete appointment',
