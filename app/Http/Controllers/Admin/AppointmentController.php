@@ -39,4 +39,12 @@ class AppointmentController extends Controller
             'data' => []
         ]);
     }
+
+    public function delete($appointmentId)
+    {
+        return html('admin.appointment.form.delete',[
+            'canDelete' => false,
+            'data' => $this->model->findOrFail($appointmentId)
+        ]);
+    }
 }
