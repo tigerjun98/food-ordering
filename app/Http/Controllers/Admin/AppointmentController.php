@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-// use App\DataTables\AppointmentDataTable;
+use App\DataTables\AppointmentDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 // use App\Modules\Admin\Appointment\Requests\AppointmentStoreRequest;
@@ -24,8 +24,10 @@ class AppointmentController extends Controller
         // $this->service = new AppointmentService();
     }
 
-    public function index()
+    public function index(AppointmentDataTable $dataTable)
     {
-        return;
+        return $dataTable->render('admin.appointment.datatable', [
+            'filter' => $this->model->Filter()
+        ]);
     }
 }
