@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
+use function PHPUnit\Framework\throwException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,8 +50,17 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            throwErr('Oops... The record does not exist.');
+        }
+
+        return parent::render($request, $e);
     }
 
 //    protected function unauthenticated($request, AuthenticationException $exception)
