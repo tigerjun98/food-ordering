@@ -115,15 +115,18 @@
         let pattern = /(\s\(\d+\))/
 
         roleIds.forEach(value => {
-            let roleTab = document.getElementById(`tab-${value}`)
-            let roleText = roleTab.innerText
-            let search = roleText.search(pattern)
+            if(!!document.getElementById(`tab-${value}`)){
+                let roleTab = document.getElementById(`tab-${value}`)
+                let roleText = roleTab.innerText
+                let search = roleText.search(pattern)
 
-            if (search > 0) {
-                roleText = roleText.slice(0, search)
+                if (search > 0) {
+                    roleText = roleText.slice(0, search)
+                }
+
+                roleTab.innerText = roleText + ` (${res.data[value]})`
             }
 
-            roleTab.innerText = roleText + ` (${res.data[value]})`
         })
     }
 </script>

@@ -33,7 +33,7 @@
                                id="tab-{{$key}}"
                                href="javascript:setQueueRoleValue({{$key}})"
                             >
-                                {{ $type }} ({{ $counts[$key] }})
+                                {{ $type }}
                             </a>
                         </li>
                     @endif
