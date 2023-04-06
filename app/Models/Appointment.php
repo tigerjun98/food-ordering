@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\ModelTrait;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\TimestampFormat;
-use App\Entity\Enums\ProcessStatusEnum;
 
 class Appointment extends Model
 {
@@ -26,6 +25,12 @@ class Appointment extends Model
     protected $casts = [
         'updated_at' => 'datetime',
     ];
+
+    public const PENDING   = 101;
+    public const QUEUED    = 102;
+    public const REJECTED  = 103;
+    public const CANCELLED = 104;
+    public const COMPLETED = 105;
 
     /**
      * Get the patient that owns the Appointment
@@ -59,13 +64,38 @@ class Appointment extends Model
 
     public static function getStatusList(): array
     {
-        return ProcessStatusEnum::getListing();
+        return [
+            self::PENDING => trans('common.pending'),
+            self::QUEUED => trans('common.queued'),
+            self::REJECTED => trans('common.rejected'),
+            self::CANCELLED => trans('common.cancelled'),
+            self::COMPLETED => trans('common.completed'),
+        ];
     }
 
     protected function statusExplain(): Attribute
     {
         return Attribute::make(
-            get: fn () => ucfirst(ProcessStatusEnum::getListing()[$this->status] ?? __('common.unknown_status'))
+            get: fn () => ucfirst(static::getStatusList()[$this->status] ?? __('common.unknown_status'))
+        );
+
+    }
+
+    public static function getStatusClass(): array
+    {
+        return [
+            self::PENDING => 'warning',
+            self::QUEUED => 'info',
+            self::REJECTED => 'danger',
+            self::CANCELLED => 'light',
+            self::COMPLETED => 'success',
+        ];
+    }
+
+    protected function classExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => strtolower(static::getStatusClass()[$this->status] ?? '')
         );
     }
 
