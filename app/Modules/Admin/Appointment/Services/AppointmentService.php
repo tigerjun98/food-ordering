@@ -21,4 +21,14 @@ class AppointmentService
             'status' => Appointment::PENDING,
         ], $request);
     }
+
+    public function queued($appointment): bool
+    {
+        return $appointment->status != Appointment::PENDING;
+    }
+
+    public function delete($appointment)
+    {
+        !self::queued($appointment) ? $appointment->delete() : throwErr(trans('messages.permission_denied'));
+    }
 }

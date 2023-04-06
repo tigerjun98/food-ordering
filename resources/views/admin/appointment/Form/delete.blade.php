@@ -9,7 +9,7 @@
                 on <span class="font-weight-bold">{{ dateFormat($data->datetime, 'r') }}</span>
                 with <span class="font-weight-bold">{{ $data->doctor->full_name }}</span>? This process cannot be undo.</h6>
         @else
-            <h6>The attempted operation is prohibited because this appointment status already
+            <h6>The attempted operation is prohibited because this appointment status on
                 <span class="font-weight-bold font-italic text-danger">{{ $data->status_explain }}</span>.
             </h6>
         @endif

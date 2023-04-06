@@ -48,9 +48,16 @@ class AppointmentController extends Controller
 
     public function delete($appointmentId)
     {
+        $model = $this->model->findOrFail($appointmentId);
         return html('admin.appointment.form.delete',[
-            'canDelete' => false,
-            'data' => $this->model->findOrFail($appointmentId)
+            'canDelete' => !$this->service->queued($model),
+            'data' => $model
         ]);
+    }
+
+    public function destroy($appointmentId)
+    {
+        $this->service->delete($this->model->findOrFail($appointmentId));
+        return makeResponse(200);
     }
 }

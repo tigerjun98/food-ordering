@@ -163,5 +163,6 @@ return [
     'appointments' => 'Appoinments',
     'accepted' => 'Accepted',
     'rejected' => 'Rejected',
-    'cancelled' => 'Cancelled'
+    'cancelled' => 'Cancelled',
+    'queued' => 'Queued',
 ];
