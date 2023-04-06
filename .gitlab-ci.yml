@@ -6,11 +6,12 @@ building:
   script:
     - git reset --hard
     - git pull origin staging
-    - composer install
+    - composer install --optimize-autoloader --no-dev
     - php artisan key:generate
     - php artisan migrate
     - php artisan cache:clear
     - php artisan config:clear
+    - php artisan view:cache
     - php artisan storage:link
     - sudo chmod -R 775 storage
     - sudo npm install
