@@ -46,6 +46,13 @@ class AppointmentController extends Controller
         return makeResponse(200, 'success', $appointment);
     }
 
+    public function edit($appointmentId)
+    {
+        return html('admin.appointment.form.create',[
+            'data' => $this->model->findOrFail($appointmentId),
+        ]);
+    }
+
     public function delete($appointmentId)
     {
         $model = $this->model->findOrFail($appointmentId);

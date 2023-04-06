@@ -54,36 +54,26 @@
                     :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
                 >
-                    @if($data && $data->doctor)
+                    @if($data && $data->admin_id)
                         @slot('customOption')
-                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
+                            <option value="{{ $data->admin_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
                         @endslot
                     @endif
                 </x-admin.form.select>
             </div>
 
-
-            {{-- <div class="row">
-                <x-admin.form.select
-                    :col="'md-6'"
-                    :name="'admin_id'"
-                    :selectJs="false"
-                    :ajax="route('admin.get-doctor-opt')"
-                >
-                    @if($data && $data->doctor)
-                        @slot('customOption')
-                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
-                        @endslot
-                    @endif
-                </x-admin.form.select>
-
-                <x-admin.form.select
-                    :col="'md-6'"
-                    :data="$data"
-                    :options="\App\Models\Appointment::getStatusList()"
-                    :name="'status'"
-                />
-            </div> --}}
+            @if (!blank($data))
+                <div class="row">
+                    <x-admin.form.select
+                        :col="'md-12'"
+                        :data="$data"
+                        :options="\App\Models\Appointment::getStatusList()"
+                        :name="'status'"
+                    />
+                </div>
+            @else
+                <input type="hidden" name="status" value="{{\App\Models\Appointment::PENDING}}" />
+            @endif
 
             <x-admin.form.textarea
                 :data="$data"
