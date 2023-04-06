@@ -38,6 +38,6 @@ class ProcessConsultedEvent implements ShouldQueue
             ->first();
 
         (new QueueService())->notifyReceptionist( $queue );
-        (new TouchPosCreateSalesService( $this->consultation ))->createSales();
+        // (new TouchPosCreateSalesService( $this->consultation ))->createSales();
     }
 }
