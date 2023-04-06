@@ -66,7 +66,7 @@ class RolesDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.role.destroy', $row->id)
+                'modal'     => route('admin.role.delete', $row->id)
             ]
         ];
 

@@ -79,7 +79,7 @@ class FeesDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.fee.destroy', $row->id)
+                'modal'     => route('admin.fee.delete', $row->id)
             ]
         ];
 

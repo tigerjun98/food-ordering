@@ -75,7 +75,7 @@ class PrintTemplateDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.print-template.destroy', $row->id)
+                'modal'     => route('admin.print-template.delete', $row->id)
             ]
         ];
 

@@ -69,7 +69,7 @@ class MedicinesDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.medicine.destroy', $row->id)
+                'modal'     => route('admin.medicine.delete', $row->id)
             ]
         ];
 

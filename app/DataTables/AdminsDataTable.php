@@ -82,7 +82,7 @@ class AdminsDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.account.destroy', $row->id)
+                'modal'     => route('admin.account.delete', $row->id)
             ]
         ];
 

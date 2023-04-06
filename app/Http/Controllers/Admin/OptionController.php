@@ -17,6 +17,7 @@ use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
 use App\Modules\Admin\Medicine\Services\MedicineService;
 use App\Modules\Admin\Option\Requests\FeeStoreRequest;
+use App\Modules\Admin\Option\Requests\OptionStoreRequest;
 use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
 use App\Modules\Admin\Option\Services\OptionService;
 use App\Modules\Admin\Queue\Services\QueueService;
@@ -75,7 +76,7 @@ class OptionController extends Controller {
         ]);
     }
 
-    public function store(FeeStoreRequest $request)
+    public function store(OptionStoreRequest $request)
     {
         $this->service->store($request->validated());
         return makeResponse(200);

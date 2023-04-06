@@ -73,7 +73,7 @@ class QueuesDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.queue.destroy', $row->id)
+                'modal'     => route('admin.queue.delete', $row->id)
             ]
         ];
 

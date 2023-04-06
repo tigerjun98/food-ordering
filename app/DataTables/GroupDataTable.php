@@ -75,7 +75,7 @@ class GroupDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.group.destroy', $row->id)
+                'modal'     => route('admin.group.delete', $row->id)
             ]
         ];
 

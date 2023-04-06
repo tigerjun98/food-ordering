@@ -72,7 +72,7 @@ class OptionsDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.option.destroy', $row->id)
+                'modal'     => route('admin.option.delete', $row->id)
             ]
         ];
 

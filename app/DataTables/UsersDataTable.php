@@ -107,7 +107,7 @@ class UsersDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.user.destroy', $row->id)
+                'modal'     => route('admin.user.delete', $row->id)
             ];
         }
 
