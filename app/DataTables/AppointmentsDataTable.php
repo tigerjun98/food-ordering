@@ -24,7 +24,7 @@ class AppointmentsDataTable extends DataTable
     {
         $query = Appointment::query();
         return (new EloquentDataTable($query))
-            ->editColumn('full_name', function($row) {
+            ->addColumn('full_name', function($row) {
                 return $row->patient->full_name;
             })->editColumn('datetime', function($row) {
                 return dateFormat($row->datetime, 'r');
@@ -64,7 +64,7 @@ class AppointmentsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(2, 'desc')
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -82,7 +82,7 @@ class AppointmentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('full_name'),
+            Column::make('full_name')->orderable(false),
             Column::make('datetime'),
             Column::make('remark')->width(300),
             Column::make('status'),
@@ -100,13 +100,6 @@ class AppointmentsDataTable extends DataTable
     public function action($row): string
     {
         $actions = [];
-
-        if (auth()->user()->hasPermissionTo('appointment-management.show')) {
-            $actions['view'] = [
-                'icon'      => 'simple-icon-eye',
-                'modal'     => route('admin.appointment.show', $row->id)
-            ];
-        }
 
         if (auth()->user()->hasPermissionTo('appointment-management.edit')) {
             $actions['edit'] = [
