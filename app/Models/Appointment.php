@@ -102,20 +102,12 @@ class Appointment extends Model
     public static function Filter()
     {
         return [
-            // 'full_name' => ['type' => 'text', 'label' => 'full_name', 'default' => false],
-            'status'    => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList(), 'multiple' => true],
+            'status' => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList(), 'multiple' => true],
         ];
     }
 
     public function scopeFilter($query)
     {
-        // if(request()->filled('full_name')){
-        //     $query->where(function ($q) {
-        //         $q->where('name_en', 'like', '%'.request()->full_name.'%')
-        //             ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
-        //     });
-        // }
-
         return $this->searchAll(
             $this->parentFilterTrait($query), []
         );
