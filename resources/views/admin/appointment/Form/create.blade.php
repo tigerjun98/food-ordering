@@ -42,15 +42,28 @@
 
             <div class="row">
                 <x-admin.form.datetime
-                    :col="'md-12'"
+                    :col="'md-6'"
                     :label="trans('label.datetime')"
                     :name="'datetime'"
                     :value="$data->datetime ?? ''"
                 />
+
+                <x-admin.form.select
+                    :col="'md-6'"
+                    :name="'admin_id'"
+                    :selectJs="false"
+                    :ajax="route('admin.get-doctor-opt')"
+                >
+                    @if($data && $data->doctor)
+                        @slot('customOption')
+                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
+                        @endslot
+                    @endif
+                </x-admin.form.select>
             </div>
 
 
-            <div class="row">
+            {{-- <div class="row">
                 <x-admin.form.select
                     :col="'md-6'"
                     :name="'admin_id'"
@@ -70,7 +83,7 @@
                     :options="\App\Models\Appointment::getStatusList()"
                     :name="'status'"
                 />
-            </div>
+            </div> --}}
 
             <x-admin.form.textarea
                 :data="$data"
