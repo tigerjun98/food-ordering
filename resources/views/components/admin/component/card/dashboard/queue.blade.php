@@ -2,47 +2,46 @@
     The total number of patient waiting are listing below based on the role assigned. <br>
     Click the below button to handle the patient.
 </p>
+
+@php
+use App\Models\Queue;
+$service = (new \App\Modules\Admin\Queue\Services\QueueCountService());
+@endphp
+
 <p class="lead mb-0">
-    @if(auth()->user()->hasPermissionTo( 'queue.'. \App\Models\Queue::RECEPTIONIST ))
-        @php
-            $count = (new \App\Modules\Admin\Queue\Services\QueueService())->countWaitingPatient();
-            $roleId = \App\Models\Queue::RECEPTIONIST;
-        @endphp
+    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::RECEPTIONIST ))
         <button
-            onclick="location.href='{{ route('admin.queue.show', $roleId) }}'"
+            onclick="location.href='{{ route('admin.queue.show', Queue::RECEPTIONIST) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.receptionist') }}
-            <span class="badge badge-light ml-1" id="queueCount-reception">{{ $count }}</span>
+            <span class="badge badge-light ml-1" id="queueCount-reception">{{ $service->getTodayReceptionistCount() }}</span>
         </button>
     @endif
 
-    @if(auth()->user()->hasPermissionTo( 'queue.'. \App\Models\Queue::DOCTOR ))
-        @php
-            $count = (new \App\Modules\Admin\Queue\Services\QueueService())->countServingPatient();
-            $roleId = \App\Models\Queue::DOCTOR;
-        @endphp
+    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::DOCTOR ))
         <button
-            onclick="location.href='{{ route('admin.queue.show', $roleId) }}'"
+            onclick="location.href='{{ route('admin.queue.show', Queue::DOCTOR) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.consultation') }}
-            <span class="badge badge-light ml-1" id="queueCount-doctor">{{ $count }}</span>
+            <span class="badge badge-light ml-1" id="queueCount-doctor">{{ $service->getTodayDoctorCount(auth()->user()) }}</span>
         </button>
     @endif
 
-    @if(auth()->user()->hasPermissionTo( 'queue.'. \App\Models\Queue::PHARMACY ))
-        @php
-            $roleId = \App\Models\Queue::PHARMACY;
-            $count = (new \App\Modules\Admin\Queue\Services\QueueService())->countWaitingPatient(\App\Models\Queue::MEDICINE);
-        @endphp
+    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::PHARMACY ))
         <button
-            onclick="location.href='{{ route('admin.queue.show', $roleId) }}'"
+            onclick="location.href='{{ route('admin.queue.show', Queue::PHARMACY) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.pharmacy') }}
-            <span class="badge badge-light ml-1" id="queueCount-pharmacy">{{ $count }}</span>
+            <span class="badge badge-light ml-1" id="queueCount-pharmacy">{{ $service->getTodayPharmacyCount() }}</span>
+        </button>
+    @endif
+
+    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::CASHIER ))
+        <button
+            onclick="location.href='{{ route('admin.queue.show', Queue::CASHIER) }}'"
+            type="button" class="btn btn-lg btn-primary">{{ trans('common.cashier') }}
+            <span class="badge badge-light ml-1" id="queueCount-cashier">{{ $service->getTodayCashierCount() }}</span>
         </button>
     @endif
 </p>
 <script type="module">
-    @php
-    use App\Models\Queue;
-    @endphp
 
     $(this).broadcasting();
 
@@ -62,6 +61,10 @@
 
         if(!! document.getElementById('queueCount-pharmacy')){
             $('#queueCount-pharmacy').html(res.data.pharmacy)
+        }
+
+        if(!! document.getElementById('queueCount-cashier')){
+            $('#queueCount-cashier').html(res.data.cashier)
         }
     }
 

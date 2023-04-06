@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Queue;
 use App\Models\User;
+use App\Modules\Admin\Queue\Services\QueueCountService;
 use App\Modules\Admin\Queue\Services\QueueService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -17,10 +18,11 @@ class DashboardController extends Controller
 
     public function getQueueCount()
     {
-        $queueService = (new QueueService());
-        $data['reception'] = $queueService->countWaitingPatient();
-        $data['doctor'] = $queueService->countServingPatient( Auth::id() );
-        $data['pharmacy'] = $queueService->countWaitingPatient(Queue::MEDICINE);
+        $service = (new QueueCountService());
+        $data['reception']  = $service->getTodayReceptionistCount();
+        $data['doctor']     = $service->getTodayDoctorCount( Auth::user() );
+        $data['pharmacy']   = $service->getTodayPharmacyCount();
+        $data['cashier']    = $service->getTodayCashierCount();
         return makeResponse(200, null, $data);
     }
 }

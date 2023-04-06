@@ -30,7 +30,7 @@ class QueueService
 
     public function getPatientWaitingMsg(): string
     {
-        $count = $this->countWaitingPatient();
+        $count = (new QueueCountService())->getTodayReceptionistCount();
         return trans_choice('messages.patient_waiting', $count, ['count' => $count]);
     }
 
