@@ -114,12 +114,7 @@ class UsersDataTable extends DataTable
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery();

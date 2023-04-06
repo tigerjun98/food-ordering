@@ -75,12 +75,7 @@ class MedicinesDataTable extends DataTable
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(Admin $model): QueryBuilder
     {
         return $model->newQuery();
