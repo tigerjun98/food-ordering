@@ -65,10 +65,8 @@ class QueueController extends Controller {
             ->getDoctorAccounts()
             ->get();
 
-        $counts = $this->service->getTotalQueue(Auth::id());
-
         return view('admin.queue.index', compact(
-            'roleId', 'doctors', 'counts'
+            'roleId', 'doctors'
         ));
     }
 
