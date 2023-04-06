@@ -15,18 +15,13 @@ Route::middleware('guest')->group(function () {
 
     Route::group(['prefix'=>'admin', 'as'=>'admin.'], function () {
         Route::get('/login', [AdminAuthenticatedSessionController::class, 'create'])->name('login');
-        Route::post('/login', [AdminAuthenticatedSessionController::class, 'store'])->name('login');
+        Route::post('/login', [AdminAuthenticatedSessionController::class, 'store'])->name('submit-login');
     });
 
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
-
-
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
