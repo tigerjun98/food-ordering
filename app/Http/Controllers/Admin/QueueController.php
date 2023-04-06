@@ -14,6 +14,7 @@ use App\Modules\Admin\Queue\Services\QueueService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class QueueController extends Controller {
 
@@ -64,7 +65,11 @@ class QueueController extends Controller {
             ->getDoctorAccounts()
             ->get();
 
-        return view('admin.queue.index', compact('roleId', 'doctors'));
+        $counts = $this->service->getTotalQueue(Auth::id());
+
+        return view('admin.queue.index', compact(
+            'roleId', 'doctors', 'counts'
+        ));
     }
 
     public function serve($queueId)
