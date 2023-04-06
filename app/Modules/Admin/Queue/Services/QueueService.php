@@ -373,18 +373,12 @@ class QueueService
 
     public function getTotalQueue($doctorId): array
     {
+        $countService = (new QueueCountService());
         return [
-            Queue::RECEPTIONIST => $this->model->where('role', Queue::RECEPTIONIST)
-                                    ->Waiting()->Today()->count(),
-            Queue::DOCTOR       => $this->model->where('role', Queue::DOCTOR)
-                                    ->where('status', Queue::SERVING)
-                                    ->where('doctor_id', $doctorId)
-                                    ->Today()
-                                    ->count(),
-            Queue::PHARMACY     => $this->model->where('role', Queue::PHARMACY)
-                                    ->Waiting()->Today()->count(),
-            Queue::CASHIER      => $this->model->where('role', Queue::CASHIER)
-                                    ->waiting()->Today()->count()
+            Queue::RECEPTIONIST => $countService->getTodayReceptionistCount(),
+            Queue::DOCTOR       => $countService->getTodayDoctorCount(Admin::find($doctorId)),
+            Queue::PHARMACY     => $countService->getTodayPharmacyCount(),
+            Queue::CASHIER      => $countService->getTodayCashierCount(),
         ];
     }
 }

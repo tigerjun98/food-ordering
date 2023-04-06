@@ -108,6 +108,7 @@
     }
 
     const getTotalQueueByRole = async (roleIds, doctorId) => {
+
         let url = `/admin/queue/get-total-queue/${doctorId}`
         let res = await $(this).sendRequest({ url, alertSuccess:false })
         // regex to find match whitespace, open bracket, number, close bracket
