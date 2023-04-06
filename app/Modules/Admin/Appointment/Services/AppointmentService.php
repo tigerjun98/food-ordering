@@ -15,6 +15,10 @@ class AppointmentService
 
     public function store(array $request): Appointment
     {
-        return $this->model->updateOrCreate(['id' => $request['id']], $request);
+        $request['datetime'] = date("Y-m-d H:i:s", strtotime($request['datetime']));
+        return $this->model->updateOrCreate([
+            'id' => $request['id'],
+            'status' => Appointment::PENDING,
+        ], $request);
     }
 }
