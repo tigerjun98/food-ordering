@@ -14,6 +14,14 @@
     />
 </div>
 
+<div class="row mb-2">
+    <x-admin.layout.info
+        :col="'md-12'"
+        :label="trans('common.consulted_by')"
+        :value="$consultation->doctor->full_name"
+    />
+</div>
+
 @php
     $badges = ['specialists_explain', 'syndromes_explain', 'diagnoses_explain']
 @endphp
