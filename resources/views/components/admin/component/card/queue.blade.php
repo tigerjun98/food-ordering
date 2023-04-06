@@ -5,7 +5,7 @@
     class="mb-2 queue-list" data-id="{{ $queue->id }}" id="queueBox-{{ $queue->id }}">
     <div class="card">
         <div class="position-absolute card-top-buttons">
-            @if($queue->role != Queue::PHARMACY)
+            @if($queue->role == Queue::RECEPTIONIST)
                 <button
                     onclick="deleteQueue({{ $queue->id }})"
                     class="btn btn-header-light icon-button text-danger">
@@ -17,7 +17,7 @@
             <div class="justify-content-between">
                 <div class="">
                     <div>
-                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:void(0)'}}"
+                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:viewMedicine('.$queue->consultation_id.')'}}"
                             class="font-weight-medium mb-1" >
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
                             {{ $queue->patient->full_name ?? '-' }}
