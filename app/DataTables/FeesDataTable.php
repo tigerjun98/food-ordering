@@ -43,7 +43,7 @@ class FeesDataTable extends DataTable
             })->addColumn('full_name', function($row){
                 return $row->full_name;
             })->addColumn('remark', function($row){
-                return '<p class="max-line-2 text-xs">'.$row->{'desc_'. app()->getLocale()}.'</p>';
+                return '<p class="max-line-2 text-xs">'.$row->remark.'</p>';
             })->addColumn('action', function($row){
                 return $this->action($row);
             })->filter(function ($model) {
