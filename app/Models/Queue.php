@@ -150,7 +150,7 @@ class Queue extends Model
 
     public function scopePriority($query)
     {
-        return $query->orderBy('priority', 'desc');
+        return $query->orderBy('priority', 'desc')->orderBy('updated_at', 'desc');
     }
 
     public static function Filter(){
