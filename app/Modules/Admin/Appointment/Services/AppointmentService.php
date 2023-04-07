@@ -2,7 +2,6 @@
 
 namespace App\Modules\Admin\Appointment\Services;
 
-use App\Modules\Admin\Appointment\Services\AppointmentJobService;
 use App\Models\Appointment;
 
 class AppointmentService
@@ -17,14 +16,8 @@ class AppointmentService
 
     public function store(array $request): Appointment
     {
-        $newAppointment = $this->appointmentNotExist($request['id']);
-
         $request['datetime'] = date("Y-m-d H:i:s", strtotime($request['datetime']));
-        $appointment = $this->model->updateOrCreate(['id' => $request['id']], $request);
-
-        if ($newAppointment) $this->job->queue($appointment);
-
-        return $appointment;
+        return $this->model->updateOrCreate(['id' => $request['id']], $request);
     }
 
     public function delete($appointment)
@@ -35,10 +28,5 @@ class AppointmentService
     public function queued($appointment): bool
     {
         return $appointment->status != Appointment::PENDING;
-    }
-
-    public function appointmentNotExist($appointmentId): bool
-    {
-        return $this->model->where('id', $appointmentId)->doesntExist();
     }
 }
