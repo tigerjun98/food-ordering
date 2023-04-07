@@ -11,7 +11,6 @@ class AppointmentService
     public function __construct()
     {
         $this->model = new Appointment();
-        $this->job = new AppointmentJobService();
     }
 
     public function store(array $request): Appointment
