@@ -42,6 +42,11 @@
                     patientConsulted(e.message, e.queue.doctor_id)
                 }
                 break;
+            case '{{ Queue::CASHIER }}':
+                if(e.type == '{{ Queue::COMPLETED }}'){
+                    addNewQueue(e.queue)
+                }
+                break;
         }
 
         getTotalQueueByRole(roleIds, doctorId)
