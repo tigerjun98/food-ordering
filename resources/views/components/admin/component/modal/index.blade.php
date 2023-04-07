@@ -6,7 +6,7 @@
     <x-admin.component.modal.header
         :lang="$lang ?? false"
         :title="$title"
-        :nav="$nav ?? null"
+        :navs="$navs ?? null"
     />
 </div>
 
@@ -17,15 +17,16 @@
             :formOption="$formOption??''"
         >
             @slot('body')
-                @if(isset($nav) && $nav)
-                    <div class="tab-content">
-                        @foreach($nav as $key => $item)
-                            <div class="tab-pane show {{$key == 0 ? 'active' : ''}}"
-                                 id="{{$item}}-tab-content"
-                                 role="tabpanel">{{ ${$item} ?? '' }}
-                            </div>
+                @if(isset($navs) && count($navs) > 0)
+                    <x-admin.layout.tabs.body
+                        :navs="$navs"
+                    >
+                        @foreach($navs as $nav)
+                            @slot($nav)
+                                {{ ${$nav} ?? '' }}
+                            @endslot
                         @endforeach
-                    </div>
+                    </x-admin.layout.tabs.body>
                 @else
                     {{ $body ?? '' }}
                 @endif
@@ -62,15 +63,16 @@
             @endslot
         </x-admin.form>
     @else
-        @if(isset($nav) && $nav)
-            <div class="tab-content">
-                @foreach($nav as $key => $item)
-                    <div class="tab-pane show {{$key == 0 ? 'active' : ''}}"
-                         id="{{$item}}-tab-content"
-                         role="tabpanel">{{ ${$item} ?? '' }}
-                    </div>
+        @if(isset($navs) && count($navs) > 0)
+            <x-admin.layout.tabs.body
+                :navs="$navs"
+            >
+                @foreach($navs as $nav)
+                    @slot($nav)
+                        {{ ${$nav} ?? '' }}
+                    @endslot
                 @endforeach
-            </div>
+            </x-admin.layout.tabs.body>
         @else
             {{ $body ?? '' }}
         @endif

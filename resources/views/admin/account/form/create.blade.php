@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="'Admin details'"
-    :nav="['details', 'roles', 'security']"
+    :navs="['details', 'roles', 'security']"
     :submit="route('admin.account.store')"
 >
     @slot('roles')

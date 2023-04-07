@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Admin;
+use App\Models\Role;
 use App\Models\User;
 use App\Entity\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -27,8 +28,9 @@ class AdminsDataTable extends DataTable
             // ->addIndexColumn()
             ->addColumn('roles', function($row){
                 $arr = '';
-                foreach ($row->getRoleNames() as $role){
-                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$role.'</span>';
+                foreach ($row->getRoleNames() as $name){
+                    $role = Role::where('name', $name)->first();
+                    $arr.= '<span class="badge badge-pill badge-outline-secondary mr-1">'.$role->full_name.'</span>';
                 }
                 return $arr;
             })->editColumn('updated_at', function($row){
@@ -80,18 +82,13 @@ class AdminsDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.account.destroy', $row->id)
+                'modal'     => route('admin.account.delete', $row->id)
             ]
         ];
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(Admin $model): QueryBuilder
     {
         return $model->newQuery();
@@ -109,7 +106,7 @@ class AdminsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(4)
+                    ->orderBy(6)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),

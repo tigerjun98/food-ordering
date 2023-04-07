@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PrintTemplateController;
 use App\Http\Controllers\Admin\GroupController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\FeeController;
 use App\Http\Controllers\Admin\AppointmentController;
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'attachment'        => AttachmentController::class,
         'print-template'    => PrintTemplateController::class,
         'group'             => GroupController::class,
+        'profile'           => ProfileController::class,
+        'fee'               => FeeController::class,
         'appointment'       => AppointmentController::class,
     ]);
 
@@ -73,11 +77,13 @@ Route::group(['middleware' => ['auth:admin']], function () {
     });
 
     Route::group(['prefix' => 'queue', 'as' => 'queue.'], function () {
+        Route::post('/send-to-pos-system', [QueueController::class, 'sendToPosSystem']);
         Route::post('/serve/{queueId}', [QueueController::class, 'serve'])->name('serve');
         Route::post('/update-sorting/{queueId}', [QueueController::class, 'updateSorting'])->name('update-sorting');
         Route::get('/edit-box/{queueId}', [QueueController::class, 'editBox'])->name('edit-box');
         // Route::get('/listing/{roleId}', [QueueController::class, 'listing'])->name('listing');
         Route::get('/get-specific-box/{queueId}', [QueueController::class, 'getSpecificBox'])->name('get-specific-box');
+        Route::post('/get-total-queue/{doctorId}', [QueueController::class, 'getTotalQueue'])->name('get-total-queue');
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
@@ -88,6 +94,9 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/home', [App\Http\Controllers\Admin\UserController::class, 'index']);
     });
 
+    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
+        Route::post('/store-password', [ProfileController::class, 'storePassword'])->name('store-password');
+    });
 });
 
 //Route::get('/', function () {

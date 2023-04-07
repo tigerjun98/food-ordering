@@ -18,7 +18,7 @@
                         <h6 class="mb-4">Login</h6>
 
                         <x-admin.form
-                            :route="route('admin.login')"
+                            :route="route('admin.submit-login')"
                         >
                             @slot('body')
                                 <x-admin.form.text

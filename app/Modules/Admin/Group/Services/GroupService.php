@@ -18,6 +18,11 @@ class GroupService
         $this->model = new Group();
     }
 
+    public function findSlug($slug): ?Group
+    {
+        return $this->model->where('slug', $slug)->first();
+    }
+
     public function store(array $request): Group
     {
         return $this->model->updateOrCreate(['id' => $request['id']], $request);

@@ -29,4 +29,5 @@ return [
     'on_hold' => 'On hold',
     'print' => 'Print',
     'back' => 'Back',
+    'send' => 'Send',
 ];

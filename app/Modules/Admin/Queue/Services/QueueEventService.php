@@ -39,5 +39,13 @@ class QueueEventService
         QueueUpdatedEvent::dispatch(Queue::CONSULTED, $msg, $queue);
     }
 
+    public function completed(Queue $queue, $msg = '')
+    {
+        QueueUpdatedEvent::dispatch(Queue::COMPLETED, $msg, $queue);
+    }
 
+    public function deleted(Queue $queue, $msg = '')
+    {
+        QueueUpdatedEvent::dispatch(Queue::DELETED, $msg, $queue);
+    }
 }

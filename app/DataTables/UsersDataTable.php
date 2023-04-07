@@ -107,19 +107,14 @@ class UsersDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.user.destroy', $row->id)
+                'modal'     => route('admin.user.delete', $row->id)
             ];
         }
 
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery();

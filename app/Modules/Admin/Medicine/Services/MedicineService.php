@@ -2,6 +2,7 @@
 
 namespace App\Modules\Admin\Medicine\Services;
 
+use App\Entity\Enums\ConsultationEnum;
 use App\Exceptions\CommonException;
 use App\Models\Admin;
 use App\Models\Medicine;
@@ -24,11 +25,11 @@ class MedicineService
     {
         switch (true) {
             case ($type == Medicine::TABLET || $type == Medicine::CAPSULE):
-                return Medicine::TABLET_OR_CAPSULE;
+                return ConsultationEnum::TABLET_OR_CAPSULE;
             case ($type == Medicine::GRANULE || $type == Medicine::POWDER):
-                return Medicine::GRANULE_OR_POWDER;
+                return ConsultationEnum::GRANULE_OR_POWDER;
             case ($type == Medicine::LIQUID):
-                return Medicine::FLUID;
+                return ConsultationEnum::FLUID;
             default:
                 return 0;
         }

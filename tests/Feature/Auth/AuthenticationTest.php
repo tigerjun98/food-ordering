@@ -24,7 +24,7 @@ class AuthenticationTest extends TestCase
     public function test_users_can_authenticate_using_the_login_screen()
     {
         $user = Admin::factory()->create();
-        $response = $this->postJson( route('admin.login'), [
+        $response = $this->postJson( route('admin.submit-login'), [
             'email' => $user->email,
             'password' => '123123',
         ]);

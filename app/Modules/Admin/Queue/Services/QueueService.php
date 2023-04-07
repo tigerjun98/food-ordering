@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
 use App\Modules\Admin\User\Services\UserService;
+use App\Modules\Tp\TouchPos\Services\TouchPosCreateSalesService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\AssignOp\Plus;
@@ -29,7 +30,7 @@ class QueueService
 
     public function getPatientWaitingMsg(): string
     {
-        $count = $this->countWaitingPatient();
+        $count = (new QueueCountService())->getTodayReceptionistCount();
         return trans_choice('messages.patient_waiting', $count, ['count' => $count]);
     }
 
@@ -44,10 +45,8 @@ class QueueService
 
     public function getDoctorsNotServing()
     {
-        $doctorsOnServing = $this->model
+        $doctorsOnServing = $this->model->Serving()->Today()
             ->where('role', Queue::DOCTOR)
-            ->where('status', Queue::SERVING)
-            ->Today()
             ->pluck('doctor_id')
             ->toArray();
 
@@ -127,28 +126,25 @@ class QueueService
         return $model->count();
     }
 
-    public function countPendingPatient($type = Queue::CONSULTATION): int
+    public function isConsultationType(Queue $queue): bool
     {
-        return $this->model->where('status', Queue::PENDING)->where('type', $type)->Today()->count();
+        return $queue->role == Queue::RECEPTIONIST || $queue->role == Queue::DOCTOR;
     }
 
     public function serve(Queue $queue): Queue
     {
-
-        if($queue->type == Queue::MEDICINE){
-            $nextStatus = Queue::COMPLETED;
-
-        } else{
-            $queue->role = Queue::DOCTOR;
-            $this->countServingPatient($queue->doctor_id) > 0 ? throwErr(trans('messages.doctor_on_serve')) : null;
+        if($queue->role == Queue::DOCTOR) {
+            $this->countServingPatient($queue->doctor_id) > 0
+                ? throwErr(trans('messages.doctor_on_serve'))
+                : null;
         }
 
-        $queue->status = $nextStatus ?? Queue::SERVING;
-        $queue->save();
+        (new QueueRoleService($queue))->updateToNextStatus();
 
-        if($queue->type == Queue::CONSULTATION){
+        if(self::isConsultationType($queue)){
              $this->event->serve($queue, $this->countWaitingPatient());
         }
+
         return $this->model->find($queue->id);
     }
 
@@ -163,24 +159,20 @@ class QueueService
 
     public function consulted(Consultation $consultation)
     {
-        $queue = $this->model
+        $queue = $this->model->Today()
+            ->where('role', Queue::DOCTOR)
             ->where('user_id', $consultation->user_id)
-            ->where('type', Queue::CONSULTATION)
             ->whereIn('status', [Queue::SERVING, Queue::HOLDING])
-            ->Today()
             ->first();
 
         if($queue){
 
             $queue->consultation_id = $consultation->id;
 
-            if(intval(request()->on_hold) == 1){
-                $queue->status = Queue::HOLDING;
-            } else{
-                $queue->role = Queue::PHARMACY;
-                $queue->status = Queue::WAITING;
-                $queue->type = Queue::MEDICINE;
-            }
+            intval(request()->on_hold) == 1
+                ? $queue->status = Queue::HOLDING
+                : (new QueueRoleService($queue))->serveToPharmacy();
+
             $queue->save();
 
             return $queue;
@@ -360,8 +352,33 @@ class QueueService
 
     public function delete(Queue $queue): bool
     {
+        $this->event->deleted($queue, 'deleted');
         return $queue->delete();
     }
 
+    public function touchPosSystem($request)
+    {
+        $docNo = "";
+        $queueIds = [];
+        foreach ($request['queue_ids'] as $queueId){
+            $queueIds[] = $queueId;
+        }
 
+        $consultIds = $this->model->whereIn('id', $queueIds)->pluck('consultation_id');
+        foreach ($consultIds as $consultId){
+            $consultation = Consultation::find($consultId);
+            $docNo = (new TouchPosCreateSalesService($consultation, $docNo))->createSales();
+        }
+    }
+
+    public function getTotalQueue($doctorId): array
+    {
+        $countService = (new QueueCountService());
+        return [
+            Queue::RECEPTIONIST => $countService->getTodayReceptionistCount(),
+            Queue::DOCTOR       => $countService->getTodayDoctorCount(Admin::find($doctorId)),
+            Queue::PHARMACY     => $countService->getTodayPharmacyCount(),
+            Queue::CASHIER      => $countService->getTodayCashierCount(),
+        ];
+    }
 }

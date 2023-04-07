@@ -4,8 +4,8 @@
 
 <x-admin.component.modal
     :title="'Queue details'"
-    :nav="['details', 'settings']"
     :submit="route('admin.queue.store')"
+    :navs="['details', 'settings']"
 >
     @slot('settings')
 
@@ -16,9 +16,9 @@
         >
 
         @if( !auth()->user()->hasPermissionTo( 'queue.index' ) )
-        <x-admin.component.status-bar
-            :type="'warning'"
-            :message="trans('messages.permission_required', ['name' => trans('permission.queue.index')])"/>
+            <x-admin.component.status-bar
+                :type="'warning'"
+                :message="trans('messages.permission_required', ['name' => trans('permission.queue.index')])"/>
         @endif
 
         <div class="@if( !auth()->user()->hasPermissionTo( 'queue.index' ) ) hide @endif">
@@ -45,9 +45,6 @@
                 @endslot
             @endif
         </div>
-
-
-
     @endslot
 
     @slot('details')
@@ -117,4 +114,5 @@
 
         @include('admin.queue.js.create')
     @endslot
+
 </x-admin.component.modal>

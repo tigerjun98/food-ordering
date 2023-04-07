@@ -51,6 +51,11 @@ class Consultation extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function queue()
+    {
+        return $this->hasOne(Queue::class, 'consultation_id', 'id');
+    }
+
     public function doctor()
     {
         return $this->belongsTo(Admin::class, 'admin_id', 'id');

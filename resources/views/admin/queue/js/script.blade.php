@@ -8,6 +8,7 @@
     @endphp
     let roleIds = '{{ implode( ',', array_keys( Queue::getRoleList() ) ) }}'.split(',')
     let requestRole = '{{ $roleId }}'
+    let doctorId = '{{ Auth::id() }}'
 
     $(this).broadcasting();
 
@@ -41,7 +42,14 @@
                     patientConsulted(e.message, e.queue.doctor_id)
                 }
                 break;
+            case '{{ Queue::CASHIER }}':
+                if(e.type == '{{ Queue::COMPLETED }}'){
+                    addNewQueue(e.queue)
+                }
+                break;
         }
+
+        getTotalQueueByRole(roleIds, doctorId)
     })
 
     const addNewQueue = async (queue) => {
@@ -84,6 +92,9 @@
 
 <script type="text/javascript">
 
+    let roleIds = '{{ implode( ',', array_keys( Queue::getRoleList() ) ) }}'.split(',')
+    let doctorId = '{{ Auth::id() }}'
+
     function setQueueRoleValue(roleId){
         const refs = document.getElementsByClassName(`role-link`);
         Array.prototype.forEach.call(refs, function (el) { // loop classes
@@ -97,7 +108,31 @@
             $('#doctor_id').val('').trigger('change')
         }
 
-        refreshDataTable();
+        refreshDataTable()
+        getTotalQueueByRole(roleIds, doctorId)
+    }
+
+    const getTotalQueueByRole = async (roleIds, doctorId) => {
+
+        let url = `/admin/queue/get-total-queue/${doctorId}`
+        let res = await $(this).sendRequest({ url, alertSuccess:false })
+        // regex to find match whitespace, open bracket, number, close bracket
+        let pattern = /(\s\(\d+\))/
+
+        roleIds.forEach(value => {
+            if(!!document.getElementById(`tab-${value}`)){
+                let roleTab = document.getElementById(`tab-${value}`)
+                let roleText = roleTab.innerText
+                let search = roleText.search(pattern)
+
+                if (search > 0) {
+                    roleText = roleText.slice(0, search)
+                }
+
+                roleTab.innerText = roleText + ` (${res.data[value]})`
+            }
+
+        })
     }
 </script>
 

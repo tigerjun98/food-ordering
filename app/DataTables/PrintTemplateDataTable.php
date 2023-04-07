@@ -75,18 +75,13 @@ class PrintTemplateDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.print-template.destroy', $row->id)
+                'modal'     => route('admin.print-template.delete', $row->id)
             ]
         ];
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(Admin $model): QueryBuilder
     {
         return $model->newQuery();

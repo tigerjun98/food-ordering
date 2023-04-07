@@ -12,7 +12,6 @@ use App\Models\Medicine;
 use App\Models\Option;
 use App\Models\Queue;
 use App\Models\User;
-use App\Modules\Admin\Account\Requests\RoleStoreRequest;
 use App\Modules\Admin\Consultation\Requests\ConsultationStoreRequest;
 use App\Modules\Admin\Medicine\Requests\MedicineStoreRequest;
 use App\Modules\Admin\Medicine\Services\MedicineService;

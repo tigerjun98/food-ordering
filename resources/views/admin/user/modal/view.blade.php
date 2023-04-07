@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="'Patient details'"
-    :nav="['details', 'emergency']"
+    :navs="['details', 'emergency']"
     :modalBodyClass="'fixed-height'"
 >
     @slot('emergency')

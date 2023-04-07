@@ -1,10 +1,11 @@
 @php
     use App\Models\Queue;
 @endphp
-<li class="mb-2 queue-list" data-id="{{ $queue->id }}" id="queueBox-{{ $queue->id }}">
+<li ondblclick="dbClickQueueBox(this)"
+    class="mb-2 queue-list" data-id="{{ $queue->id }}" id="queueBox-{{ $queue->id }}">
     <div class="card">
         <div class="position-absolute card-top-buttons">
-            @if($queue->role != Queue::PHARMACY)
+            @if($queue->role == Queue::RECEPTIONIST)
                 <button
                     onclick="deleteQueue({{ $queue->id }})"
                     class="btn btn-header-light icon-button text-danger">
@@ -15,15 +16,16 @@
         <div class="card-body">
             <div class="justify-content-between">
                 <div class="">
-                    <a href="#">
-                        <p class="font-weight-medium mb-1">
+                    <div>
+                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:viewMedicine('.$queue->consultation_id.')'}}"
+                            class="font-weight-medium mb-1" >
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
                             {{ $queue->patient->full_name ?? '-' }}
-                        </p>
+                        </a>
                         <p class="text-muted mb-0 text-small">
                             {{ get_time_ago( strtotime($queue->created_at) ) }}
                         </p>
-                    </a>
+                    </div>
                     <div class="">
                         @if($queue->doctor)
                             <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
@@ -43,52 +45,51 @@
             </div>
             <div class="mt-2 border-top pt-3 footer">
 
-                @if($queue->type == Queue::CONSULTATION)
+                @if($queue->role == Queue::RECEPTIONIST)
+                    <x-admin.component.button
+                        :openModal="'{ header: `EDIT`, url: `'.route('admin.queue.edit', $queue->id).'` }'"
+                        :lang="'edit'"
+                        :class="'btn-outline-primary'"
+                    />
+                    <x-admin.component.button
+                        :onclick="'servePatient('.$queue->id.')'"
+                        :lang="'serve'"
+                        :class="'btn-primary show-when-first '"
+                    />
+                @endif
 
-                    @if($queue->status == Queue::WAITING || $queue->status == Queue::PENDING)
-                        <x-admin.component.button
-                            :openModal="'{ header: `EDIT`, url: `'.route('admin.queue.edit', $queue->id).'` }'"
-                            :lang="'edit'"
-                            :class="'btn-outline-primary'"
-                        />
-                        <x-admin.component.button
-                            :onclick="'servePatient('.$queue->id.')'"
-                            :lang="'serve'"
-                            :class="'btn-primary show-when-first '"
-                        />
-                    @endif
+                @if($queue->role == Queue::DOCTOR)
+                    <x-admin.component.button
+                        :redirect="route('admin.consultation.edit', $queue->consultation ?? $queue->user_id)"
+                        :lang="$queue->status == \App\Models\Queue::SERVING ? 'consult' : 'continue'"
+                        :class="'btn-primary show-when-first '"
+                    />
+                @endif
 
-                    @if($queue->status == Queue::SERVING)
-                        <x-admin.component.button
-                            :redirect="route('admin.consultation.edit', $queue->consultation ?? $queue->user_id)"
-                            :lang="'consult'"
-                            :class="'btn-primary show-when-first '"
-                        />
-                    @endif
+                @if($queue->role == Queue::PHARMACY)
+                    <x-admin.component.button
+                        :onclick="'servePatient('.$queue->id.')'"
+                        :lang="'completed'"
+                        :class="'btn-outline-primary show-when-first '"
+                    />
+                    <x-admin.component.button
+                        :onclick="'viewMedicine('.$queue->consultation_id.')'"
+                        :lang="'medicine'"
+                        :class="'btn-primary show-when-first '"
+                    />
+                @endif
 
-                    @if($queue->status == Queue::HOLDING)
-                        <x-admin.component.button
-                            :redirect="route('admin.consultation.edit', $queue->consultation_id ?? $queue->user_id)"
-                            :lang="'continue'"
-                            :class="'btn-primary show-when-first '"
-                        />
-                    @endif
-
-                @elseif($queue->type == Queue::MEDICINE)
-
-                    @if($queue->status == Queue::WAITING || $queue->status == Queue::PENDING)
-                        <x-admin.component.button
-                            :onclick="'servePatient('.$queue->id.')'"
-                            :lang="'completed'"
-                            :class="'btn-outline-primary show-when-first '"
-                        />
-                        <x-admin.component.button
-                            :onclick="'viewMedicine('.$queue->consultation_id.')'"
-                            :lang="'medicine'"
-                            :class="'btn-primary show-when-first '"
-                        />
-                    @endif
-
+                @if($queue->role == Queue::CASHIER)
+                    <x-admin.component.button
+                        :onclick="'servePatient('.$queue->id.')'"
+                        :lang="'completed'"
+                        :class="'btn-outline-primary show-when-first '"
+                    />
+                    <x-admin.component.button
+                        :onclick="'sendToPosSystem('.$queue->id.')'"
+                        :text="trans('button.send')"
+                        :class="'btn-primary show-when-first '"
+                    />
                 @endif
 
             </div>

@@ -69,18 +69,13 @@ class MedicinesDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.medicine.destroy', $row->id)
+                'modal'     => route('admin.medicine.delete', $row->id)
             ]
         ];
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(Admin $model): QueryBuilder
     {
         return $model->newQuery();

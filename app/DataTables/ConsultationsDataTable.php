@@ -31,7 +31,9 @@ class ConsultationsDataTable extends DataTable
 //                }
 //                return $arr;
 //            })
-            ->editColumn('symptom', function($row){
+            ->editColumn('admin_id', function($row){
+                return $row->doctor->full_name;
+            })->editColumn('symptom', function($row){
                 return '<p class="max-line-2 text-xs">'.$row->symptom.'</p>';
             })->addColumn('consulted_at', function($row){
                 return $row->consulted_at ? dateFormat($row->consulted_at, 'd M, Y') : '-';
@@ -55,7 +57,8 @@ class ConsultationsDataTable extends DataTable
         return [
             Column::make('ref_id'),
             Column::make('consulted_at'),
-            Column::make('full_name'),
+            Column::make('admin_id')->title(trans('common.consulted_by')),
+            Column::make('full_name')->title(trans('common.patient_name')),
             Column::make('symptom'),
             Column::computed('action')
                 ->exportable(false)
@@ -86,18 +89,13 @@ class ConsultationsDataTable extends DataTable
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
                 'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.consultation.destroy', $row->id)
+                'modal'     => route('admin.consultation.delete', $row->id)
             ]
         ];
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Transaction $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery();

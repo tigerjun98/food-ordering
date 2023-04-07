@@ -31,6 +31,7 @@ class Queue extends Model
     public const EXPIRED    = 104;
     public const COMPLETED  = 105;
     public const HOLDING    = 106;
+    public const DELETED    = 107;
 
     public const CONSULTATION = 201;
     public const MEDICINE = 202;
@@ -133,6 +134,16 @@ class Queue extends Model
         );
     }
 
+    public function scopeConsultation($query)
+    {
+        return $query->where('type', self::CONSULTATION);
+    }
+
+    public function scopeServing($query)
+    {
+        return $query->where('status', self::SERVING);
+    }
+
     public function scopeWaiting($query)
     {
         return $query->where('status', self::WAITING);
@@ -150,7 +161,7 @@ class Queue extends Model
 
     public function scopePriority($query)
     {
-        return $query->orderBy('priority', 'desc');
+        return $query->orderBy('priority', 'desc')->orderBy('updated_at', 'desc');
     }
 
     public static function Filter(){

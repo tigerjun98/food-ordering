@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
+use App\Modules\Admin\Queue\Requests\QueuePosSystemRequest;
 use App\Modules\Admin\Queue\Requests\QueueStoreRequest;
 use App\Modules\Admin\Queue\Requests\QueueUpdateSortingRequest;
 use App\Modules\Admin\Queue\Services\QueueService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class QueueController extends Controller {
 
@@ -26,6 +28,12 @@ class QueueController extends Controller {
         parent::__construct($request);
         $this->model = new Queue();
         $this->service = new QueueService();
+    }
+
+    public function sendToPosSystem(QueuePosSystemRequest $request)
+    {
+        $this->service->touchPosSystem($request);
+        return makeResponse(200);
     }
 
     public function getSpecificBox($queueId)
@@ -57,7 +65,9 @@ class QueueController extends Controller {
             ->getDoctorAccounts()
             ->get();
 
-        return view('admin.queue.index', compact('roleId', 'doctors'));
+        return view('admin.queue.index', compact(
+            'roleId', 'doctors'
+        ));
     }
 
     public function serve($queueId)
@@ -108,6 +118,11 @@ class QueueController extends Controller {
     {
         $this->service->delete(Queue::findOrFail($queueId));
         return makeResponse(200);
+    }
+
+    public function getTotalQueue($doctorId)
+    {
+        return makeResponse(200, 'success', $this->service->getTotalQueue($doctorId));
     }
 }
 
