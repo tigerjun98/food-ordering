@@ -1,3 +1,7 @@
+@php
+    $module = isset($moduleName) ? $moduleName : 'queue';
+@endphp
+
 <x-admin.form.select
     :selectJs="false"
     :col="'md-12'"
@@ -61,12 +65,12 @@
     function createNewPatient(){
         $(this).hideAlert()
         let url = '{{ route('admin.user.create', 'jsAction=:script') }}'
-        url = url.replace(':script', 'openQueueModal(res);');
+        url = url.replace(':script', 'openRelatedModal(res);');
         $(this).openModal({url, refresh: true})
     }
 
-    function openQueueModal(res){
-        let url = '{{ route('admin.queue.create', 'user_id=:userId') }}'.replace( ':userId', res.data.id )
+    function openRelatedModal(res){
+        let url = '{{ route('admin.'.$module.'.create', 'user_id=:userId') }}'.replace( ':userId', res.data.id )
         $(this).openModal({ url })
     }
 

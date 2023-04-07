@@ -16,7 +16,7 @@
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
                 <div class="row">
-                    <x-admin.page.queue.patient-search />
+                    <x-admin.page.queue.patient-search :moduleName="'appointment'" />
                 </div>
             </div>
         @endif
