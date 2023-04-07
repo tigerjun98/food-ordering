@@ -2,7 +2,7 @@
 
 @section('content')
     <x-admin.datatable :dataTable="$dataTable"
-                       :title="'Fee Management'"
+                       :title="'Price Management'"
                        :filter="$filter"
     ></x-admin.datatable>
 @stop
