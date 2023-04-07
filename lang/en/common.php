@@ -164,4 +164,5 @@ return [
     'profile_details' => 'Profile Details',
     'consulted_by' => 'Consulted by',
     'patient_name' => 'Patient name',
+    'price' => 'Price',
 ];
