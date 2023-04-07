@@ -75,12 +75,12 @@ class FeesDataTable extends DataTable
                 'modal' => route('admin.fee.edit', $row->id),
                 'modalHeader' => $row->type. ' details'
             ],
-            'delete' => [
-                'size'      => 'md', //[sm, md, lg]
-                'class'     => 'text-danger',
-                'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.fee.delete', $row->id)
-            ]
+//            'delete' => [
+//                'size'      => 'md', //[sm, md, lg]
+//                'class'     => 'text-danger',
+//                'icon'      => 'simple-icon-trash',
+//                'modal'     => route('admin.fee.delete', $row->id)
+//            ]
         ];
 
         return view('components.admin.datatable.action', compact('actions'))->render();
