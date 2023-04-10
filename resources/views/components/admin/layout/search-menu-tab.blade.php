@@ -34,23 +34,7 @@
                                 :tabEnabled="$enableTab"
                             />
                         @else
-                            <div class="d-flex flex-row mb-1 border-bottom pb-3 mb-3">
-                                <a class="d-flex" href="#">
-                                    <img alt="Profile Picture" src="#"
-                                        class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall">
-                                </a>
-                                <div class="d-flex flex-grow-1 min-width-zero">
-                                    <div
-                                        class="pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
-                                        <div class="min-width-zero">
-                                            <a href="#">
-                                                <p class=" mb-0 truncate">{{$nav}}</p>
-                                            </a>
-                                            <p class="mb-1 text-muted text-small">14:20</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{ $tabContent ?? '' }}
                         @endif
                     </div>
                 </div>

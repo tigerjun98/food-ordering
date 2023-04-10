@@ -65,6 +65,7 @@
         :navTab="$checkedNav"
         :filter="$filter ?? null"
         :extraFilter="$extraFilter ?? null"
+        :tabContent="$tabContent ?? null"
     />
 @endif
 
