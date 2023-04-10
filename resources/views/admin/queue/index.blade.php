@@ -48,8 +48,10 @@
         </div>
     </div>
 
-    <x-admin.layout.search-menu
-        :filter="\App\Models\Queue::SimpleFilter()"
+    <x-admin.layout.search-menu-tab
+        :enableTab="true"
+        :navTab="['search', 'appointment']"
+        :filter="App\Models\Queue::SimpleFilter()"
     >
         @slot('extraFilter')
             <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
@@ -69,7 +71,7 @@
                 </x-admin.form.select>
             </div>
         @endslot
-    </x-admin.layout.search-menu>
+    </x-admin.layout.search-menu-tab>
 
     @include('admin.queue.js.script')
 @stop

@@ -48,25 +48,21 @@
 {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 
 @php
-    $tab = isset($enableTab) ? $enableTab : false;
-    $getNav = isset($extraTab) ? $extraTab : [];
-    // Limit only to 2
-    $navsTab = (!blank($getNav) && count($getNav) > 2)
-                    ? array_slice($getNav, 0, 2)
-                    : $getNav;
+    $checkedTab = isset($enableTab) ? $enableTab : false;
+    $checkedNav = isset($navTab) ? $navTab : [];
 @endphp
 
-@if((isset($filter) && count($filter) > 0) && !$tab)
+@if((isset($filter) && count($filter) > 0) && !$checkedTab)
     <x-admin.layout.search-menu
         :filter="$filter"
         :extraFilter="$extraFilter ?? null"
     />
 @endif
 
-@if ($tab && !blank($navsTab))
+@if ($checkedTab && !blank($checkedNav))
     <x-admin.layout.search-menu-tab
-        :enableTab="$tab"
-        :navs="$navsTab"
+        :enableTab="$checkedTab"
+        :navTab="$checkedNav"
         :filter="$filter ?? null"
         :extraFilter="$extraFilter ?? null"
     />

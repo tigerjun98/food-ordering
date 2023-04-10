@@ -1,3 +1,10 @@
+@php
+    // Limit only to 2
+    $navs = (!blank($navTab) && count($navTab) > 2)
+                ? array_slice($navTab, 0, 2)
+                : $navTab;
+@endphp
+
 <div class="app-menu">
     <ul class="nav nav-tabs card-header-tabs ml-0 mr-0 mb-1" role="tablist">
         @foreach ($navs as $key => $nav)
@@ -19,17 +26,17 @@
         <div class="tab-content h-100">
             @foreach ($navs as $key => $nav)
                 <div class="tab-pane fade show {{$key == 0 ? 'active' : ''}} h-100" id="{{$nav}}-tab-content" role="tabpanel" aria-labelledby="{{$nav}}-tab">
-                    @if (! is_null($filter) && $key == 0)
-                        <x-admin.layout.search-menu
-                            :filter="$filter"
-                            :extraFilter="$extraFilter ?? null"
-                            :tabEnabled="$enableTab"
-                        />
-                    @else
-                        <div class="scroll">
+                    <div class="scroll">
+                        @if (! is_null($filter) && $nav == 'search')
+                            <x-admin.layout.search-menu
+                                :filter="$filter"
+                                :extraFilter="$extraFilter ?? null"
+                                :tabEnabled="$enableTab"
+                            />
+                        @else
                             <div class="d-flex flex-row mb-1 border-bottom pb-3 mb-3">
                                 <a class="d-flex" href="#">
-                                    <img alt="Profile Picture" src="img/profiles/l-1.jpg"
+                                    <img alt="Profile Picture" src="#"
                                         class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall">
                                 </a>
                                 <div class="d-flex flex-grow-1 min-width-zero">
@@ -44,8 +51,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
             @endforeach
         </div>
