@@ -1,6 +1,6 @@
 <x-admin.component.modal
     :title="'Appointment details'"
-    :nav="['details']"
+    :navs="['details']"
     :submit="route('admin.appointment.store')"
 >
     @slot('details')
