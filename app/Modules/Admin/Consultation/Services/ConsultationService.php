@@ -50,6 +50,7 @@ class ConsultationService
         });
 
         if(
+            $model->queue &&
             $model->queue
                 ->Today()
                 ->where('role', Queue::PHARMACY)
