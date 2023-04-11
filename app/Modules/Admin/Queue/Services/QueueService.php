@@ -277,7 +277,7 @@ class QueueService
             (new AppointmentQueueService($appointment))->queueAppointment($queue->id);
         }
 
-        // if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
+        if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
 
         return $queue;
     }
