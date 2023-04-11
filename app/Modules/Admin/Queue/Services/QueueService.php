@@ -143,6 +143,10 @@ class QueueService
 
         (new QueueRoleService($queue))->updateToNextStatus();
 
+        if ($queue->role == Queue::CASHIER && (!blank($queue->appointment_id))) {
+            (new AppointmentQueueService($queue->appointment()->first()))->updateToNextStatus();
+        }
+
         if(self::isConsultationType($queue)){
              $this->event->serve($queue, $this->countWaitingPatient());
         }
