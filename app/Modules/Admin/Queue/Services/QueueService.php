@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Queue\Services;
 
 use App\Models\Admin;
+use App\Models\Appointment;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
@@ -244,6 +245,7 @@ class QueueService
     public function store($request): Queue
     {
         $newQueue = false;
+        $fromAppointment = isset($request['appointment_id']) ?? false;
 
         if( ! $this->queueExist( $request['id'] ) ){
             $this->patientOnQueue($request['user_id']) ? throwErr(trans('messages.patient_on_queue')) : null;
@@ -264,6 +266,11 @@ class QueueService
         $request['role'] = request()->role ?? Queue::RECEPTIONIST;
 
         $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
+
+        if ($fromAppointment) {
+            $this->updateAppointment($queue->id, $request['appointment_id']);
+        }
+
         if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
 
         return $queue;
@@ -380,5 +387,13 @@ class QueueService
             Queue::PHARMACY     => $countService->getTodayPharmacyCount(),
             Queue::CASHIER      => $countService->getTodayCashierCount(),
         ];
+    }
+
+    public function updateAppointment($queueId, $appointmentId)
+    {
+        $appointment = Appointment::findOrFail($appointmentId);
+        $appointment->queue_id = (int) $queueId;
+        $appointment->status = Appointment::QUEUED;
+        $appointment->save();
     }
 }
