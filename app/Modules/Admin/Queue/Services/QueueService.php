@@ -11,6 +11,7 @@ use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
+use App\Modules\Admin\Appointment\Services\AppointmentQueueService;
 use App\Modules\Admin\User\Services\UserService;
 use App\Modules\Tp\TouchPos\Services\TouchPosCreateSalesService;
 use Carbon\Carbon;
@@ -268,7 +269,8 @@ class QueueService
         $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
 
         if ($fromAppointment) {
-            $this->updateAppointment($queue->id, $request['appointment_id']);
+            $appointment = Appointment::findOrFail($request['appointment_id']);
+            (new AppointmentQueueService($appointment))->queueAppointment($queue->id);
         }
 
         if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
@@ -387,13 +389,5 @@ class QueueService
             Queue::PHARMACY     => $countService->getTodayPharmacyCount(),
             Queue::CASHIER      => $countService->getTodayCashierCount(),
         ];
-    }
-
-    public function updateAppointment($queueId, $appointmentId)
-    {
-        $appointment = Appointment::findOrFail($appointmentId);
-        $appointment->queue_id = (int) $queueId;
-        $appointment->status = Appointment::QUEUED;
-        $appointment->save();
     }
 }
