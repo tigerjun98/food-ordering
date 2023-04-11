@@ -52,16 +52,6 @@ class Appointment extends Model
         return $this->belongsTo(Admin::class, 'admin_id', 'id');
     }
 
-    /**
-     * Get the queue that owns the Appointment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function queue(): BelongsTo
-    {
-        return $this->belongsTo(Queue::class, 'queue_id', 'id');
-    }
-
     public static function getStatusList(): array
     {
         return [

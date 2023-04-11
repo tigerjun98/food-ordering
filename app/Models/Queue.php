@@ -72,16 +72,6 @@ class Queue extends Model
         return $this->belongsTo(User::class,'user_id', 'id');
     }
 
-    /**
-     * Get the appointment associated with the Queue
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function appointment(): HasOne
-    {
-        return $this->hasOne(Appointment::class, 'queue_id', 'id');
-    }
-
     public static function getTypeList()
     {
         return [
