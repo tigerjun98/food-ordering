@@ -46,6 +46,13 @@ class AppointmentController extends Controller
         return makeResponse(200, 'success', $appointment);
     }
 
+    public function show($appointmentId)
+    {
+        return html('admin.appointment.modal.view',[
+            'data' => $this->model->findOrFail($appointmentId),
+        ]);
+    }
+
     public function edit($appointmentId)
     {
         return html('admin.appointment.form.create',[
