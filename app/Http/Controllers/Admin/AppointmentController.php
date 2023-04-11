@@ -67,4 +67,13 @@ class AppointmentController extends Controller
         $this->service->delete($this->model->findOrFail($appointmentId));
         return makeResponse(200);
     }
+
+    public function getAppointmentList()
+    {
+        return html('admin.appointment.include.appointment-list', [
+            'appointments' => $this->model->where('status', Appointment::PENDING)
+                                ->orderBy('datetime', 'asc')
+                                ->paginate(10)
+        ]);
+    }
 }

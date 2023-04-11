@@ -71,7 +71,68 @@
                 </x-admin.form.select>
             </div>
         @endslot
+        @slot('tabContent')
+            <div>
+                <div class="" id="appointmentList" style="height: 74vh;padding-top:1.5em"></div>
+                <div class="ajax-load text-center hide">
+                    <div class="spinner"></div>
+                    <br>Loading...
+                </div>
+                <div class="load-max text-center hide">
+                    <p>No more data!</p>
+                </div>
+            </div>
+
+            <script type="module">
+                let page = 1;
+                let loading = false;
+                const ps = $('#appointmentList').initialiseScrollbar()
+
+                const loadAppointmentList = async () => {
+
+                    if(page == 'stop') return true;
+
+                    $('.ajax-load').removeClass('hide')
+                    let res = await $(this).sendRequest({
+                        method: 'GET',
+                        url: `{{ route('admin.get-appointment-list') }}?page=${page}`
+                    });
+
+                    if(res.html === ""){
+                        page = 'stop'
+                        $('.load-max').removeClass('hide')
+                    } else{
+                        page++
+                    }
+
+                    $("#appointmentList").append(res.html);
+                    $('.ajax-load').addClass('hide')
+                    ps.update();
+                }
+
+                document.querySelector('#appointmentList').addEventListener('ps-y-reach-end', () => {
+                    loadAppointmentList()
+                });
+
+                loadAppointmentList()
+            </script>
+
+            <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
+                <div style="position:fixed; bottom: 0; width: 100%;">
+                    <div class="separator mt-5 mb-3"></div>
+                    <div class="d-flex mt-1 mb-4"></div>
+                </div>
+            </form>
+        @endslot
     </x-admin.layout.search-menu-tab>
 
     @include('admin.queue.js.script')
+
+    <script type="text/javascript">
+        const viewAppointmentDetails = (id) => {
+            $(this).openModal({
+                url: `/admin/appointment/show/${id}`
+            });
+        }
+    </script>
 @stop
