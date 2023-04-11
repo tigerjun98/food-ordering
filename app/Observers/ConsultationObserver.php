@@ -12,7 +12,7 @@ class ConsultationObserver
     public function getRunningNo($clinicCode = null): string //  PCNyymmdd{ClinicInitial}XXX = PCN230220YLN001
     {
         $clinicCode = $clinicCode ?? Auth::user()->clinic->code;
-        $lastRunningNo = Consultation::Today()->latest()->count();
+        $lastRunningNo = Consultation::Today()->withTrashed()->latest()->count();
         $nextRunningNo = str_pad($lastRunningNo + 1, 3, 0, STR_PAD_LEFT);
 
         return 'PCN'.Carbon::now()->format('ymd').$clinicCode.$nextRunningNo;
