@@ -11,7 +11,6 @@
         @endphp
 
         <input type="hidden" name="user_id" id="user_id" value="{{ request()->user_id ?? ($patient ? $patient->id : null) }}" />
-        <input type="hidden" name="status" value="{{\App\Models\Appointment::PENDING}}" />
 
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
@@ -61,6 +60,15 @@
                         @endslot
                     @endif
                 </x-admin.form.select>
+            </div>
+
+            <div class="row">
+                <x-admin.form.select
+                    :col="'md-12'"
+                    :data="$data"
+                    :options="\App\Models\Appointment::getStatusList()"
+                    :name="'status'"
+                />
             </div>
 
             <x-admin.form.textarea
