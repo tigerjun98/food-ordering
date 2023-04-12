@@ -63,8 +63,6 @@ class AppointmentsDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(2, 'desc')
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -86,7 +84,7 @@ class AppointmentsDataTable extends DataTable
             Column::make('datetime'),
             Column::make('remark')->width(300),
             Column::make('status'),
-            Column::make('doctor'),
+            Column::make('doctor')->orderable(false),
             Column::make('updated_at'),
             Column::computed('action')->exportable(false)->printable(false)
         ];
