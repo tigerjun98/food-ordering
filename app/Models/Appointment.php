@@ -13,7 +13,7 @@ use App\Traits\Models\TimestampFormat;
 
 class Appointment extends Model
 {
-    use HasFactory, SoftDeletes, ModelTrait;
+    use HasFactory, SoftDeletes, ModelTrait, TimestampFormat;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -92,7 +92,8 @@ class Appointment extends Model
     public static function Filter()
     {
         return [
-            'status' => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList(), 'multiple' => true],
+            'status'    => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList(), 'multiple' => true],
+            'datetime'  => ['type' => 'date', 'label'=> 'appointment_date' ],
         ];
     }
 

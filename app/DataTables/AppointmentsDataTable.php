@@ -27,13 +27,13 @@ class AppointmentsDataTable extends DataTable
             ->addColumn('full_name', function($row) {
                 return $row->patient->full_name;
             })->editColumn('datetime', function($row) {
-                return dateFormat($row->datetime, 'r');
+                return $row->created_at;
             })->editColumn('status', function($row) {
                 return '<span class="badge badge-pill badge-'.$row->class_explain.' mr-1">'.$row->status_explain.'</span>';
             })->editColumn('doctor', function($row) {
                 return $row->doctor->full_name;
             })->editColumn('updated_at', function($row) {
-                return dateFormat($row->updated_at, 'r');
+                return $row->updated_at;
             })->addColumn('action', function($row) {
                 return $this->action($row);
             })->filter(function ($model) {
