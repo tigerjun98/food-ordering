@@ -54,4 +54,8 @@
         </div>
     @endslot
 
+    @slot('script')
+        let list = $(`#appointmentList-${ res.data.appointment_id }`)
+        list.hide('slow', function(){ list.remove(); });
+    @endslot
 </x-admin.component.modal>

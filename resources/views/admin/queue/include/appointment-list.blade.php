@@ -1,5 +1,5 @@
 @foreach($appointments as $data)
-    <div class="mb-3 border-bottom"
+    <div id="appointmentList-{{ $data->id }}" class="mb-3 border-bottom"
          onclick="viewAppointmentDetails('{{$data->id}}')">
         <div class="d-flex flex-row justify-content-between">
             <div class="">
