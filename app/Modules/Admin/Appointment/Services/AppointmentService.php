@@ -6,7 +6,7 @@ use App\Models\Appointment;
 
 class AppointmentService
 {
-    private Appointment $appointment;
+    private Appointment $model;
 
     public function __construct()
     {
@@ -19,13 +19,26 @@ class AppointmentService
         return $this->model->updateOrCreate(['id' => $request['id']], $request);
     }
 
-    public function delete($appointment)
+    public function delete(Appointment $appointment)
     {
-        !self::queued($appointment) ? $appointment->delete() : throwErr(trans('messages.permission_denied'));
+        !self::isQueued($appointment) ? $appointment->delete() : throwErr(trans('messages.permission_denied'));
     }
 
-    public function queued($appointment): bool
+    public function isQueued(Appointment $appointment): bool
     {
         return $appointment->status != Appointment::PENDING;
+    }
+
+    public function queueAppointment(Appointment $appointment, int $queueId)
+    {
+        $appointment->queue_id = $queueId;
+        $appointment->status = Appointment::QUEUED;
+        $appointment->save();
+    }
+
+    public function completeAppointment(Appointment $appointment)
+    {
+        $appointment->status = Appointment::COMPLETED;
+        $appointment->save();
     }
 }

@@ -11,7 +11,7 @@ use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
-use App\Modules\Admin\Appointment\Services\AppointmentQueueService;
+use App\Modules\Admin\Appointment\Services\AppointmentService;
 use App\Modules\Admin\User\Services\UserService;
 use App\Modules\Tp\TouchPos\Services\TouchPosCreateSalesService;
 use Carbon\Carbon;
@@ -141,11 +141,11 @@ class QueueService
                 : null;
         }
 
-        (new QueueRoleService($queue))->updateToNextStatus();
-
         if ($queue->role == Queue::CASHIER && (!blank($queue->appointment_id))) {
-            (new AppointmentQueueService($queue->appointment()->first()))->updateToNextStatus();
+            (new AppointmentService())->completeAppointment($queue->appointment()->first());
         }
+
+        (new QueueRoleService($queue))->updateToNextStatus();
 
         if(self::isConsultationType($queue)){
              $this->event->serve($queue, $this->countWaitingPatient());
@@ -274,7 +274,7 @@ class QueueService
 
         if ($fromAppointment) {
             $appointment = Appointment::findOrFail($request['appointment_id']);
-            (new AppointmentQueueService($appointment))->queueAppointment($queue->id);
+            (new AppointmentService())->queueAppointment($appointment, $queue->id);
         }
 
         if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
