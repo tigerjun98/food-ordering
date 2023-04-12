@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\QueuesDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
@@ -123,6 +124,22 @@ class QueueController extends Controller {
     public function getTotalQueue($doctorId)
     {
         return makeResponse(200, 'success', $this->service->getTotalQueue($doctorId));
+    }
+
+    public function getAppointments()
+    {
+        return html('admin.queue.include.appointment-list', [
+            'appointments' => Appointment::where('status', Appointment::PENDING)
+                                ->orderBy('datetime', 'asc')
+                                ->paginate(10)
+        ]);
+    }
+
+    public function showAppointment($appointmentId)
+    {
+        return html('admin.queue.modal.view-appointment',[
+            'data' => Appointment::findOrFail($appointmentId),
+        ]);
     }
 }
 

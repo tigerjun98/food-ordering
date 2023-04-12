@@ -46,13 +46,6 @@ class AppointmentController extends Controller
         return makeResponse(200, 'success', $appointment);
     }
 
-    public function show($appointmentId)
-    {
-        return html('admin.appointment.modal.view',[
-            'data' => $this->model->findOrFail($appointmentId),
-        ]);
-    }
-
     public function edit($appointmentId)
     {
         return html('admin.appointment.form.create',[
@@ -73,14 +66,5 @@ class AppointmentController extends Controller
     {
         $this->service->delete($this->model->findOrFail($appointmentId));
         return makeResponse(200);
-    }
-
-    public function getAppointmentList()
-    {
-        return html('admin.appointment.include.appointment-list', [
-            'appointments' => $this->model->where('status', Appointment::PENDING)
-                                ->orderBy('datetime', 'asc')
-                                ->paginate(10)
-        ]);
     }
 }
