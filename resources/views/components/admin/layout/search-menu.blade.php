@@ -1,10 +1,11 @@
+@if (!isset($tabEnabled))
 <div class="app-menu">
     <div class="p-4 h-100">
         <div class="scroll">
             <div class="modal-header mb-5">
                 <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
             </div>
-
+@endif
             <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
                 <input type="hidden" id="searchVal" name="search_all" />
                 @foreach($filter as $name => $item)
@@ -106,13 +107,16 @@
                     </div>
                 </div>
             </form>
+@if (!isset($tabEnabled))
         </div>
     </div>
-
+@endif
     <a class="app-menu-button d-inline-block d-xl-none" href="#">
         <i class="simple-icon-options"></i>
     </a>
+@if (!isset($tabEnabled))
 </div>
+@endif
 
 <script type="text/javascript">
     function setMultiSelectVal(id){

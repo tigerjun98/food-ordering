@@ -44,6 +44,7 @@ class QueueStoreRequest extends FormRequest
             'type'          => ['nullable', 'in:'.arrayToString(Queue::getTypeList())],
             'status'        => ['nullable', 'in:'.arrayToString(Queue::getStatusList())],
             'role'          => ['nullable', 'in:'.arrayToString(Queue::getRoleList())],
+            'appointment_id'=> ['nullable', 'exists:appointments,id'],
         ];
     }
 }

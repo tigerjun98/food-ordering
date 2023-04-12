@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Queue\Services;
 
 use App\Models\Admin;
+use App\Models\Appointment;
 use App\Models\Consultation;
 use App\Models\Medicine;
 use App\Models\Option;
@@ -10,6 +11,7 @@ use App\Models\Queue;
 use App\Models\User;
 use App\Modules\Admin\Permissions\Services\PermissionService;
 use App\Modules\Admin\Queue\Events\QueueUpdatedEvent;
+use App\Modules\Admin\Appointment\Services\AppointmentService;
 use App\Modules\Admin\User\Services\UserService;
 use App\Modules\Tp\TouchPos\Services\TouchPosCreateSalesService;
 use Carbon\Carbon;
@@ -139,6 +141,10 @@ class QueueService
                 : null;
         }
 
+        if ($queue->role == Queue::CASHIER && (!blank($queue->appointment_id))) {
+            (new AppointmentService())->completeAppointment($queue->appointment()->first());
+        }
+
         (new QueueRoleService($queue))->updateToNextStatus();
 
         if(self::isConsultationType($queue)){
@@ -244,6 +250,7 @@ class QueueService
     public function store($request): Queue
     {
         $newQueue = false;
+        $fromAppointment = isset($request['appointment_id']) ?? false;
 
         if( ! $this->queueExist( $request['id'] ) ){
             $this->patientOnQueue($request['user_id']) ? throwErr(trans('messages.patient_on_queue')) : null;
@@ -264,6 +271,12 @@ class QueueService
         $request['role'] = request()->role ?? Queue::RECEPTIONIST;
 
         $queue = $this->model->updateOrCreate([ 'id' => $request['id'] ], $request);
+
+        if ($fromAppointment) {
+            $appointment = Appointment::findOrFail($request['appointment_id']);
+            (new AppointmentService())->queueAppointment($appointment, $queue->id);
+        }
+
         if($newQueue) $this->event->newQueue($queue, $this->getPatientWaitingMsg());
 
         return $queue;

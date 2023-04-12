@@ -1,6 +1,7 @@
 {{--<div class="app-alert" id="app-alert"></div>--}}
 @php
     $id = new_id();
+    $submitBtnLang = isset($submitBtnLang) ? $submitBtnLang : 'submit';
 @endphp
 <div class="modal-header pb-0 alert-box">
     <x-admin.component.modal.header
@@ -49,7 +50,7 @@
                 @elseif(!isset($submitBtn) || ( isset($submitBtn) && $submitBtn === true ))
                     <x-admin.component.button
                         :class="'btn-primary'"
-                        :lang="'submit'"
+                        :lang="$submitBtnLang"
                         :type="'submit'"
                     />
                 @endif

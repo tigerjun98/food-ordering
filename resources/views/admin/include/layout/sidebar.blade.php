@@ -36,6 +36,7 @@
         'patients'          => ['route'=> route('admin.user.index'), 'icon'=>'iconsminds-conference', 'permission' => 'patient.index'],
         'consultations'     => ['route'=> route('admin.consultation.index'), 'icon'=>'iconsminds-stethoscope', 'permission' => 'consultation.index'],
 //        'queues'            => ['route'=> route('admin.queue.show', \App\Models\Queue::RECEPTIONIST), 'icon'=>'iconsminds-loading-2', 'permission' => 'queue.show'],
+        'appointments'      => ['route'=> route('admin.appointment.index'), 'icon'=>'iconsminds-calendar-4', 'permision' => 'appointment-management.index'],
         'queues'            => ['icon'=>'iconsminds-loading-2', 'children' => $queueChildren, 'permission' => 'queue.tab'],
         'settings'          => ['icon' => 'iconsminds-gears', 'children' => $settingChildren, 'permission' => 'setting.index'],
     ];

@@ -4,6 +4,8 @@
     <x-admin.datatable :dataTable="$dataTable"
                        :title="'Queue Management'"
                        :filter="$filter"
+                       :enableTab="true"
+                       :extraTab="['search', 'appointment']"
     >
         @slot('extraFilter')
             <div class="mt-2">

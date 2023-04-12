@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PrintTemplateController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\FeeController;
+use App\Http\Controllers\Admin\AppointmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'group'             => GroupController::class,
         'profile'           => ProfileController::class,
         'fee'               => FeeController::class,
+        'appointment'       => AppointmentController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
@@ -52,6 +54,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('home');
     Route::get('/get-doctor-opt', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
     Route::get('/get-user-opt', [MainController::class, 'getUserOpt'])->name('get-user-opt');
+    Route::get('/get-appointments', [QueueController::class, 'getAppointments'])->name('get-appointments');
+    Route::get('/show-appointment/{id}', [QueueController::class, 'showAppointment'])->name('show-appointment');
 
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
 

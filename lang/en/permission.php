@@ -56,4 +56,11 @@ return [
         'group'         => 'Group management',
         'fee'           => 'Consultation fee management',
     ],
+
+    'appointment-management' => [
+        'index'         => 'View appointment',
+        'create'        => 'Create appointment',
+        'edit'          => 'Edit appointment',
+        'delete'        => 'Delete appointment',
+    ],
 ];
