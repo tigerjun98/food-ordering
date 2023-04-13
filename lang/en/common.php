@@ -165,7 +165,7 @@ return [
     'consulted_by' => 'Consulted by',
     'patient_name' => 'Patient name',
     'price' => 'Price',
-    'appointments' => 'Appoinments',
+    'appointments' => 'Appointments',
     'accepted' => 'Accepted',
     'rejected' => 'Rejected',
     'cancelled' => 'Cancelled',
