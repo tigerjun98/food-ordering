@@ -11,6 +11,7 @@
         @endphp
 
         <input type="hidden" name="user_id" id="user_id" value="{{ request()->user_id ?? ($patient ? $patient->id : null) }}" />
+        <input type="hidden" name="status" id="status" value="{{ request()->status ?? ($data ? $data->status : \App\Models\Appointment::PENDING) }}" />
 
         @if(!$patient)
             <div class="hide-box" id="patientSearch">
