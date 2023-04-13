@@ -118,8 +118,4 @@
         </div>
     </div>
 </li>
-<script type="module">
-    $('[data-toggle="tooltip"]').tooltip();
-</script>
-
 
