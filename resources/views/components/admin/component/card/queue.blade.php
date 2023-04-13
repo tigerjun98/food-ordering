@@ -17,6 +17,9 @@
             <div class="justify-content-between">
                 <div class="">
                     <div>
+                        @if ($queue->appointment_id)
+                            <span class="text-medium text-info"><i class="iconsminds-calendar-4"></i></span>
+                        @endif
                         <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:viewMedicine('.$queue->consultation_id.')'}}"
                             class="font-weight-medium mb-1" >
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>

@@ -27,7 +27,7 @@ class AppointmentsDataTable extends DataTable
             ->addColumn('full_name', function($row) {
                 return $row->patient->full_name;
             })->editColumn('datetime', function($row) {
-                return $row->created_at;
+                return dateFormat($row->datetime, 'r');
             })->editColumn('status', function($row) {
                 return '<span class="badge badge-pill badge-'.$row->class_explain.' mr-1">'.$row->status_explain.'</span>';
             })->editColumn('doctor', function($row) {
@@ -62,6 +62,7 @@ class AppointmentsDataTable extends DataTable
         return $this->builder()
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
+                    ->orderBy(1, 'asc')
                     ->minifiedAjax()
                     ->selectStyleSingle()
                     ->buttons([

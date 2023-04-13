@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Appointment\Requests;
 
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentStoreRequest extends FormRequest
@@ -24,7 +25,7 @@ class AppointmentStoreRequest extends FormRequest
     {
         return [
             'id'        => ['integer'],
-            'datetime'  => ['required', 'date_format:Y-m-d g:i A'], // 2023(Y)-10(m)-27(d) 7(g - without leading zero):15(i) AM(A)
+            'datetime'  => ['required', 'date_format:Y-m-d g:i A', 'after_or_equal:'.Carbon::now()->format('Y-m-d g:i A')], // 2023(Y)-10(m)-27(d) 7(g - without leading zero):15(i) AM(A)
             'remark'    => ['nullable', 'string'],
             'status'    => ['required', 'in:'.arrayToString(Appointment::getStatusList())],
             'user_id'   => ['required', 'exists:users,id'],
