@@ -31,6 +31,7 @@ $.fn.setHtml = async function(options) {
     }
 
     myLazyLoad.update();
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 $.fn.sendRequest = function(options) {
