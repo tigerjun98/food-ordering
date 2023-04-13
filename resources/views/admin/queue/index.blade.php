@@ -50,7 +50,7 @@
 
     <x-admin.layout.search-menu-tab
         :enableTab="true"
-        :navTab="['search', 'appointment']"
+        :navTab="['appointment', 'search']"
         :filter="App\Models\Queue::SimpleFilter()"
     >
         @slot('extraFilter')
