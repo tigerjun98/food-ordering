@@ -62,15 +62,6 @@
                 </x-admin.form.select>
             </div>
 
-            <div class="row">
-                <x-admin.form.select
-                    :col="'md-12'"
-                    :data="$data"
-                    :options="\App\Models\Appointment::getStatusList()"
-                    :name="'status'"
-                />
-            </div>
-
             <x-admin.form.textarea
                 :data="$data"
                 :rows="6"
