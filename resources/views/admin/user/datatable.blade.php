@@ -8,7 +8,7 @@
 
         @slot('action')
 
-            @if(auth()->user()->hasPermissionTo( 'patient.create' ) )
+            @if(auth()->user()->can( 'patient.create' ) )
                 <x-admin.component.button
                     :openModal="'{ header: `CREATE`, url: `'.route('admin.user.create').'` }'"
                     :class="'btn-primary btn-lg top-right-button mr-1'"

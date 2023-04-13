@@ -15,13 +15,13 @@
                value="{{ $data->type ?? Queue::CONSULTATION }}"
         >
 
-        @if( !auth()->user()->hasPermissionTo( 'queue.index' ) )
+        @if( !auth()->user()->can( 'queue.index' ) )
             <x-admin.component.status-bar
                 :type="'warning'"
                 :message="trans('messages.permission_required', ['name' => trans('permission.queue.index')])"/>
         @endif
 
-        <div class="@if( !auth()->user()->hasPermissionTo( 'queue.index' ) ) hide @endif">
+        <div class="@if( !auth()->user()->can( 'queue.index' ) ) hide @endif">
             <div class="row">
                 <x-admin.form.select
                     :options="App\Models\Queue::getRoleList()"

@@ -13,7 +13,7 @@
                         :icon="'iconsminds-left-1'"
                         :text="trans('button.back')"
                     />
-                    @if(auth()->user()->hasPermissionTo( 'queue.create' ))
+                    @if(auth()->user()->can( 'queue.create' ))
                         <x-admin.component.button
                             :onclick="'$(this).openModal({url: `'.route('admin.queue.create').'`})'"
                             :class="'btn-primary btn-lg top-right-button'"
@@ -27,7 +27,7 @@
                 <?php $permissions = [] ?>
                 @foreach(\App\Models\Queue::getRoleList() as $key => $type)
                     <?php $permissions[] = 'queue.'.$key ?>
-                    @if(auth()->user()->hasPermissionTo( 'queue.'.$key ) )
+                    @if(auth()->user()->can( 'queue.'.$key ) )
                         <li class="nav-item">
                             <a class="nav-link role-link {{ $roleId == $key ? 'active' : '' }}"
                                id="tab-{{$key}}"
@@ -40,7 +40,7 @@
                 @endforeach
             </ul>
 
-            @if( !auth()->user()->hasAnyPermission($permissions ) )
+            @if( !auth()->user()->canany($permissions ) )
                 <x-admin.component.status-bar :type="'danger'" :message="'Permission denied!'"/>
             @endif
 

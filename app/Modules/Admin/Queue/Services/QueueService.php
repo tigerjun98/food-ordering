@@ -88,7 +88,7 @@ class QueueService
 
     public function hasPermission($roleId)
     {
-        return auth()->user()->hasPermissionTo( 'queue.'.$roleId );
+        return auth()->user()->can( 'queue.'.$roleId );
     }
 
     public function index($roleId): array

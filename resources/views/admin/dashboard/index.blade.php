@@ -40,7 +40,7 @@
                             use App\Models\Queue;
                             $queuePermission = [ 'queue.'.Queue::RECEPTIONIST, 'queue.'.Queue::DOCTOR, 'queue.'.Queue::PHARMACY, 'queue.'.Queue::CASHIER ]
                         @endphp
-                        @if( auth()->user()->hasAnyPermission($queuePermission) )
+                        @if( auth()->user()->canany($queuePermission) )
                             <x-admin.component.card.dashboard.queue />
                         @endif
 
@@ -48,7 +48,7 @@
                             $queuePermission = [ 'queue.create' ]
                         @endphp
 
-                        @if( auth()->user()->hasAnyPermission($queuePermission) )
+                        @if( auth()->user()->canany($queuePermission) )
                             <hr class="my-4">
                             <p>
                                 New patient coming? Create queue for them now.

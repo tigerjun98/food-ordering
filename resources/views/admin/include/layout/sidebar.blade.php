@@ -61,8 +61,8 @@
 
     function hasPermission($data): bool
     {
-        if( !isset($data['permission']) || ( isset($data['permission']) &&  auth()->user()->hasPermissionTo( $data['permission'] ) ) ){
-         return true;
+        if( !isset($data['permission']) || ( isset($data['permission']) &&  auth()->user()->can( $data['permission'] ) ) ){
+            return true;
         }
         return false;
     }
