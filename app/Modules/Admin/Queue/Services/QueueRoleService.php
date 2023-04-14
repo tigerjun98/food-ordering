@@ -56,11 +56,12 @@ class QueueRoleService
             $this->serveToPharmacy();
 
         } elseif($this->isPharmacy()){
-            $this->event->completed($this->model, 'completed');
+            $this->event->checkout($this->model, 'checkout');
             $this->serveToCashier();
 
         } else{
             $this->serveCompleted();
+            $this->event->completed($this->model, 'completed');
         }
     }
 
