@@ -44,7 +44,7 @@
             <div class="row">
                 <x-admin.form.datetime
                     :col="'md-6'"
-                    :label="trans('label.datetime')"
+                    :label="trans('label.appointment_date')"
                     :name="'datetime'"
                     :value="$data->datetime ?? ''"
                 />
