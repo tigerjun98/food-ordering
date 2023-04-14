@@ -23,6 +23,6 @@ class PermissionService
             $query->whereIn('name', $permissionName);
         })->orWhereHas('roles.permissions', function ($query) use ($permissionName) {
             $query->whereIn('name', $permissionName);
-        });
+        })->excludeSuperAdmin();
     }
 }

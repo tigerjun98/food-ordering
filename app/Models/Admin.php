@@ -171,4 +171,11 @@ class Admin extends Authenticatable
 
         return $this->parentFilterTrait($query);
     }
+
+    public function scopeExcludeSuperAdmin($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->whereNot('name', 'super-admin');
+        });
+    }
 }
