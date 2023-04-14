@@ -18,10 +18,10 @@ class MainController extends Controller {
 
     use ApiResponser;
 
-    public function getDoctorOpt()
+    public function getDoctorOpt($status = null)
     {
         $query = (new PermissionService())->getDoctorAccounts();
-        $admin = $query->FilterOption()->FilterOptionActive()->paginate(10);
+        $admin = $query->FilterOption()->filterOptionStatus($status)->paginate(10);
         return response()->json($admin);
     }
 
