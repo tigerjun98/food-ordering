@@ -41,4 +41,10 @@ class AppointmentService
         $appointment->status = Appointment::COMPLETED;
         $appointment->save();
     }
+
+    public function cancelAppointment(Appointment $appointment)
+    {
+        $appointment->status = Appointment::CANCELLED;
+        $appointment->save();
+    }
 }

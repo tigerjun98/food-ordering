@@ -365,6 +365,9 @@ class QueueService
 
     public function delete(Queue $queue): bool
     {
+        if (!blank($queue->appointment_id)) {
+            (new AppointmentService())->cancelAppointment($queue->appointment()->first());
+        }
         $this->event->deleted($queue, 'deleted');
         return $queue->delete();
     }

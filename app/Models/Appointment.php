@@ -29,7 +29,7 @@ class Appointment extends Model
     public const PENDING   = 101;
     public const QUEUED    = 102;
     // public const REJECTED  = 103;
-    // public const CANCELLED = 104;
+    public const CANCELLED = 104;
     public const COMPLETED = 105;
 
     /**
@@ -58,7 +58,7 @@ class Appointment extends Model
             self::PENDING => trans('common.pending'),
             self::QUEUED => trans('common.queued'),
             // self::REJECTED => trans('common.rejected'),
-            // self::CANCELLED => trans('common.cancelled'),
+            self::CANCELLED => trans('common.cancelled'),
             self::COMPLETED => trans('common.completed'),
         ];
     }
@@ -77,7 +77,7 @@ class Appointment extends Model
             self::PENDING => 'warning',
             self::QUEUED => 'info',
             // self::REJECTED => 'danger',
-            // self::CANCELLED => 'light',
+            self::CANCELLED => 'light',
             self::COMPLETED => 'success',
         ];
     }
