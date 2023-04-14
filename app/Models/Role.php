@@ -19,6 +19,8 @@ use Spatie\Permission\Models\Permission;
 
 class Role extends Model
 {
+    public const ROOT = 'super-admin';
+
     use ModelTrait, HasFactory;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
@@ -52,6 +54,6 @@ class Role extends Model
 
     public function scopeExcludeSuperAdmin($query)
     {
-        return $query->whereNot('name', 'super-admin');
+        return $query->whereNot('name', Role::ROOT);
     }
 }
