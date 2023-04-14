@@ -49,4 +49,9 @@ class Role extends Model
             $this->parentFilterTrait($query), ['name_en', 'name_cn']
         );
     }
+
+    public function scopeExcludeSuperAdmin($query)
+    {
+        return $query->whereNot('name', 'super-admin');
+    }
 }

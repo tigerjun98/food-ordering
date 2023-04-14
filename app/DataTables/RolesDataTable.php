@@ -22,7 +22,7 @@ class RolesDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Role::query();
+        $query = Role::query()->excludeSuperAdmin();
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('action', function($row){
