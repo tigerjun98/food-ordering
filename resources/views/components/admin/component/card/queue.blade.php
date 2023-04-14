@@ -38,9 +38,28 @@
                         {{--                    @endif--}}
                     </div>
 
-                    <p class="mt-3 mb-0 text-small text-semi-muted">
+                    <p
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        title="{{ trans('label.remark') }}"
+                        data-original-title="{{ trans('label.remark') }}"
+                        class="mt-3 mb-0 text-small text-semi-muted"
+                    >
                         {{ $queue->remark }}
                     </p>
+
+                    @if($queue->consultation && $queue->consultation->internal_remark)
+                        <p
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="{{ trans('label.internal_remark') }}"
+                            data-original-title="{{ trans('label.internal_remark') }}"
+                            class="mt-2 mb-0 text-small text-danger font-weight-bold"
+                        >
+                            {{ $queue->consultation->internal_remark }}
+                        </p>
+                    @endif
+
                 </div>
             </div>
             <div class="mt-2 border-top pt-3 footer">
