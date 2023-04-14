@@ -82,6 +82,11 @@ class Admin extends Authenticatable
         return $this->hasOne(Group::class, 'id', 'group_id');
     }
 
+    public function isRoot(): bool
+    {
+        return $this->hasRole('super-admin');
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
