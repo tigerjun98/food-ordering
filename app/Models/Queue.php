@@ -29,6 +29,7 @@ class Queue extends Model
     public const PENDING    = 103;
     public const EXPIRED    = 104;
     public const COMPLETED  = 105;
+    public const CHECKOUT   = 106;
     public const HOLDING    = 106;
     public const DELETED    = 107;
 
