@@ -49,7 +49,7 @@ class Appointment extends Model
      */
     public function doctor(): BelongsTo
     {
-        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+        return $this->belongsTo(Admin::class, 'doctor_id', 'id');
     }
 
     public static function getStatusList(): array
@@ -92,8 +92,8 @@ class Appointment extends Model
     public static function Filter()
     {
         return [
-            'status'    => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList(), 'multiple' => true],
-            'datetime'  => ['type' => 'date', 'label'=> 'appointment_date' ],
+            'status'            => ['type' => 'select', 'label' => 'status', 'option' => static::getStatusList(), 'multiple' => true],
+            'appointment_date'  => ['type' => 'date', 'label'=> 'appointment_date' ],
         ];
     }
 

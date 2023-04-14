@@ -45,19 +45,19 @@
                 <x-admin.form.datetime
                     :col="'md-6'"
                     :label="trans('label.appointment_date')"
-                    :name="'datetime'"
-                    :value="$data->datetime ?? ''"
+                    :name="'appointment_date'"
+                    :value="$data->appointment_date ?? ''"
                 />
 
                 <x-admin.form.select
                     :col="'md-6'"
-                    :name="'admin_id'"
+                    :name="'doctor_id'"
                     :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
                 >
-                    @if($data && $data->admin_id)
+                    @if($data && $data->doctor_id)
                         @slot('customOption')
-                            <option value="{{ $data->admin_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
+                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
                         @endslot
                     @endif
                 </x-admin.form.select>

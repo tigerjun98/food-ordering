@@ -15,7 +15,7 @@ class AppointmentService
 
     public function store(array $request): Appointment
     {
-        $request['datetime'] = date("Y-m-d H:i:s", strtotime($request['datetime']));
+        $request['appointment_date'] = date("Y-m-d H:i:s", strtotime($request['appointment_date']));
         return $this->model->updateOrCreate(['id' => $request['id']], $request);
     }
 

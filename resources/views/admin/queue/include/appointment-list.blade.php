@@ -5,7 +5,7 @@
             <div class="">
                 <a href="#">
                     <p class="font-weight-medium mb-0">{{ $data->patient->full_name_with_group }}</p>
-                    <p class="font-weight-medium mb-0">{{ $data->dateFormat('datetime', 'r') }}</p>
+                    <p class="font-weight-medium mb-0">{{ $data->dateFormat('appointment_date', 'r') }}</p>
                 </a>
                 <p class="mt-2 text-small text-semi-muted">{{ $data->doctor->full_name }}</p>
             </div>

@@ -25,12 +25,12 @@ class AppointmentStoreRequest extends FormRequest
     {
         return [
             'id'        => ['integer'],
-            'datetime'  => ['required', 'date_format:Y-m-d g:i A', 'after_or_equal:'.Carbon::now()->format('Y-m-d g:i A')], // 2023(Y)-10(m)-27(d) 7(g - without leading zero):15(i) AM(A)
+            'appointment_date'  => ['required', 'date_format:Y-m-d g:i A', 'after_or_equal:'.Carbon::now()->format('Y-m-d g:i A')], // 2023(Y)-10(m)-27(d) 7(g - without leading zero):15(i) AM(A)
             'remark'    => ['nullable', 'string'],
             'status'    => ['required', 'in:'.arrayToString(Appointment::getStatusList())],
             'user_id'   => ['required', 'exists:users,id'],
             'queue_id'  => ['nullable'],
-            'admin_id'  => ['required', 'exists:admins,id'],
+            'doctor_id' => ['required', 'exists:admins,id'],
         ];
     }
 }

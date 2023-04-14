@@ -130,7 +130,7 @@ class QueueController extends Controller {
     {
         return html('admin.queue.include.appointment-list', [
             'appointments' => Appointment::where('status', Appointment::PENDING)
-                                ->orderBy('datetime', 'asc')
+                                ->orderBy('appointment_date', 'asc')
                                 ->paginate(10)
         ]);
     }

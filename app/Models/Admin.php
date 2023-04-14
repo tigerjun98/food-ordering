@@ -90,8 +90,8 @@ class Admin extends Authenticatable
      */
     public function appointments(): HasMany
     {
-        return $this->hasMany(Appointment::class, 'admin_id', 'id')
-                ->orderBy('created_at', 'desc');
+        return $this->hasMany(Appointment::class, 'doctor_id', 'id')
+                ->orderBy('appointment_date', 'asc');
     }
 
     protected function fullName(): Attribute
