@@ -108,7 +108,7 @@
             $('#doctor_id').val('').trigger('change')
         }
 
-        refreshDataTable()
+        // refreshDataTable()
         getTotalQueueByRole(roleIds, doctorId)
     }
 
