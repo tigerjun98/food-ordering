@@ -42,7 +42,7 @@ class QueueCountService
             ->Serving()
             ->where('role', Queue::DOCTOR);
 
-        if($doctor)
+        if($doctor && !$doctor->isRoot())
             $model->where('doctor_id', $doctor->id);
 
         return $model->count();
