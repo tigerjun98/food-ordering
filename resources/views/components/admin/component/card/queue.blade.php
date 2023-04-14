@@ -31,7 +31,7 @@
                             <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
                         @endif
                         @if ($queue->appointment_id)
-                            <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">Appointmented</span>
+                            <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">Appointment</span>
                         @endif
                         {{--                    @if($queue->priority > 0)--}}
                         {{--                        <span class="badge badge-pill badge-danger mr-1 mt-2">--}}
