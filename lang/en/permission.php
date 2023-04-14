@@ -54,6 +54,6 @@ return [
     'setting-other'  => [
         'print'         => 'Print template management',
         'group'         => 'Group management',
-        'fee'           => 'Consultation fee management',
+        'fee'           => 'Price management',
     ],
 ];
