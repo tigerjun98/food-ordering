@@ -32,15 +32,15 @@
         <div class="row mb-2">
             <x-admin.layout.info
                 :col="'md-12'"
-                :name="'datetime'"
-                :value="$data->dateFormat('datetime', 'r')"
+                :name="'appointment_date'"
+                :value="$data->dateFormat('appointment_date', 'r')"
             />
         </div>
 
         <div class="row mb-2">
             <x-admin.layout.info
                 :col="'md-12'"
-                :name="'admin_id'"
+                :name="'doctor_id'"
                 :value="$data->doctor->full_name"
             />
         </div>

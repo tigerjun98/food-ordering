@@ -84,7 +84,7 @@
                     :col="'md-12'"
                     :name="'doctor_id'"
                     :selectJs="false"
-                    :ajax="route('admin.get-doctor-opt')"
+                    :ajax="route('admin.get-doctor-opt', \App\Entity\Enums\StatusEnum::ACTIVE)"
                 >
                     @if($data && $data->doctor)
                         @slot('customOption')

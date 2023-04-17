@@ -26,8 +26,8 @@ class AppointmentsDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('full_name', function($row) {
                 return $row->patient->full_name;
-            })->editColumn('datetime', function($row) {
-                return dateFormat($row->datetime, 'r');
+            })->editColumn('appointment_date', function($row) {
+                return dateFormat($row->appointment_date, 'r');
             })->editColumn('status', function($row) {
                 return '<span class="badge badge-pill badge-'.$row->class_explain.' mr-1">'.$row->status_explain.'</span>';
             })->editColumn('doctor', function($row) {
@@ -82,7 +82,7 @@ class AppointmentsDataTable extends DataTable
     {
         return [
             Column::make('full_name')->orderable(false),
-            Column::make('datetime'),
+            Column::make('appointment_date'),
             Column::make('remark')->width(300),
             Column::make('status'),
             Column::make('doctor')->orderable(false),

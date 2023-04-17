@@ -17,10 +17,7 @@
             <div class="justify-content-between">
                 <div class="">
                     <div>
-                        @if ($queue->appointment_id)
-                            <span class="text-medium text-info"><i class="iconsminds-calendar-4"></i></span>
-                        @endif
-                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:viewMedicine('.$queue->consultation_id.')'}}"
+                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : '#'}}"
                             class="font-weight-medium mb-1" >
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
                             {{ $queue->patient->full_name ?? '-' }}
@@ -32,6 +29,9 @@
                     <div class="">
                         @if($queue->doctor)
                             <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
+                        @endif
+                        @if ($queue->appointment_id)
+                            <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">Appointment</span>
                         @endif
                         {{--                    @if($queue->priority > 0)--}}
                         {{--                        <span class="badge badge-pill badge-danger mr-1 mt-2">--}}

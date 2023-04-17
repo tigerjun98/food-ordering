@@ -6,7 +6,7 @@
     @slot('body')
         @if($canDelete)
             <h6>Do you really want to delete appointment <span class="font-weight-bold">{{ $data->patient->full_name }}</span>
-                on <span class="font-weight-bold">{{ dateFormat($data->datetime, 'r') }}</span>
+                on <span class="font-weight-bold">{{ dateFormat($data->appointment_date, 'r') }}</span>
                 with <span class="font-weight-bold">{{ $data->doctor->full_name }}</span>? This process cannot be undo.</h6>
         @else
             <h6>The attempted operation is prohibited because this appointment status on

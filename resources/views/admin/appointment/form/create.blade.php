@@ -5,6 +5,7 @@
 >
     @slot('details')
         <input type="hidden" name="id" value="{{ $data ? $data->id : new_id() }}" />
+        <input type="hidden" name="process" value="{{ $data ? 'update' : 'create' }}" />
 
         @php
             $patient = $data ? $data->patient : ($patient ?? null)
@@ -44,20 +45,20 @@
             <div class="row">
                 <x-admin.form.datetime
                     :col="'md-6'"
-                    :label="trans('label.datetime')"
-                    :name="'datetime'"
-                    :value="$data->datetime ?? ''"
+                    :label="trans('label.appointment_date')"
+                    :name="'appointment_date'"
+                    :value="$data->appointment_date ?? ''"
                 />
 
                 <x-admin.form.select
                     :col="'md-6'"
-                    :name="'admin_id'"
+                    :name="'doctor_id'"
                     :selectJs="false"
                     :ajax="route('admin.get-doctor-opt')"
                 >
-                    @if($data && $data->admin_id)
+                    @if($data && $data->doctor_id)
                         @slot('customOption')
-                            <option value="{{ $data->admin_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
+                            <option value="{{ $data->doctor_id }}" selected="selected">{{ $data->doctor->full_name }}</option>
                         @endslot
                     @endif
                 </x-admin.form.select>

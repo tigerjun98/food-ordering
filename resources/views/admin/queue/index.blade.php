@@ -95,7 +95,7 @@
                     $('.ajax-load').removeClass('hide')
                     let res = await $(this).sendRequest({
                         method: 'GET',
-                        url: `{{ route('admin.get-appointments') }}?page=${page}`
+                        url: `{{ route('admin.list-appointment') }}?page=${page}`
                     });
 
                     if(res.html === ""){
@@ -129,9 +129,22 @@
     @include('admin.queue.js.script')
 
     <script type="text/javascript">
-        const viewAppointmentDetails = (id) => {
+        const viewAppointment = async (appointmentId) => {
             $(this).openModal({
-                url: `/admin/show-appointment/${id}`
+                url: `/admin/appointment/show/${appointmentId}`
+            });
+        }
+
+        const editAppointment = async (appointmentId) => {
+            $(this).openModal({
+                url: `/admin/appointment/edit/${appointmentId}`
+            });
+        }
+
+        const cancelAppointment = async (appointmentId) => {
+            $(this).openModal({
+                url: `/admin/appointment/cancel/${appointmentId}`,
+                size: 'md'
             });
         }
     </script>

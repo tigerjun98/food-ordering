@@ -77,7 +77,6 @@ return [
     'price' => 'Price',
     'category' => 'Category',
     'appointment' => 'Appointment',
-    'admin_id' => 'Doctor',
     'datetime' => 'Date & Time',
     'appointment_date' => 'Appointment Date'
 ];

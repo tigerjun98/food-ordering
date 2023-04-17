@@ -1,7 +1,7 @@
 {{--<div class="app-alert" id="app-alert"></div>--}}
 @php
     $id = new_id();
-    $submitBtnLang = isset($submitBtnLang) ? $submitBtnLang : 'submit';
+    $submitBtnLang = isset($submitBtnLang) ? $submitBtnLang : (isset($delete) ? 'confirm_delete' : 'submit');
 @endphp
 <div class="modal-header pb-0 alert-box">
     <x-admin.component.modal.header
@@ -43,7 +43,7 @@
                 @if(isset($delete))
                     <x-admin.component.button
                         :class="'btn-danger'"
-                        :lang="'confirm_delete'"
+                        :lang="$submitBtnLang"
                         :type="'submit'"
                         :disabled="!$delete"
                     />
