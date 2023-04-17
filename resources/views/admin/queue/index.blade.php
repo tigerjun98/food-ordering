@@ -48,28 +48,38 @@
         </div>
     </div>
 
-    <x-admin.layout.search-menu
-        :filter="\App\Models\Queue::SimpleFilter()"
+    <x-admin.layout.right-bar
+        :navs="['do_search']"
     >
-        @slot('extraFilter')
-            <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
-            <div class="mt-2">
-                <x-admin.form.select
-                    :name="'doctor_id'"
-                    :required="false"
-                    :onchange="'refreshDataTable()'"
-                >
-                    @slot('customOption')
-                        @foreach($doctors as $doctor)
-                            <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
-                        @endforeach
-                    @endslot
-
-
-                </x-admin.form.select>
+        @slot('do_search')
+            <div class="modal-header mb-5 pt-0">
+                <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
             </div>
+
+            <x-admin.layout.right-bar.search
+                :filter="\App\Models\Queue::SimpleFilter()"
+            >
+                @slot('extraFilter')
+                    <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
+                    <div class="mt-2">
+                        <x-admin.form.select
+                            :name="'doctor_id'"
+                            :required="false"
+                            :onchange="'refreshDataTable()'"
+                        >
+                            @slot('customOption')
+                                @foreach($doctors as $doctor)
+                                    <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
+                                @endforeach
+                            @endslot
+
+
+                        </x-admin.form.select>
+                    </div>
+                @endslot
+            </x-admin.layout.right-bar.search>
         @endslot
-    </x-admin.layout.search-menu>
+    </x-admin.layout.right-bar>
 
     @include('admin.queue.js.script')
 @stop
