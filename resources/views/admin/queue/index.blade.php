@@ -49,7 +49,7 @@
     </div>
 
     <x-admin.layout.right-bar
-        :navs="['do_search', 'appt']"
+        :navs="['appt', 'do_search']"
     >
         @slot('appt')
             <div>
@@ -103,6 +103,27 @@
                     <div class="d-flex mt-1 mb-4"></div>
                 </div>
             </form>
+            <script type="text/javascript">
+                const viewAppointment = async (appointmentId) => {
+                    $(this).openModal({
+                        url: `/admin/appointment/show/${appointmentId}`
+                    });
+                }
+
+                const editAppointment = async (appointmentId) => {
+                    $(this).openModal({
+                        url: `/admin/appointment/edit/${appointmentId}`
+                    });
+                }
+
+                const cancelAppointment = async (appointmentId) => {
+                    $(this).openModal({
+                        url: `/admin/appointment/cancel/${appointmentId}`,
+                        size: 'md'
+                    });
+                }
+            </script>
+
         @endslot
 
         @slot('do_search')
