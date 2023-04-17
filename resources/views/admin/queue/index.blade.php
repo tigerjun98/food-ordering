@@ -95,7 +95,7 @@
                     $('.ajax-load').removeClass('hide')
                     let res = await $(this).sendRequest({
                         method: 'GET',
-                        url: `{{ route('admin.get-appointments') }}?page=${page}`
+                        url: `{{ route('admin.list-appointment') }}?page=${page}`
                     });
 
                     if(res.html === ""){
@@ -131,7 +131,7 @@
     <script type="text/javascript">
         const viewAppointment = async (appointmentId) => {
             $(this).openModal({
-                url: `/admin/show-appointment/${appointmentId}`
+                url: `/admin/appointment/show/${appointmentId}`
             });
         }
 

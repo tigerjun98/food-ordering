@@ -54,8 +54,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('home');
     Route::get('/get-doctor-opt/{status?}', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
     Route::get('/get-user-opt', [MainController::class, 'getUserOpt'])->name('get-user-opt');
-    Route::get('/get-appointments', [QueueController::class, 'getAppointments'])->name('get-appointments');
-    Route::get('/show-appointment/{id}', [QueueController::class, 'showAppointment'])->name('show-appointment');
+    Route::get('/appointment/list', [AppointmentController::class, 'list'])->name('list-appointment');
     Route::get('/appointment/cancel/{id}', [AppointmentController::class, 'cancel'])->name('cancel-appointment');
     Route::post('/appointment/drop/{id}', [AppointmentController::class, 'drop'])->name('drop-appointment');
 

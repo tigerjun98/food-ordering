@@ -32,6 +32,13 @@ class AppointmentController extends Controller
         ]);
     }
 
+    public function show($appointmentId)
+    {
+        return html('admin.appointment.modal.view',[
+            'data' => Appointment::findOrFail($appointmentId),
+        ]);
+    }
+
     public function create()
     {
         return html('admin.appointment.form.create',[
@@ -81,5 +88,14 @@ class AppointmentController extends Controller
     {
         $this->service->cancelAppointment($this->model->findOrFail($appointmentId));
         return makeResponse(200);
+    }
+
+    public function list()
+    {
+        return html('admin.appointment.include.list', [
+            'appointments' => Appointment::where('status', Appointment::PENDING)
+                                ->orderBy('appointment_date', 'asc')
+                                ->paginate(10)
+        ]);
     }
 }
