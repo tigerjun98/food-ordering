@@ -17,7 +17,7 @@
             <div class="justify-content-between">
                 <div class="">
                     <div>
-                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:viewMedicine('.$queue->consultation_id.')'}}"
+                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : '#'}}"
                             class="font-weight-medium mb-1" >
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
                             {{ $queue->patient->full_name ?? '-' }}
