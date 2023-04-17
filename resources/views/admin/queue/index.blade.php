@@ -129,9 +129,16 @@
     @include('admin.queue.js.script')
 
     <script type="text/javascript">
-        const viewAppointmentDetails = (id) => {
+        const viewAppointment = async (appointmentId) => {
             $(this).openModal({
-                url: `/admin/show-appointment/${id}`
+                url: `/admin/show-appointment/${appointmentId}`
+            });
+        }
+
+        const deleteAppointment = async (appointmentId) => {
+            $(this).openModal({
+                url: `/admin/appointment/destroy/${appointmentId}`,
+                size: 'md'
             });
         }
     </script>
