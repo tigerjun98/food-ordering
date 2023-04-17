@@ -94,6 +94,11 @@ class Admin extends Authenticatable
                 ->orderBy('appointment_date', 'asc');
     }
 
+    public function isRoot(): bool
+    {
+        return $this->hasRole(\App\Models\Role::ROOT);
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
@@ -143,7 +148,10 @@ class Admin extends Authenticatable
 
     public static function getRolesList(): array
     {
-        return \Spatie\Permission\Models\Role::all()->pluck('name_en','id')->toArray();
+        return \Spatie\Permission\Models\Role::all()
+            ->whereNotIn('name', [\App\Models\Role::ROOT])
+            ->pluck('name_en','id')
+            ->toArray();
     }
 
     public static function Filter(){
@@ -182,5 +190,12 @@ class Admin extends Authenticatable
             $query = $this->searchAll($query, ['nric', 'name_en', 'name_cn', 'phone', 'email']);
 
         return $this->parentFilterTrait($query);
+    }
+
+    public function scopeExcludeSuperAdmin($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->whereNot('name', \App\Models\Role::ROOT);
+        });
     }
 }

@@ -33,7 +33,7 @@ class RoleAndPermissionSeeder extends Seeder
 
     public function createRoleAndPermissions()
     {
-        $spatieRole = Role::findOrCreate( self::ROLE_NAME, self::GUARD);
+        $spatieRole = Role::findOrCreate( \App\Models\Role::ROOT, self::GUARD);
         $spatieRole->name_en = 'Super admin';
         $spatieRole->name_cn = '超级管理员';
         $spatieRole->save();
@@ -51,7 +51,7 @@ class RoleAndPermissionSeeder extends Seeder
     public function createSuperAdminAccount()
     {
         $admin = Admin::create([
-            'name' => self::ROLE_NAME,
+            'name' => \App\Models\Role::ROOT,
             'name_en' => 'Super admin',
             'name_cn' =>  '超级管理员',
             'email' => 'admin@yilin.com.my',
@@ -60,7 +60,7 @@ class RoleAndPermissionSeeder extends Seeder
             'clinic_id' => Clinic::all()->random()->id
         ]);
 
-        $admin->assignRole(self::ROLE_NAME);
+        $admin->assignRole(\App\Models\Role::ROOT);
     }
 
 }

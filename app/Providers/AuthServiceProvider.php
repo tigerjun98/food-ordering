@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Admin;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -26,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::before(function ($user, $ability) {
-            return $user->hasRole('super-admin') ? true : null;
+            return $user->hasRole(Role::ROOT) ? true : null;
         });
 
 //        foreach (Admin::getPermissionsLists() as $key => $list){

@@ -75,34 +75,34 @@ class UsersDataTable extends DataTable
             ],
         ];
 
-        if(auth()->user()->hasPermissionTo( 'queue.create' ) ){
+        if(auth()->user()->can( 'queue.create' ) ){
             $actions['queue'] = [
                 'icon'      => 'simple-icon-ghost',
                 'modal'     => route('admin.queue.create', 'user_id='.$row->id)
             ];
         }
 
-        if(auth()->user()->hasPermissionTo( 'consultation.index' ) ){
+        if(auth()->user()->can( 'consultation.index' ) ){
             $actions['history'] = [
                 'icon'      => 'simple-icon-event',
                 'redirect'     => route('admin.consultation.index', 'nric='.$row->nric)
             ];
         }
 
-        if(auth()->user()->hasPermissionTo( 'consultation.create' ) ){
+        if(auth()->user()->can( 'consultation.create' ) ){
             $actions['consultation'] = [
                 'icon'      => 'simple-icon-calendar',
                 'redirect'  => route('admin.consultation.edit', $row->id)
             ];
         }
 
-        if(auth()->user()->hasPermissionTo( 'patient.edit' ) ){
+        if(auth()->user()->can( 'patient.edit' ) ){
             $actions['edit'] = [
                 'icon'      => 'simple-icon-pencil',
                 'modal'     => route('admin.user.edit', $row->id)
             ];
         }
-        if(auth()->user()->hasPermissionTo( 'patient.delete' ) ){
+        if(auth()->user()->can( 'patient.delete' ) ){
             $actions['delete'] = [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',

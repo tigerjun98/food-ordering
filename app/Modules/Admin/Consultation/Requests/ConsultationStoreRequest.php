@@ -26,7 +26,7 @@ class ConsultationStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        if(auth()->user()->hasPermissionTo( 'consultation.create' )){
+        if(auth()->user()->can( 'consultation.create' )){
             return true;
         }
 

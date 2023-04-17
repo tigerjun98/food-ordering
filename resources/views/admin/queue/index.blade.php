@@ -13,7 +13,7 @@
                         :icon="'iconsminds-left-1'"
                         :text="trans('button.back')"
                     />
-                    @if(auth()->user()->hasPermissionTo( 'queue.create' ))
+                    @if(auth()->user()->can( 'queue.create' ))
                         <x-admin.component.button
                             :onclick="'$(this).openModal({url: `'.route('admin.queue.create').'`})'"
                             :class="'btn-primary btn-lg top-right-button'"
@@ -27,7 +27,7 @@
                 <?php $permissions = [] ?>
                 @foreach(\App\Models\Queue::getRoleList() as $key => $type)
                     <?php $permissions[] = 'queue.'.$key ?>
-                    @if(auth()->user()->hasPermissionTo( 'queue.'.$key ) )
+                    @if(auth()->user()->can( 'queue.'.$key ) )
                         <li class="nav-item">
                             <a class="nav-link role-link {{ $roleId == $key ? 'active' : '' }}"
                                id="tab-{{$key}}"
@@ -40,7 +40,7 @@
                 @endforeach
             </ul>
 
-            @if( !auth()->user()->hasAnyPermission($permissions ) )
+            @if( !auth()->user()->canany($permissions ) )
                 <x-admin.component.status-bar :type="'danger'" :message="'Permission denied!'"/>
             @endif
 
@@ -48,30 +48,10 @@
         </div>
     </div>
 
-    <x-admin.layout.search-menu-tab
-        :enableTab="true"
-        :navTab="['search','appointment']"
-        :filter="App\Models\Queue::SimpleFilter()"
+    <x-admin.layout.right-bar
+        :navs="['do_search', 'appt']"
     >
-        @slot('extraFilter')
-            <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
-            <div class="mt-2">
-                <x-admin.form.select
-                    :name="'doctor_id'"
-                    :required="false"
-                    :onchange="'refreshDataTable()'"
-                >
-                    @slot('customOption')
-                        @foreach($doctors as $doctor)
-                            <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
-                        @endforeach
-                    @endslot
-
-
-                </x-admin.form.select>
-            </div>
-        @endslot
-        @slot('tabContent')
+        @slot('appt')
             <div>
                 <div class="" id="appointmentList" style="height: 74vh;padding-top:1.5em"></div>
                 <div class="ajax-load text-center hide">
@@ -124,28 +104,36 @@
                 </div>
             </form>
         @endslot
-    </x-admin.layout.search-menu-tab>
 
+        @slot('do_search')
+            <div class="modal-header mb-5 pt-0">
+                <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
+            </div>
+
+            <x-admin.layout.right-bar.search
+                :filter="\App\Models\Queue::SimpleFilter()"
+            >
+                @slot('extraFilter')
+                    <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
+                    <div class="mt-2">
+                        <x-admin.form.select
+                            :name="'doctor_id'"
+                            :required="false"
+                            :onchange="'refreshDataTable()'"
+                        >
+                            @slot('customOption')
+                                @foreach($doctors as $doctor)
+                                    <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
+                                @endforeach
+                            @endslot
+
+
+                        </x-admin.form.select>
+                    </div>
+                @endslot
+            </x-admin.layout.right-bar.search>
+        @endslot
+
+    </x-admin.layout.right-bar>
     @include('admin.queue.js.script')
-
-    <script type="text/javascript">
-        const viewAppointment = async (appointmentId) => {
-            $(this).openModal({
-                url: `/admin/appointment/show/${appointmentId}`
-            });
-        }
-
-        const editAppointment = async (appointmentId) => {
-            $(this).openModal({
-                url: `/admin/appointment/edit/${appointmentId}`
-            });
-        }
-
-        const cancelAppointment = async (appointmentId) => {
-            $(this).openModal({
-                url: `/admin/appointment/cancel/${appointmentId}`,
-                size: 'md'
-            });
-        }
-    </script>
 @stop
