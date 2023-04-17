@@ -31,4 +31,5 @@ return [
     'back' => 'Back',
     'send' => 'Send',
     'queue' => 'Queue',
+    'cancel_appointment' => 'Cancel Appointment',
 ];

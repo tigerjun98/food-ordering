@@ -10,9 +10,9 @@
             </div>
             <div>
                 <button
-                    onclick="deleteAppointment({{$data->id}})"
+                    onclick="cancelAppointment({{$data->id}})"
                     class="btn btn-header-light icon-button text-danger">
-                    <i class="simple-icon-trash"></i>
+                    <i class="simple-icon-close"></i>
                 </button>
             </div>
         </div>

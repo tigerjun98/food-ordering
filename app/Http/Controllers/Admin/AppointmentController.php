@@ -67,4 +67,19 @@ class AppointmentController extends Controller
         $this->service->delete($this->model->findOrFail($appointmentId));
         return makeResponse(200);
     }
+
+    public function cancel($appointmentId)
+    {
+        $model = $this->model->findOrFail($appointmentId);
+        return html('admin.appointment.form.cancel',[
+            'canDelete' => true,
+            'data' => $model
+        ]);
+    }
+
+    public function drop($appointmentId)
+    {
+        $this->service->cancelAppointment($this->model->findOrFail($appointmentId));
+        return makeResponse(200);
+    }
 }

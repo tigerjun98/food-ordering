@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/get-user-opt', [MainController::class, 'getUserOpt'])->name('get-user-opt');
     Route::get('/get-appointments', [QueueController::class, 'getAppointments'])->name('get-appointments');
     Route::get('/show-appointment/{id}', [QueueController::class, 'showAppointment'])->name('show-appointment');
+    Route::get('/appointment/cancel/{id}', [AppointmentController::class, 'cancel'])->name('cancel-appointment');
+    Route::post('/appointment/drop/{id}', [AppointmentController::class, 'drop'])->name('drop-appointment');
+
 
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
 

@@ -135,9 +135,9 @@
             });
         }
 
-        const deleteAppointment = async (appointmentId) => {
+        const cancelAppointment = async (appointmentId) => {
             $(this).openModal({
-                url: `/admin/appointment/destroy/${appointmentId}`,
+                url: `/admin/appointment/cancel/${appointmentId}`,
                 size: 'md'
             });
         }
