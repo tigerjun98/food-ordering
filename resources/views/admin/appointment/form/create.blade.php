@@ -5,6 +5,7 @@
 >
     @slot('details')
         <input type="hidden" name="id" value="{{ $data ? $data->id : new_id() }}" />
+        <input type="hidden" name="process" value="{{ $data ? 'update' : 'create' }}" />
 
         @php
             $patient = $data ? $data->patient : ($patient ?? null)

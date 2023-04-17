@@ -24,13 +24,14 @@ class AppointmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'        => ['integer'],
+            'id'                => ['integer'],
             'appointment_date'  => ['required', 'date_format:Y-m-d g:i A', 'after_or_equal:'.Carbon::now()->format('Y-m-d')], // 2023(Y)-10(m)-27(d) 7(g - without leading zero):15(i) AM(A)
-            'remark'    => ['nullable', 'string'],
-            'status'    => ['required', 'in:'.arrayToString(Appointment::getStatusList())],
-            'user_id'   => ['required', 'exists:users,id'],
-            'queue_id'  => ['nullable'],
-            'doctor_id' => ['required', 'exists:admins,id'],
+            'remark'            => ['nullable', 'string'],
+            'status'            => ['required', 'in:'.arrayToString(Appointment::getStatusList())],
+            'user_id'           => ['required', 'exists:users,id'],
+            'queue_id'          => ['nullable'],
+            'doctor_id'         => ['required', 'exists:admins,id'],
+            'process'           => ['required', 'in:create,update'],
         ];
     }
 }
