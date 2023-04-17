@@ -135,6 +135,12 @@
             });
         }
 
+        const editAppointment = async (appointmentId) => {
+            $(this).openModal({
+                url: `/admin/appointment/edit/${appointmentId}`
+            });
+        }
+
         const cancelAppointment = async (appointmentId) => {
             $(this).openModal({
                 url: `/admin/appointment/cancel/${appointmentId}`,
