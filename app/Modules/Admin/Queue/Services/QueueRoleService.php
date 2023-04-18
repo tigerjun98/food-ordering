@@ -95,5 +95,18 @@ class QueueRoleService
         $this->model->save();
     }
 
+    public function updateToPreviousStatus()
+    {
+        if($this->isDoctor()){
+            $this->revertToRceptionist();
+        }
+    }
 
+    public function revertToRceptionist()
+    {
+        $this->model->type      = Queue::CONSULTATION;
+        $this->model->role      = Queue::RECEPTIONIST;
+        $this->model->status    = Queue::WAITING;
+        $this->model->save();
+    }
 }

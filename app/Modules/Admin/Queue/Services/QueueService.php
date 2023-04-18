@@ -397,4 +397,13 @@ class QueueService
             Queue::CASHIER      => $countService->getTodayCashierCount(),
         ];
     }
+
+    public function revert(Queue $queue)
+    {
+        (new QueueRoleService($queue))->updateToPreviousStatus();
+
+        $this->event->newQueue($queue, $this->getPatientWaitingMsg());
+
+        return $this->model->find($queue->id);
+    }
 }
