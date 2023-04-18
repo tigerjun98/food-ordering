@@ -119,13 +119,14 @@ class TouchPosCreateSalesService
 
     public function getCustomerId(): string
     {
+        return '';
 
         if(!$this->consultation->patient->touch_pos_cust_id){
             $user = (new DynamodCustomerService())->createCustomer($this->consultation->patient);
             return $user->touch_pos_cust_id;
         }
 
-        return $this->consultation->user->touch_pos_cust_id ?? '';
+        return $this->consultation->patient->touch_pos_cust_id ?? '';
     }
 
     public function _sendMedicineSales(string $docNo): void
@@ -147,7 +148,6 @@ class TouchPosCreateSalesService
 
         [$desc, $price] = $this->getConsultationFee();
         $docNo = $this->submitSales($desc, $price, $this->doc_no, $this->getCustomerId());
-
 
         if($this->consultation->prescriptions){
 
