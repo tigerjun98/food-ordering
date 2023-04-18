@@ -46,6 +46,56 @@ class TouchPosCreateSalesService
         return [$note, $fee->price ?? 0];
     }
 
+    public function isMedicine(int $category): bool
+    {
+        return count(
+            array_compare(ConsultationEnum::getMedicineListing(), [$category])
+            ) == 1;
+    }
+
+    public function getQuantity(int $amount, int $category): int
+    {
+        $maxFee = Fee::where('category', $category)->orderBy('type', 'desc')->first();
+        if($amount > $maxFee->type){
+            return ceil($amount / $maxFee->type);
+        }
+
+        return 1;
+    }
+
+    public function combineSameCategoryMedicine($prescriptions): array
+    {
+        $category = [];
+
+        foreach ($prescriptions as $prescription){
+            if($this->isMedicine($prescription->category)){
+                $category[$prescription->category] = isset($category[$prescription->category])
+                    ? $category[$prescription->category] + $prescription->combination_amount
+                    : $prescription->combination_amount;
+            }
+        }
+
+        return $category;
+    }
+
+    public function getMedicineFee(int $amount, int $category): float
+    {
+        $qty = $this->getQuantity($amount, $category);
+
+        if($qty == 1){
+            $price = Fee::where('category', $category)
+                ->where('type', '>=', $amount)
+                ->orderBy('type', 'asc')
+                ->value('price');
+
+        } else{
+            $fee = Fee::where('category', $category)->orderBy('type', 'desc')->value('price');
+            $price = $fee * $qty;
+        }
+
+        return $price;
+    }
+
     public function getPrescriptionOrderDetails(Prescription $prescription): array
     {
         $fee = Fee::where('category', $prescription->category)
@@ -69,12 +119,23 @@ class TouchPosCreateSalesService
 
     public function getCustomerId(): string
     {
-        if(!$this->consultation->user->touch_pos_cust_id){
-            $user = (new DynamodCustomerService())->createCustomer($this->consultation->user);
+
+        if(!$this->consultation->patient->touch_pos_cust_id){
+            $user = (new DynamodCustomerService())->createCustomer($this->consultation->patient);
             return $user->touch_pos_cust_id;
         }
 
-        return $this->consultation->user->touch_pos_cust_id;
+        return $this->consultation->user->touch_pos_cust_id ?? '';
+    }
+
+    public function _sendMedicineSales(string $docNo): void
+    {
+        $prices = $this->combineSameCategoryMedicine($this->consultation->prescriptions);
+
+        foreach ($prices as $category => $amount){
+            $price = $this->getMedicineFee($amount, $category);
+            $this->submitSales(ConsultationEnum::getMedicineListing()[$category], $price, $docNo, $this->getCustomerId());
+        }
     }
 
     public function createSales(): string
@@ -84,16 +145,22 @@ class TouchPosCreateSalesService
             $this->consultation->save();
         }
 
-
         [$desc, $price] = $this->getConsultationFee();
         $docNo = $this->submitSales($desc, $price, $this->doc_no, $this->getCustomerId());
 
+
         if($this->consultation->prescriptions){
+
+            $this->_sendMedicineSales($docNo);
+
             foreach ($this->consultation->prescriptions as $prescription){
-                [$desc, $price] = $this->getPrescriptionOrderDetails($prescription);
-                $this->submitSales($desc, $price, $docNo, $this->getCustomerId());
+                if(! $this->isMedicine($prescription->category)){
+                    [$desc, $price] = $this->getPrescriptionOrderDetails($prescription);
+                    $this->submitSales($desc, $price, $docNo, $this->getCustomerId());
+                }
             }
         }
+
         return $docNo;
     }
 
