@@ -4,14 +4,15 @@
 >
     @foreach($navs as $key => $item)
         <li class="nav-item {{ isset($rightBar) && $rightBar ? 'w-50 text-center' : '' }}">
-            <a class="nav-link {{$key == 0 ? 'active' : ''}}"
-               id="{{$item}}-tab"
-               data-toggle="tab"
-               href="#{{$item}}-tab-content"
-               role="tab"
-               aria-selected="true"
+            <a
+                class="nav-link {{$key == 0 ? 'active' : ''}}"
+                id="{{$item}}-tab"
+                data-toggle="tab"
+                href="#{{$item}}-tab-content"
+                role="tab"
+                aria-selected="true"
             >
-                {{ __('label.'.$item) }}
+                <span id="nav-link-{{ $item }}-title">{{ __('label.'.$item) }}</span>
             </a>
         </li>
     @endforeach
