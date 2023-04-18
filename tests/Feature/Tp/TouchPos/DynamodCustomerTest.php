@@ -25,21 +25,21 @@ class DynamodCustomerTest extends TestCase
 //        $this->assertTrue(true);
 //    }
 
-    public function test_get_customers()
-    {
-        (new DynamodCustomerService())->getCustomers(1);
-        $this->assertTrue(true);
-    }
+//    public function test_get_customers()
+//    {
+//        (new DynamodCustomerService())->getCustomers(1);
+//        $this->assertTrue(true);
+//    }
 //
 //    public function test_sync_customers()
 //    {
 //        (new DynamodCustomerService())->syncCustomers(1);
 //    }
 //
-//    public function test_find_customers_by_id()
-//    {
-//        (new DynamodCustomerService())->findCustomersById('1611819829');
-//        $this->assertTrue(true);
-//    }
+    public function test_find_customers_by_id()
+    {
+        (new DynamodCustomerService())->findCustomersById('23106126');
+        $this->assertTrue(true);
+    }
 
 }

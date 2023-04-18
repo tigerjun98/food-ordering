@@ -56,6 +56,7 @@ class TouchPosService
     {
         try {
             $url = $this->getUrl($path);
+
             $res = $this->client->post($url, [
                 'json' => $data
             ]);

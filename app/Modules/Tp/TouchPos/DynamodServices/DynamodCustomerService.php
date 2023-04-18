@@ -97,6 +97,9 @@ class DynamodCustomerService
     public function findCustomersById($custId)
     {
         $res = $this->service->get('Customers/CustomerID/'.$custId);
+
+        dd($res->Customers);
+
         if(count($res->Customers) > 0){
             return $res->Customers;
         }

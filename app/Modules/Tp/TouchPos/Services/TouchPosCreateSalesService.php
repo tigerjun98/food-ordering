@@ -78,7 +78,27 @@ class TouchPosCreateSalesService
         return $category;
     }
 
-    public function getMedicineFee(int $amount, int $category): float
+    public function _submitPrescriptionOrder($docNo, $group = false): void
+    {
+        foreach ($this->consultation->prescriptions as $prescription){
+            if(! $this->isMedicine($prescription->category)){
+                [$desc, $price] = $this->getPrescriptionOrderDetails($prescription);
+                $this->submitSales($desc, $price, $docNo, $this->getCustomerId());
+
+            } else{
+                $fees = $this->getMedicineFee($prescription->combination_amount, $prescription->category);
+                $desc = ConsultationEnum::getMedicineListing()[$prescription->category];
+                $this->submitSales($desc, $fees['price'], $docNo, $this->getCustomerId(), $fees['qty']);
+            }
+        }
+
+//        if($group){
+//            $this->_sendMedicineSalesInGroup($docNo);
+//        }
+
+    }
+
+    public function getMedicineFee(int $amount, int $category): array
     {
         $qty = $this->getQuantity($amount, $category);
 
@@ -89,11 +109,14 @@ class TouchPosCreateSalesService
                 ->value('price');
 
         } else{
-            $fee = Fee::where('category', $category)->orderBy('type', 'desc')->value('price');
-            $price = $fee * $qty;
+            $price = Fee::where('category', $category)->orderBy('type', 'desc')->value('price');
+            // $price = $fee * $qty;
         }
 
-        return $price;
+        $arr['price'] = $price;
+        $arr['qty'] = $qty;
+
+        return $arr;
     }
 
     public function getPrescriptionOrderDetails(Prescription $prescription): array
@@ -119,7 +142,7 @@ class TouchPosCreateSalesService
 
     public function getCustomerId(): string
     {
-        return '';
+        return ''; // If return customer Id can send but not appear from the POS system
 
         if(!$this->consultation->patient->touch_pos_cust_id){
             $user = (new DynamodCustomerService())->createCustomer($this->consultation->patient);
@@ -129,7 +152,7 @@ class TouchPosCreateSalesService
         return $this->consultation->patient->touch_pos_cust_id ?? '';
     }
 
-    public function _sendMedicineSales(string $docNo): void
+    public function _sendMedicineSalesInGroup(string $docNo): void
     {
         $prices = $this->combineSameCategoryMedicine($this->consultation->prescriptions);
 
@@ -150,21 +173,13 @@ class TouchPosCreateSalesService
         $docNo = $this->submitSales($desc, $price, $this->doc_no, $this->getCustomerId());
 
         if($this->consultation->prescriptions){
-
-            $this->_sendMedicineSales($docNo);
-
-            foreach ($this->consultation->prescriptions as $prescription){
-                if(! $this->isMedicine($prescription->category)){
-                    [$desc, $price] = $this->getPrescriptionOrderDetails($prescription);
-                    $this->submitSales($desc, $price, $docNo, $this->getCustomerId());
-                }
-            }
+            $this->_submitPrescriptionOrder($docNo);
         }
 
         return $docNo;
     }
 
-    public function submitSales($stock_desc, $stock_price, $docNo = "", $cust_id = ''): string
+    public function submitSales($stock_desc, $stock_price, $docNo = "", $cust_id = '', int $qty = 1): string
     {
         $create_sales = new TouchPosCreateSales();
         $create_sales->prepare_data(
@@ -172,7 +187,7 @@ class TouchPosCreateSalesService
             $this->stock_barcode,
             $stock_desc,
             $stock_price,
-            1,
+            $qty,
             $cust_id
         );
 
