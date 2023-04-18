@@ -83,7 +83,7 @@
         $('#{{ $dataTableId ?? 'dataTable' }}').DataTable().ajax.reload( function(){
             $(this).hideLoader({fullScreen: true});
         });
-        window.history.replaceState({ id: "100" }, "Filter", "?"+$('#js-datatable-filter-form').serialize());
+        window.history.replaceState({ id: "100" }, "Filter", "?"+$('.js-datatable-filter-form').serialize());
     };
 
     function setSearchAllVal(){
