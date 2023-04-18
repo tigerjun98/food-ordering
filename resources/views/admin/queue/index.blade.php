@@ -161,8 +161,8 @@
             // regex to find match whitespace, open bracket, number, close bracket
             let pattern = /(\s\(\d+\))/
 
-            if(!!document.getElementById('nav-link-appointment-title')){
-                let tab = document.getElementById('nav-link-appointment-title')
+            if(!!document.getElementById('nav-link-appt-title')){
+                let tab = document.getElementById('nav-link-appt-title')
                 let title = tab.innerText
                 let search = title.search(pattern)
 
