@@ -63,4 +63,9 @@ class AppointmentService
         $appointment->status = Appointment::CANCELLED;
         $appointment->save();
     }
+
+    public function getTotalToday()
+    {
+        return $this->model->countToday();
+    }
 }

@@ -75,7 +75,7 @@
                     $('.ajax-load').removeClass('hide')
                     let res = await $(this).sendRequest({
                         method: 'GET',
-                        url: `{{ route('admin.list-appointment') }}?page=${page}`
+                        url: `{{ route('admin.appointment.list') }}?page=${page}`
                     });
 
                     if(res.html === ""){
@@ -122,6 +122,25 @@
                         size: 'md'
                     });
                 }
+
+                const getTotalTodayAppointment = async ($data = null) => {
+                    let url = `/admin/appointment/get-total-today`
+                    let res = await $(this).sendRequest({ url, alertSuccess:false, method:'GET' })
+                    // regex to find match whitespace, open bracket, number, close bracket
+                    let pattern = /(\s\(\d+\))/
+
+                    if(!!document.getElementById('nav-link-appointment-title')){
+                        let tab = document.getElementById('nav-link-appointment-title')
+                        let title = tab.innerText
+                        let search = title.search(pattern)
+
+                        if (search > 0) {
+                            title = title.slice(0, search)
+                        }
+
+                        tab.innerText = title + ` (${res.data})`
+                    }
+                }
             </script>
 
         @endslot
@@ -147,8 +166,6 @@
                                     <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
                                 @endforeach
                             @endslot
-
-
                         </x-admin.form.select>
                     </div>
                 @endslot

@@ -27,18 +27,16 @@
                         </p>
                     </div>
                     <div class="">
-                        @if($queue->doctor)
-                            <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
-                        @endif
-                        @if ($queue->appointment_id)
-                            <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">Appointment</span>
-                        @endif
-                        {{--                    @if($queue->priority > 0)--}}
-                        {{--                        <span class="badge badge-pill badge-danger mr-1 mt-2">--}}
-                        {{--                            <i class="simple-icon-star"></i>--}}
-                        {{--                            {{ $queue->priority ?? '' }}--}}
-                        {{--                        </span>--}}
-                        {{--                    @endif--}}
+                        <x-admin.component.badge
+                            :light="true"
+                            :theme="'secondary'"
+                            :text="$queue->doctor ? $queue->doctor->full_name : null"
+                        />
+
+                        <x-admin.component.badge
+                            :theme="'info'"
+                            :text="$queue->appointment_id ? trans('common.appointments') : null"
+                        />
                     </div>
 
                     <p

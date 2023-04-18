@@ -1,7 +1,7 @@
 <x-admin.component.modal
     :delete="$canDelete"
     :title="'Cancel Confirmation'"
-    :submit="route('admin.drop-appointment', $data->id)"
+    :submit="route('admin.appointment.drop', $data->id)"
     :submitBtnLang="'cancel_appointment'"
 >
     @slot('body')
@@ -16,6 +16,7 @@
         let list = $(`#appointmentList-${ appointmentId }`)
         if (list.length) {
             list.hide('slow', function(){ list.remove(); })
+            getTotalTodayAppointment()
         }
     @endslot
 </x-admin.component.modal>

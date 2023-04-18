@@ -50,6 +50,7 @@
         }
 
         getTotalQueueByRole(roleIds, doctorId)
+        getTotalTodayAppointment()
     })
 
     const addNewQueue = async (queue) => {
@@ -110,6 +111,7 @@
 
         // refreshDataTable()
         getTotalQueueByRole(roleIds, doctorId)
+        getTotalTodayAppointment()
     }
 
     const getTotalQueueByRole = async (roleIds, doctorId) => {

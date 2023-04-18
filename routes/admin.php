@@ -54,12 +54,14 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('home');
     Route::get('/get-doctor-opt/{status?}', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
     Route::get('/get-user-opt', [MainController::class, 'getUserOpt'])->name('get-user-opt');
-    Route::get('/appointment/list', [AppointmentController::class, 'list'])->name('list-appointment');
-    Route::get('/appointment/cancel/{id}', [AppointmentController::class, 'cancel'])->name('cancel-appointment');
-    Route::post('/appointment/drop/{id}', [AppointmentController::class, 'drop'])->name('drop-appointment');
-
-
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
+
+    Route::group(['prefix' => 'appointment', 'as' => 'appointment.'], function () {
+        Route::get('/list', [AppointmentController::class, 'list'])->name('list');
+        Route::get('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('cancel');
+        Route::post('/drop/{id}', [AppointmentController::class, 'drop'])->name('drop');
+        Route::get('/get-total-today', [AppointmentController::class, 'getTotalToday'])->name('get-total-today');
+    });
 
     Route::group(['prefix' => 'print-template', 'as' => 'print-template.'], function () {
         Route::get('/get-checked-item/{id}', [PrintTemplateController::class, 'getCheckedItem'])->name('get-checked-item');
