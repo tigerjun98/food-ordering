@@ -63,6 +63,11 @@ class Appointment extends Model
         ];
     }
 
+    public function scopePending($query)
+    {
+        return $query->where('status', self::PENDING);
+    }
+
     protected function statusExplain(): Attribute
     {
         return Attribute::make(

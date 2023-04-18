@@ -92,10 +92,10 @@ class AppointmentController extends Controller
 
     public function list()
     {
-        return html('admin.appointment.include.list', [
-            'appointments' => Appointment::where('status', Appointment::PENDING)
-                                ->orderBy('appointment_date', 'asc')
-                                ->paginate(10)
-        ]);
+        $appointments = $this->model->Pending()
+            ->orderBy('appointment_date', 'asc')
+            ->paginate(10);
+
+        return html('admin.appointment.include.list', compact('appointments'));
     }
 }
