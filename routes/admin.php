@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/list', [AppointmentController::class, 'list'])->name('list');
         Route::get('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('cancel');
         Route::post('/drop/{id}', [AppointmentController::class, 'drop'])->name('drop');
+        Route::get('/get-total-today', [AppointmentController::class, 'getTotalToday'])->name('get-total-today');
     });
 
     Route::group(['prefix' => 'print-template', 'as' => 'print-template.'], function () {

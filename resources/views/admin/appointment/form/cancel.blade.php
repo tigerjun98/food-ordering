@@ -16,6 +16,7 @@
         let list = $(`#appointmentList-${ appointmentId }`)
         if (list.length) {
             list.hide('slow', function(){ list.remove(); })
+            getTotalTodayAppointment()
         }
     @endslot
 </x-admin.component.modal>

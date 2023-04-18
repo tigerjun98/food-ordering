@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\ModelTrait;
 use App\Traits\Models\FilterTrait;
 use App\Traits\Models\TimestampFormat;
+use Carbon\Carbon;
 
 class Appointment extends Model
 {
@@ -66,6 +67,11 @@ class Appointment extends Model
     public function scopePending($query)
     {
         return $query->where('status', self::PENDING);
+    }
+
+    public function scopeCountToday($query)
+    {
+        return $query->whereDate('appointment_date', Carbon::now()->format('Y-m-d'))->pending()->count();
     }
 
     protected function statusExplain(): Attribute

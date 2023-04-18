@@ -98,4 +98,9 @@ class AppointmentController extends Controller
 
         return html('admin.appointment.include.list', compact('appointments'));
     }
+
+    public function getTotalToday()
+    {
+        return makeResponse(200, 'success', $this->service->getTotalToday());
+    }
 }
