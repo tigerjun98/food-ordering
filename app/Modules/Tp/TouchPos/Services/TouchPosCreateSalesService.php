@@ -10,6 +10,7 @@ use App\Models\Consultation;
 use App\Models\Fee;
 use App\Models\Medicine;
 use App\Models\Prescription;
+use App\Modules\Tp\TouchPos\DynamodServices\DynamodCustomerService;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -66,6 +67,16 @@ class TouchPosCreateSalesService
         return [$note, $fee->price ?? 0];
     }
 
+    public function getCustomerId(): string
+    {
+        if(!$this->consultation->user->touch_pos_cust_id){
+            $user = (new DynamodCustomerService())->createCustomer($this->consultation->user);
+            return $user->touch_pos_cust_id;
+        }
+
+        return $this->consultation->user->touch_pos_cust_id;
+    }
+
     public function createSales(): string
     {
         if(!$this->consultation->touch_pos_requested_at){
@@ -73,26 +84,29 @@ class TouchPosCreateSalesService
             $this->consultation->save();
         }
 
+
         [$desc, $price] = $this->getConsultationFee();
-        $docNo = $this->submitSales($desc, $price, $this->doc_no);
+        $docNo = $this->submitSales($desc, $price, $this->doc_no, $this->getCustomerId());
 
         if($this->consultation->prescriptions){
             foreach ($this->consultation->prescriptions as $prescription){
                 [$desc, $price] = $this->getPrescriptionOrderDetails($prescription);
-                $this->submitSales($desc, $price, $docNo);
+                $this->submitSales($desc, $price, $docNo, $this->getCustomerId());
             }
         }
         return $docNo;
     }
 
-    public function submitSales($stock_desc, $stock_price, $docNo = ""): string
+    public function submitSales($stock_desc, $stock_price, $docNo = "", $cust_id = ''): string
     {
         $create_sales = new TouchPosCreateSales();
         $create_sales->prepare_data(
             $docNo,
             $this->stock_barcode,
             $stock_desc,
-            $stock_price
+            $stock_price,
+            1,
+            $cust_id
         );
 
         $res = $this->service->post('TouchSeries/Order', $create_sales->get_data());

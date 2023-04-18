@@ -28,7 +28,7 @@ class DynamodCustomerService
         $this->page = 1;
     }
 
-    public function createCustomer(User $user)
+    public function createCustomer(User $user): ?User
     {
         $data = array (
             'Customer' =>
@@ -82,10 +82,10 @@ class DynamodCustomerService
             $user->touch_pos_cust_data = json_encode($res->Customer->CustomerRecord, true);
             $user->touch_pos_updated_at = Carbon::now();
             $user->touch_pos_created_at = Carbon::now();
-            return $user->save();
+            $user->save();
+            return $user;
         }
 
-        return false;
     }
 
     public function getCustomers(int $page)
