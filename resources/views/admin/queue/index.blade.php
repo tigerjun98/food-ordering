@@ -95,7 +95,7 @@
                     $('.ajax-load').removeClass('hide')
                     let res = await $(this).sendRequest({
                         method: 'GET',
-                        url: `{{ route('admin.list-appointment') }}?page=${page}`
+                        url: `{{ route('admin.appointment.list') }}?page=${page}`
                     });
 
                     if(res.html === ""){
