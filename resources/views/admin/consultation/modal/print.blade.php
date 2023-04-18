@@ -2,7 +2,7 @@
     $data = $data ?? null;
     $nav = ['print'];
 
-    if( auth()->user()->hasPermissionTo( 'setting-other.print' ) ){
+    if( auth()->user()->can( 'setting-other.print' ) ){
         $nav[] = 'template';
     }
 

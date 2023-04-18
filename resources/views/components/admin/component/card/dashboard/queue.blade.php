@@ -9,7 +9,7 @@ $service = (new \App\Modules\Admin\Queue\Services\QueueCountService());
 @endphp
 
 <p class="lead mb-0">
-    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::RECEPTIONIST ))
+    @if(auth()->user()->can( 'queue.'. Queue::RECEPTIONIST ))
         <button
             onclick="location.href='{{ route('admin.queue.show', Queue::RECEPTIONIST) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.receptionist') }}
@@ -17,7 +17,7 @@ $service = (new \App\Modules\Admin\Queue\Services\QueueCountService());
         </button>
     @endif
 
-    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::DOCTOR ))
+    @if(auth()->user()->can( 'queue.'. Queue::DOCTOR ))
         <button
             onclick="location.href='{{ route('admin.queue.show', Queue::DOCTOR) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.consultation') }}
@@ -25,7 +25,7 @@ $service = (new \App\Modules\Admin\Queue\Services\QueueCountService());
         </button>
     @endif
 
-    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::PHARMACY ))
+    @if(auth()->user()->can( 'queue.'. Queue::PHARMACY ))
         <button
             onclick="location.href='{{ route('admin.queue.show', Queue::PHARMACY) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.pharmacy') }}
@@ -33,7 +33,7 @@ $service = (new \App\Modules\Admin\Queue\Services\QueueCountService());
         </button>
     @endif
 
-    @if(auth()->user()->hasPermissionTo( 'queue.'. Queue::CASHIER ))
+    @if(auth()->user()->can( 'queue.'. Queue::CASHIER ))
         <button
             onclick="location.href='{{ route('admin.queue.show', Queue::CASHIER) }}'"
             type="button" class="btn btn-lg btn-primary">{{ trans('common.cashier') }}

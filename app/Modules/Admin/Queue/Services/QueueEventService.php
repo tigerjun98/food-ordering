@@ -39,6 +39,12 @@ class QueueEventService
         QueueUpdatedEvent::dispatch(Queue::CONSULTED, $msg, $queue);
     }
 
+    public function checkout(Queue $queue, $msg = '')
+    {
+        // Pharmacy to cashier
+        QueueUpdatedEvent::dispatch(Queue::CHECKOUT, $msg, $queue);
+    }
+
     public function completed(Queue $queue, $msg = '')
     {
         QueueUpdatedEvent::dispatch(Queue::COMPLETED, $msg, $queue);

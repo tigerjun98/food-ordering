@@ -43,7 +43,7 @@
                 }
                 break;
             case '{{ Queue::CASHIER }}':
-                if(e.type == '{{ Queue::COMPLETED }}'){
+                if(e.type == '{{ Queue::CHECKOUT }}'){
                     addNewQueue(e.queue)
                 }
                 break;
@@ -108,7 +108,7 @@
             $('#doctor_id').val('').trigger('change')
         }
 
-        refreshDataTable()
+        // refreshDataTable()
         getTotalQueueByRole(roleIds, doctorId)
     }
 

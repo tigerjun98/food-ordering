@@ -78,5 +78,7 @@ return [
     'category' => 'Category',
     'appointment' => 'Appointment',
     'datetime' => 'Date & Time',
-    'appointment_date' => 'Appointment Date'
+    'appointment_date' => 'Appointment Date',
+    'do_search' => 'Search',
+    'appt' => 'Appointment',
 ];
