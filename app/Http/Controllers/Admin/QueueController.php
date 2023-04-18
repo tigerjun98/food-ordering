@@ -124,5 +124,11 @@ class QueueController extends Controller {
     {
         return makeResponse(200, 'success', $this->service->getTotalQueue($doctorId));
     }
+
+    public function revert($queueId)
+    {
+        $this->service->revert( $this->model->findOrFail($queueId) );
+        return makeResponse(200);
+    }
 }
 

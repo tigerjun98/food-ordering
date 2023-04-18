@@ -30,4 +30,5 @@ return [
     'print' => 'Print',
     'back' => 'Back',
     'send' => 'Send',
+    'revert' => 'Revert',
 ];

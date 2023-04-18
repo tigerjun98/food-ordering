@@ -79,6 +79,11 @@
 
                 @if($queue->role == Queue::DOCTOR)
                     <x-admin.component.button
+                        :onclick="'revertPatient('.$queue->id.')'"
+                        :lang="'revert'"
+                        :class="'btn-outline-primary show-when-first '"
+                    />
+                    <x-admin.component.button
                         :redirect="route('admin.consultation.edit', $queue->consultation ?? $queue->user_id)"
                         :lang="$queue->status == \App\Models\Queue::SERVING ? 'consult' : 'continue'"
                         :class="'btn-primary show-when-first '"
