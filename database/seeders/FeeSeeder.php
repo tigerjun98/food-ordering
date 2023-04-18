@@ -104,6 +104,12 @@ class FeeSeeder extends Seeder
                 'price'     => 150,
             ),
             array(
+                'name_en'   => 'Tablets 21pcs',
+                'category'  => ConsultationEnum::TABLET_OR_CAPSULE,
+                'type'      => 21,
+                'price'     => 8,
+            ),
+            array(
                 'name_en'   => 'Tablets 42pcs',
                 'category'  => ConsultationEnum::TABLET_OR_CAPSULE,
                 'type'      => 42,
