@@ -7,7 +7,7 @@ return [
     'gender' => 'Gender',
     'full_name' => 'Full name',
     'occupation' => 'Occupation',
-    'remark_allergic' => 'Remark (Allergic)',
+    'remark_allergic' => 'Remark (Allergic, Medical History, etc.)',
     'remark' => 'Remark',
     'name_cn' => 'Name (CN)',
     'name_en' => 'Name (EN)',
