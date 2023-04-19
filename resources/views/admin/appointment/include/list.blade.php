@@ -43,5 +43,9 @@
                 />
             </div>
         </div>
+
+        <div class="mt-3 mb-0 text-small text-semi-muted">
+            {{ $data->remark }}
+        </div>
     </div>
 @endforeach
