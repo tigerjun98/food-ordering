@@ -74,4 +74,18 @@
 
         @include('admin.queue.js.create')
     @endslot
+
+    @slot('script')
+        let dateTime = $(`#apptDateTime-${ res.data.id }`)
+        let converted = moment(res.data.appointment_date).format('DD MMM, YYYY HH:mm A')
+        dateTime.text(converted)
+
+        let remark = $(`#apptRemark-${ res.data.id }`)
+        if (res.data.remark === null) {
+            remark.removeClass('mt-3')
+        } else {
+            remark.addClass('mt-3')
+        }
+        remark.text(res.data.remark)
+    @endslot
 </x-admin.component.modal>

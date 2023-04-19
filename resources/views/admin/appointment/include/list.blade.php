@@ -35,13 +35,11 @@
             <div class="font-weight-semibold mb-0">
                 {{ $data->patient->full_name_with_group }}
             </div>
-            <p class="font-weight mb-1 mt-1 text-small">{{ $data->dateFormat('appointment_date', 'r') }}</p>
+            <p id="apptDateTime-{{ $data->id }}" class="font-weight mb-1 mt-1 text-small">{{ $data->dateFormat('appointment_date', 'r') }}</p>
         </div>
 
-        @if($data->remark)
-        <div class="mt-3 mb-0 text-small text-semi-muted">
+        <div id="apptRemark-{{ $data->id }}" class="@if($data->remark) mt-3 @endif mb-0 text-small text-semi-muted">
             {{ $data->remark }}
         </div>
-        @endif
     </div>
 @endforeach
