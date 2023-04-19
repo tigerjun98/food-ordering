@@ -48,90 +48,113 @@
         </div>
     </div>
 
-    <x-admin.layout.right-bar
-        :navs="['appointment', 'search']"
-    >
-        @slot('appointment')
-            <div>
-                <div class="" id="appointmentList" style="height: 74vh;padding-top:1.5em"></div>
-                <div class="ajax-load text-center hide">
-                    <div class="spinner"></div>
-                    <br>Loading...
+    @if( auth()->user()->can( 'appointment-management.index' ) )
+        <x-admin.layout.right-bar
+            :navs="['appointment', 'search']"
+        >
+            @slot('appointment')
+                <div>
+                    <div class="" id="appointmentList" style="height: 74vh;padding-top:1.5em"></div>
+                    <div class="ajax-load text-center hide">
+                        <div class="spinner"></div>
+                        <br>Loading...
+                    </div>
+                    <div class="load-max text-center hide">
+                        <p>No more data!</p>
+                    </div>
                 </div>
-                <div class="load-max text-center hide">
-                    <p>No more data!</p>
-                </div>
-            </div>
 
-            <script type="module">
-                let page = 1;
-                let loading = false;
-                const ps = $('#appointmentList').initialiseScrollbar()
+                <script type="module">
+                    let page = 1;
+                    let loading = false;
+                    const ps = $('#appointmentList').initialiseScrollbar()
 
-                const loadAppointmentList = async () => {
+                    const loadAppointmentList = async () => {
 
-                    if(page == 'stop') return true;
+                        if(page == 'stop') return true;
 
-                    $('.ajax-load').removeClass('hide')
-                    let res = await $(this).sendRequest({
-                        method: 'GET',
-                        url: `{{ route('admin.appointment.list') }}?page=${page}`
-                    });
+                        $('.ajax-load').removeClass('hide')
+                        let res = await $(this).sendRequest({
+                            method: 'GET',
+                            url: `{{ route('admin.appointment.list') }}?page=${page}`
+                        });
 
-                    if(res.html === ""){
-                        page = 'stop'
-                        $('.load-max').removeClass('hide')
-                    } else{
-                        page++
+                        if(res.html === ""){
+                            page = 'stop'
+                            $('.load-max').removeClass('hide')
+                        } else{
+                            page++
+                        }
+
+                        $("#appointmentList").append(res.html);
+                        $('.ajax-load').addClass('hide')
+                        ps.update();
                     }
 
-                    $("#appointmentList").append(res.html);
-                    $('.ajax-load').addClass('hide')
-                    ps.update();
-                }
+                    document.querySelector('#appointmentList').addEventListener('ps-y-reach-end', () => {
+                        loadAppointmentList()
+                    });
 
-                document.querySelector('#appointmentList').addEventListener('ps-y-reach-end', () => {
                     loadAppointmentList()
-                });
+                </script>
 
-                loadAppointmentList()
-            </script>
-
-            <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
-                <div style="position:fixed; bottom: 0; width: 100%;">
-                    <div class="separator mt-5 mb-3"></div>
-                    <div class="d-flex mt-1 mb-4"></div>
-                </div>
-            </form>
-        @endslot
-
-        @slot('search')
-            <div class="modal-header mb-5 pt-0">
-                <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
-            </div>
-
-            <x-admin.layout.right-bar.search
-                :filter="\App\Models\Queue::SimpleFilter()"
-            >
-                @slot('extraFilter')
-                    <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
-                    <div class="mt-2">
-                        <x-admin.form.select
-                            :name="'doctor_id'"
-                            :required="false"
-                            :onchange="'refreshDataTable()'"
-                        >
-                            @slot('customOption')
-                                @foreach($doctors as $doctor)
-                                    <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
-                                @endforeach
-                            @endslot
-                        </x-admin.form.select>
+                <form id="js-datatable-filter-form" class="js-datatable-filter-form text-capitalize">
+                    <div style="position:fixed; bottom: 0; width: 100%;">
+                        <div class="separator mt-5 mb-3"></div>
+                        <div class="d-flex mt-1 mb-4"></div>
                     </div>
-                @endslot
-            </x-admin.layout.right-bar.search>
-        @endslot
-    </x-admin.layout.right-bar>
+                </form>
+            @endslot
+
+            @slot('search')
+                <div class="modal-header mb-5 pt-0">
+                    <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
+                </div>
+
+                <x-admin.layout.right-bar.search
+                    :filter="\App\Models\Queue::SimpleFilter()"
+                >
+                    @slot('extraFilter')
+                        <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
+                        <div class="mt-2">
+                            <x-admin.form.select
+                                :name="'doctor_id'"
+                                :required="false"
+                                :onchange="'refreshDataTable()'"
+                            >
+                                @slot('customOption')
+                                    @foreach($doctors as $doctor)
+                                        <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
+                                    @endforeach
+                                @endslot
+                            </x-admin.form.select>
+                        </div>
+                    @endslot
+                </x-admin.layout.right-bar.search>
+            @endslot
+        </x-admin.layout.right-bar>
+    @else
+        <x-admin.layout.search-menu
+            :filter="App\Models\Queue::SimpleFilter()"
+        >
+            @slot('extraFilter')
+                <input type="hidden" name="role" id="setRoleVal" value="{{ $roleId }}">
+                <div class="mt-2">
+                    <x-admin.form.select
+                        :name="'doctor_id'"
+                        :required="false"
+                        :onchange="'refreshDataTable()'"
+                    >
+                        @slot('customOption')
+                            @foreach($doctors as $doctor)
+                                <option @if(request()->doctor_id) selected="selected" @endif value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
+                            @endforeach
+                        @endslot
+                    </x-admin.form.select>
+                </div>
+            @endslot
+        </x-admin.layout.search-menu>
+    @endif
 
     @include('admin.queue.js.script')
 
