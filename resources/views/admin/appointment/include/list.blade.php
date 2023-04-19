@@ -38,6 +38,14 @@
             <p id="apptDateTime-{{ $data->id }}" class="font-weight mb-1 mt-1 text-small">{{ $data->dateFormat('appointment_date', 'r') }}</p>
         </div>
 
+        <div class="d-flex">
+            <x-admin.component.badge
+                :light="true"
+                :theme="'secondary'"
+                :text="$data->doctor->full_name ?? null"
+            />
+        </div>
+
         <div id="apptRemark-{{ $data->id }}" class="@if($data->remark) mt-3 @endif mb-0 text-small text-semi-muted">
             {{ $data->remark }}
         </div>
