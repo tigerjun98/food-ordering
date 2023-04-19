@@ -33,7 +33,7 @@
 
         <div onclick="viewAppointment({{$data->id}})">
             <p class="font-weight-medium mb-0">{{ $data->patient->full_name_with_group }}</p>
-            <p class="font-weight mb-1 mt-1 text-small">{{ $data->dateFormat('appointment_date', 'h:i A') }}</p>
+            <p class="font-weight mb-1 mt-1 text-small">{{ $data->dateFormat('appointment_date', 'r') }}</p>
 
             <div class="d-flex">
                 <x-admin.component.badge
