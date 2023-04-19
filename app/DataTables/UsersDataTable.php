@@ -96,6 +96,13 @@ class UsersDataTable extends DataTable
             ];
         }
 
+        if(auth()->user()->can( 'appointment-management.create' ) ){
+            $actions['appointment'] = [
+                'icon'   => 'simple-icon-notebook',
+                'modal'  => route('admin.appointment.create', 'user_id='.$row->id)
+            ];
+        }
+
         if(auth()->user()->can( 'patient.edit' ) ){
             $actions['edit'] = [
                 'icon'      => 'simple-icon-pencil',
