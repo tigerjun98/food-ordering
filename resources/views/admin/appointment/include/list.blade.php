@@ -8,19 +8,23 @@
                 data-toggle="dropdown"
             ></button>
             <div class="dropdown-menu dropdown-menu-right">
-                <a
-                    class="dropdown-item"
-                    href="javascript:viewAppointment({{$data->id}})"
-                >
-                    {{ trans('common.queue') }}
-                </a>
+                @if( auth()->user()->can( 'queue.create' ) )
+                    <a
+                        class="dropdown-item"
+                        href="javascript:viewAppointment({{$data->id}})"
+                    >
+                        {{ trans('common.queue') }}
+                    </a>
+                @endif
 
-                <a
-                    class="dropdown-item"
-                    href="javascript:editAppointment({{$data->id}})"
-                >
-                    {{ trans('common.edit') }}
-                </a>
+                @if( auth()->user()->can( 'appointment-management.edit' ) )
+                    <a
+                        class="dropdown-item"
+                        href="javascript:editAppointment({{$data->id}})"
+                    >
+                        {{ trans('common.edit') }}
+                    </a>
+                @endif
 
                 <a
                     class="dropdown-item text-danger"
@@ -31,7 +35,7 @@
             </div>
         </div>
 
-        <div onclick="viewAppointment({{$data->id}})">
+        <div @if( auth()->user()->can( 'appointment-management.index' ) ) onclick="viewAppointment({{$data->id}})" @endif>
             <div class="font-weight-semibold mb-0">
                 {{ $data->patient->full_name_with_group }}
             </div>

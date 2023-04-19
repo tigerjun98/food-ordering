@@ -100,14 +100,14 @@ class AppointmentsDataTable extends DataTable
     {
         $actions = [];
 
-        if (auth()->user()->hasPermissionTo('appointment-management.edit')) {
+        if( auth()->user()->can( 'appointment-management.edit' ) ){
             $actions['edit'] = [
                 'icon'      => 'simple-icon-pencil',
                 'modal'     => route('admin.appointment.edit', $row->id)
             ];
         }
 
-        if (auth()->user()->hasPermissionTo('appointment-management.delete')) {
+        if( auth()->user()->can( 'appointment-management.delete' ) ){
             $actions['delete'] = [
                 'size'      => 'md', //[sm, md, lg]
                 'class'     => 'text-danger',
