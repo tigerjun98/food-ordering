@@ -33,22 +33,9 @@
 
         <div onclick="viewAppointment({{$data->id}})">
             <div class="font-weight-semibold mb-0">
-                {{ $data->patient->full_name }}
-                <x-admin.component.badge
-                    :class="'mt-0 ml-1'"
-                    :theme="'secondary'"
-                    :text="$data->patient->group->full_name ?? null"
-                />
+                {{ $data->patient->full_name_with_group }}
             </div>
             <p class="font-weight mb-1 mt-1 text-small">{{ $data->dateFormat('appointment_date', 'r') }}</p>
-
-            <div class="d-flex">
-                <x-admin.component.badge
-                    :light="true"
-                    :theme="'secondary'"
-                    :text="$data->doctor->full_name"
-                />
-            </div>
         </div>
 
         @if($data->remark)

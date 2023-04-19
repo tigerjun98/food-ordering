@@ -20,13 +20,7 @@
                         <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : '#'}}"
                             class="font-weight-medium mb-2">
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
-                            {{ $queue->patient->full_name ?? '-' }}
-
-                            <x-admin.component.badge
-                                :class="'mt-0 ml-1'"
-                                :theme="'secondary'"
-                                :text="$queue->patient->group->full_name ?? null"
-                            />
+                            {{ $queue->patient->full_name_with_group ?? '-' }}
                         </a>
                         <p class="text-muted mb-0 text-small">
                             {{ get_time_ago( strtotime($queue->created_at) ) }}
