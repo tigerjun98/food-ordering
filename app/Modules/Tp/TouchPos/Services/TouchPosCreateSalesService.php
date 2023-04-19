@@ -87,8 +87,7 @@ class TouchPosCreateSalesService
 
             } else{
                 $fees = $this->getMedicineFee($prescription->combination_amount, $prescription->category);
-                $desc = ConsultationEnum::getMedicineListing()[$prescription->category];
-                $this->submitSales($desc, $fees['price'], $docNo, $this->getCustomerId(), $fees['qty']);
+                $this->submitSales($fees['desc'], $fees['price'], $docNo, $this->getCustomerId(), $fees['qty']);
             }
         }
 
@@ -103,18 +102,19 @@ class TouchPosCreateSalesService
         $qty = $this->getQuantity($amount, $category);
 
         if($qty == 1){
-            $price = Fee::where('category', $category)
+            $fee = Fee::where('category', $category)
                 ->where('type', '>=', $amount)
                 ->orderBy('type', 'asc')
-                ->value('price');
+                ->first();
 
         } else{
-            $price = Fee::where('category', $category)->orderBy('type', 'desc')->value('price');
+            $fee = Fee::where('category', $category)->orderBy('type', 'desc')->first();
             // $price = $fee * $qty;
         }
 
-        $arr['price'] = $price;
-        $arr['qty'] = $qty;
+        $arr['desc']    = $fee->full_name;
+        $arr['price']   = $fee->price;
+        $arr['qty']     = $qty;
 
         return $arr;
     }
