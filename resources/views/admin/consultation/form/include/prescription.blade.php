@@ -151,8 +151,8 @@
 
             <div class="row">
                 <div class="col-12">
-                    <h6></h6>
-                    @foreach(\App\Models\Prescription::getDirectionList() as $key => $label)
+                    {{-- <h6></h6> --}}
+                    {{-- @foreach(\App\Models\Prescription::getDirectionList() as $key => $label)
                         <div class="custom-control custom-radio">
                             <input type="radio"
                                    name="direction[{{$id}}]"
@@ -165,7 +165,11 @@
                                    for="direction-{{$key}}-{{$id}}">{{ $label }}
                             </label>
                         </div>
-                    @endforeach
+                    @endforeach --}}
+                    <x-admin.modules.consultation.form.prescription.direction
+                        :id="$id"
+                        :model="(isset($data) && $data ? $data : [])"
+                    />
                 </div>
             </div>
         </div>
