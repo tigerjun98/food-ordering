@@ -104,6 +104,46 @@
                         <div class="d-flex mt-1 mb-4"></div>
                     </div>
                 </form>
+                <script type="text/javascript">
+                    const viewAppointment = async (appointmentId) => {
+                        $(this).openModal({
+                            url: `/admin/appointment/show/${appointmentId}`
+                        });
+                    }
+
+                    const editAppointment = async (appointmentId) => {
+                        $(this).openModal({
+                            url: `/admin/appointment/edit/${appointmentId}`
+                        });
+                    }
+
+                    const cancelAppointment = async (appointmentId) => {
+                        $(this).openModal({
+                            url: `/admin/appointment/cancel/${appointmentId}`,
+                            size: 'md'
+                        });
+                    }
+
+                    const getTotalTodayAppointment = async ($data = null) => {
+                        let url = `/admin/appointment/get-total-today`
+                        let res = await $(this).sendRequest({ url, alertSuccess:false, method:'GET' })
+                        // regex to find match whitespace, open bracket, number, close bracket
+                        let pattern = /(\s\(\d+\))/
+
+                        if(!!document.getElementById('nav-link-appt-title')){
+                            let tab = document.getElementById('nav-link-appt-title')
+                            let title = tab.innerText
+                            let search = title.search(pattern)
+
+                            if (search > 0) {
+                                title = title.slice(0, search)
+                            }
+
+                            tab.innerText = title + ` (${res.data})`
+                        }
+                    }
+                </script>
+
             @endslot
 
             @slot('search')
@@ -157,44 +197,4 @@
     @endif
 
     @include('admin.queue.js.script')
-
-    <script type="text/javascript">
-        const viewAppointment = async (appointmentId) => {
-            $(this).openModal({
-                url: `/admin/appointment/show/${appointmentId}`
-            });
-        }
-
-        const editAppointment = async (appointmentId) => {
-            $(this).openModal({
-                url: `/admin/appointment/edit/${appointmentId}`
-            });
-        }
-
-        const cancelAppointment = async (appointmentId) => {
-            $(this).openModal({
-                url: `/admin/appointment/cancel/${appointmentId}`,
-                size: 'md'
-            });
-        }
-
-        const getTotalTodayAppointment = async () => {
-            let url = `/admin/appointment/get-total-today`
-            let res = await $(this).sendRequest({ url, alertSuccess:false, method:'GET' })
-            // regex to find match whitespace, open bracket, number, close bracket
-            let pattern = /(\s\(\d+\))/
-
-            if(!!document.getElementById('nav-link-appt-title')){
-                let tab = document.getElementById('nav-link-appt-title')
-                let title = tab.innerText
-                let search = title.search(pattern)
-
-                if (search > 0) {
-                    title = title.slice(0, search)
-                }
-
-                tab.innerText = title + ` (${res.data})`
-            }
-        }
-    </script>
 @stop
