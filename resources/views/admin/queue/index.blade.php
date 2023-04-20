@@ -124,7 +124,7 @@
                         });
                     }
 
-                    const getTotalTodayAppointment = async ($data = null) => {
+                    const getTotalTodayAppointment = async () => {
                         let url = `/admin/appointment/get-total-today`
                         let res = await $(this).sendRequest({ url, alertSuccess:false, method:'GET' })
                         // regex to find match whitespace, open bracket, number, close bracket
