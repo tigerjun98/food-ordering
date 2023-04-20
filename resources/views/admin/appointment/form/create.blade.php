@@ -87,5 +87,7 @@
             remark.addClass('mt-3')
         }
         remark.text(res.data.remark)
+
+        getTotalTodayAppointment()
     @endslot
 </x-admin.component.modal>
