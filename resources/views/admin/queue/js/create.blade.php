@@ -55,10 +55,7 @@
 
     function getRelatedStatus(role) {
 
-        if(     role === '{{ Queue::RECEPTIONIST }}'
-            ||  role === '{{ Queue::PHARMACY }}'
-            ||  role === '{{ Queue::CASHIER }}'
-        ){
+        if(role === '{{ Queue::RECEPTIONIST }}' ||  role === '{{ Queue::PHARMACY }}'){
             initSelect2Status([
                 waiting, pending
             ])
@@ -66,6 +63,11 @@
         } else if( role === '{{ Queue::DOCTOR }}'){
             initSelect2Status([
                 serving, holding
+            ])
+
+        } else if(role === '{{ Queue::CASHIER }}') {
+            initSelect2Status([
+                waiting, pending, completed
             ])
 
         } else {
