@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
         // Route::get('/listing/{roleId}', [QueueController::class, 'listing'])->name('listing');
         Route::get('/get-specific-box/{queueId}', [QueueController::class, 'getSpecificBox'])->name('get-specific-box');
         Route::post('/get-total-queue/{doctorId}', [QueueController::class, 'getTotalQueue'])->name('get-total-queue');
+        Route::post('/revert/{queueId}', [QueueController::class, 'revert'])->name('revert');
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
