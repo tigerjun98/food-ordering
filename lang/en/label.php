@@ -76,4 +76,9 @@ return [
     'groups' => 'Groups',
     'price' => 'Price',
     'category' => 'Category',
+    'do_search' => 'Search',
+    'appt' => 'Appointment',
+    'appointment' => 'Appointment',
+    'datetime' => 'Date & Time',
+    'appointment_date' => 'Appointment Date'
 ];

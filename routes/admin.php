@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PrintTemplateController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\FeeController;
+use App\Http\Controllers\Admin\AppointmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,15 +46,22 @@ Route::group(['middleware' => ['auth:admin']], function () {
         'group'             => GroupController::class,
         'profile'           => ProfileController::class,
         'fee'               => FeeController::class,
+        'appointment'       => AppointmentController::class,
     ]);
 
     Route::post('/option', [AdminController::class, 'selectOption'])->name('selectOption');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('home');
-    Route::get('/get-doctor-opt', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
+    Route::get('/get-doctor-opt/{status?}', [MainController::class, 'getDoctorOpt'])->name('get-doctor-opt');
     Route::get('/get-user-opt', [MainController::class, 'getUserOpt'])->name('get-user-opt');
-
     Route::post('/get-queue-count', [DashboardController::class, 'getQueueCount'])->name('get-queue-count');
+
+    Route::group(['prefix' => 'appointment', 'as' => 'appointment.'], function () {
+        Route::get('/list', [AppointmentController::class, 'list'])->name('list');
+        Route::get('/cancel/{id}', [AppointmentController::class, 'cancel'])->name('cancel');
+        Route::post('/drop/{id}', [AppointmentController::class, 'drop'])->name('drop');
+        Route::get('/get-total-today', [AppointmentController::class, 'getTotalToday'])->name('get-total-today');
+    });
 
     Route::group(['prefix' => 'print-template', 'as' => 'print-template.'], function () {
         Route::get('/get-checked-item/{id}', [PrintTemplateController::class, 'getCheckedItem'])->name('get-checked-item');

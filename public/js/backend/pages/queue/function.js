@@ -44,7 +44,7 @@ const deleteQueue = async (queueId) => {
 
 function refreshDataTable() {
     let roleId = $('#setRoleVal').val()
-    let filterForm = $('#js-datatable-filter-form').serialize()
+    let filterForm = $('.js-datatable-filter-form').serialize()
     window.history.replaceState({ id: "100" }, "Filter", `/admin/queue/show/${roleId}?${filterForm}`);
     $('#queueListingWrapper').setHtml({
         url: `/admin/queue/show/${roleId}?${filterForm}`

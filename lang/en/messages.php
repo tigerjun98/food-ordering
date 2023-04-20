@@ -29,4 +29,5 @@ return [
     'patient_exists' => 'Patient exists!',
     'patient_not_exists' => 'Patient not exists!',
     'attachment_expired' => 'Attachment expired!',
+    'user_appointmented' => 'User had a appointment on that date',
 ];

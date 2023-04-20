@@ -34,4 +34,9 @@ trait SelectOption {
     {
         return $query->where('status', StatusEnum::ACTIVE);
     }
+
+    public function scopeFilterOptionStatus($query, $status)
+    {
+        return $status ? $query->where('status', (int) $status) : $query;
+    }
 }

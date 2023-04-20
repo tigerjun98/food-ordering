@@ -17,25 +17,26 @@
             <div class="justify-content-between">
                 <div class="">
                     <div>
-                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : 'javascript:viewMedicine('.$queue->consultation_id.')'}}"
-                            class="font-weight-medium mb-1" >
+                        <a href="{{ $queue->consultation_id ? 'javascript:viewMedicine('.$queue->consultation_id.')' : '#'}}"
+                            class="font-weight-medium mb-2">
                             <span class="mr-1 font-weight-semibold">#{{ $queue->sorting }}</span>
-                            {{ $queue->patient->full_name ?? '-' }}
+                            {{ $queue->patient->full_name_with_group ?? '-' }}
                         </a>
                         <p class="text-muted mb-0 text-small">
                             {{ get_time_ago( strtotime($queue->created_at) ) }}
                         </p>
                     </div>
                     <div class="">
-                        @if($queue->doctor)
-                            <span class="badge badge-pill badge-outline-secondary mr-1 mt-2">{{ $queue->doctor ? $queue->doctor->full_name : '' }}</span>
-                        @endif
-                        {{--                    @if($queue->priority > 0)--}}
-                        {{--                        <span class="badge badge-pill badge-danger mr-1 mt-2">--}}
-                        {{--                            <i class="simple-icon-star"></i>--}}
-                        {{--                            {{ $queue->priority ?? '' }}--}}
-                        {{--                        </span>--}}
-                        {{--                    @endif--}}
+                        <x-admin.component.badge
+                            :light="true"
+                            :theme="'secondary'"
+                            :text="$queue->doctor ? $queue->doctor->full_name : null"
+                        />
+
+                        <x-admin.component.badge
+                            :theme="'info'"
+                            :text="$queue->appointment_id ? trans('common.appointments') : null"
+                        />
                     </div>
 
                     <p
@@ -120,5 +121,4 @@
         </div>
     </div>
 </li>
-
 
