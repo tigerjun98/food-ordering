@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
     // Route::customResource('user', UserController::class);
 
+    Route::post('/post-job', [AdminController::class, 'testJob'])->name('test-job');
+
     Route::customResources([
         'role'              => RoleController::class,
         'user'              => UserController::class,

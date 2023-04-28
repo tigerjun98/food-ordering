@@ -59,6 +59,12 @@
                                 :text="trans('button.create')"
                                 :onclick="'createQueue()'"
                             />
+
+                            <x-admin.component.button
+                                :class="'btn-lg btn-primary'"
+                                :text="trans('button.test')"
+                                :onclick="'createJob()'"
+                            />
                         @endif
                     </div>
                 </div>
@@ -71,6 +77,10 @@
 @push('js')
     function createQueue(){
         $(this).openModal({ url: '{{ route('admin.queue.create') }}' })
+    }
+
+    async function createJob(){
+        let res = await $(this).sendRequest({ url: '{{ route('admin.test-job') }}' });
     }
 @endpush
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\TestJob;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\View;
 class AdminController extends Controller
 {
     use ApiResponser;
+
+    public function testJob()
+    {
+        TestJob::dispatch();
+        return makeResponse(200);
+    }
 
     public function index()
     {

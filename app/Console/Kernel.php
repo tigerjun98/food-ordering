@@ -21,11 +21,11 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
 
-            \Log::error('haha');
+            \Log::error('schedule - 10 Mins');
 //            $this->cancelExpiredOrder();
 //            $this->clearExpiredResetPasswordToken();
 //            Artisan::call('')
-        })->everyMinute();
+        })->everyTenMinutes();
     }
 
     protected function commands()
