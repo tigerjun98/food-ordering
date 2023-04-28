@@ -38,6 +38,7 @@ class TestJob implements ShouldQueue
      */
     public function handle()
     {
+        sleep(60);
         \Log::error('Test Job');
     }
 
