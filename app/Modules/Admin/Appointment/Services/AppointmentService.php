@@ -23,7 +23,7 @@ class AppointmentService
         $isAppointmented = self::isAppointmented($request['user_id'], $request['appointment_date']);
 
         return ($isAppointmented && $isCreate)
-            ? throwErr(trans('messages.user_appointmented'))
+            ? throwErr(trans('messages.user_appointed'))
             : $this->model->updateOrCreate(['id' => $request['id']], $request);
     }
 
