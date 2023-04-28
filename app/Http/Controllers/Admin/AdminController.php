@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\TestEBJob2;
 use App\Jobs\TestJob;
 use App\Models\User;
 use App\Traits\ApiResponser;
@@ -17,7 +18,8 @@ class AdminController extends Controller
 
     public function testJob()
     {
-        TestJob::dispatch()->delay(Carbon::now()->addSeconds(10));
+//        TestJob::dispatch()->delay(Carbon::now()->addSeconds(10));
+        TestEBJob2::dispatch();
         return makeResponse(200);
     }
 

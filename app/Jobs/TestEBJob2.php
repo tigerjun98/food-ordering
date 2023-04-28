@@ -2,16 +2,17 @@
 
 namespace App\Jobs;
 
-use App\Models\Log;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Models\Admin;
+use Faker\Factory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-class TestJob implements ShouldQueue
+use Illuminate\Support\Str;
+
+class TestEBJob2 implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,9 +21,6 @@ class TestJob implements ShouldQueue
      *
      * @return void
      */
-    protected $sendTo;
-    protected $details;
-    protected $type;
 
     public $timeout = 1500;
 
@@ -38,8 +36,20 @@ class TestJob implements ShouldQueue
      */
     public function handle()
     {
-        sleep(60);
-        \Log::error('Test Job');
+        $faker = Factory::create();
+
+        $admin = [
+            'name' => $faker->userName(),
+            'name_en' => $faker->name(),
+            'phone' => '601'.$faker->randomNumber(8),
+            'email' => $faker->companyEmail(),
+            'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
+            'remember_token' => Str::random(10),
+        ];
+
+        Admin::create($admin);
+
+        \Log::error('Test Job done');
     }
 
 }
