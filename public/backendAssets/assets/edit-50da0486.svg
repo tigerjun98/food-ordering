@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="Group_622" data-name="Group 622" transform="translate(3501 -2564)">
+    <rect id="Rectangle_1678" data-name="Rectangle 1678" width="16" height="16" transform="translate(-3501 2564)" fill="none"/>
+    <g id="pencil" transform="translate(-3499.448 2565.552)">
+      <path id="Path_411" data-name="Path 411" d="M313.949,1.6l-1.6-1.6-1.87,1.87,1.336,3.473Z" transform="translate(-302.656)" fill="#c29971"/>
+      <path id="Path_412" data-name="Path 412" d="M334.629,63.64l-2.939,2.939,2.672.534,1.87-1.87Z" transform="translate(-323.335 -62.037)" fill="#8d491c"/>
+      <path id="Path_413" data-name="Path 413" d="M.862,406.5,0,409.161l2.828-1.76Z" transform="translate(0 -396.265)" fill="#373e9f"/>
+      <path id="Path_414" data-name="Path 414" d="M0,423.226l2.657-.862L2.3,420.932Z" transform="translate(-0.002 -410.329)" fill="#340d66"/>
+      <path id="Path_415" data-name="Path 415" d="M38.1,324.7l-3.206-1.069-.677,2.087.9.9Z" transform="translate(-33.354 -315.477)" fill="#f6d5b3"/>
+      <path id="Path_416" data-name="Path 416" d="M69.857,347.293l.9.9,2.087-.677-.534-2.672Z" transform="translate(-68.097 -336.156)" fill="#dc9e74"/>
+      <path id="Path_417" data-name="Path 417" d="M124.734,144.169l1.6,1.6,6.282-6.282-1.6-1.6-4.186,2.048Z" transform="translate(-121.592 -134.414)" fill="#b2774f"/>
+      <path id="Path_418" data-name="Path 418" d="M0,0H8.883V2.267H0Z" transform="translate(1.538 8.151) rotate(-45)" fill="#eec7a0"/>
+    </g>
+  </g>
+</svg>
