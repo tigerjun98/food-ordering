@@ -54,7 +54,7 @@ class ConsultationStoreRequest extends FormRequest
             'diagnoses.*'                       => ['nullable'],
             'specialists.*'                     => ['nullable'],
             'syndromes.*'                       => ['nullable'],
-            'direction.*'                       => ['nullable'],//['nullable', 'in:'.arrayToString(Prescription::getDirectionList())],
+            'direction.*'                       => ['nullable'],
             'remark.*'                          => ['nullable', 'string'],
             'advise'                            => ['nullable', 'string'],
             'symptom'                           => ['required', 'string'],
