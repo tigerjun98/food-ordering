@@ -153,7 +153,7 @@
                 <div class="col-12">
                     <x-admin.modules.consultation.form.prescription.direction
                         :id="$id"
-                        :model="(isset($data) && $data ? $data : [])"
+                        :prescription="$data ?? null"
                     />
                 </div>
             </div>
