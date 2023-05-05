@@ -42,7 +42,7 @@ class Prescription extends Model
     protected function direction(): Attribute
     {
         return Attribute::make(
-            get: fn (string $direction) => array_flip(array_map('intval', explode(',', $direction))),
+            get: fn (string|null $direction) => array_flip(array_map('intval', explode(',', ($direction ?? '')))),
         );
     }
 
