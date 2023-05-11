@@ -4,7 +4,9 @@ namespace App\DataTables;
 
 use App\Entity\Enums\StatusEnum;
 use App\Models\Admin;
+use App\Models\Bid;
 use App\Models\Medicine;
+use App\Models\PrescriptionCombination;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -21,9 +23,23 @@ class MedicinesDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
+
+    public function getStock($id): int
+    {
+        return PrescriptionCombination::where('medicine_id', $id)
+            ->sum('quantity');
+    }
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        $query = Medicine::query();
+        $query = Medicine::query()->joinSub(function ($subquery) {
+            $subquery->from('prescription_combinations')
+                ->select('medicine_id', \DB::raw('SUM(quantity) as stock'))
+                ->groupBy('medicine_id');
+        }, 'prescription_combinations', function ($join) {
+            $join->on('medicines.id', '=', 'prescription_combinations.medicine_id');
+        });
+
         return (new EloquentDataTable($query))
             // ->addIndexColumn()
             ->editColumn('updated_at', function($row){
@@ -47,6 +63,7 @@ class MedicinesDataTable extends DataTable
     {
         return [
             Column::make('full_name')->title('Name'),
+            Column::make('stock'),
             Column::make('status'),
             Column::make('sku'),
             Column::make('type'),
@@ -92,7 +109,7 @@ class MedicinesDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(6)
+                    ->orderBy(7)
                     //->dom('Bfrtip')
 //                    ->orderBy(0)
                     ->selectStyleSingle()
