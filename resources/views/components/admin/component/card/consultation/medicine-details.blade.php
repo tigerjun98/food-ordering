@@ -1,12 +1,25 @@
+@if(isset($prescriptions) && count($prescriptions) > 0)
+    <div style="margin-top: -20px; position: sticky; top: -20px; z-index: 9;">
+        <x-admin.component.status-bar
+            :class="'col-12 pl-4 mb-3'"
+            :type="'info'"
+            :message="$prescriptions[0]->consultation->patient->full_name_with_group"
+        />
+    </div>
+@endif
+
 @forelse($prescriptions as $prescription)
     <div class="mb-4 hover-box">
-        <div class="row mb-2">
-            <x-admin.layout.info
-                :col="'md-12'"
-                :value="$prescription->category_explain"
-                :label="trans('label.prescription_category')"
-            />
-        </div>
+        <h4 class="mb-4 title-separator-line">
+            <span>{{ $prescription->category_explain }}</span>
+        </h4>
+{{--        <div class="row mb-2">--}}
+{{--            <x-admin.layout.info--}}
+{{--                :col="'md-12'"--}}
+{{--                :value="$prescription->category_explain"--}}
+{{--                :label="trans('label.prescription_category')"--}}
+{{--            />--}}
+{{--        </div>--}}
 
 
         @if( in_array($prescription->category, array_keys(\App\Models\Medicine::getCategoryList())) && $prescription->combinations )

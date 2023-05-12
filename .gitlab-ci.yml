@@ -13,7 +13,7 @@ building:
     - php artisan config:clear
     - php artisan storage:link
     - sudo chmod -R 775 storage
-    - npm install
+    - sudo npm install
     - npm run build:admin
   only:
     - staging
