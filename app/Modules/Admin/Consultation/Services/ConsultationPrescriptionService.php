@@ -46,13 +46,14 @@ class ConsultationPrescriptionService
             'sorting'           => $this->sorting++
         ];
 
-
         foreach( $columns as $column ){
             $prescription[$column] = $request[$column][$key] ?? null;
+            if ($column === 'direction' && (! is_null($prescription[$column])) ) {
+                $prescription[$column] = implode(',', $prescription[$column]);
+            }
         }
         $prescription = $this->model->create($prescription);
         return $prescription;
-
     }
 
     public function store(array $request): Consultation

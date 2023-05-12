@@ -151,21 +151,10 @@
 
             <div class="row">
                 <div class="col-12">
-                    <h6></h6>
-                    @foreach(\App\Models\Prescription::getDirectionList() as $key => $label)
-                        <div class="custom-control custom-radio">
-                            <input type="radio"
-                                   name="direction[{{$id}}]"
-                                   id="direction-{{$key}}-{{$id}}"
-                                   value="{{ $key }}"
-                                   class="custom-control-input"
-                                   @if(isset($data) && $data->direction == $key) checked @endif
-                            />
-                            <label class="custom-control-label"
-                                   for="direction-{{$key}}-{{$id}}">{{ $label }}
-                            </label>
-                        </div>
-                    @endforeach
+                    <x-admin.modules.consultation.form.prescription.direction
+                        :id="$id"
+                        :prescription="$data ?? null"
+                    />
                 </div>
             </div>
         </div>

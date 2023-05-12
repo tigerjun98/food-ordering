@@ -39,6 +39,20 @@ class Prescription extends Model
             ->orderBy('sorting', 'asc');
     }
 
+    protected function direction(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string|null $direction) => array_flip(array_map('intval', explode(',', ($direction ?? '')))),
+        );
+    }
+
+    protected function directionExplain(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::getDirectionList()[$this->direction] ?? ''
+        );
+    }
+
     public static function getDirectionList(): array
     {
         return [
@@ -47,13 +61,6 @@ class Prescription extends Model
             3 => trans('common.empty_stomach'),
             4 => trans('common.when_need'),
         ];
-    }
-
-    protected function directionExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => self::getDirectionList()[$this->direction] ?? ''
-        );
     }
 
     protected function metricExplain(): Attribute

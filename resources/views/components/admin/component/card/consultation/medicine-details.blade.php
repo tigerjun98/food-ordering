@@ -111,9 +111,22 @@
             <div class="row mb-2">
                 <x-admin.layout.info
                     :col="'md-12'"
-                    :value="$prescription->direction_explain"
                     :label="trans('label.direction')"
-                />
+                >
+                    @php
+                        $direction_list = \App\Models\Prescription::getDirectionList();
+                        $directions = array_flip($prescription->direction);
+                    @endphp
+                    @slot('value')
+                        @foreach($directions as $key => $direction)
+                            {{
+                                ($key !== array_key_last($directions))
+                                    ? $direction_list[$direction].', '
+                                    : $direction_list[$direction].'.'
+                            }}
+                        @endforeach
+                    @endslot
+                </x-admin.layout.info>
             </div>
 
         @endif

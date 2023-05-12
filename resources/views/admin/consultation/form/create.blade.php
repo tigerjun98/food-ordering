@@ -111,11 +111,23 @@
             @if(!$consultation)
                 addPrescriptions();
             @else
+                initializeDirectionSelect2()
                 @foreach($consultation->prescriptions as $key => $prescription)
                     initializeMedicineSelect2({{ $prescription->id }})
                 @endforeach
             @endif
         })
+
+        function initializeDirectionSelect2() {
+            $(".select2-direction").select2({
+                theme: "bootstrap",
+                dir: "ltr",
+                placeholder: "",
+                maximumSelectionSize: 6,
+                containerCssClass: ":all:",
+                allowClear: true,
+            });
+        }
 
         const countDailyDose = (id) => {
             let totalDailyDose = parseInt($(`#timePerDay${id}`).val()) * parseInt($(`#timePerDose${id}`).val())
@@ -193,6 +205,7 @@
             let html = `@include('admin.consultation.form.include.prescription')`;
             html = html.replaceAll('*009b*', uniqid)
             $('#prescriptionsWrapper').append(html)
+            initializeDirectionSelect2()
         }
 
         const initializeMedicineSelect2 = (id) => {
