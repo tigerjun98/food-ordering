@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class UserStoreRequest extends FormRequest
@@ -33,50 +34,17 @@ class UserStoreRequest extends FormRequest
      * @return array
      */
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'nric' => str_replace('-', '', $this->nric),
-            'phone' => str_replace('+', '', $this->phone)
-        ]);
-    }
-
     public function rules()
     {
         $validation = [
-            'id'                                => ['integer'],
-            'name_en'                           => ['required', 'string'],
-            'name_cn'                           => ['nullable', 'string'],
-            'nric'                              => ['required', 'string', Rule::unique('users')->ignore(request()->id, 'id')],
-            'email'                             => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
-            'occupation'                        => ['nullable', 'string'],
-            'dob'                               => ['nullable', 'date_format:Y-m-d', 'before:'.Carbon::now()],
-            'remark'                            => ['nullable', 'string'],
-            'remark_allergic'                   => ['nullable', 'string'],
-            'gender'                            => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
-            'emergency_contact_name'            => ['nullable', 'string'],
-            'emergency_contact_no'              => ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
-            'emergency_contact_relationship'    => ['nullable', 'string'],
-            'state'                             => ['nullable', 'string', 'in:'.arrayToString(User::getStatesList())],
-            'area'                              => ['nullable', 'string'],
-            'postcode'                          => ['nullable', 'digits:5'],
-            'address'                           => ['nullable', 'string'],
-            'nationality'                       => ['required', 'in:'.arrayToString(CountryEnum::getCountryList(false))],
-            'group_id'                          => ['nullable', 'exists:groups,id'],
+            'id'            => ['integer'],
+            'first_name'    => ['required', 'string', 'max:50'],
+            'last_name'     => ['required', 'string', 'max:50'],
+            'contact'       => ['nullable', 'string', Rule::unique('users')->ignore(request()->id, 'id')],
+            'email'         => ['nullable', 'email', Rule::unique('users')->ignore(request()->id, 'id')],
+            'password'      => ['nullable', 'confirmed', Password::min(6)], // Password::min(6)->uncompromised()
         ];
 
-        $validation['phone'] = request()->phone
-            ? ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('users')->ignore(request()->id, 'id')]
-            : ['nullable'];
-
         return $validation;
-    }
-
-    protected function passedValidation()
-    {
-        // https://stackoverflow.com/questions/31662977/how-to-modify-request-input-after-validation-in-laravel
-        $this->merge(
-            [ 'nric' => str_replace('-', '', $this->nric) ]
-        );
     }
 }

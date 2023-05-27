@@ -22,38 +22,11 @@
         </a>
     </div>
 
-    <a class="navbar-logo" href="{{route('admin.home')}}">
-        <img src="{{ Vite::image('icons/logo.webp') }}" />
-{{--        <span class="logo-mobile d-block d-xs-none"></span>--}}
+    <a class="navbar-logo" href="#">
+        <img src="{{ Vite::image('icons/logo.jpeg') }}" />
     </a>
 
     <div class="navbar-right">
-{{--        <div class="header-icons d-inline-block align-middle">--}}
-{{--            <div class="position-relative d-inline-block">--}}
-{{--                <button class="header-icon btn btn-empty" type="button" id="notificationButton"--}}
-{{--                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                    <i class="simple-icon-bell"></i>--}}
-{{--                    <span class="count">3</span>--}}
-{{--                </button>--}}
-{{--                <div class="dropdown-menu dropdown-menu-right mt-3 position-absolute" id="notificationDropdown">--}}
-{{--                    <div class="scroll">--}}
-{{--                        <div class="d-flex flex-row mb-3 pb-3 border-bottom">--}}
-{{--                            <a href="#">--}}
-{{--                                <img src="img/profiles/l-2.jpg" alt="Notification Image"--}}
-{{--                                     class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />--}}
-{{--                            </a>--}}
-{{--                            <div class="pl-3">--}}
-{{--                                <a href="#">--}}
-{{--                                    <p class="font-weight-medium mb-1">Joisse Kaycee just sent a new comment!</p>--}}
-{{--                                    <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
         <div class="user d-inline-block">
             <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
@@ -63,24 +36,13 @@
                     </span>
             </button>
 
-            <div class="dropdown-menu dropdown-menu-right mt-3">
-{{--                @if(\Illuminate\Support\Facades\Gate::allows('log_management'))--}}
-{{--                    <a class="dropdown-item" href="{{route('admin.log.')}}">--}}
-{{--                        <i class="iconsminds-monitoring mr-1"></i>{{ __('common.logs') }}--}}
-{{--                    </a>--}}
-{{--                @endif--}}
-                <a class="dropdown-item" href="{{ route('admin.profile.index') }}">
-                    <i class="iconsminds-profile mr-1"></i>
-                    {{ __('common.profile') }}
-                </a>
-                <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="iconsminds-anchor mr-1"></i>
-                    {{ __('common.logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
+            @if(auth()->guard()->name == 'admin')
+                <x-admin.header />
+            @elseif(auth()->guard()->name == 'merchant')
+                <x-merchant.header />
+            @else
+                <x-user.user-header />
+            @endif
         </div>
     </div>
 </nav>

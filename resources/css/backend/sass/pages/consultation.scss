@@ -23,7 +23,26 @@
 #patientHistoryList{
     height: 74vh;
     padding-top: 1.5rem;
+}
 
+.title-separator-line{
+    position: relative;
 
+    span{
+        background: #fff;
+        width: fit-content;
+        display: block;
+        position: relative;
+        padding-right: 25px;
+    }
 
+    &:before{
+        content: "";
+        height: 1px;
+        width: 100%;
+        background: #e7e7e7;
+        position: absolute;
+        display: block;
+        top: 50%;
+    }
 }

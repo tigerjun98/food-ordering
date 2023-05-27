@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class AuthenticatedSessionController extends Controller
@@ -19,7 +20,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('admin.auth.login');
+        return view('user.auth.login');
     }
 
     /**
@@ -34,7 +35,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return makeResponse(201, trans('common.operation_success'), [
+            'redirect' => Session::pull('url.intended', \route('order.index'))
+        ]);
     }
 
     public function storeAdmin(LoginRequest $request)
@@ -54,12 +57,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::guard('user')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

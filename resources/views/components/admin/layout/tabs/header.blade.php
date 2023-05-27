@@ -12,7 +12,7 @@
                 role="tab"
                 aria-selected="true"
             >
-                <span id="nav-link-{{ $item }}-title">{{ __('label.'.$item) }}</span>
+                <span id="nav-link-{{ $item }}-title">{{ $item }}</span>
             </a>
         </li>
     @endforeach

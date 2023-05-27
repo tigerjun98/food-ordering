@@ -17,8 +17,8 @@ class RouteMixin
                         static::get('/create', [$controller, 'create'])->name('create');
                         static::post('/store', [$controller, 'store'])->name('store');
                         static::get('/edit/{id}', [$controller, 'edit'])->name('edit');
-                        static::post('edit/{id}', [$controller, 'update'])->name('update');
-                        static::get('destroy/{id}', [$controller, 'delete'])->name('delete');
+                        static::post('update/{id}', [$controller, 'update'])->name('update');
+                        static::get('delete/{id}', [$controller, 'delete'])->name('delete');
                         static::post('destroy/{id}', [$controller, 'destroy'])->name('destroy');
                     });
                 }

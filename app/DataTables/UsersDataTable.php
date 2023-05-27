@@ -22,43 +22,23 @@ class UsersDataTable extends DataTable
     {
         $query = User::query();
         return (new EloquentDataTable($query))
-            // ->addIndexColumn()
             ->editColumn('updated_at', function($row){
                 return $row->updated_at;
             })->addColumn('full_name', function($row){
                 return $row->full_name;
             })->addColumn('action', function($row){
                 return $this->action($row);
-            })->editColumn('nationality', function($row){
-                return $row->nationality_explain;
-            })->editColumn('dob', function($row){
-                return $row->dob_with_age;
-            })->editColumn('phone', function($row){
-                return $row->phone_format;
-            })->editColumn('nric', function($row){
-                return nricFormat($row->nric);
-            })->editColumn('gender', function($row){
-                return $row->gender_explain;
             })->filter(function ($model) {
                 return $model->filter();
-            })->rawColumns(['image', 'action'])
-            ->orderColumn('full_name', function ($query, $order) {
-                $query->orderByRaw("ISNULL(name_en), name_en $order");
-            })->editColumn('group_id', function($row){
-                return $row->group->full_name ?? '-';
             });
     }
 
     public function getColumns(): array
     {
         return [
-            Column::make('nric')->title('NRIC/Passport'),
-            Column::make('group_id')->title('Group'),
             Column::make('full_name'),
-            Column::make('phone'),
-            Column::make('gender'),
-            Column::make('nationality'),
-            Column::make('dob')->title('DOB (Age)'),
+            Column::make('email'),
+            Column::make('contact'),
             Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
@@ -75,49 +55,17 @@ class UsersDataTable extends DataTable
             ],
         ];
 
-        if(auth()->user()->can( 'queue.create' ) ){
-            $actions['queue'] = [
-                'icon'      => 'simple-icon-ghost',
-                'modal'     => route('admin.queue.create', 'user_id='.$row->id)
-            ];
-        }
+        $actions['edit'] = [
+            'icon'      => 'simple-icon-pencil',
+            'modal'     => route('admin.user.edit', $row->id)
+        ];
 
-        if(auth()->user()->can( 'consultation.index' ) ){
-            $actions['history'] = [
-                'icon'      => 'simple-icon-event',
-                'redirect'     => route('admin.consultation.index', 'nric='.$row->nric)
-            ];
-        }
-
-        if(auth()->user()->can( 'consultation.create' ) ){
-            $actions['consultation'] = [
-                'icon'      => 'simple-icon-calendar',
-                'redirect'  => route('admin.consultation.edit', $row->id)
-            ];
-        }
-
-        if(auth()->user()->can( 'appointment-management.create' ) ){
-            $actions['appointment'] = [
-                'icon'   => 'simple-icon-notebook',
-                'modal'  => route('admin.appointment.create', 'user_id='.$row->id)
-            ];
-        }
-
-        if(auth()->user()->can( 'patient.edit' ) ){
-            $actions['edit'] = [
-                'icon'      => 'simple-icon-pencil',
-                'modal'     => route('admin.user.edit', $row->id)
-            ];
-        }
-        if(auth()->user()->can( 'patient.delete' ) ){
-            $actions['delete'] = [
-                'size'      => 'md', //[sm, md, lg]
-                'class'     => 'text-danger',
-                'icon'      => 'simple-icon-trash',
-                'modal'     => route('admin.user.delete', $row->id)
-            ];
-        }
-
+        $actions['delete'] = [
+            'size'      => 'md', //[sm, md, lg]
+            'class'     => 'text-danger',
+            'icon'      => 'simple-icon-trash',
+            'modal'     => route('admin.user.delete', $row->id)
+        ];
 
         return view('components.admin.datatable.action', compact('actions'))->render();
     }
@@ -138,45 +86,7 @@ class UsersDataTable extends DataTable
                     ->setTableId('dataTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy(7)
-                    //->dom('Bfrtip')
-                    ->selectStyleSingle()
-//                    ->parameters([
-//                        'language' => [
-//                            'info' => "Showing <b>_START_ to _END_</b> (of _TOTAL_)",
-//                            'infoEmpty' => "No records found",
-//                            'infoFiltered' => "",
-//                            'lengthMenu' => "Items Per Page _MENU_",
-//                            'processing' => "<div class='spinner'>Loading...</div>",
-//                            'loadingRecords' => "Loading data...",
-//                            'zeroRecords' => "Sorry no records found",
-//                            'search' => "_INPUT_",
-//                            'searchPlaceholder' => "Search...",
-//                            'paginate' => [
-//                                'previous' => "<i class='simple-icon-arrow-left'></i>",
-//                                'next' => "<i class='simple-icon-arrow-right'></i>",
-//                            ]
-//                        ],
-//                    ])
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-//                        Button::make('reset'),
-                        // Button::make('reload')
-                    ]);
-    }
-
-
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Transactions_' . date('YmdHis');
+                    ->orderBy(3)
+                    ->selectStyleSingle();
     }
 }

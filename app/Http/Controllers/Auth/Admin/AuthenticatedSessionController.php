@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
 
         // $role = auth()->user()->hasRole('');
         return makeResponse(201, 'Login success', [
-            'redirect' => Session::pull('url.intended', \route('admin.home'))
+            'redirect' => route('admin.user.index')
         ]);
     }
 

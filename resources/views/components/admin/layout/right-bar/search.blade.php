@@ -8,7 +8,7 @@
 
         @if($item['type'] == 'date')
             <div class="mt-3">
-                <label class="float-left">{{ __('label.'.$label ?? $name ) }}</label>
+                <label class="float-left">{{ $label ?? $name }}</label>
                 <div class="float-right" onclick="switchToMonthly('{{$name}}')"><i class="simple-icon-refresh"></i></div>
             </div>
 
@@ -55,7 +55,7 @@
         @if($item['type'] == 'text')
             <label class="form-group has-float-label mb-4">
                 <input class="form-control" placeholder="All {{$item['label'] ?? $name}}" name="{{$name}}" value="{{request()->query($name)}}">
-                <span>{{ __('label.'.$label ?? $name) }}</span>
+                <span>{{ $label ?? $name }}</span>
             </label>
         @endif
 
@@ -72,7 +72,7 @@
                         <option value="{{$value}}">{{$opt}}</option>
                     @endforeach
                 </select>
-                <span>{{ __('label.'.$label ?? $name) }}</span>
+                <span>{{ $label ?? $name }}</span>
             </label>
             <script>
                 let opt{{$name}} = '{{request()->query($name)}}';

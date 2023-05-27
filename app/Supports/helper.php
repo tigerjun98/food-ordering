@@ -2,36 +2,6 @@
 
 use App\Exceptions\CommonException;
 
-function get_age($dateOfBirth)
-{
-    $age = Carbon\Carbon::parse($dateOfBirth)->age;
-    return $age;
-}
-
-function get_time_ago( $time ) // get_time_ago( strtotime("2013-12-01") );
-{
-    $time_difference = time() - $time;
-
-    if( $time_difference < 1 ) { return 'less than 1 second ago'; }
-    $condition = array( 12 * 30 * 24 * 60 * 60 =>  'year',
-        30 * 24 * 60 * 60       =>  'month',
-        24 * 60 * 60            =>  'day',
-        60 * 60                 =>  'hour',
-        60                      =>  'minute',
-        1                       =>  'second'
-    );
-
-    foreach( $condition as $secs => $str )
-    {
-        $d = $time_difference / $secs;
-
-        if( $d >= 1 )
-        {
-            $t = round( $d );
-            return 'about ' . $t . ' ' . $str . ( $t > 1 ? 's' : '' ) . ' ago';
-        }
-    }
-}
 function array_only(array $request, array $key): array
 {
     return array_filter(
@@ -105,76 +75,6 @@ function throwErr($msg){
 function dateFormat($col, $format = 'd-m-Y'){
     if($format == 'r') $format = 'd M, Y H:i A';
     return date($format, strtotime($col));
-}
-
-function stringToSecret(string $string = NULL){
-    if (!$string) {
-        return NULL;
-    }
-    $length = strlen($string);
-    $visibleCount = (int) round($length / 4);
-    $hiddenCount = $length - ($visibleCount * 2);
-    return substr($string, 0, $visibleCount) . str_repeat('*', $hiddenCount) . substr($string, ($visibleCount * -1), $visibleCount);
-}
-
-function splitAddress($full_address){
-    $address_length = strlen($full_address);
-    $address2 = '';
-    $address3 = '';
-
-    if($address_length <= 40){
-        $address1 = $full_address;
-        return [$address1, $address2, $address3];
-    }
-    elseif($address_length <= 80){
-        $equal_length = floor($address_length/2);
-        $comma_index_before = strrpos(substr($full_address, 0, $equal_length), ',');
-        $comma_index_after = strpos($full_address, ',', $equal_length);
-
-        //validation if no comma in full address
-        if ($comma_index_before === false) {
-            $comma_index_before = $equal_length;
-        }
-        if ($comma_index_after === false) {
-            $comma_index_after = $address_length;
-        }
-
-        $comma_index = $equal_length - $comma_index_before <= $comma_index_after - $equal_length ? $comma_index_before : $comma_index_after;
-
-        $address1 = trim(substr($full_address, 0, $comma_index + 1));
-        $address2 = trim(substr($full_address, $comma_index + 1));
-
-        return [$address1, $address2, $address3];
-    }else {
-        $equal_length = floor($address_length/3);
-        $combine_length = $equal_length * 2;
-        $half_combine_length = $equal_length + ($equal_length/2);
-
-        $comma_index_before = strrpos(substr($full_address, 0, $equal_length), ',');
-        $comma_index_middle = strrpos(substr($full_address, $comma_index_before, $half_combine_length), ',');
-        $comma_index_after = strpos($full_address, ',', $combine_length);
-
-        //validation if no comma in full address
-        if ($comma_index_before === false) {
-            $comma_index_before = $equal_length;
-        }
-        if ($comma_index_middle === false) {
-            $comma_index_middle = $half_combine_length;
-        }
-        if ($comma_index_after === false) {
-            $comma_index_after = $address_length;
-        }
-
-        $comma_index = $equal_length - $comma_index_before <= $comma_index_after - $equal_length ? $comma_index_before : $comma_index_after;
-
-        $comma_index_1 = $combine_length - $comma_index_middle <= $comma_index_after - $equal_length ? $comma_index_middle : $comma_index_after;
-
-        $address1 = trim(substr($full_address, 0, $comma_index + 1));
-        $address2 = trim(substr($full_address, $comma_index + 1, $comma_index_1));
-        $address3 = trim(substr($full_address, strlen($address1) + strlen($address2) + 1));
-
-        return [$address1, $address2, $address3];
-    }
 }
 
 function array_except($array, array $keys){
@@ -309,57 +209,6 @@ function isEmpty($value)
     return notEmpty($value) === true ? false : true;
 }
 
-function notDigit($value)
-{
-    if ($value != '' && $value != null && $value != false && $value != true && $value >= 0 && ctype_digit((string) $value)) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function isDigit($value)
-{
-    if ($value != '' && $value != null && $value != false && $value != true && $value >= 0 && ctype_digit((string) $value)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function isFund($value)
-{
-    return preg_match_all('/[\d](.[\d]{1,2})?/im', $value) ? true : false;
-}
-
-function notFund($value)
-{
-    return preg_match_all('/[\d](.[\d]{1,2})?/im', $value) ? false : true;
-}
-
-function isPercentage($value)
-{
-    if (is_numeric($value) && $value <= 100) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function notPercentage($value)
-{
-    if (is_numeric($value) && $value <= 100) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function isNumber($value)
-{
-    return ctype_digit((string) $value) ? true : false;
-}
-
 function notNumber($value)
 {
     return ctype_digit((string) $value) ? false : true;
@@ -376,69 +225,6 @@ function writeErrorLog($log)
     }
 }
 
-function numberToWord($num)
-{
-    $num = ( string )(( int )$num);
-
-    if($num == 0) return 'zero';
-
-    if (( int )($num) && ctype_digit($num)) {
-        $words = array();
-
-        $num = str_replace(array(',', ' '), '', trim($num));
-
-        $list1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
-            'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-            'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen');
-
-        $list2 = array('', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty',
-            'seventy', 'eighty', 'ninety', 'hundred');
-
-        $list3 = array('', 'thousand', 'million', 'billion', 'trillion',
-            'quadrillion', 'quintillion', 'sextillion', 'septillion',
-            'octillion', 'nonillion', 'decillion', 'undecillion',
-            'duodecillion', 'tredecillion', 'quattuordecillion',
-            'quindecillion', 'sexdecillion', 'septendecillion',
-            'octodecillion', 'novemdecillion', 'vigintillion');
-
-        $num_length = strlen($num);
-        $levels = ( int )(($num_length + 2) / 3);
-        $max_length = $levels * 3;
-        $num = substr('00' . $num, -$max_length);
-        $num_levels = str_split($num, 3);
-
-        foreach ($num_levels as $num_part) {
-            $levels--;
-            $hundreds = ( int )($num_part / 100);
-            $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
-            $tens = ( int )($num_part % 100);
-            $singles = '';
-
-            if ($tens < 20) {
-                $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '');
-            } else {
-                $tens = ( int )($tens / 10);
-                $tens = ' ' . $list2[$tens] . ' ';
-                $singles = ( int )($num_part % 10);
-                $singles = ' ' . $list1[$singles] . ' ';
-            }
-            $words[] = $hundreds . $tens . $singles . (($levels && ( int )($num_part)) ? ' ' . $list3[$levels] . ' ' : '');
-        }
-        $commas = count($words);
-        if ($commas > 1) {
-            $commas = $commas - 1;
-        }
-
-        $words = implode(', ', $words);
-
-        $words = trim(str_replace(' ,', ',', $words), ', ');
-        if ($commas) {
-            $words = str_replace(',', ' and', $words);
-        }
-
-        return $words;
-    }
-}
 
 function html($view, $compact, $code = 200, $message = null, $title = null)
 {
@@ -541,21 +327,6 @@ function fundFormat($fund, $decimal = 2)
     return number_format($fund, $decimal, '.', ',');
 }
 
-function isImageExtension($ext, $trim = false)
-{
-    $imgs_ext = ['png', 'jpg', 'jpeg', 'bmp', 'gif'];
-
-    if ($trim === true) {
-        $name = strtolower($ext);
-        $split = explode('?', $name)[0];
-        $split = explode('.', $split);
-
-        return in_array(end($split), $imgs_ext);
-    } else {
-        return in_array(strtolower($ext), $imgs_ext);
-    }
-}
-
 function slugify($text)
 {
     // replace non letter or digits by -
@@ -581,120 +352,4 @@ function slugify($text)
     }
 
     return $text;
-}
-
-function safeFileFormat()
-{
-    return ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'pdf', 'xlsx', 'docx'];
-}
-
-function isSafeFileFormat($ext)
-{
-    $ext = str_replace('.', '', $ext);
-
-    return in_array($ext, safeFileFormat());
-}
-
-function getClassName($class)
-{
-    $str = get_class($class);
-    $arr = explode('\\', $str);
-
-    return end($arr);
-}
-
-function isValidImageExtension($name)
-{
-    return \Str::endsWith($name, ['.jpg', '.jpeg', '.gif', '.jpg', '.png', '.bmp']);
-}
-
-function encodeURIComponent($str)
-{
-    $revert = ['%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')'];
-
-    return strtr(rawurlencode($str), $revert);
-}
-
-function getIpAddress()
-{
-    $req = request();
-    if ($req->header('cf-connecting-ip')) {
-        return $req->header('cf-connecting-ip');
-    } else {
-        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-            return $_SERVER['HTTP_CF_CONNECTING_IP'];
-        } else {
-            return $req->ip();
-        }
-    }
-}
-
-function sanitizeContactNumber($contact_number, $country = null)
-{
-    if ($country == null) {
-        return $contact_number;
-    } else {
-        $can_format = false;
-
-        if ($country instanceof \App\Models\Country) {
-            $can_format = true;
-        } elseif (is_int($country) && $country > 0) {
-            $country = \App\Models\Country::find($country);
-
-            if ($country) {
-                $can_format = true;
-            }
-        }
-
-        if ($can_format === true) {
-            if ($country->country_code_alpha_2 == 'MY') {
-                $contact_number = ltrim($contact_number, '+60');
-                $contact_number = ltrim($contact_number, '0');
-                // dd(preg_match('/^(\+?6?1)[0-46-9]-*[0-9]{7,8}/', $contact_number));
-                if (! preg_match('/^(\+?6?1)[0-46-9]-*[0-9]{7,8}/', $contact_number)) {
-                    throw new \Exception(trans('common.invalid_contact_number_format', ['eg' => '0123456789']));
-                }
-            } elseif ($country->country_code_alpha_2 == 'CN') {
-                $contact_number = ltrim($contact_number, '+86');
-//                $contact_number = ltrim($contact_number, '0');
-
-                if (! preg_match('/^[0-9]{10,15}/', $contact_number)) {
-                    throw new \Exception(trans('common.invalid_contact_number_format', ['eg' => '1065529988']));
-                }
-            }
-        }
-
-        return $contact_number;
-    }
-}
-
-function generateRandomAlphaNumeric($length_of_string = 8, $all_capital = true)
-{
-    if ($all_capital === true) {
-        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-
-    } else {
-        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
-    }
-
-    return substr(str_shuffle($str_result), 0, $length_of_string);
-}
-
-function generateRandomAlpha($length_of_string = 8, $all_capital = true)
-{
-    $str_result = $all_capital ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    return substr(str_shuffle($str_result), 0, $length_of_string);
-}
-
-function formatBytes($size, $precision = 2)
-{
-    if ($size > 0) {
-        $size = (int) $size;
-        $base = log($size) / log(1024);
-        $suffixes = [' bytes', ' KB', ' MB', ' GB', ' TB'];
-
-        return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
-    } else {
-        return $size.' bytes';
-    }
 }

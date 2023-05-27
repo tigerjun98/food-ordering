@@ -3,7 +3,7 @@ import 'bootstrap-datepicker'
 import PerfectScrollbar from 'perfect-scrollbar';
 import Sortable from 'sortablejs'; // https://github.com/SortableJS/Sortable
 import Dropzone from "dropzone"; // https://docs.dropzone.dev/configuration/basics/layout
-import 'tempusdominus-bootstrap-4';
+// import 'tempusdominus-bootstrap-4';
 
 $.fn.initialiseDropzone = function(options) {
     Dropzone.autoDiscover = false;

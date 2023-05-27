@@ -18,7 +18,6 @@ class ProfileService
     public function store(array $request): Admin
     {
         $data = array_except($request, ['roles']);
-        $data['clinic_id'] = auth()->user()->clinic_id;
         $this->model->find($request['id'])->update($data);
         return $this->model->find($request['id'])->first();
     }

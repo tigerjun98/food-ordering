@@ -26,7 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SoftDeletes, TimestampFormat, SelectOption;
+    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, TimestampFormat, SelectOption;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -35,7 +35,6 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $guarded= []; // remove this replaces with $fillable to strict input col
     protected $primaryKey = 'id';
-    protected $appends = ['full_name', 'full_name_with_group'];
     /**
      * The attributes that are mass assignable.
      *
@@ -53,109 +52,22 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'deleted_at' => 'datetime',
     ];
 
-    public function consultations()
-    {
-        return $this->hasMany(Consultation::class, 'user_id', 'id')
-            ->orderBy('created_at', 'desc');
-    }
+    public const RELATIONS = [
+        'address'
+    ];
 
-    public function queues()
+    public function address()
     {
-        return $this->hasMany(Queue::class, 'user_id', 'id')
-            ->orderBy('created_at', 'desc');
-    }
-
-    /**
-     * Get the group that owns the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function group(): HasOne
-    {
-        return $this->hasOne(Group::class, 'id', 'group_id');
-    }
-
-    /**
-     * Get all of the appointments for the Patient
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function appointments(): HasMany
-    {
-        return $this->hasMany(Appointment::class, 'user_id', 'id')
-                ->orderBy('created_at', 'desc');
-    }
-
-    protected function dobWithAge(): Attribute
-    {
-        $age = get_age($this->dob);
-        return Attribute::make(
-            get: fn () => $age > 0 ? dateFormat($this->dob, 'd M, Y').' ('.get_age($this->dob).' '.trans('common.age').')' : '-'
-        );
+        return $this->hasMany(Address::class,'user_id', 'id');
     }
 
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
+            get: fn () => $this->first_name .' '. $this->last_name
         );
-    }
-
-    protected function fullNameWithGroup(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' ) .' '.( $this->group ? '('.$this->group->full_name.')' : '' )
-        );
-    }
-
-    protected function phoneFormat(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->phone ? '+'.$this->phone : ''
-        );
-    }
-
-    protected function nricFormat(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => strlen($this->nric) == 12 ? nricFormat($this->nric) : $this->nric
-        );
-    }
-
-    protected function nationalityExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => ucfirst(CountryEnum::getCountryList(false)[$this->nationality] ?? '')
-        );
-    }
-
-    protected function stateName(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => ucfirst(static::getStatesList()[$this->state] ?? '')
-        );
-    }
-
-    protected function fullAddress(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->address.', '.$this->postcode.' '.$this->area.', '.$this->state
-        );
-    }
-
-    protected function genderExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => ucfirst(GenderEnum::getListing()[$this->gender] ?? '')
-        );
-    }
-
-    public static function getStatesList(): array
-    {
-        return StateEnum::getListing();
     }
 
     public static function Filter(){
@@ -168,34 +80,20 @@ class User extends Authenticatable
 
         return [
             'full_name'     => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
-            'nric'          => ['type' => 'text', 'label'=> 'nric_or_passport'],
-            'phone'         => ['type' => 'text' ],
+            'contact'       => ['type' => 'text' ],
             'email'         => ['type' => 'text' ],
-            'nationality'   => ['type' => 'select', 'option' => CountryEnum::getCountryList(false)],
-            'groups'        => ['type' => 'select', 'option' => (new GroupService())->getSelectOption(Group::USER), 'default' => false],
-            // 'date_name_2' => ['type' => 'date', 'label'=> 'created_at' ],
         ];
     }
 
     public function scopeFilter($query)
     {
-        request()->nric = str_replace('-', '', request()->nric);
-
         if(request()->filled('full_name')){
             $query->where(function ($q) {
-                $q->where('name_en', 'like', '%'.request()->full_name.'%')
-                    ->orWhere('name_cn', 'like', '%'.request()->full_name.'%');
+                $q->where('first_name', 'like', '%'.request()->full_name.'%')
+                    ->orWhere('last_name', 'like', '%'.request()->full_name.'%');
             });
         }
 
-        if(request()->filled('groups')){
-            $query->whereHas('group', function($q){
-                $q->whereIn('id', explode(",",request()->groups));
-            });
-        }
-
-        return $this->searchAll(
-            $this->parentFilterTrait($query), ['nric', 'name_en', 'name_cn', 'phone', 'email']
-        );
+        return $this->parentFilterTrait($query);
     }
 }

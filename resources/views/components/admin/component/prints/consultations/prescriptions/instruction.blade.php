@@ -3,7 +3,17 @@
         <td>
             <div class="prescription-table-content" style="font-weight: 500;">
                 <p>{{ trans('label.time_per_day') }}
-                    <b>({{ $prescription->direction_explain }})</b>
+                    @php
+                        $direction_list = \App\Models\Prescription::getDirectionList();
+                        $directions = array_flip($prescription->direction);
+                    @endphp
+                    @foreach($directions as $key => $direction)
+                        <b>{{
+                            ($key !== array_key_last($directions))
+                                ? $direction_list[$direction].', '
+                                : $direction_list[$direction].'.'
+                        }}</b>
+                    @endforeach
                 </p>
             </div>
         </td>

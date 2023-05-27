@@ -37,13 +37,11 @@ class ProfileStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'        => ['integer'],
-            'name_en'   => ['required', 'string'],
-            'name_cn'   => ['nullable', 'string'],
-            'phone'     => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('admins')->ignore(request()->id, 'id')],
-            'email'     => ['required', 'email', Rule::unique('admins')->ignore(request()->id, 'id')],
-            'gender'    => ['required', 'in:'.arrayToString(GenderEnum::getListing())],
-            'status'    => ['nullable', 'in:'.arrayToString(StatusEnum::getListing())],
+            'id'            => ['integer'],
+            'first_name'    => ['required', 'string'],
+            'last_name'     => ['nullable', 'string'],
+            'contact'       => ['required', 'regex:/^([0-9\s\-\+\(\)]*)$/', Rule::unique('admins')->ignore(request()->id, 'id')],
+            'email'         => ['required', 'email', Rule::unique('admins')->ignore(request()->id, 'id')],
         ];
     }
 }

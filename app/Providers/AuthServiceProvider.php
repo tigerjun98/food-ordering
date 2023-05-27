@@ -26,18 +26,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole(Role::ROOT) ? true : null;
-        });
 
-//        foreach (Admin::getPermissionsLists() as $key => $list){
-//            Gate::define($key, function ($user) use($key){
-//                $permissions = explode(",", $user->permissions);
-//                if (in_array($key, $permissions)) {
-//                    return true;
-//                }
-//                return false;
-//            });
-//        }
     }
 }

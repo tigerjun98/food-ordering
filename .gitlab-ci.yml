@@ -14,7 +14,7 @@ building:
     - php artisan storage:link
     - sudo chmod -R 775 storage
     - sudo npm install
-    - sudo npm run build:admin
+    - npm run build:admin
   only:
     - staging
   tags:

@@ -29,12 +29,12 @@ class Authenticate extends Middleware
 
         if (! $request->expectsJson()) {
 
-            if($request->path() == 'admin/horizon/dashboard'){
+            if(Route::is('admin.*')){
                 return route('admin.login');
             }
 
-            if(Route::is('admin.*')){
-                return route('admin.login');
+            if(Route::is('merchant.*')){
+                return route('merchant.login');
             }
 
             return route('login');

@@ -3,7 +3,7 @@
 >
     @slot('do_search')
         <div class="modal-header mb-5 pt-0">
-            <h4 class="mt-1 text-capitalize">{{ __('label.search') }}</h4>
+            <h4 class="mt-1 text-capitalize">Search</h4>
         </div>
 
         <x-admin.layout.right-bar.search

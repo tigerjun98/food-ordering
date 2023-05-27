@@ -4,42 +4,76 @@ namespace App\Entity\Enums;
 
 enum StatusEnum: string
 {
-    case ACTIVE = '100';
-    case INACTIVE = '101';
+    public const ACTIVE = 100;
+    public const INACTIVE = 101;
+    public const SHOW = 102;
+    public const HIDE = 103;
+    public const UNPAID = 104;
+    public const PAID = 105;
+    public const PENDING = 106;
+    public const PREPARING = 108;
+    public const SHIPPING = 109;
+    public const EXPIRED = 110;
+    public const COMPLETED = 111;
+    public const CANCELLED = 112;
+    public const REJECTED = 113;
 
-    public static function getClass($type)
+    public static function getListing(): array
     {
-        foreach (self::cases() as $case){
-            if($case->value == $type){
-                return $case->getType();
-            }
-        }
-        return null;
+        return [
+            self::ACTIVE            => 'Active',
+            self::INACTIVE          => 'Inactive',
+            self::SHOW              => 'Show',
+            self::HIDE              => 'Hide',
+            self::UNPAID            => 'Unpaid',
+            self::PAID              => 'Paid',
+            self::PENDING           => 'Pending',
+            self::PREPARING         => 'Preparing',
+            self::SHIPPING          => 'Shipping',
+            self::EXPIRED           => 'Expired',
+            self::COMPLETED         => 'Completed',
+            self::CANCELLED         => 'Cancelled',
+            self::REJECTED          => 'Rejected',
+        ];
     }
 
-    public static function getListing()
+    public static function getOrderListing(): array
     {
-        $options = [];
-        foreach (self::cases() as $case){
-            $options[$case->value] = $case->getName();
-        }
-
-        return $options;
+        return array_only(self::getListing(), [
+            self::UNPAID,
+            self::PENDING,
+            self::PREPARING,
+            self::SHIPPING,
+            self::COMPLETED,
+            self::CANCELLED,
+            self::EXPIRED,
+        ]);
     }
 
-    public function getName(): string
+    public static function getUserOrderListing(): array
     {
-        return match ($this) {
+        return [
+            self::PENDING           => trans('status.to_ship'),
+            self::SHIPPING          => trans('status.to_receive'),
+            self::COMPLETED         => trans('status.to_review'),
+            self::CANCELLED         => trans('status.cancelled'),
+        ];
+    }
+
+    public static function getActivityListing(): array
+    {
+        return [
             self::ACTIVE => trans('common.active'),
             self::INACTIVE => trans('common.inactive'),
-        };
+        ];
     }
 
-    public function getType(): string
+    public static function getDisplayListing(): array
     {
-        return match ($this) {
-            self::ACTIVE => 'success',
-            self::INACTIVE => 'light',
-        };
+        return [
+            self::SHOW => trans('status.show'),
+            self::HIDE => trans('status.hide'),
+        ];
     }
+
 }

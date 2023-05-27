@@ -3,22 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\UsersDataTable;
-use App\Entity\Enums\Country;
-use App\Entity\Enums\GenderEnum;
 use App\Http\Controllers\Controller;
-use App\Models\Consultation;
 use App\Models\User;
 use App\Modules\Admin\User\Requests\UserStoreRequest;
 use App\Modules\Admin\User\Services\UserService;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use DB;
-use App\Entity\Enums\CountryEnum;
 
 class UserController extends Controller {
 
@@ -31,17 +21,6 @@ class UserController extends Controller {
         $this->service = new UserService();
     }
 
-    public function searchPatient()
-    {
-        $nric = str_replace('-', '', request()->nric);
-        $user = User::where('nric', $nric)->first();
-        if($user){
-            return makeResponse(200, trans('messages.patient_exists'), $user);
-        } else{
-            return makeResponse(502, trans('messages.patient_not_exists'));
-        }
-    }
-
     public function index(UsersDataTable $dataTable)
     {
         $filter = User::Filter();
@@ -50,8 +29,8 @@ class UserController extends Controller {
 
     public function show($modelId)
     {
-        $patient = User::findOrFail($modelId);
-        return html('admin.user.modal.view', compact('patient'));
+        $data = User::findOrFail($modelId);
+        return html('admin.user.modal.view', compact('data'));
     }
 
     public function create()

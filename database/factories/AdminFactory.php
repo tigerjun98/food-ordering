@@ -2,44 +2,49 @@
 
 namespace Database\Factories;
 
-use App\Models\Clinic;
-use Carbon\Carbon;
-use Faker\Provider\zh_CN\Company;
-use Faker\Provider\zh_CN\Person;
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class AdminFactory extends Factory
 {
-    use RefreshDatabase;
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Admin::class;
+
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition()
     {
-        $userFactory = (new UserFactory());
-        $dobAndNric = $userFactory->getRandDobAndNric();
-        $gender = $userFactory->getRandGender();
-
-        $fakerCN = \Faker\Factory::create('zh_CN');
-
         return [
-            'name' => $this->faker->userName(),
-            'name_en' => $this->faker->name($gender[1]),
-            'name_cn' =>  $fakerCN->name($gender[1]),
-            'gender' => $gender[0],
-            'nric' => $dobAndNric[1],
-            'phone' => '601'.$this->faker->randomNumber(8),
-            'email' => $this->faker->companyEmail(),
+            'name' => $this->faker->name(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'email_verified_at' => now(),
             'password' => '$2y$10$qivlTFx6oBeB92J13hCIruir0zqMp8qN5JVq058YoGfoQQ4.MGm9a', // 123123
             'remember_token' => Str::random(10),
-            'clinic_id' => Clinic::all()->random()->id
         ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function unverified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'email_verified_at' => null,
+            ];
+        });
     }
 }

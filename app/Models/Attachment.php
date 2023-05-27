@@ -6,9 +6,6 @@ use App\Traits\Models\ObserverTrait;
 use App\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Schema;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Attachment extends Model
 {
@@ -30,7 +27,7 @@ class Attachment extends Model
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => route('admin.attachment.show', $this->id),
+            get: fn ($value) => route('attachment.show', $this->id),
         );
     }
 }

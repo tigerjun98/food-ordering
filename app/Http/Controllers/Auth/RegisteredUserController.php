@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Merchant;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -21,7 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Auth/Register');
+        return view('user.auth.register');
     }
 
     /**
@@ -35,21 +36,25 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'first_name'    => 'required|string|max:50',
+            'last_name'     => 'required|string|max:50',
+            'email'         => 'required|string|email|max:255|unique:users',
+            'contact'       => 'required|string|max:14|unique:users',
+            'password'      => ['required', 'confirmed', 'min:6'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'first_name'    => $request->first_name,
+            'last_name'     => $request->last_name,
+            'email'         => $request->email,
+            'contact'       => $request->contact,
+            'password'      => Hash::make($request->password),
         ]);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return makeResponse(201, trans('common.operation_success'), [
+            'redirect' => route('order.index')
+        ]);
     }
 }

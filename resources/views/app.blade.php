@@ -119,7 +119,7 @@
         $.fn.sendRequest = function( options ) {
             // default options.
             var settings = $.extend({
-                url: '{{ route('ajaxRequest') }}',
+                url: null,
                 id : null,
                 val: null,
                 data: {
@@ -201,7 +201,7 @@
         $.fn.updateOption = async function( options ) {
             // default options.
             var settings = $.extend({
-                url: '{{ route('ajaxRequest') }}',
+                url: null,
                 id : null,
                 val: null,
                 data: {

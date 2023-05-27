@@ -9,7 +9,7 @@
         {{$customOption ?? ''}}
     </select>
 
-    <span> {{ __('label.'.$label ?? $name) }}
+    <span> {{ $label ?? $name }}
         <span class="text-danger">{{isset($required) ? null : '*' }}</span>
     </span>
     @if(isset($small))

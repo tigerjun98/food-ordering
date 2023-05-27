@@ -6,7 +6,7 @@
             <div class="col-12 col-md-10 mx-auto my-auto">
                 <div class="card auth-card">
                     <div class="position-relative image-side ">
-                        <p class="text-white h4">YILIN WORKSPACE</p>
+                        <p class="text-white h4">Food Ordering System</p>
 
                         <p class="white mb-0 text-semi-muted">
                             I am so happy to see. You can continue to login for manage your work.
@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-side alert-box">
 
-                        <h6 class="mb-4">Login</h6>
+                        <h6 class="mb-4">Admin Login</h6>
 
                         <x-admin.form
                             :route="route('admin.submit-login')"

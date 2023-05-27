@@ -35,9 +35,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
         $this->loadMigrationsFrom(base_path() .'/database/migrations/**/*');
-//        Str::macro('isLength', function ($str, $length) {
-//            return static::length($str) == $length;
-//        });
         Vite::useBuildDirectory('/backendAssets')->macro('image', fn ($asset) => $this->asset("resources/img/{$asset}"));
         Route::mixin(new RouteMixin);
 
@@ -45,10 +42,6 @@ class AppServiceProvider extends ServiceProvider
 
     protected function configureRateLimiting(): void
     {
-        RateLimiter::for('add-cart', function (Request $request) {
-            return Limit::perMinute(100)->response(function() {
-                return $this->error('Beep! Beep! Too many attempts', 401);
-            });
-        });
+
     }
 }

@@ -1,8 +1,25 @@
 <x-admin.component.modal
-    :title="'Patients details'"
-    :navs="['details', 'address', 'emergency']"
+    :title="'Users details'"
+    :navs="['details', 'security']"
     :submit="route('admin.user.store')"
 >
+
+    @slot('security')
+        <div class="row">
+            <x-admin.form.text
+                :col="'md-6'"
+                :type="'password'"
+                :name="'password'"
+                :required="false"
+            />
+            <x-admin.form.text
+                :col="'md-6'"
+                :type="'password'"
+                :name="'password_confirmation'"
+                :required="false"
+            />
+        </div>
+    @endslot
 
     @slot('details')
 
@@ -12,165 +29,31 @@
             <x-admin.form.text
                 :data="$data"
                 :col="'md-6'"
-                :name="'name_en'"
+                :name="'first_name'"
             />
             <x-admin.form.text
                 :data="$data"
                 :col="'md-6'"
-                :name="'name_cn'"
-                :required="false"
-            />
-        </div>
-
-        <div class="row">
-            @if(request()->nric)
-                <input type="hidden" name="nric" value="{{ request()->nric }}">
-            @endif
-
-            <x-admin.form.text
-                :value="$data ? $data->nric : (request()->nric ?? null)"
-                :col="'md-6'"
-                :name="'nric'"
-                :disabled="request()->nric ?? false"
-                :label="trans('label.nric_or_passport')"
-            />
-            <x-admin.form.text
-                :data="$data"
-                :type="'phone'"
-                :col="'md-6'"
-                :name="'phone'"
+                :name="'last_name'"
                 :required="false"
             />
         </div>
 
         <div class="row">
             <x-admin.form.text
-                :data="$data"
-                :type="'date'"
-                :col="'md-6'"
-                :name="'dob'"
-                :required="false"
-                :jsOptions="'startView: 2,'"
-            />
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
-                :name="'email'"
-                :required="false"
-            />
-        </div>
-
-        <div class="row">
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
-                :name="'occupation'"
-                :required="false"
-            />
-            <x-admin.form.select
-                :data="$data"
-                :col="'md-6'"
-                :name="'gender'"
-                :options="\App\Entity\Enums\GenderEnum::getListing()"
-            />
-        </div>
-
-        <div class="row">
-            <x-admin.form.select-nationality
-                :data="$data"
-                :col="'md-6'"
-                :name="'nationality'"
-            />
-            <x-admin.form.select
-                :data="$data"
-                :col="'md-6'"
-                :name="'group_id'"
-                :required="false"
-                :options="\App\Models\Group::where('type', \App\Models\Group::USER)->Active()->pluck('name_en','id')"
-            />
-        </div>
-
-        <x-admin.form.textarea
-            :data="$data"
-            :name="'remark_allergic'"
-            :rows="4"
-            :required="false"
-        />
-
-    @endslot
-
-    @slot('address')
-        <x-admin.form.textarea
-            :data="$data"
-            :name="'address'"
-            :required="false"
-        />
-
-        <div class="row">
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
-                :name="'postcode'"
-                :required="false"
-            />
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
-                :name="'area'"
-                :required="false"
-            />
-        </div>
-
-        <div class="row">
-            <x-admin.form.select
                 :data="$data"
                 :col="'md-12'"
-                :name="'state'"
-                :required="false"
-                :options="\App\Models\User::getStatesList()"
+                :name="'contact'"
             />
         </div>
-    @endslot
 
-    @slot('emergency')
         <div class="row">
             <x-admin.form.text
                 :data="$data"
-                :col="'md-6'"
-                :name="'emergency_contact_name'"
-                :label="trans('label.contact_name')"
-                :required="false"
-            />
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
-                :type="'phone'"
-                :name="'emergency_contact_no'"
-                :label="trans('label.contact_no')"
-                :required="false"
+                :col="'md-12'"
+                :name="'email'"
             />
         </div>
-        <div class="row">
-            <x-admin.form.text
-                :data="$data"
-                :col="'md-6'"
-                :name="'emergency_contact_relationship'"
-                :label="trans('label.relationship')"
-                :required="false"
-            />
-        </div>
-    @endslot
-
-    {{-- Temporary fixed alert popup between two modal is opening; Just hide it 1st --}}
-    @if(request()->nric || request()->jsAction)
-        @slot('formOption')
-            alertSuccess: false,
-        @endslot
-    @endif
-
-
-    @slot('script')
-        {{ request()->jsAction ?? '' }}
     @endslot
 
 </x-admin.component.modal>

@@ -15,15 +15,24 @@ Route::middleware('guest')->group(function () {
 
     Route::group(['prefix'=>'admin', 'as'=>'admin.'], function () {
         Route::get('/login', [AdminAuthenticatedSessionController::class, 'create'])->name('login');
-        Route::post('/login', [AdminAuthenticatedSessionController::class, 'store'])->name('submit-login');
+        Route::post('/submit-login', [AdminAuthenticatedSessionController::class, 'store'])->name('submit-login');
+    });
+
+    Route::group(['prefix'=>'merchant', 'as'=>'merchant.'], function () {
+        Route::get('/login', [\App\Http\Controllers\Merchant\Auth\MerchantAuthenticatedSessionController::class, 'create'])->name('login');
+        Route::post('/submit-login', [\App\Http\Controllers\Merchant\Auth\MerchantAuthenticatedSessionController::class, 'store'])->name('submit-login');
+        Route::get('/register', [\App\Http\Controllers\Merchant\Auth\RegisteredMerchantController::class, 'create'])->name('register');
+        Route::post('/submit-register', [\App\Http\Controllers\Merchant\Auth\RegisteredMerchantController::class, 'store'])->name('submit-register');
+        Route::post('logout', [\App\Http\Controllers\Merchant\Auth\MerchantAuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
 
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('submit-register', [RegisteredUserController::class, 'store'])->name('submit-register');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('submit-login', [AuthenticatedSessionController::class, 'store'])->name('submit-login');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

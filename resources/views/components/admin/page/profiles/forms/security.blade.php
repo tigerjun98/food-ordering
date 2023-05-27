@@ -1,9 +1,11 @@
 <x-admin.page.profiles.forms.index
-    :route="route('admin.profile.store-password')"
-    :title="trans('common.security')"
+    :route="route('profile.store-password')"
+    :title="'Security'"
     :desc="'Last edited '.dateFormat($data->updated_at, 'r')"
 >
     @slot('body')
+
+        <input type="hidden" name="id" value="{{ auth()->id() }}" />
         <div class="row">
             <x-admin.form.text
                 :col="'md-6'"

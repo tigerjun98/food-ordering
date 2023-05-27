@@ -63,9 +63,15 @@ $id = $id ?? uniqid();
         return elem ? elem.value : ''
     }
 
+    const getRefModel = () => {
+        let elem = document.querySelector("[name='ref_model']");
+        return elem ? elem.value : ''
+    }
+
     myDropzone{{$id ?? ''}}.on("sending", function(file, xhr, formData) {
         formData.append("_token", "{{ csrf_token() }}");
         formData.append("ref_id", getRefId());
+        formData.append("ref_model", getRefModel());
         @if(isset($sendingData))
         @foreach($sendingData as $name => $value)
         formData.append("{{ $name }}", '{{ $value }}');

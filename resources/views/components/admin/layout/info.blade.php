@@ -3,7 +3,7 @@
         ? ( isset($data) && isset($name) && isset($data->{$name}) ? $data->{$name} : '' )
         : $value;
 
-    $label = isset($label) ? $label : trans('label.'.$name);
+    $label = isset($label) ? $label : $name;
 @endphp
 
 @if(isset($col)) <div class="col-{{ $col }}"> @endif

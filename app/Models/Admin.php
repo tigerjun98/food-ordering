@@ -24,7 +24,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, ObserverTrait, SelectOption, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, ObserverTrait, SelectOption, HasRoles;
     use FilterTrait {
         FilterTrait::scopeFilter as parentFilterTrait;
     }
@@ -68,92 +68,6 @@ class Admin extends Authenticatable
         'deleted_at' => 'datetime',
     ];
 
-    public function clinic()
-    {
-        return $this->belongsTo(Clinic::class, 'clinic_id', 'id');
-    }
-
-    /**
-     * Get the group that owns the Admin
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function group(): HasOne
-    {
-        return $this->hasOne(Group::class, 'id', 'group_id');
-    }
-
-    /**
-     * Get all of the appointments for the Doctor
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function appointments(): HasMany
-    {
-        return $this->hasMany(Appointment::class, 'doctor_id', 'id')
-                ->orderBy('appointment_date', 'asc');
-    }
-
-    public function isRoot(): bool
-    {
-        return $this->hasRole(\App\Models\Role::ROOT);
-    }
-
-    protected function fullName(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->name_en .' '. ( $this->name_cn ? '('.$this->name_cn.')' : '' )
-        );
-    }
-
-    protected function genderExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => ucfirst(GenderEnum::getListing()[$this->gender] ?? '')
-        );
-    }
-    public static function getPermissionsLists()
-    {
-        $lang = app()->getLocale();
-        $arr = @include base_path('lang/'.$lang.'/permission.php');
-
-        if (! $arr || count($arr) < 0) {
-            return [];
-        }
-
-        return $arr;
-    }
-
-    public function getPermissionsInStr()
-    {
-        $arr = "";
-        foreach (explode(",", $this->permissions) as $key => $item){
-            $arr .= "'".$item."',";
-        }
-        return $arr;
-    }
-
-
-    public static function getStatusList()
-    {
-        return StatusEnum::getListing();
-    }
-
-    protected function statusExplain(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => ucfirst(StatusEnum::getListing()[$this->status] ?? '')
-        );
-    }
-
-    public static function getRolesList(): array
-    {
-        return \Spatie\Permission\Models\Role::all()
-            ->whereNotIn('name', [\App\Models\Role::ROOT])
-            ->pluck('name_en','id')
-            ->toArray();
-    }
-
     public static function Filter(){
         return [
             'full_name' => ['type' => 'text', 'label'=> 'full_name', 'default' => false],
@@ -190,12 +104,5 @@ class Admin extends Authenticatable
             $query = $this->searchAll($query, ['nric', 'name_en', 'name_cn', 'phone', 'email']);
 
         return $this->parentFilterTrait($query);
-    }
-
-    public function scopeExcludeSuperAdmin($query)
-    {
-        return $query->whereHas('roles', function ($query) {
-            $query->whereNot('name', \App\Models\Role::ROOT);
-        });
     }
 }

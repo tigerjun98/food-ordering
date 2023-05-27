@@ -17,7 +17,7 @@
     $attributes['id'] = isset($id) ? $id : $name;
     $attributes['autocomplete'] = 'off';
 
-    $label = isset($lang) ? __('label.'.$lang) : ( isset($label) ? $label : __('label.'.$name) );
+    $label = isset($lang) ? $lang : ( isset($label) ? $label : $name );
     $label = str_replace('[]', '', $label);
 
     if( !isset($value) && isset($data->{$name}) ){

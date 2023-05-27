@@ -10,14 +10,12 @@
     <div id="collapse{{$name}}" class="collapse show">
         <ul class="list-unstyled inner-level-menu" id="innerLevelMenu-{{$name}}">
             @foreach($children as $childrenName => $child)
-                @if( hasPermission($child) )
-                    <li class="{{ isActive($child['route'] ?? '') ? 'active' : '' }} inner-level-menu-child">
-                        <a href="{{$child['route']}}">
-                            <i class="{{ $child['icon'] }}"></i>
-                            <span class="d-inline-block">{{ trans('common.'.$childrenName) }}</span>
-                        </a>
-                    </li>
-                @endif
+                <li class="{{ isActive($child['route'] ?? '') ? 'active' : '' }} inner-level-menu-child">
+                    <a href="{{$child['route']}}">
+                        <i class="{{ $child['icon'] }}"></i>
+                        <span class="d-inline-block">{{ trans('common.'.$childrenName) }}</span>
+                    </a>
+                </li>
             @endforeach
         </ul>
     </div>
